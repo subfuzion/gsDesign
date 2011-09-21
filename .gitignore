@@ -1,4 +1,7 @@
-﻿# ============================
+﻿# temporarily hide gsDesign directory until ready to commit
+gsDesign/
+
+# ============================
 # Other Version Control
 # ============================
 .svn
