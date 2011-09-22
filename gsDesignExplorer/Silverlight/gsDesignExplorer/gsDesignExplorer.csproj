@@ -106,9 +106,6 @@
     <Compile Include="ViewModel\RunCommand.cs" />
     <Compile Include="ViewModel\ViewMode.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\DemoPanel.xaml.cs">
-      <DependentUpon>DemoPanel.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -132,10 +129,6 @@
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\DemoPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Resource Include="Assets\Images\Samples\Plot.png" />
     <Resource Include="Assets\Images\Samples\Text.png" />
     <Content Include="Assets\Images\Splash\gsDesignSplash.png">
