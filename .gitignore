@@ -1,6 +1,6 @@
 ﻿# temporarily hide directories until ready to commit
 gsDesign/
-RserveX/
+RhttpServe/
 
 # ============================
 # Other Version Control
