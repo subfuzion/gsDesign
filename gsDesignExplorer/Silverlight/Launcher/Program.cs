@@ -8,18 +8,21 @@
 	{
 		private Process mongooseProcess;
 		private Process rserveProcess;
+		private Process policyServer;
 
 		private static void Main(string[] args)
 		{
 			var launcher = new Program();
 
 			launcher.StartRserve();
-			launcher.StartMongoose();
+			launcher.StartSilverlightPolicyServer();
+			// launcher.StartMongoose();
 
 			launcher.Print("Press <enter> to quit");
 			Console.ReadLine();
 
-			launcher.mongooseProcess.Kill();
+			//launcher.mongooseProcess.Kill();
+			launcher.policyServer.Kill();
 			launcher.rserveProcess.Kill();
 		}
 
@@ -43,6 +46,17 @@
 			mongooseProcess = Process.Start(processStartInfo);
 
 			Print("started mongoose on port {0}", 8080.ToString());
+		}
+
+		private void StartSilverlightPolicyServer()
+		{
+			string pathname = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
+
+			var processStartInfo = new ProcessStartInfo { FileName = pathname, CreateNoWindow = true };
+
+			policyServer = Process.Start(processStartInfo);
+
+			Print("started Silverlight policy server on port {0}", 943.ToString());
 		}
 
 		private void Print(string s, params string[] args)

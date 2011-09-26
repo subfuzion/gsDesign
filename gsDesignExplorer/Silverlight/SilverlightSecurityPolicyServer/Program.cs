@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Reflection;
 
 namespace Subfuzion.Silverlight.Tcp
 {
@@ -7,20 +10,32 @@ namespace Subfuzion.Silverlight.Tcp
 	{
 		public static readonly string DefaultPolicyFileKey = "DefaultPolicyFile";
 
-		// No attempt is made to catch exceptions here. Any exceptions will be written to the
-		// console and the process will exit.
 		static void Main(string[] args)
 		{
-			var policyFile = args.Length > 0 ? args[0] : ConfigurationManager.AppSettings[DefaultPolicyFileKey];
+			try
+			{
+				var policyFile = args.Length > 0 ? args[0] : ConfigurationManager.AppSettings[DefaultPolicyFileKey];
 
-			var policyServer = new SocketPolicyServer(policyFile);
-			policyServer.Start();
+				var currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".";
+				policyFile = Path.Combine(currentDir, policyFile);
 
-			Console.WriteLine("Started Silverlight socket policy server on port 943. Press <Enter> to stop.");
-			Console.ReadLine();
+				var policyServer = new SocketPolicyServer(policyFile);
+				policyServer.Start();
 
-			policyServer.Stop();
-			Console.WriteLine("Stopped Silverlight socket policy server");
+				Console.WriteLine("Started Silverlight socket policy server on port 943. Press <Enter> to exit.");
+				Console.ReadLine();
+
+				policyServer.Stop();
+				Console.WriteLine("Stopped Silverlight socket policy server");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+			finally
+			{
+				Console.ReadLine();
+			}
 		}
 	}
 }

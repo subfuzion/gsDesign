@@ -7,17 +7,25 @@ namespace Subfuzion.Silverlight.Tcp
 {
 	public class SocketPolicyServer
 	{
+		public static readonly IPAddress DefaultIPAddress = IPAddress.Any;
+
 		// Silverlight requires port 943
 		public static readonly int PolicyServerPort = 943;
 
-		private string _policyFileName;
-		private byte[] _policy;
+		private ServerContext _serverContext;
+
+		private Policy _policy;
 
 		private TcpListener _listener;
 		private bool _isStopped = true;
 
-		// caller should catch file exceptions
 		public SocketPolicyServer(string policyFileName)
+			: this(DefaultIPAddress, PolicyServerPort, policyFileName)
+		{
+		}
+
+		// caller should catch file exceptions
+		public SocketPolicyServer(IPAddress ipAddress, int port, string policyFileName)
 		{
 			LoadPolicyFile(policyFileName);
 		}
@@ -25,16 +33,25 @@ namespace Subfuzion.Silverlight.Tcp
 		// caller should catch socket exceptions
 		public void Start()
 		{
-			if (_isStopped)
+			try
 			{
-				_listener = new TcpListener(IPAddress.Any, PolicyServerPort);
-				_listener.Start();
+				if (_isStopped)
+				{
+					_serverContext = new ServerContext {IPAddress = IPAddress.Any, Port = PolicyServerPort};
 
-				// This call returns immediately; waiting for a client to connect happens on a separate thread
-				ListenForNewConnection();
+					_listener = new TcpListener(_serverContext.IPAddress, _serverContext.Port);
+					_listener.Start();
 
-				_isStopped = false;
-				Console.WriteLine("start success");
+					// This call returns immediately; waiting for a client to connect happens on a separate thread
+					ListenForNewConnection();
+
+					_isStopped = false;
+					Console.WriteLine("start success");
+				}
+			}
+			catch (SocketException e)
+			{
+				ServerException.ThrowServerException(e, _serverContext);
 			}
 		}
 
@@ -66,19 +83,8 @@ namespace Subfuzion.Silverlight.Tcp
 		// caller should catch file exceptions
 		private void LoadPolicyFile(string policyFileName)
 		{
-			if (_policyFileName != policyFileName)
-			{
-				var policyStream = new FileStream(policyFileName, FileMode.Open);
-				var policy = new byte[policyStream.Length];
-				policyStream.Read(policy, 0, policy.Length);
-				policyStream.Close();
-
-				// successfully loaded new policy, so save information
-				_policyFileName = policyFileName;
-				_policy = policy;
-
-				Console.WriteLine("loaded policy file: " + policyFileName);
-			}
+			_policy = new Policy(policyFileName);
+			Console.WriteLine("loaded policy file: " + _policy.ToString());
 		}
 	}
 }

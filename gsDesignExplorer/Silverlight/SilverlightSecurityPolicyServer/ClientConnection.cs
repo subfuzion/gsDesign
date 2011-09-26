@@ -9,9 +9,9 @@ namespace Subfuzion.Silverlight.Tcp
 		public static readonly string PolicyRequestString = "<policy-file-request/>";
 
 		private readonly TcpClient _client;
-		private readonly byte[] _policy;
+		private readonly Policy _policy;
 
-		public ClientConnection(TcpClient client, byte[] policy)
+		public ClientConnection(TcpClient client, Policy policy)
 		{
 			_client = client;
 			_policy = policy;
@@ -27,7 +27,7 @@ namespace Subfuzion.Silverlight.Tcp
 			_client.ReceiveTimeout = 5000;
 			s.Read(buffer, 0, buffer.Length);
 
-			s.Write(_policy, 0, _policy.Length);
+			s.Write(_policy.Bytes, 0, _policy.Length);
 			_client.Close();
 			Console.WriteLine("served policy file in response to request");
 		}
