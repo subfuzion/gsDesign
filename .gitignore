@@ -1,8 +1,4 @@
-﻿# temporarily hide directories until ready to commit
-gsDesign/
-RhttpServe/
-
-# ============================
+﻿# ============================
 # Other Version Control
 # ============================
 .svn
