@@ -102,10 +102,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ViewModel.cs" />
-    <Compile Include="ViewModels\RunCommand.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+	<Compile Include="ViewModels\RunCommand.cs" />
+	<Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
