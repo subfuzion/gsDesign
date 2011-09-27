@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
+using gsDesign.LauncherGUI.ViewModels;
 
-namespace LauncherGUI
+namespace gsDesign.LauncherGUI
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
 	public partial class App : Application
 	{
+		public static ViewModel ViewModel
+		{
+			get { return (ViewModel)Current.Resources["ViewModel"]; }
+		}
 	}
 }
