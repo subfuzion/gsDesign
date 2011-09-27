@@ -6,14 +6,12 @@
 	xmlns:tk="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-	xmlns:viewModels="clr-namespace:gsDesignExplorer.ViewModel"
 	mc:Ignorable="d"
 	d:DesignHeight="600" d:DesignWidth="800"
 	>
 
 	<UserControl.Resources>
 		
-		<viewModels:DesignExplorerViewModel x:Key="ViewModel" />
 
 	</UserControl.Resources>
 

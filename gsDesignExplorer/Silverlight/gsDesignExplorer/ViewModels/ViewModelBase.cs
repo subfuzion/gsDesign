@@ -1,7 +1,7 @@
-namespace gsDesignExplorer.ViewModel
-{
-	using System.ComponentModel;
+using System.ComponentModel;
 
+namespace gsDesignExplorer.ViewModels
+{
 	public abstract class ViewModelBase : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;

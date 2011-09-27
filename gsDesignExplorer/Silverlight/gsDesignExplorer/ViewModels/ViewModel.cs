@@ -1,11 +1,11 @@
-﻿namespace gsDesignExplorer.ViewModel
-{
-	using System;
-	using System.Windows;
+using System;
+using System.Windows;
 
-	public class DesignExplorerViewModel : ViewModelBase
+namespace gsDesignExplorer.ViewModels
+{
+	public class ViewModel : ViewModelBase
 	{
-		public DesignExplorerViewModel()
+		public ViewModel()
 		{
 			CurrentViewMode = 0;
 

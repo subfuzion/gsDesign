@@ -1,4 +1,4 @@
-namespace gsDesignExplorer.ViewModel
+namespace gsDesignExplorer.ViewModels
 {
 	public enum ViewMode
 	{
