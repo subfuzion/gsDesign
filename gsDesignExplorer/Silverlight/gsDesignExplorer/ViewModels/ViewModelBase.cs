@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace gsDesignExplorer.ViewModels
+namespace gsDesign.Explorer.ViewModels
 {
 	public abstract class ViewModelBase : INotifyPropertyChanged
 	{

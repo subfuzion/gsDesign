@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace gsDesignExplorer
+namespace gsDesign.Explorer
 {
 	public partial class MainPage : UserControl
 	{

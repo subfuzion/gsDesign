@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace gsDesignExplorer.ViewModels
+namespace gsDesign.Explorer.ViewModels
 {
 	public class RunCommand : ICommand
 	{

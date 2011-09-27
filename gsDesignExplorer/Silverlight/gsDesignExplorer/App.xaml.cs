@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Browser;
-using gsDesignExplorer.ViewModels;
+using gsDesign.Explorer.ViewModels;
 
-namespace gsDesignExplorer
+namespace gsDesign.Explorer
 {
 	public partial class App : Application
 	{

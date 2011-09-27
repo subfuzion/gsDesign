@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace gsDesignExplorer.ViewModels
+namespace gsDesign.Explorer.ViewModels
 {
 	public class ViewModel : ViewModelBase
 	{
