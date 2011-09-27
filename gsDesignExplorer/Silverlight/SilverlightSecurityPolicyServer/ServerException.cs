@@ -30,7 +30,7 @@ namespace Subfuzion.Silverlight.Tcp
 			if (ipAddress.Equals("0.0.0.0")) ipAddress = "any";
 
 			if (e.Message.StartsWith("Only one usage of each socket address"))
-				throw new ServerException(string.Format("Can't bind to socket on port {0} for IP addresses ({1}) because it is already in use", port, ipAddress), e);
+				throw new ServerException(string.Format("Can't bind to socket on port {0} for IP addresses ({1}) because it is already in use (is the server already running?)", port, ipAddress), e);
 
 			throw e;
 		}

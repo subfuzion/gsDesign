@@ -2,8 +2,9 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:viewModels="clr-namespace:gsDesign.Explorer.ViewModels"
 			 mc:Ignorable="d" 
-			 x:Class="gsDesignExplorer.App"
+			 x:Class="gsDesign.Explorer.App"
 			 >
 	<Application.Resources>
 
@@ -11,6 +12,8 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="ControlsResourceDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
+
+			<viewModels:ViewModel x:Key="ViewModel" />
 
 			<Style x:Key="SeparatorStyle" TargetType="Canvas">
 				<Setter Property="VerticalAlignment" Value="Center"/>

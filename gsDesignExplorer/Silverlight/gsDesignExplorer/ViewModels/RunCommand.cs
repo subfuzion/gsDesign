@@ -1,9 +1,8 @@
-﻿using System.Windows.Input;
+using System;
+using System.Windows.Input;
 
-namespace gsDesignExplorer.ViewModel
+namespace gsDesign.Explorer.ViewModels
 {
-	using System;
-
 	public class RunCommand : ICommand
 	{
 		public event EventHandler CanExecuteChanged;
