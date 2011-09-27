@@ -6,6 +6,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{E8483144-2F38-484D-98A8-FFC11505B467}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F76F995C-0777-446A-9B43-8939A3B4A991} = {F76F995C-0777-446A-9B43-8939A3B4A991}
+		{163A1960-4493-480E-A3B2-E77CE4F2ED43} = {163A1960-4493-480E-A3B2-E77CE4F2ED43}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightSecurityPolicyServer", "SilverlightSecurityPolicyServer\SilverlightSecurityPolicyServer.csproj", "{163A1960-4493-480E-A3B2-E77CE4F2ED43}"
