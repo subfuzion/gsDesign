@@ -1,0 +1,11 @@
+﻿<Window x:Class="LauncherGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="gsDesign Explorer Launcher" Height="350" Width="525">
+    <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="150*" />
+			<ColumnDefinition Width="353*" />
+		</Grid.ColumnDefinitions>
+	</Grid>
+</Window>
