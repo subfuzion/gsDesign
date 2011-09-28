@@ -7,6 +7,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 {
 	public enum RunState
 	{
+		Invalid,
 		Stopped,
 		Running,
 	}
@@ -17,7 +18,17 @@ namespace gsDesign.LauncherGUI.ViewModels
 		{
 			if (targetType.Equals(typeof(Brush)) && value is RunState)
 			{
-				return (RunState)value == RunState.Running ? Brushes.Green : Brushes.Red;
+				switch ((RunState)value)
+				{
+					case RunState.Invalid:
+						return Brushes.Red;
+
+					case RunState.Stopped:
+						return Brushes.LightGray;
+
+					case RunState.Running:
+						return Brushes.Green;
+				}
 			}
 
 			throw new NotImplementedException();
@@ -35,7 +46,17 @@ namespace gsDesign.LauncherGUI.ViewModels
 		{
 			if (value is RunState)
 			{
-				return (RunState)value == RunState.Running ? "Stop" : "Start";
+				switch ((RunState)value)
+				{
+					case RunState.Invalid:
+						return "Unavailable";
+
+					case RunState.Stopped:
+						return "Start";
+
+					case RunState.Running:
+						return "Stop";
+				}
 			}
 
 			throw new NotImplementedException();

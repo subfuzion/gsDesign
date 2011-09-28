@@ -22,5 +22,41 @@ namespace gsDesign.LauncherGUI.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RservePath {
+            get {
+                return ((string)(this["RservePath"]));
+            }
+            set {
+                this["RservePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PolicyServerPath {
+            get {
+                return ((string)(this["PolicyServerPath"]));
+            }
+            set {
+                this["PolicyServerPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ExplorerPath {
+            get {
+                return ((string)(this["ExplorerPath"]));
+            }
+            set {
+                this["ExplorerPath"] = value;
+            }
+        }
     }
 }
