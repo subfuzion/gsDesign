@@ -53,7 +53,7 @@
 				</ToolTipService.ToolTip>
 			</Button>
 
-			<Button Name="runButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" Click="runButton_Click" >
+			<Button Name="runButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" Command="{Binding Path=RunDesignCommand}" >
 				<Image Source="/Assets/Images/Toolbar/designExecute.png" Stretch="Uniform" />
 				<ToolTipService.ToolTip>
 					<ToolTip Content="Run design in R" Style="{StaticResource TooltipStyle}" />

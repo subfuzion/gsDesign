@@ -3,8 +3,16 @@ using System.Windows;
 
 namespace gsDesign.Explorer.ViewModels
 {
+	using System.Windows.Input;
+
 	public class AppViewModel : ViewModelBase
 	{
+		#region Commands
+
+		public ICommand RunDesignCommand { get; private set; }
+
+		#endregion
+
 		public AppViewModel()
 		{
 			CurrentViewMode = 0;
@@ -16,6 +24,9 @@ namespace gsDesign.Explorer.ViewModels
 
 			BeforeRunExecutedVisibility = Visibility.Visible;
 			AfterRunExecutedVisibility = Visibility.Collapsed;
+
+			// commands
+			RunDesignCommand = new DelegateCommand(RunDesign);
 		}
 
 		public string[] ViewModes
@@ -163,7 +174,7 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		public void RunDesign()
+		public void RunDesign(object parameter = null)
 		{
 			BeforeRunExecutedVisibility = Visibility.Collapsed;
 			AfterRunExecutedVisibility = Visibility.Visible;
