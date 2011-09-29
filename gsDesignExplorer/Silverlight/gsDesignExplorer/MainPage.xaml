@@ -24,6 +24,5 @@
 		<!-- status bar (bottom row) -->
 		<Views:StatusPanel Grid.Row="2" />
 
-		
 	</Grid>
 </UserControl>
