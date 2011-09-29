@@ -7,7 +7,12 @@
 	xmlns:Analysis="clr-namespace:gsDesign.Explorer.Views.Analysis"
 	xmlns:Simulation="clr-namespace:gsDesign.Explorer.Views.Simulation"
 	xmlns:Test="clr-namespace:gsDesign.Explorer.Views.Test"
-	mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+	xmlns:ViewModels="clr-namespace:gsDesign.Explorer.ViewModels"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+	
+	<UserControl.Resources>
+		<ViewModels:ViewModeConverter x:Key="viewModeConverter" />
+	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<Grid.RowDefinitions>
@@ -26,7 +31,7 @@
 			<TextBlock Text="Design Navigator" Grid.Row="0" />
 
 			<StackPanel Orientation="Horizontal" Grid.Row="1">
-				<ComboBox x:Name="ModeComboBox" Margin="2" Width="100" ItemsSource="{Binding Path=ViewModes, Mode=OneTime}" SelectedIndex="{Binding Path=CurrentViewMode, Mode=TwoWay}">
+				<ComboBox x:Name="ModeComboBox" Margin="2" Width="100" ItemsSource="{Binding Path=ViewModes, Mode=OneTime}" SelectedIndex="{Binding Path=CurrentViewMode, Mode=TwoWay, Converter={StaticResource viewModeConverter}}">
 
 				</ComboBox>
 

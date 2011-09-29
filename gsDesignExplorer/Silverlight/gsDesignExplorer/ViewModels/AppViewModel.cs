@@ -1,26 +1,25 @@
 namespace gsDesign.Explorer.ViewModels
 {
-	using System;
 	using System.Threading;
 	using System.Windows;
 	using System.Windows.Input;
+	using Helpers;
 
 	public class AppViewModel : ViewModelBase
 	{
-		#region Commands
+		#region Fields
 
-		public ICommand RunDesignCommand { get; private set; }
+		private ViewMode _currentViewMode;
 
-		#endregion
-
-		private Visibility _afterRunExecutedVisibility;
 		private Visibility _analysisPanelVisibility;
-		private Visibility _beforeRunExecutedVisibility;
-		private int _currentViewMode;
 		private Visibility _designPanelVisibility;
 		private Visibility _simulationPanelVisibility;
 		private Visibility _testPanelVisibility;
-		private ViewMode _viewMode;
+
+		private Visibility _afterRunExecutedVisibility;
+		private Visibility _beforeRunExecutedVisibility;
+
+		#endregion
 
 		public AppViewModel()
 		{
@@ -38,12 +37,14 @@ namespace gsDesign.Explorer.ViewModels
 			RunDesignCommand = new DelegateCommand {ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true};
 		}
 
+		#region View mode (Design, Analysis, Simulation...) management
+
 		public string[] ViewModes
 		{
-			get { return new[] {"Design", "Analysis", "Simulation", "Test"}; }
+			get { return EnumHelper.GetNames<ViewMode>(); }
 		}
 
-		public int CurrentViewMode
+		public ViewMode CurrentViewMode
 		{
 			get { return _currentViewMode; }
 			set
@@ -51,48 +52,36 @@ namespace gsDesign.Explorer.ViewModels
 				if (_currentViewMode != value)
 				{
 					_currentViewMode = value;
-					RaisePropertyChanged("CurrentViewMode");
 
 					switch (value)
 					{
-						case 0:
+						case ViewMode.Design:
 							AnalysisPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Collapsed;
 							TestPanelVisibility = Visibility.Collapsed;
 							DesignPanelVisibility = Visibility.Visible;
 							break;
-						case 1:
+						case ViewMode.Analysis:
 							DesignPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Collapsed;
 							TestPanelVisibility = Visibility.Collapsed;
 							AnalysisPanelVisibility = Visibility.Visible;
 							break;
-						case 2:
+						case ViewMode.Simulation:
 							DesignPanelVisibility = Visibility.Collapsed;
 							AnalysisPanelVisibility = Visibility.Collapsed;
 							TestPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Visible;
 							break;
-						case 3:
+						case ViewMode.Test:
 							DesignPanelVisibility = Visibility.Collapsed;
 							AnalysisPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Collapsed;
 							TestPanelVisibility = Visibility.Visible;
 							break;
 					}
-				}
-			}
-		}
 
-		public string ViewMode
-		{
-			get { return _viewMode.ToString(); }
-			set
-			{
-				if (_viewMode.ToString() != value)
-				{
-					_viewMode = (ViewMode) Enum.Parse(typeof (ViewMode), value, true);
-					RaisePropertyChanged("ViewMode");
+					RaisePropertyChanged("CurrentViewMode");
 				}
 			}
 		}
@@ -175,9 +164,15 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
+		#endregion
+
+		#region Commands
+
+		public ICommand RunDesignCommand { get; private set; }
+
 		public void RunDesign(object parameter = null)
 		{
-			Thread.Sleep(3000);
+			Thread.Sleep(2000);
 		}
 
 		public void RunDesignCompleted(object parameter = null)
@@ -185,5 +180,7 @@ namespace gsDesign.Explorer.ViewModels
 			BeforeRunExecutedVisibility = Visibility.Collapsed;
 			AfterRunExecutedVisibility = Visibility.Visible;
 		}
+
+		#endregion
 	}
 }
