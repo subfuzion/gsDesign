@@ -58,5 +58,17 @@ namespace gsDesign.LauncherGUI.Properties {
                 this["ExplorerPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowConsoleOutput {
+            get {
+                return ((bool)(this["ShowConsoleOutput"]));
+            }
+            set {
+                this["ShowConsoleOutput"] = value;
+            }
+        }
     }
 }

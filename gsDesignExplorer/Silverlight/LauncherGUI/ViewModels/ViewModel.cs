@@ -16,14 +16,46 @@ namespace gsDesign.LauncherGUI.ViewModels
 
 		public ViewModel()
 		{
-			_explorerRunState = IsValidRservePath ? RunState.Stopped : RunState.Invalid;
+			_rserveRunState = IsValidRservePath ? RunState.Stopped : RunState.Invalid;
 			_policyServerRunState = IsValidPolicyServerPath ? RunState.Stopped : RunState.Invalid;
-			_rserveRunState = IsValidExplorerPath ? RunState.Stopped : RunState.Invalid;
+			_explorerRunState = IsValidExplorerPath ? RunState.Stopped : RunState.Invalid;
 		}
 
 		private AppModel Model
 		{
 			get { return _appModel; }
+		}
+
+		public bool IsSystemConfigurationValid
+		{
+			get { return IsRserveButtonEnabled && IsPolicyServerButtonEnabled && IsValidExplorerPath; }
+		}
+
+		public SystemState SystemState
+		{
+			get
+			{
+				if (!IsSystemConfigurationValid)
+					return SystemState.Invalid;
+
+				if (RserveRunState == RunState.Running && PolicyServerRunState == RunState.Running)
+					return SystemState.Running;
+
+				return SystemState.Stopped;
+			}
+		}
+
+		public bool IsConsoleOutputEnabled
+		{
+			get { return LauncherSettings.ShowConsoleOutput; }
+			set
+			{
+				if (LauncherSettings.ShowConsoleOutput != value)
+				{
+					LauncherSettings.ShowConsoleOutput = value;
+					RaisePropertyChanged("IsConsoleOutputEnabled");
+				}
+			}
 		}
 
 		#region Rserve
@@ -41,6 +73,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 					RaisePropertyChanged("IsRserveButtonEnabled");
 					RaisePropertyChanged("IsRservePathButtonEnabled");
 					RaisePropertyChanged("IsExplorerButtonEnabled");
+					RaisePropertyChanged("SystemState");
 				}
 			}
 		}
@@ -51,7 +84,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 
 			set
 			{
-				if (LauncherSettings.RservePath != value && IsValidRservePath)
+				if (LauncherSettings.RservePath != value && IsValidRservePathString(value))
 				{
 					LauncherSettings.RservePath = value;
 					RaisePropertyChanged("RservePath");
@@ -60,9 +93,14 @@ namespace gsDesign.LauncherGUI.ViewModels
 			}
 		}
 
+		public bool IsValidRservePathString(string path)
+		{
+			return path != null && File.Exists(path) /* && RservePath.EndsWith(RserveFileName) && */ ;
+		}
+
 		public bool IsValidRservePath
 		{
-			get { return RservePath != null && /* RservePath.EndsWith(RserveFileName) && */ File.Exists(RservePath); }
+			get { return IsValidRservePathString(RservePath); }
 		}
 
 		public bool IsRserveButtonEnabled
@@ -91,7 +129,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 			{
 				try
 				{
-					Model.Launcher.StartRserve(RservePath);
+					Model.Launcher.StartRserve(RservePath, IsConsoleOutputEnabled);
 					RserveRunState = RunState.Running;
 				}
 				catch (Exception e)
@@ -146,6 +184,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 					RaisePropertyChanged("IsPolicyServerButtonEnabled");
 					RaisePropertyChanged("IsPolicyServerPathButtonEnabled");
 					RaisePropertyChanged("IsExplorerButtonEnabled");
+					RaisePropertyChanged("SystemState");
 				}
 			}
 		}
@@ -156,7 +195,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 
 			set
 			{
-				if (LauncherSettings.PolicyServerPath != value && IsValidPolicyServerPath)
+				if (LauncherSettings.PolicyServerPath != value && IsValidPolicyServerPathString(value))
 				{
 					LauncherSettings.PolicyServerPath = value;
 					RaisePropertyChanged("PolicyServerPath");
@@ -165,9 +204,14 @@ namespace gsDesign.LauncherGUI.ViewModels
 			}
 		}
 
+		public bool IsValidPolicyServerPathString(string path)
+		{
+			return path != null && File.Exists(path);
+		}
+
 		public bool IsValidPolicyServerPath
 		{
-			get { return PolicyServerPath != null && File.Exists(PolicyServerPath); }
+			get { return IsValidPolicyServerPathString(PolicyServerPath); }
 		}
 
 		public bool IsPolicyServerButtonEnabled
@@ -196,7 +240,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 			{
 				try
 				{
-					Model.Launcher.StartSilverlightPolicyServer(PolicyServerPath);
+					Model.Launcher.StartSilverlightPolicyServer(PolicyServerPath, IsConsoleOutputEnabled);
 					PolicyServerRunState = RunState.Running;
 				}
 				catch (Exception e)
@@ -250,6 +294,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 					RaisePropertyChanged("ExplorerRunState");
 					RaisePropertyChanged("IsExplorerButtonEnabled");
 					RaisePropertyChanged("IsExplorerPathButtonEnabled");
+					RaisePropertyChanged("SystemState");
 				}
 			}
 		}
@@ -260,7 +305,7 @@ namespace gsDesign.LauncherGUI.ViewModels
 
 			set
 			{
-				if (LauncherSettings.ExplorerPath != value && IsValidExplorerPath)
+				if (LauncherSettings.ExplorerPath != value && IsValidExplorerPathString(value))
 				{
 					LauncherSettings.ExplorerPath = value;
 					RaisePropertyChanged("ExplorerPath");
@@ -269,9 +314,14 @@ namespace gsDesign.LauncherGUI.ViewModels
 			}
 		}
 
+		public bool IsValidExplorerPathString(string path)
+		{
+			return path != null && File.Exists(path);
+		}
+
 		public bool IsValidExplorerPath
 		{
-			get { return ExplorerPath != null && File.Exists(ExplorerPath); }
+			get { return IsValidExplorerPathString(ExplorerPath); }
 		}
 
 		public bool IsExplorerButtonEnabled

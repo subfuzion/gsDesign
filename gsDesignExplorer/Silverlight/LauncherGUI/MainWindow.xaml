@@ -2,9 +2,11 @@
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:ViewModels="clr-namespace:gsDesign.LauncherGUI.ViewModels"
-		Title="gsDesign Explorer Launcher" Height="505" Width="394" ResizeMode="NoResize">
+		Title="gsDesign Explorer Launcher" Height="536" Width="394" ResizeMode="NoResize">
 	
 	<Window.Resources>
+		<ViewModels:SystemStateToBrushValueConverter x:Key="systemStateToBrushConverter"/>
+		<ViewModels:SystemStateToTransitionActionValueConverter x:Key="systemStateToTransitionConverter"/>
 		<ViewModels:RunStateToBrushValueConverter x:Key="runStateToBrushConverter"/>
 		<ViewModels:RunStateToTransitionActionValueConverter x:Key="runStateToTransitionActionConverter"/>
 		
@@ -21,6 +23,14 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
+		
+		<Grid Grid.Row="0">
+			<Canvas Height="30">
+				<Rectangle Canvas.Left="10" Canvas.Top="8" Fill="{Binding Path=SystemState, Mode=OneWay, Converter={StaticResource systemStateToBrushConverter}}" Height="15" Stroke="Black" Width="15" />
+				<Button Canvas.Left="44" Canvas.Top="4" Height="23" Name="SystemButton" Width="121" Content="{Binding Path=SystemState, Mode=OneWay, Converter={StaticResource systemStateToTransitionConverter}}" Click="SystemButton_Click" />
+				<CheckBox Canvas.Left="192" Canvas.Top="8" Content="Show console output" Height="15" Width="157" IsChecked="{Binding Path=IsConsoleOutputEnabled, Mode=TwoWay}" />
+			</Canvas>
+		</Grid>
 		
 		<StackPanel Grid.Row="1" Orientation="Vertical" Margin="0">
 			<Border Style="{StaticResource BorderStyle}">

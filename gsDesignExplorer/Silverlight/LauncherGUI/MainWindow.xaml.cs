@@ -80,5 +80,19 @@ namespace gsDesign.LauncherGUI
 				App.ViewModel.ExplorerPath = dlg.FileName;
 			}
 		}
+
+		private void SystemButton_Click(object sender, RoutedEventArgs e)
+		{
+			StartSystem();
+		}
+
+		private void StartSystem()
+		{
+			App.ViewModel.ToggleRserveRunning();
+			App.ViewModel.TogglePolicyServerRunning();
+			App.ViewModel.OpenExplorer();
+		}
+
+
 	}
 }

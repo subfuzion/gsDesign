@@ -11,11 +11,17 @@ namespace gsDesign.LauncherGUI
 		private Process policyServer;
 		private Process explorer;
 
-		public void StartRserve(string pathname)
+		public void StartRserve(string pathname, bool showConsoleOutput = false)
 		{
 			// string pathname = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\thirdparty\rserve\inst\Rserve.exe");
 
-			var processStartInfo = new ProcessStartInfo { FileName = pathname, Arguments = "--RS-port 4502", CreateNoWindow = true };
+			var processStartInfo = new ProcessStartInfo
+			                       	{
+			                       		FileName = pathname,
+										Arguments = "--RS-port 4502",
+										CreateNoWindow = true,
+										UseShellExecute = showConsoleOutput,
+			                       	};
 
 			rserveProcess = Process.Start(processStartInfo);
 
@@ -27,11 +33,16 @@ namespace gsDesign.LauncherGUI
 			rserveProcess.Kill();
 		}
 
-		public void StartMongoose()
+		public void StartMongoose(bool showConsoleOutput = false)
 		{
 			string pathname = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\thirdparty\mongoose\mongoose.exe");
 
-			var processStartInfo = new ProcessStartInfo { FileName = pathname, CreateNoWindow = true };
+			var processStartInfo = new ProcessStartInfo
+			                       	{
+			                       		FileName = pathname,
+										CreateNoWindow = true,
+										UseShellExecute = showConsoleOutput,
+									};
 
 			mongooseProcess = Process.Start(processStartInfo);
 
@@ -43,11 +54,16 @@ namespace gsDesign.LauncherGUI
 			mongooseProcess.Kill();
 		}
 
-		public void StartSilverlightPolicyServer(string pathname = null)
+		public void StartSilverlightPolicyServer(string pathname = null, bool showConsoleOutput = false)
 		{
 			pathname = pathname ?? Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
 
-			var processStartInfo = new ProcessStartInfo { FileName = pathname, CreateNoWindow = true };
+			var processStartInfo = new ProcessStartInfo
+			                       	{
+			                       		FileName = pathname,
+										CreateNoWindow = true,
+										UseShellExecute = showConsoleOutput,
+									};
 
 			policyServer = Process.Start(processStartInfo);
 
@@ -63,7 +79,10 @@ namespace gsDesign.LauncherGUI
 		{
 			// pathname = pathname ?? Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
 
-			var processStartInfo = new ProcessStartInfo { FileName = pathname };
+			var processStartInfo = new ProcessStartInfo
+			                       	{
+			                       		FileName = pathname,
+			                       	};
 
 			explorer = Process.Start(processStartInfo);
 

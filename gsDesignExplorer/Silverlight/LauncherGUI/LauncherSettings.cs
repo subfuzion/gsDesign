@@ -9,9 +9,19 @@ namespace gsDesign.LauncherGUI
 			get { return Settings.Default; }
 		}
 
+		public static bool ShowConsoleOutput
+		{
+			get { return Settings.ShowConsoleOutput; }
+			set
+			{
+				Settings.ShowConsoleOutput = value;
+				Settings.Save();
+			}
+		}
+
 		public static string RservePath
 		{
-			get { return Settings.Default.RservePath; }
+			get { return Settings.RservePath; }
 			set
 			{
 				Settings.RservePath = value;

@@ -5,30 +5,28 @@
 	using System.Windows.Data;
 	using System.Windows.Media;
 
-	public enum RunState
+	public enum SystemState
 	{
 		Invalid,
 		Stopped,
 		Running,
 	}
 
-	public class RunStateToBrushValueConverter : IValueConverter
+	public class SystemStateToBrushValueConverter : IValueConverter
 	{
-		#region IValueConverter Members
-
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (targetType.Equals(typeof (Brush)) && value is RunState)
+			if (targetType.Equals(typeof(Brush)) && value is SystemState)
 			{
-				switch ((RunState) value)
+				switch ((SystemState)value)
 				{
-					case RunState.Invalid:
+					case SystemState.Invalid:
 						return Brushes.Red;
 
-					case RunState.Stopped:
+					case SystemState.Stopped:
 						return Brushes.LightGray;
 
-					case RunState.Running:
+					case SystemState.Running:
 						return Brushes.Green;
 				}
 			}
@@ -40,28 +38,24 @@
 		{
 			throw new NotImplementedException();
 		}
-
-		#endregion
 	}
 
-	public class RunStateToTransitionActionValueConverter : IValueConverter
+	public class SystemStateToTransitionActionValueConverter : IValueConverter
 	{
-		#region IValueConverter Members
-
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is RunState)
+			if (value is SystemState)
 			{
-				switch ((RunState) value)
+				switch ((SystemState)value)
 				{
-					case RunState.Invalid:
-						return "Unavailable";
+					case SystemState.Invalid:
+						return "Not configured";
 
-					case RunState.Stopped:
-						return "Start";
+					case SystemState.Stopped:
+						return "Start system";
 
-					case RunState.Running:
-						return "Stop";
+					case SystemState.Running:
+						return "Stop system";
 				}
 			}
 
@@ -72,7 +66,5 @@
 		{
 			throw new NotImplementedException();
 		}
-
-		#endregion
 	}
 }
