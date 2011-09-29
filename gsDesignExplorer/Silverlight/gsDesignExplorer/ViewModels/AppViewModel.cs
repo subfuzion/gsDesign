@@ -5,7 +5,7 @@ namespace gsDesign.Explorer.ViewModels
 	using System.Windows.Input;
 	using Helpers;
 
-	public class AppViewModel : ViewModelBase
+	public partial class AppViewModel : ViewModelBase
 	{
 		#region Fields
 
@@ -33,8 +33,7 @@ namespace gsDesign.Explorer.ViewModels
 			BeforeRunExecutedVisibility = Visibility.Visible;
 			AfterRunExecutedVisibility = Visibility.Collapsed;
 
-			// commands
-			RunDesignCommand = new DelegateCommand {ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true};
+			InitCommands();
 		}
 
 		#region View mode (Design, Analysis, Simulation...) management
@@ -166,21 +165,5 @@ namespace gsDesign.Explorer.ViewModels
 
 		#endregion
 
-		#region Commands
-
-		public ICommand RunDesignCommand { get; private set; }
-
-		public void RunDesign(object parameter = null)
-		{
-			Thread.Sleep(2000);
-		}
-
-		public void RunDesignCompleted(object parameter = null)
-		{
-			BeforeRunExecutedVisibility = Visibility.Collapsed;
-			AfterRunExecutedVisibility = Visibility.Visible;
-		}
-
-		#endregion
 	}
 }
