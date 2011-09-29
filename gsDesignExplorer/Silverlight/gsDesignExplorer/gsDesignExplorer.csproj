@@ -124,6 +124,9 @@
     <Compile Include="Views\Design\SpendingFunctionsView.xaml.cs">
       <DependentUpon>SpendingFunctionsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Output\ChartOutputView.xaml.cs">
       <DependentUpon>ChartOutputView.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Design\SpendingFunctionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
