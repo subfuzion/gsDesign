@@ -1,8 +1,8 @@
-using System;
-using System.Windows;
-
 namespace gsDesign.Explorer.ViewModels
 {
+	using System;
+	using System.Threading;
+	using System.Windows;
 	using System.Windows.Input;
 
 	public class AppViewModel : ViewModelBase
@@ -12,6 +12,15 @@ namespace gsDesign.Explorer.ViewModels
 		public ICommand RunDesignCommand { get; private set; }
 
 		#endregion
+
+		private Visibility _afterRunExecutedVisibility;
+		private Visibility _analysisPanelVisibility;
+		private Visibility _beforeRunExecutedVisibility;
+		private int _currentViewMode;
+		private Visibility _designPanelVisibility;
+		private Visibility _simulationPanelVisibility;
+		private Visibility _testPanelVisibility;
+		private ViewMode _viewMode;
 
 		public AppViewModel()
 		{
@@ -26,7 +35,7 @@ namespace gsDesign.Explorer.ViewModels
 			AfterRunExecutedVisibility = Visibility.Collapsed;
 
 			// commands
-			RunDesignCommand = new DelegateCommand(RunDesign);
+			RunDesignCommand = new DelegateCommand {ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true};
 		}
 
 		public string[] ViewModes
@@ -34,7 +43,6 @@ namespace gsDesign.Explorer.ViewModels
 			get { return new[] {"Design", "Analysis", "Simulation", "Test"}; }
 		}
 
-		private int _currentViewMode;
 		public int CurrentViewMode
 		{
 			get { return _currentViewMode; }
@@ -76,7 +84,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private ViewMode _viewMode;
 		public string ViewMode
 		{
 			get { return _viewMode.ToString(); }
@@ -90,7 +97,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private Visibility _designPanelVisibility;
 		public Visibility DesignPanelVisibility
 		{
 			get { return _designPanelVisibility; }
@@ -104,7 +110,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private Visibility _analysisPanelVisibility;
 		public Visibility AnalysisPanelVisibility
 		{
 			get { return _analysisPanelVisibility; }
@@ -118,7 +123,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private Visibility _simulationPanelVisibility;
 		public Visibility SimulationPanelVisibility
 		{
 			get { return _simulationPanelVisibility; }
@@ -132,7 +136,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private Visibility _testPanelVisibility;
 		public Visibility TestPanelVisibility
 		{
 			get { return _testPanelVisibility; }
@@ -146,7 +149,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private Visibility _beforeRunExecutedVisibility;
 		public Visibility BeforeRunExecutedVisibility
 		{
 			get { return _beforeRunExecutedVisibility; }
@@ -160,7 +162,6 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
-		private Visibility _afterRunExecutedVisibility;
 		public Visibility AfterRunExecutedVisibility
 		{
 			get { return _afterRunExecutedVisibility; }
@@ -175,6 +176,11 @@ namespace gsDesign.Explorer.ViewModels
 		}
 
 		public void RunDesign(object parameter = null)
+		{
+			Thread.Sleep(3000);
+		}
+
+		public void RunDesignCompleted(object parameter = null)
 		{
 			BeforeRunExecutedVisibility = Visibility.Collapsed;
 			AfterRunExecutedVisibility = Visibility.Visible;
