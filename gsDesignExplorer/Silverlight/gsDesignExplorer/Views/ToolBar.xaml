@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="gsDesign.Explorer.Views.ToolBar"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+	mc:Ignorable="d"
+	d:DesignHeight="32" d:DesignWidth="400">
+
+	<Grid x:Name="LayoutRoot" Background="#eee" DataContext="{Binding Source={StaticResource AppViewModel}}">
+		<toolkit:WrapPanel>
+			<Button Name="newButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/designNew.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Add new design" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Button Name="openButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}">
+				<Image Source="/Assets/Images/Toolbar/designLoad.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Load design(s) from file" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Button Name="saveButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/fileSave.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Save design(s) to file" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Button Name="deleteButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/designDelete.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Delete current design" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Canvas Style="{StaticResource SeparatorStyle}" />
+
+			<Button Name="defaultButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/designDefault.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Reset design to default" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Button Name="exportButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/designExport.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Save design(s) to file" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Button Name="runButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" Click="runButton_Click" >
+				<Image Source="/Assets/Images/Toolbar/designExecute.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Run design in R" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Canvas Style="{StaticResource SeparatorStyle}" />
+
+			<Button Name="editPlotButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/edit.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Save design(s) to file" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Button Name="exportPlotButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/plotExport.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Save design(s) to file" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+			<Canvas Style="{StaticResource SeparatorStyle}" />
+
+			<Button Name="helpButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
+				<Image Source="/Assets/Images/Toolbar/help.png" Stretch="Uniform" />
+				<ToolTipService.ToolTip>
+					<ToolTip Content="Save design(s) to file" Style="{StaticResource TooltipStyle}" />
+				</ToolTipService.ToolTip>
+			</Button>
+
+		</toolkit:WrapPanel>
+	</Grid>
+</UserControl>

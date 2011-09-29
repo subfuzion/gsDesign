@@ -17,9 +17,9 @@ namespace gsDesign.Explorer
 			InitializeComponent();
 		}
 
-		public static ViewModel ViewModel
+		public static AppViewModel AppViewModel
 		{
-			get { return (ViewModel) Current.Resources["ViewModel"]; }
+			get { return (AppViewModel) Current.Resources["AppViewModel"]; }
 		}
 
 		private void Application_Startup(object sender, StartupEventArgs e)

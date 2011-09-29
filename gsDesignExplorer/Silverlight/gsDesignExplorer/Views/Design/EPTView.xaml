@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="gsDesign.Explorer.Views.Design.EPTView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 mc:Ignorable="d"
+			 d:DesignHeight="300" d:DesignWidth="400">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<Canvas>
+			<TextBlock Canvas.Left="14" Canvas.Top="19" Height="23" Name="textBlock1" Text="Type I Error and Power"
+					   FontWeight="Bold" />
+			<TextBlock Canvas.Left="32" Canvas.Top="48" Height="23" Name="textBlock2" Text="Type I Error (1-sided a x 100)" />
+			<toolkit:NumericUpDown Canvas.Left="216" Canvas.Top="48" Height="23" Name="numericUpDown1" Width="84" Maximum="100" />
+			<Slider Canvas.Left="32" Canvas.Top="77" Height="22" Name="slider1" Width="272" Maximum="100" SmallChange="0.5"
+					LargeChange="5" Value="{Binding ElementName=numericUpDown1, Path=Value, Mode=TwoWay}" />
+			<TextBlock Canvas.Left="32" Canvas.Top="122" Height="23" Name="textBlock3" Text="Power (100 x [1-B])" />
+			<toolkit:NumericUpDown Canvas.Left="216" Canvas.Top="122" Height="23" Maximum="100" Name="numericUpDown2" Width="84" />
+			<Slider Canvas.Left="32" Canvas.Top="151" Height="22" LargeChange="5" Maximum="100" Name="slider2" SmallChange="0.5"
+					Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}" Width="272" />
+		</Canvas>
+	</Grid>
+</UserControl>

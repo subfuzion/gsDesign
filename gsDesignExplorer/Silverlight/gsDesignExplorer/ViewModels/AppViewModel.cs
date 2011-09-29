@@ -3,15 +3,16 @@ using System.Windows;
 
 namespace gsDesign.Explorer.ViewModels
 {
-	public class ViewModel : ViewModelBase
+	public class AppViewModel : ViewModelBase
 	{
-		public ViewModel()
+		public AppViewModel()
 		{
 			CurrentViewMode = 0;
 
 			DesignPanelVisibility = Visibility.Visible;
 			AnalysisPanelVisibility = Visibility.Collapsed;
 			SimulationPanelVisibility = Visibility.Collapsed;
+			TestPanelVisibility = Visibility.Collapsed;
 
 			BeforeRunExecutedVisibility = Visibility.Visible;
 			AfterRunExecutedVisibility = Visibility.Collapsed;
@@ -19,7 +20,7 @@ namespace gsDesign.Explorer.ViewModels
 
 		public string[] ViewModes
 		{
-			get { return new[] {"Design", "Analysis", "Simulation"}; }
+			get { return new[] {"Design", "Analysis", "Simulation", "Test"}; }
 		}
 
 		private int _currentViewMode;
@@ -38,17 +39,26 @@ namespace gsDesign.Explorer.ViewModels
 						case 0:
 							AnalysisPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Collapsed;
+							TestPanelVisibility = Visibility.Collapsed;
 							DesignPanelVisibility = Visibility.Visible;
 							break;
 						case 1:
 							DesignPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Collapsed;
+							TestPanelVisibility = Visibility.Collapsed;
 							AnalysisPanelVisibility = Visibility.Visible;
 							break;
 						case 2:
 							DesignPanelVisibility = Visibility.Collapsed;
 							AnalysisPanelVisibility = Visibility.Collapsed;
+							TestPanelVisibility = Visibility.Collapsed;
 							SimulationPanelVisibility = Visibility.Visible;
+							break;
+						case 3:
+							DesignPanelVisibility = Visibility.Collapsed;
+							AnalysisPanelVisibility = Visibility.Collapsed;
+							SimulationPanelVisibility = Visibility.Collapsed;
+							TestPanelVisibility = Visibility.Visible;
 							break;
 					}
 				}
@@ -107,6 +117,20 @@ namespace gsDesign.Explorer.ViewModels
 				{
 					_simulationPanelVisibility = value;
 					RaisePropertyChanged("SimulationPanelVisibility");
+				}
+			}
+		}
+
+		private Visibility _testPanelVisibility;
+		public Visibility TestPanelVisibility
+		{
+			get { return _testPanelVisibility; }
+			set
+			{
+				if (_testPanelVisibility != value)
+				{
+					_testPanelVisibility = value;
+					RaisePropertyChanged("TestPanelVisibility");
 				}
 			}
 		}

@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace gsDesign.Explorer
 {
@@ -8,11 +7,6 @@ namespace gsDesign.Explorer
 		public MainPage()
 		{
 			InitializeComponent();
-		}
-
-		private void runButton_Click(object sender, RoutedEventArgs e)
-		{
-			App.ViewModel.RunDesign();
 		}
 	}
 }
