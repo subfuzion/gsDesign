@@ -7,8 +7,10 @@ namespace gsDesign.Explorer.Models.Rserve
 
 	public class RserveClient : NotifyPropertyChangedBase
 	{
+		private static readonly int DefaultBufferSize = 8*1024*1024; // 8 MB
 		private ConnectionState _connectionState;
 		private Socket _socket;
+		private readonly byte[] _messageBuffer = new byte[DefaultBufferSize];
 
 		public ConnectionState ConnectionState
 		{
@@ -47,12 +49,7 @@ namespace gsDesign.Explorer.Models.Rserve
 
 			var args = new SocketAsyncEventArgs {UserToken = _socket, RemoteEndPoint = endPoint};
 
-			args.Completed += (sender, socketAsyncEventArgs) =>
-			                  	{
-			                  		ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
-			                  		                  	? ConnectionState.Connected
-			                  		                  	: ConnectionState.Disconnected;
-			                  	};
+			args.Completed += OnConnectAsyncCompleted;
 
 			_socket.ConnectAsync(args);
 		}
@@ -76,5 +73,42 @@ namespace gsDesign.Explorer.Models.Rserve
 				ConnectionState = ConnectionState.Disconnected;
 			}
 		}
+
+		private void OnConnectAsyncCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
+		{
+			ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
+								? ConnectionState.Connected
+								: ConnectionState.Disconnected;
+
+			if (ConnectionState == ConnectionState.Connected)
+			{
+				socketAsyncEventArgs.SetBuffer(_messageBuffer, 0, _messageBuffer.Length);
+				socketAsyncEventArgs.Completed -= OnConnectAsyncCompleted;
+				socketAsyncEventArgs.Completed += OnSocketReceive;
+
+				_socket.SendBufferSize = DefaultBufferSize;
+				_socket.ReceiveBufferSize = DefaultBufferSize;
+				_socket.ReceiveAsync(socketAsyncEventArgs);
+			}
+		}
+
+		void OnSocketReceive(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
+		{
+			if (socketAsyncEventArgs.BytesTransferred == 0)
+			{
+				try
+				{
+					Disconnect();
+				}
+				catch (Exception e)
+				{
+					throw;
+				}
+
+
+			}
+		}
+
+
 	}
 }
