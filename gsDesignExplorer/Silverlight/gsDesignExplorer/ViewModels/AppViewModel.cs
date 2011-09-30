@@ -1,9 +1,8 @@
 namespace gsDesign.Explorer.ViewModels
 {
-	using System.Threading;
 	using System.Windows;
-	using System.Windows.Input;
 	using Helpers;
+	using Models.Rserve;
 
 	public partial class AppViewModel : ViewModelBase
 	{
@@ -33,8 +32,12 @@ namespace gsDesign.Explorer.ViewModels
 			BeforeRunExecutedVisibility = Visibility.Visible;
 			AfterRunExecutedVisibility = Visibility.Collapsed;
 
+			RserveClient = new RserveClient();
+
 			InitCommands();
 		}
+
+		public RserveClient RserveClient { get; private set; }
 
 		#region View mode (Design, Analysis, Simulation...) management
 

@@ -12,7 +12,7 @@ namespace gsDesign.Explorer.ViewModels
 		Test,
 	}
 
-	public class ViewModeConverter : IValueConverter
+	public class ViewModeValueConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

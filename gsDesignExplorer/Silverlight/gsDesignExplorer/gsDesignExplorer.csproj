@@ -102,12 +102,15 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Rserve\ConnectionState.cs" />
+    <Compile Include="Models\Rserve\RserveClient.cs" />
+    <Compile Include="Models\Rserve\RserveException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rserve\RserveClient.cs" />
-		<Compile Include="ViewModels\AppViewModel.Commands.cs">
-			<DependentUpon>AppViewModel.cs</DependentUpon>
-		</Compile>
+    <Compile Include="ViewModels\AppViewModel.Commands.cs">
+      <DependentUpon>AppViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\DelegateCommand.cs" />
+    <Compile Include="Helpers\NotifyPropertyChangedBase.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\RunCommand.cs" />
@@ -279,9 +282,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

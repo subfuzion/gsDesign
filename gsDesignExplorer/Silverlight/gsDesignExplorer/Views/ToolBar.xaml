@@ -4,11 +4,22 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+	xmlns:Rserve="clr-namespace:gsDesign.Explorer.Models.Rserve"
 	mc:Ignorable="d"
-	d:DesignHeight="32" d:DesignWidth="400">
+	d:DesignHeight="32" d:DesignWidth="800">
 
 	<Grid x:Name="LayoutRoot" Background="#eee" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<toolkit:WrapPanel>
+			
+			<Canvas Height="32" Width="144">
+				<Canvas.Resources>
+					<Rserve:ConnectionStateValueConverter x:Key="connectionStateValueConverter" />
+				</Canvas.Resources>
+
+				<Rectangle Canvas.Left="6" Canvas.Top="8" Fill="{Binding Path=RserveClient.ConnectionState, Mode=OneWay, Converter={StaticResource connectionStateValueConverter}}" Height="15" Stroke="Black" Width="15" />
+				<Button Canvas.Left="27" Canvas.Top="4" Content="{Binding Path=RserveClient.ConnectionState, Mode=OneWay, Converter={StaticResource connectionStateValueConverter}}" Height="23" Name="ConnectionButton" Width="110" Command="{Binding Path=ToggleConnectCommand}" IsEnabled="{Binding Path=ConnectCommand.IsEnabled}"/>
+			</Canvas>
+			
 			<Button Name="newButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
 				<Image Source="/Assets/Images/Toolbar/designNew.png" Stretch="Uniform" />
 				<ToolTipService.ToolTip>
