@@ -81,7 +81,8 @@ namespace Subfuzion.Silverlight.Tcp
 				_policy = value;
 
 				var stream = new MemoryStream(_policy);
-				var xdoc = XElement.Load(stream);
+				var textReader = new StreamReader(stream);
+				var xdoc = XElement.Load(textReader);
 
 				var uriResults =
 					xdoc.Descendants("allow-from").Select(

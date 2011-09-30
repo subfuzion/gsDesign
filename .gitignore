@@ -1,4 +1,7 @@
-﻿# ============================
+﻿# ignore Versions directory
+Versions/
+
+# ============================
 # Other Version Control
 # ============================
 .svn
