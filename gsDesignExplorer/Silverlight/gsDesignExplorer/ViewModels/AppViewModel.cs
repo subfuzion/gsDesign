@@ -22,12 +22,7 @@ namespace gsDesign.Explorer.ViewModels
 
 		public AppViewModel()
 		{
-			CurrentViewMode = 0;
-
-			DesignPanelVisibility = Visibility.Visible;
-			AnalysisPanelVisibility = Visibility.Collapsed;
-			SimulationPanelVisibility = Visibility.Collapsed;
-			TestPanelVisibility = Visibility.Collapsed;
+			CurrentViewMode = ViewMode.Test;
 
 			BeforeRunExecutedVisibility = Visibility.Visible;
 			AfterRunExecutedVisibility = Visibility.Collapsed;
