@@ -103,10 +103,19 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Rserve\ConnectionState.cs" />
+    <Compile Include="Models\Rserve\PasswordEncryption.cs" />
+    <Compile Include="Models\Rserve\Protocol\DataType.cs" />
+    <Compile Include="Models\Rserve\Protocol\ErrorCode.cs" />
+    <Compile Include="Models\Rserve\Protocol\ExpressionType.cs" />
+    <Compile Include="Models\Rserve\Protocol\Request.cs" />
+    <Compile Include="Models\Rserve\Protocol\MessageFactory.cs" />
+    <Compile Include="Models\Rserve\Protocol\Response.cs" />
     <Compile Include="Models\Rserve\Protocol\REXPFactory.cs" />
+    <Compile Include="Models\Rserve\Protocol\Command.cs" />
     <Compile Include="Models\Rserve\RserveClient.cs" />
     <Compile Include="Models\Rserve\Rserve.cs" />
     <Compile Include="Models\Rserve\RserveException.cs" />
+    <Compile Include="Models\Rserve\RserveProtocolSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AppViewModel.Commands.cs">
       <DependentUpon>AppViewModel.cs</DependentUpon>
