@@ -1,6 +1,8 @@
 ﻿# ignore Versions directory
 Versions/
 
+gsDesignExplorer/Silverlight/thirdparty/rserve/
+
 # ============================
 # Other Version Control
 # ============================
