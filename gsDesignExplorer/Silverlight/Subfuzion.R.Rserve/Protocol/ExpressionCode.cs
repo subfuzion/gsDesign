@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Rserve.Protocol
+﻿namespace Subfuzion.R.Rserve.Protocol
 {
 	// http://www.rforge.net/Rserve/dev.html
 	public enum ExpressionCode : byte

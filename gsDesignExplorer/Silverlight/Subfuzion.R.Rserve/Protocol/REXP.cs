@@ -1,6 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 
-namespace gsDesign.Explorer.Models.Rserve.Protocol
+namespace Subfuzion.R.Rserve.Protocol
 {
 	using System;
 	using System.Text;
@@ -83,6 +83,8 @@ namespace gsDesign.Explorer.Models.Rserve.Protocol
 			return new REXP(ExpressionCode.StringVector, bytes);
 		}
 	}
+
+
 }
 
 // ReSharper restore InconsistentNaming

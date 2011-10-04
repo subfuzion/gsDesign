@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Rserve.Protocol
+﻿namespace Subfuzion.R.Rserve.Protocol
 {
 	public enum ErrorCode
 	{

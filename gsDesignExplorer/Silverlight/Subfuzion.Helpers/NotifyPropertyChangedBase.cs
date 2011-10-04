@@ -1,4 +1,4 @@
-namespace gsDesign.Explorer.Helpers
+namespace Subfuzion.Helpers
 {
 	using System.ComponentModel;
 	using System.Windows;

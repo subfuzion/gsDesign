@@ -2,7 +2,7 @@
 
 namespace gsDesign.Explorer.Views.Test
 {
-	using Models.Rserve.Protocol;
+	using Subfuzion.R.Rserve.Protocol;
 
 	public partial class TestView : UserControl
 	{

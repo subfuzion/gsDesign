@@ -1,6 +1,6 @@
 namespace gsDesign.Explorer.ViewModels
 {
-	using Helpers;
+	using Subfuzion.Helpers;
 
 	public abstract class ViewModelBase : NotifyPropertyChangedBase
 	{

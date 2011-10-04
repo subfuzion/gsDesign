@@ -1,4 +1,4 @@
-namespace gsDesign.Explorer.Models.Rserve
+namespace Subfuzion.R.Rserve
 {
 	using System;
 	using System.Text;

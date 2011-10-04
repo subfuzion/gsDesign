@@ -98,35 +98,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Rserve\ConnectionState.cs" />
-    <Compile Include="Models\Rserve\PasswordEncryption.cs" />
-    <Compile Include="Models\Rserve\Protocol\DataTransportCode.cs" />
-    <Compile Include="Models\Rserve\Protocol\ErrorCode.cs" />
-    <Compile Include="Models\Rserve\Protocol\ExpressionCode.cs" />
-    <Compile Include="Models\Rserve\Protocol\ProtocolHeader.cs" />
-    <Compile Include="Models\Rserve\Protocol\Request.cs" />
-    <Compile Include="Models\Rserve\Protocol\RequestHeader.cs" />
-    <Compile Include="Models\Rserve\Protocol\Response.cs" />
-    <Compile Include="Models\Rserve\Protocol\ResponseHeader.cs" />
-    <Compile Include="Models\Rserve\Protocol\REXP.cs" />
-    <Compile Include="Models\Rserve\Protocol\CommandCode.cs" />
-    <Compile Include="Models\Rserve\RserveClient.cs" />
-    <Compile Include="Models\Rserve\Rserve.cs" />
-    <Compile Include="Models\Rserve\RserveException.cs" />
-    <Compile Include="Models\Rserve\RserveProtocolSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AppViewModel.Commands.cs">
       <DependentUpon>AppViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DelegateCommand.cs" />
-    <Compile Include="Helpers\NotifyPropertyChangedBase.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
-    <Compile Include="ViewModels\RunCommand.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModePanelVisibilityManager.cs" />
     <Compile Include="Views\Analysis\AnalysisView.xaml.cs">
@@ -295,7 +276,19 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Subfuzion.Helpers\Subfuzion.Helpers.csproj">
+      <Project>{641843FD-780C-421F-A150-AA12B170829E}</Project>
+      <Name>Subfuzion.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Subfuzion.R.Rserve\Subfuzion.R.Rserve.csproj">
+      <Project>{9DC3F078-6A39-4DCA-813B-50B2D90E330A}</Project>
+      <Name>Subfuzion.R.Rserve</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

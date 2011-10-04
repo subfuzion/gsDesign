@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Rserve.Protocol
+﻿namespace Subfuzion.R.Rserve.Protocol
 {
 	/// <summary>
 	/// Used for the transport protocol (QAP1): indicates to rserve the type of content

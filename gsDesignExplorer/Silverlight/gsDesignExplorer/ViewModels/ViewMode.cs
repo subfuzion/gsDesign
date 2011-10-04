@@ -47,7 +47,7 @@ namespace gsDesign.Explorer.ViewModels
 					{
 						return (ViewMode)value;
 					}
-					catch (Exception e)
+					catch
 					{
 						return ViewMode.Design;
 					}

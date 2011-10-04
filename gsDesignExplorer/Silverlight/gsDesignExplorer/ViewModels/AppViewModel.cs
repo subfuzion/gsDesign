@@ -1,8 +1,8 @@
 namespace gsDesign.Explorer.ViewModels
 {
 	using System.Windows;
-	using Helpers;
-	using Models.Rserve;
+	using Subfuzion.Helpers;
+	using Subfuzion.R.Rserve;
 
 	public partial class AppViewModel : ViewModelBase
 	{
