@@ -11,18 +11,18 @@ namespace gsDesign.Explorer.Models.Rserve.Protocol
 		static readonly int DataLengthBytes = 3;
 		static readonly int REXPHeaderLengthBytes = ExpressionTypeLengthBytes + DataLengthBytes;
 
-		private readonly ExpressionType _expressionType;
+		private readonly ExpressionCode _expressionCode;
 		private readonly byte[] _data;
 
-		public REXP(ExpressionType expressionType, byte[] data)
+		public REXP(ExpressionCode expressionCode, byte[] data)
 		{
-			_expressionType = expressionType;
+			_expressionCode = expressionCode;
 			_data = data;
 		}
 
-		public ExpressionType ExpressionType
+		public ExpressionCode ExpressionCode
 		{
-			get { return _expressionType; }
+			get { return _expressionCode; }
 		}
 
 		public byte[] Data
@@ -38,7 +38,7 @@ namespace gsDesign.Explorer.Models.Rserve.Protocol
 		public byte[] ToEncodedBytes()
 		{
 			var contents = new byte[REXPHeaderLengthBytes + DataLength];
-			contents[0] = (byte)ExpressionType;
+			contents[0] = (byte)ExpressionCode;
 			Array.Copy(BitConverter.GetBytes(DataLength), 0, contents, 1, 3);
 			Array.Copy(Data, 0, contents, REXPHeaderLengthBytes, DataLength);
 
@@ -54,7 +54,7 @@ namespace gsDesign.Explorer.Models.Rserve.Protocol
 
 			try
 			{
-				var type = (ExpressionType) bytes[0];
+				ExpressionCode type = (ExpressionCode) bytes[0];
 
 				var lengthBytes = new byte[4];
 				Array.Copy(bytes, 1, lengthBytes, 0, DataLengthBytes);
@@ -80,7 +80,7 @@ namespace gsDesign.Explorer.Models.Rserve.Protocol
 			utf8.CopyTo(bytes, 0);
 			bytes[s.Length] = 0;
 
-			return new REXP(ExpressionType.StringVector, bytes);
+			return new REXP(ExpressionCode.StringVector, bytes);
 		}
 	}
 }

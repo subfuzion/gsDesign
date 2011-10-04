@@ -1,7 +1,7 @@
 ﻿namespace gsDesign.Explorer.Models.Rserve.Protocol
 {
 	// http://www.rforge.net/Rserve/dev.html
-	public enum ExpressionType
+	public enum ExpressionCode : byte
 	{
 		Null = 0,
 

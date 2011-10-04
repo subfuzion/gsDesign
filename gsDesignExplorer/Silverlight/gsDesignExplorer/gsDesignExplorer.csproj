@@ -104,18 +104,16 @@
     </Compile>
     <Compile Include="Models\Rserve\ConnectionState.cs" />
     <Compile Include="Models\Rserve\PasswordEncryption.cs" />
-    <Compile Include="Models\Rserve\Protocol\DataTransportType.cs" />
+    <Compile Include="Models\Rserve\Protocol\DataTransportCode.cs" />
     <Compile Include="Models\Rserve\Protocol\ErrorCode.cs" />
-    <Compile Include="Models\Rserve\Protocol\ExpressionType.cs" />
+    <Compile Include="Models\Rserve\Protocol\ExpressionCode.cs" />
     <Compile Include="Models\Rserve\Protocol\ProtocolHeader.cs" />
     <Compile Include="Models\Rserve\Protocol\Request.cs" />
-    <Compile Include="Models\Rserve\Protocol\MessageFactory.cs" />
     <Compile Include="Models\Rserve\Protocol\RequestHeader.cs" />
     <Compile Include="Models\Rserve\Protocol\Response.cs" />
     <Compile Include="Models\Rserve\Protocol\ResponseHeader.cs" />
     <Compile Include="Models\Rserve\Protocol\REXP.cs" />
-    <Compile Include="Models\Rserve\Protocol\REXPFactory.cs" />
-    <Compile Include="Models\Rserve\Protocol\Command.cs" />
+    <Compile Include="Models\Rserve\Protocol\CommandCode.cs" />
     <Compile Include="Models\Rserve\RserveClient.cs" />
     <Compile Include="Models\Rserve\Rserve.cs" />
     <Compile Include="Models\Rserve\RserveException.cs" />

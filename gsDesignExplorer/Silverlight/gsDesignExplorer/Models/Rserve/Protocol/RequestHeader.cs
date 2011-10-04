@@ -4,17 +4,17 @@
 
 	public class RequestHeader : ProtocolHeader
 	{
-		public RequestHeader(Command command, int contentLength, int contentOffset = 0, int contentLength2 = 0)
+		public RequestHeader(CommandCode commandCode, int contentLength, int contentOffset = 0, int contentLength2 = 0)
 		{
-			Code = (int)command;
+			Code = (int)commandCode;
 			ContentLength = contentLength;
 			ContentOffset = contentOffset;
 			ContentLength2 = contentLength2;
 		}
 
-		public Command Command
+		public CommandCode CommandCode
 		{
-			get { return (Command) Code; }
+			get { return (CommandCode) Code; }
 		}
 
 		public void CopyTo(byte[] dest, int offset = 0)

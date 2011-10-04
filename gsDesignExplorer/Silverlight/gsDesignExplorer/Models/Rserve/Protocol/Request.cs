@@ -9,13 +9,13 @@
 		{
 		}
 
-		public Request(Command command, byte[] content = null)
+		public Request(CommandCode commandCode, byte[] content = null)
 		{
-			Command = command;
+			CommandCode = commandCode;
 			Content = content;
 		}
 
-		public Command Command { get; set; }
+		public CommandCode CommandCode { get; set; }
 
 		/// <summary>
 		/// The raw data
@@ -29,7 +29,7 @@
 
 		public override string ToString()
 		{
-			return Command.ToString();
+			return CommandCode.ToString();
 		}
 
 		/// <summary>
@@ -41,7 +41,7 @@
 		{
 			var bytes = new byte[ProtocolHeader.HeaderLength + ContentLength];
 
-			var header = ProtocolHeader.CreateRequestHeader(Command, ContentLength);
+			var header = ProtocolHeader.CreateRequestHeader(CommandCode, ContentLength);
 
 			// copy the header
 			header.CopyTo(bytes);
@@ -64,7 +64,7 @@
 			utf8.CopyTo(bytes, 0);
 			bytes[s.Length] = 0;
 
-			var type = DataTransportType.String;
+			var type = DataTransportCode.String;
 			var length = bytes.Length;
 
 			var contents = new byte[4 + length];
@@ -76,11 +76,11 @@
 			//var rexp = REXP.FromString(s).ToEncodedBytes();
 
 			//var contents = new byte[4 + rexp.Length];
-			//contents[0] = (byte)DataTransportType.Sexp;
+			//contents[0] = (byte)DataTransportCode.Sexp;
 			//Array.Copy(BitConverter.GetBytes(rexp.Length), 0, contents, 1, 3);
 			//Array.Copy(rexp, 0, contents, 4, rexp.Length);
 
-			return new Request(Command.Eval)
+			return new Request(CommandCode.Eval)
 			       	{
 						Content = contents,
 			       	};
@@ -88,12 +88,12 @@
 
 		public static Request Shutdown()
 		{
-			return new Request {Command = Command.Shutdown};
+			return new Request {CommandCode = CommandCode.Shutdown};
 		}
 
 		public static Request CtrlShutdown()
 		{
-			return new Request {Command = Command.CtrlShutdown};
+			return new Request {CommandCode = CommandCode.CtrlShutdown};
 		}
 
 		#endregion

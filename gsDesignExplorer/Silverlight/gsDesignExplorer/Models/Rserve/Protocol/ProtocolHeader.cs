@@ -2,9 +2,9 @@
 {
 	public abstract class ProtocolHeader
 	{
-		public static RequestHeader CreateRequestHeader(Command command, int contentLength, int contentOffset = 0, int contentLength2 = 0)
+		public static RequestHeader CreateRequestHeader(CommandCode commandCode, int contentLength, int contentOffset = 0, int contentLength2 = 0)
 		{
-			return new RequestHeader(command, contentLength, contentOffset, contentLength2);
+			return new RequestHeader(commandCode, contentLength, contentOffset, contentLength2);
 		}
 
 		public static ResponseHeader CreateResponseHeader(byte[] bytes)

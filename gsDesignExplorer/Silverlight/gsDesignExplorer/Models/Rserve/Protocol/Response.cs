@@ -1,6 +1,7 @@
 ﻿namespace gsDesign.Explorer.Models.Rserve.Protocol
 {
 	using System;
+	using System.Text;
 
 	public class Response
 	{
@@ -10,9 +11,28 @@
 		public Response(Request request, byte[] responseBytes)
 		{
 			_header = ProtocolHeader.CreateResponseHeader(responseBytes);
-			Content = new byte[responseBytes.Length - 16];
-			Array.Copy(responseBytes, 16, Content, 0, Content.Length);
-			_rexp = REXP.FromBytes(Content);
+
+			if (_header.IsOk && _header.ContentLength > 0)
+			{
+				// get the data type (DataTransferCode) of the content
+				// it will be either Sexp or ByteStream
+
+				var offset = ProtocolHeader.HeaderLength + _header.ContentOffset;
+
+				var dataType = (DataTransportCode) responseBytes[offset];
+				var lengthBytes = new byte[4];
+				Array.Copy(responseBytes, offset + 1, lengthBytes, 0, 3);
+				var length = BitConverter.ToInt32(lengthBytes, 0);
+
+				Content = new byte[length];
+				Array.Copy(responseBytes, offset + 4, Content, 0, Content.Length);
+
+				if (dataType == DataTransportCode.Sexp)
+				{
+					_rexp = REXP.FromBytes(Content);
+					var s = Encoding.UTF8.GetString(_rexp.Data, 0, _rexp.DataLength);
+				}
+			}
 		}
 
 		public bool IsOk
