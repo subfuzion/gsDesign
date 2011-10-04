@@ -5,7 +5,7 @@ namespace Subfuzion.R.Rserve.Protocol
 	using System;
 	using System.Text;
 
-	public class REXP
+	public class Rexpression
 	{
 		static readonly int ExpressionTypeLengthBytes = 1;
 		static readonly int DataLengthBytes = 3;
@@ -14,7 +14,7 @@ namespace Subfuzion.R.Rserve.Protocol
 		private readonly ExpressionCode _expressionCode;
 		private readonly byte[] _data;
 
-		public REXP(ExpressionCode expressionCode, byte[] data)
+		public Rexpression(ExpressionCode expressionCode, byte[] data)
 		{
 			_expressionCode = expressionCode;
 			_data = data;
@@ -45,11 +45,11 @@ namespace Subfuzion.R.Rserve.Protocol
 			return contents;
 		}
 
-		public static REXP FromBytes(byte[] bytes)
+		public static Rexpression FromBytes(byte[] bytes)
 		{
 			if (bytes == null || bytes.Length < REXPHeaderLengthBytes)
 			{
-				throw new ArgumentException("Can't convert bytes to REXP");
+				throw new ArgumentException("Can't convert bytes to Rexpression");
 			}
 
 			try
@@ -63,7 +63,7 @@ namespace Subfuzion.R.Rserve.Protocol
 				var data = new byte[length];
 				Array.Copy(bytes, REXPHeaderLengthBytes, data, 0, length);
 
-				return new REXP(type, data);
+				return new Rexpression(type, data);
 			}
 			catch (Exception e)
 			{
@@ -72,7 +72,7 @@ namespace Subfuzion.R.Rserve.Protocol
 			}
 		}
 
-		public static REXP FromString(string s)
+		public static Rexpression FromString(string s)
 		{
 			// Ensure server is using UTF8. See http://www.rforge.net/Rserve/doc.html "String encoding directive"
 			var utf8 = Encoding.UTF8.GetBytes(s);
@@ -80,7 +80,7 @@ namespace Subfuzion.R.Rserve.Protocol
 			utf8.CopyTo(bytes, 0);
 			bytes[s.Length] = 0;
 
-			return new REXP(ExpressionCode.StringVector, bytes);
+			return new Rexpression(ExpressionCode.StringVector, bytes);
 		}
 	}
 

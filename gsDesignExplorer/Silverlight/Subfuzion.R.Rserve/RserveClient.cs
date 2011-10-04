@@ -182,7 +182,7 @@ namespace Subfuzion.R.Rserve
 				//            {
 				//                BufferList = new List<ArraySegment<byte>>
 				//                                {
-				//                                    new ArraySegment<byte>(message.ToBytes()),
+				//                                    new ArraySegment<byte>(message.ToEncodedBytes()),
 				//                                },
 				//            };
 
@@ -192,7 +192,7 @@ namespace Subfuzion.R.Rserve
 				           	};
 
 
-				var buffer = message.ToBytes();
+				var buffer = message.ToEncodedBytes();
 				args.SetBuffer(buffer, 0, buffer.Length);
 
 				args.Completed += OnSocketAsyncCompleted;

@@ -3,13 +3,13 @@ namespace Subfuzion.R.Rserve.Protocol
 	public enum CommandCode
 	{
 	//	============================	//	========================			========================
-	//	Command							//	DataTransportCode enum				Return DataTransportCode
+	//	Command							//	PayloadCode							Return PayloadCode
 	//	============================	//	========================			========================
 		None = 0,						//	
 
 		Login = 0x001,					//	String ("name\npassword")			-
 		VoidEval = 0x002,				//	String								-
-		Eval = 0x003,					//	String								Sexp
+		Eval = 0x003,					//	String								Rexpression
 		Shutdown = 0x004,				//	[String ("adminpassword")]			-
 		
 		// File I/O
@@ -21,8 +21,8 @@ namespace Subfuzion.R.Rserve.Protocol
 		RemoveFile = 0x015,				//	String ("filename")
 
 		// Object manipulation
-		SetSexp = 0x020,				//	String ("name"), Sexp
-		AssignSexp = 0x021,				//	String ("name"), Sexp
+		SetRexpression = 0x020,			//	String ("name"), Rexpression
+		AssignRexpression = 0x021,		//	String ("name"), Rexpression
 
 		// Session management
 		DetachSession = 0x030,			//	

@@ -16,8 +16,8 @@
 		// data: SEXP head, SEXP values, [SEXP tag]
 		List = 17,
 
-		// closure (currently the body of the closure is stored in the content part of the REXP)
-		// data: SEXP formals, SEXP body
+		// closure (currently the body of the closure is stored in the content part of the Rexpression)
+		// data: Rexpression formals, Rexpression body
 		Closure = 18,
 
 		// symbol name
@@ -29,7 +29,7 @@
 		ListNoTags = 20,
 
 		// dotted-pair list (w tags)
-		// data: SEXP tag, SEXP value, ...
+		// data: Rexpression tag, Rexpression value, ...
 		ListTags = 21,
 
 		// language list (w/o tags)
@@ -56,10 +56,10 @@
 		// data: (n*8) double,double,...
 		DoubleArray = 33,
 
-		// string[] (currently not used, Vector is used instead)
+		// string[]
 		StringArray = 34,
 
-		// internal use only! this constant should never appear in a REXP
+		// internal use only! this constant should never appear in a Rexpression
 		BoolArrayInternal = 35,
 
 		// RBool[]

@@ -31,9 +31,9 @@
 
 	public abstract class ProtocolHeader
 	{
-		public static RequestHeader CreateRequestHeader(CommandCode commandCode, int contentLength, int contentOffset = 0, int contentLength2 = 0)
+		public static RequestHeader CreateRequestHeader(CommandCode commandCode, int payloadSize, int payloadOffset = 0, int payloadSize2 = 0)
 		{
-			return new RequestHeader(commandCode, contentLength, contentOffset, contentLength2);
+			return new RequestHeader(commandCode, payloadSize, payloadOffset, payloadSize2);
 		}
 
 		public static ResponseHeader CreateResponseHeader(byte[] bytes)
@@ -41,15 +41,15 @@
 			return new ResponseHeader(bytes);
 		}
 
-		public static readonly int HeaderLength = 16;
+		public static readonly int HeaderSize = 16;
 
 		public int Code { get; set; }
 
-		public int ContentLength { get; set; }
+		public int PayloadSize { get; set; }
 
-		public int ContentOffset { get; set; }
+		public int PayloadOffset { get; set; }
 
-		public int ContentLength2 { get; set; }
+		public int PayloadSize2 { get; set; }
 
 	}
 }
