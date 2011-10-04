@@ -1,22 +1,21 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using System.Net;
-using System.Reflection;
-
-namespace Subfuzion.Silverlight.Tcp
+﻿namespace Subfuzion.Silverlight.Tcp
 {
-	class Program
+	using System;
+	using System.Configuration;
+	using System.IO;
+	using System.Reflection;
+
+	internal class Program
 	{
 		public static readonly string DefaultPolicyFileKey = "DefaultPolicyFile";
 
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			try
 			{
-				var policyFile = args.Length > 0 ? args[0] : ConfigurationManager.AppSettings[DefaultPolicyFileKey];
+				string policyFile = args.Length > 0 ? args[0] : ConfigurationManager.AppSettings[DefaultPolicyFileKey];
 
-				var currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".";
+				string currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".";
 				policyFile = Path.Combine(currentDir, policyFile);
 
 				var policyServer = new SocketPolicyServer(policyFile);

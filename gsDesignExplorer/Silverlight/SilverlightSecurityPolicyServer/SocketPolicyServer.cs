@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-
-namespace Subfuzion.Silverlight.Tcp
+﻿namespace Subfuzion.Silverlight.Tcp
 {
+	using System;
+	using System.Net;
+	using System.Net.Sockets;
+
 	public class SocketPolicyServer
 	{
 		public static readonly IPAddress DefaultIPAddress = IPAddress.Any;
@@ -12,12 +11,10 @@ namespace Subfuzion.Silverlight.Tcp
 		// Silverlight requires port 943
 		public static readonly int PolicyServerPort = 943;
 
-		private ServerContext _serverContext;
-
-		private Policy _policy;
-
-		private TcpListener _listener;
 		private bool _isStopped = true;
+		private TcpListener _listener;
+		private Policy _policy;
+		private ServerContext _serverContext;
 
 		public SocketPolicyServer(string policyFileName)
 			: this(DefaultIPAddress, PolicyServerPort, policyFileName)
@@ -59,17 +56,17 @@ namespace Subfuzion.Silverlight.Tcp
 		{
 			_listener.BeginAcceptTcpClient(asyncResult =>
 			                               	{
-												if (_isStopped) return;
+			                               		if (_isStopped) return;
 
-												// while we handle this request, continue listening for
-												// another request on a separate thread
-												ListenForNewConnection();
+			                               		// while we handle this request, continue listening for
+			                               		// another request on a separate thread
+			                               		ListenForNewConnection();
 
-												// create a ClientConnection object to handle this request
-												var client = _listener.EndAcceptTcpClient(asyncResult);
-												var policyConnection = new ClientConnection(client, _policy);
-												policyConnection.HandleRequest();
-											}, null);
+			                               		// create a ClientConnection object to handle this request
+			                               		TcpClient client = _listener.EndAcceptTcpClient(asyncResult);
+			                               		var policyConnection = new ClientConnection(client, _policy);
+			                               		policyConnection.HandleRequest();
+			                               	}, null);
 		}
 
 		// caller should catch socket exceptions
@@ -84,7 +81,7 @@ namespace Subfuzion.Silverlight.Tcp
 		private void LoadPolicyFile(string policyFileName)
 		{
 			_policy = new Policy(policyFileName);
-			Console.WriteLine("loaded policy file: " + _policy.ToString());
+			Console.WriteLine("loaded policy file: " + _policy);
 		}
 	}
 }
