@@ -24,6 +24,11 @@
 
 		public int PayloadSize { get { return 4 + ContentSize; } }
 
+		public override string ToString()
+		{
+			return string.Format("(Payload) PayloadCode:{0}, ContentSize:{1}", PayloadCode, ContentSize);
+		}
+
 		public byte[] ToEncodedBytes()
 		{
 			var payload = new byte[PayloadSize];

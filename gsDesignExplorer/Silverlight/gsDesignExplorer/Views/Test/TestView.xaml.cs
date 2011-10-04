@@ -16,8 +16,13 @@ namespace gsDesign.Explorer.Views.Test
 			if (!string.IsNullOrWhiteSpace(inputText.Text))
 			{
 				var request = Request.Eval(inputText.Text);
-				App.AppViewModel.RserveClient.SendRequest(request);
+				App.AppViewModel.RserveClient.SendRequest(request, OnResponse);
 			}
+		}
+
+		private void OnResponse(Response response)
+		{
+			
 		}
 	}
 }

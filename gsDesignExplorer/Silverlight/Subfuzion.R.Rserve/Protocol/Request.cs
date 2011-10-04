@@ -23,7 +23,10 @@
 
 		public override string ToString()
 		{
-			return CommandCode.ToString();
+			return string.Format("(Request) CommandCode:{0}, PayloadCode:{1}, PayloadSize:{2}",
+				CommandCode.ToString(),
+				Payload != null ? Payload.PayloadCode : PayloadCode.Empty,
+				PayloadSize);
 		}
 
 		/// <summary>

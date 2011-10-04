@@ -47,7 +47,7 @@
 
 		public override string ToString()
 		{
-			return string.Format("Response -> ErrorCode:{0} for Command:{1}", ErrorCode, Request.CommandCode);
+			return string.Format("(Response) ErrorCode:{0} for Command:{1} Payload:{2}", ErrorCode, Request.CommandCode, Payload);
 		}
 	}
 }

@@ -49,12 +49,12 @@ namespace Subfuzion.R.Rserve.Protocol
 		{
 			if (bytes == null || bytes.Length < REXPHeaderLengthBytes)
 			{
-				throw new ArgumentException("Can't convert bytes to Rexpression");
+				throw new ArgumentException();
 			}
 
 			try
 			{
-				ExpressionCode type = (ExpressionCode) bytes[0];
+				var type = (ExpressionCode) bytes[0];
 
 				var lengthBytes = new byte[4];
 				Array.Copy(bytes, 1, lengthBytes, 0, DataLengthBytes);

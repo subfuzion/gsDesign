@@ -3,6 +3,7 @@ namespace Subfuzion.R.Rserve
 	using System;
 	using System.Net;
 	using System.Net.Sockets;
+	using System.Windows;
 	using Helpers;
 	using Protocol;
 
@@ -35,6 +36,7 @@ namespace Subfuzion.R.Rserve
 				 for unix crypt the first two letters of the key are the salt
 				 required by the server
 	*/
+
 	public class RserveClient : NotifyPropertyChangedBase
 	{
 		#region Fields
@@ -107,7 +109,7 @@ namespace Subfuzion.R.Rserve
 
 			var args = new SocketAsyncEventArgs
 			           	{
-							RemoteEndPoint = endPoint
+			           		RemoteEndPoint = endPoint
 			           	};
 
 			args.Completed += OnConnectAsyncCompleted;
@@ -174,25 +176,30 @@ namespace Subfuzion.R.Rserve
 			}
 		}
 
-		public void SendRequest(Request message)
+		public void SendRequest(Request request, Action<Response> completed)
 		{
 			try
 			{
 				//var args = new SocketAsyncEventArgs
 				//            {
+				//				  UserToken = new RequestContext {Request = request},
 				//                BufferList = new List<ArraySegment<byte>>
 				//                                {
-				//                                    new ArraySegment<byte>(message.ToEncodedBytes()),
+				//                                    new ArraySegment<byte>(request.ToEncodedBytes()),
 				//                                },
 				//            };
 
 				var args = new SocketAsyncEventArgs
 				           	{
-				           		UserToken = message
+				           		UserToken = new RequestContext
+				           		            	{
+													CompletedAction = completed,
+				           		            		Request = request,
+				           		            	},
 				           	};
 
 
-				var buffer = message.ToEncodedBytes();
+				byte[] buffer = request.ToEncodedBytes();
 				args.SetBuffer(buffer, 0, buffer.Length);
 
 				args.Completed += OnSocketAsyncCompleted;
@@ -206,7 +213,7 @@ namespace Subfuzion.R.Rserve
 
 		private void OnSocketAsyncCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
 		{
-			var lastOperation = socketAsyncEventArgs.LastOperation;
+			SocketAsyncOperation lastOperation = socketAsyncEventArgs.LastOperation;
 
 			switch (lastOperation)
 			{
@@ -218,7 +225,7 @@ namespace Subfuzion.R.Rserve
 					try
 					{
 						socketAsyncEventArgs.Completed -= OnConnectAsyncCompleted;
-						var args = new SocketAsyncEventArgs();
+						var args = new SocketAsyncEventArgs {UserToken = socketAsyncEventArgs.UserToken};
 						args.SetBuffer(new byte[1024], 0, 1024);
 						args.Completed += OnReceiveCompleted;
 						_socket.ReceiveAsync(args);
@@ -255,8 +262,22 @@ namespace Subfuzion.R.Rserve
 				Console.WriteLine(e);
 			}
 
-			var request = (Request) socketAsyncEventArgs.UserToken;
-			var response = new Response(request, socketAsyncEventArgs.Buffer);
+			var context = (RequestContext) socketAsyncEventArgs.UserToken;
+			if (context != null)
+			{
+				var response = new Response(context.Request, socketAsyncEventArgs.Buffer);
+
+				if (context.CompletedAction != null)
+				{
+					Deployment.Current.Dispatcher.BeginInvoke(() => context.CompletedAction(response));
+				}
+			}
 		}
+	}
+
+	public class RequestContext
+	{
+		public Action<Response> CompletedAction { get; set; }
+		public Request Request { get; set; }
 	}
 }
