@@ -2,7 +2,7 @@
 {
 	public enum ErrorCode
 	{
-		None = 0,
+		Unknown = 0,
 		AuthFailed = 0x41,
 		ConnectionBroken = 0x42,
 		InvalidCommand = 0x43,

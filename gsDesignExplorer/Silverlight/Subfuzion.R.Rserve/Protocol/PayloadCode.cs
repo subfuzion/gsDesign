@@ -12,7 +12,7 @@
 		Double = 3,
 		String = 4,			// null-terminated
 		ByteStream = 5,		// can contain 0
-		Rexpression = 10,	// encoded R SEXP (see ExpressionCode)
+		Rexpression = 10,	// encoded R SEXP (see RexpressionType)
 		Array = 11,			// array of objects, first 4 bytes is count (0 is legitimate)
 		Large = 64,
 	}

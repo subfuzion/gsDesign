@@ -1,5 +1,6 @@
 namespace Subfuzion.Helpers
 {
+	using System;
 	using System.ComponentModel;
 	using System.Windows;
 
@@ -9,9 +10,16 @@ namespace Subfuzion.Helpers
 
 		protected void RaisePropertyChanged(string property)
 		{
-			if (PropertyChanged != null)
+			try
 			{
-				Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs(property)));
+				if (PropertyChanged != null)
+				{
+					Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs(property)));
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
 			}
 		}
 	}

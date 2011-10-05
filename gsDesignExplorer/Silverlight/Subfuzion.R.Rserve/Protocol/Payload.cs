@@ -103,7 +103,7 @@
 			}
 
 			// size of each rexpression is 1 byte for the type + data length
-			int size = objects.Sum(rexpression => 1 + rexpression.DataLength);
+			int size = objects.Sum(rexpression => 1 + rexpression.DataSize);
 
 			var bytes = new byte[size];
 

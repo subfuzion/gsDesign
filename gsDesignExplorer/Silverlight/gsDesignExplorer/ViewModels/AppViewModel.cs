@@ -18,6 +18,8 @@ namespace gsDesign.Explorer.ViewModels
 		private Visibility _afterRunExecutedVisibility;
 		private Visibility _beforeRunExecutedVisibility;
 
+		private string _outputText = "Welcome to gsDesign Explorer";
+
 		#endregion
 
 		public AppViewModel()
@@ -163,5 +165,17 @@ namespace gsDesign.Explorer.ViewModels
 
 		#endregion
 
+		public string OutputText
+		{
+			get { return _outputText; }
+			set
+			{
+				if (_outputText != value)
+				{
+					_outputText = value;
+					RaisePropertyChanged("OutputText");
+				}
+			}
+		}
 	}
 }

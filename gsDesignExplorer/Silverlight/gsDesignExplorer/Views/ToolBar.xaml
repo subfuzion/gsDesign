@@ -8,6 +8,8 @@
 	mc:Ignorable="d"
 	d:DesignHeight="32" d:DesignWidth="800">
 
+	<!-- DataContext MUST be set by parent container -->
+
 	<Grid x:Name="LayoutRoot" Background="#eee" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<toolkit:WrapPanel>
 			
@@ -64,7 +66,7 @@
 				</ToolTipService.ToolTip>
 			</Button>
 
-			<Button Name="runButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" Command="{Binding Path=RunDesignCommand}" IsEnabled="{Binding Path=RunDesignCommand.IsEnabled}" >
+			<Button Name="runButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" Command="{Binding Path=RunDesignCommand}" IsEnabled="{Binding Path=RunDesignCommand.IsEnabled, Mode=OneWay}" >
 				<Image Source="/Assets/Images/Toolbar/designExecute.png" Stretch="Uniform" />
 				<ToolTipService.ToolTip>
 					<ToolTip Content="Run design in R" Style="{StaticResource TooltipStyle}" />

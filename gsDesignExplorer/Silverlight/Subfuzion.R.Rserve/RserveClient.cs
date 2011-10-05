@@ -176,7 +176,15 @@ namespace Subfuzion.R.Rserve
 			}
 		}
 
-		public void SendRequest(Request request, Action<Response> completed)
+		public void SendFileRequest()
+		{
+		}
+
+		public void SendRequest(
+			Request request,
+			Action<Response, object> completed,
+			Action<ErrorCode, object> error,
+			object context)
 		{
 			try
 			{
@@ -194,6 +202,8 @@ namespace Subfuzion.R.Rserve
 				           		UserToken = new RequestContext
 				           		            	{
 													CompletedAction = completed,
+													ErrorAction = error,
+													Context = context,
 				           		            		Request = request,
 				           		            	},
 				           	};
@@ -243,17 +253,22 @@ namespace Subfuzion.R.Rserve
 
 		private void OnReceiveCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
 		{
+			var context = (RequestContext)socketAsyncEventArgs.UserToken;
+
 			try
 			{
 				if (socketAsyncEventArgs.BytesTransferred == 0) // || socketAsyncEventArgs.SocketError != SocketError.Success)
 				{
 					// server disconnected
 					Disconnect();
+					ReturnError(context, ErrorCode.ConnectionBroken);
+					return;
 				}
 
 				if (socketAsyncEventArgs.SocketError != SocketError.Success)
 				{
-					Console.WriteLine("socket error on response to: " + socketAsyncEventArgs.UserToken);
+					Console.WriteLine("socket error");
+					ReturnError(context, ErrorCode.Unknown);
 					return;
 				}
 			}
@@ -262,22 +277,47 @@ namespace Subfuzion.R.Rserve
 				Console.WriteLine(e);
 			}
 
-			var context = (RequestContext) socketAsyncEventArgs.UserToken;
 			if (context != null)
 			{
 				var response = new Response(context.Request, socketAsyncEventArgs.Buffer);
+				ReturnResult(context, response);
+			}
+		}
 
+		private void ReturnResult(RequestContext context, Response response)
+		{
+			if (context != null)
+			{
 				if (context.CompletedAction != null)
 				{
-					Deployment.Current.Dispatcher.BeginInvoke(() => context.CompletedAction(response));
+					Deployment.Current.Dispatcher.BeginInvoke(() => context.CompletedAction(response, context.Context));
 				}
 			}
 		}
+
+		private void ReturnError(RequestContext context, ErrorCode errorCode)
+		{
+			if (context != null)
+			{
+				if (context.ErrorAction != null)
+				{
+					Deployment.Current.Dispatcher.BeginInvoke(() => context.ErrorAction(errorCode, context.Context));
+				}
+			}
+		}
+
 	}
 
 	public class RequestContext
 	{
-		public Action<Response> CompletedAction { get; set; }
+		public Action<Response, object> CompletedAction { get; set; }
+		public Action<ErrorCode, object> ErrorAction { get; set; }
+		public object Context { get; set; }
 		public Request Request { get; set; }
+	}
+
+	public class FileRequestContext
+	{
+		
 	}
 }

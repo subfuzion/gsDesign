@@ -1,7 +1,7 @@
 ﻿namespace Subfuzion.R.Rserve.Protocol
 {
 	// http://www.rforge.net/Rserve/dev.html
-	public enum ExpressionCode : byte
+	public enum RexpressionType : byte
 	{
 		Null = 0,
 
@@ -57,6 +57,7 @@
 		DoubleArray = 33,
 
 		// string[]
+		// data: (?) string,string,.. 
 		StringArray = 34,
 
 		// internal use only! this constant should never appear in a Rexpression

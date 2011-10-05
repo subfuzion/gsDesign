@@ -61,7 +61,7 @@
     <Compile Include="Protocol\CommandCode.cs" />
     <Compile Include="Protocol\PayloadCode.cs" />
     <Compile Include="Protocol\ErrorCode.cs" />
-    <Compile Include="Protocol\ExpressionCode.cs" />
+    <Compile Include="Protocol\RexpressionType.cs" />
     <Compile Include="Protocol\Payload.cs" />
     <Compile Include="Protocol\ProtocolHeader.cs" />
     <Compile Include="Protocol\Request.cs" />

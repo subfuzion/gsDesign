@@ -2,7 +2,8 @@
 
 namespace gsDesign.Explorer.Views.Test
 {
-	using Subfuzion.R.Rserve.Protocol;
+	using System.Windows.Input;
+	using ViewModels.Test;
 
 	public partial class TestView : UserControl
 	{
@@ -11,18 +12,25 @@ namespace gsDesign.Explorer.Views.Test
 			InitializeComponent();
 		}
 
-		private void executeButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		TestViewModel ViewModel
 		{
-			if (!string.IsNullOrWhiteSpace(inputText.Text))
+			get
 			{
-				var request = Request.Eval(inputText.Text);
-				App.AppViewModel.RserveClient.SendRequest(request, OnResponse);
+				return (TestViewModel)Resources["ViewModel"];
 			}
 		}
 
-		private void OnResponse(Response response)
+		private void LayoutRoot_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
 		{
-			
+			if (e.Key == Key.Enter)
+			{
+				ViewModel.RunCommand.Execute();
+			}
+		}
+
+		private void inputText_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			ViewModel.Input = inputText.Text;
 		}
 	}
 }

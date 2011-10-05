@@ -7,8 +7,13 @@
 	d:DesignHeight="300" d:DesignWidth="400">
 	
 	<Grid x:Name="LayoutRoot" Background="White">
-		<TextBlock Text="Welcome to gsDesign Explorer" Visibility="{Binding Path=BeforeRunExecutedVisibility}" />
+		<TextBlock
+			Margin="10"
+			Visibility="{Binding Path=BeforeRunExecutedVisibility}"
+			Text="{Binding OutputText}" />
+		<!--
 		<Image Source="/gsDesignExplorer;component/Assets/Images/Samples/Text.png" Stretch="None" VerticalAlignment="Top"
 						   HorizontalAlignment="Left" Visibility="{Binding Path=AfterRunExecutedVisibility}" />
+		-->
 	</Grid>
 </UserControl>

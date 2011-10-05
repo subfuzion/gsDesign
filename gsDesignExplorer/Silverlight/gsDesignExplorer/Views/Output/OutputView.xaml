@@ -7,7 +7,7 @@
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<sdk:TabControl>
-			<sdk:TabItem Header="Text">
+			<sdk:TabItem Header="Results">
 				<Output:TextOutputView />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Plot">
