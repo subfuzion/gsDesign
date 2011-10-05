@@ -34,7 +34,7 @@
 
 		public override string ToString()
 		{
-			return string.Format("ResponseHeader -> IsOk:{0} IsError:{1} ErrorCode:{2} PayloadSize:{3} PayloadOffset:{4} PayloadSize2:{5}",
+			return string.Format("IsOk:{0} IsError:{1} ErrorCode:{2} PayloadSize:{3} PayloadOffset:{4} PayloadSize2:{5}",
 				IsOk, IsError, (CommandCode)Code, PayloadSize, PayloadOffset, PayloadSize2);
 		}
 	}

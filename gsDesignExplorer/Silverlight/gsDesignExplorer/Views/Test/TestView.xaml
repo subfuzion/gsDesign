@@ -58,14 +58,16 @@
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0" Text="Rserve diagnostics" />
 				<ScrollViewer Grid.Row="1"
+							  x:Name="scrollViewer"
 							  BorderBrush="DarkGray" BorderThickness="1"
+							  Background="#eee"
 							  VerticalScrollBarVisibility="Auto"
-							  HorizontalScrollBarVisibility="Auto"
+							  HorizontalScrollBarVisibility="Hidden"
 							  Padding="0">
-					<TextBox Name="outputText"
-							 IsReadOnly="True"
-							 BorderThickness="0"
-							 Text="{Binding Path=Output, Mode=OneWay}" />
+					<TextBlock Name="outputText"
+							   Width="{Binding ElementName=scrollViewer, Path=ActualWidth}"
+							   TextWrapping="Wrap"
+							   Text="{Binding Path=Output, Mode=OneWay}" />
 				</ScrollViewer>
 			</Grid>
 		</Grid>

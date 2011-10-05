@@ -82,7 +82,8 @@
 
 		private void OnResponse(Response response, object context)
 		{
-			Output = string.Empty;
+			AppViewModel.OutputText = string.Empty;
+			Output = response.ToString();
 
 			try
 			{
@@ -96,8 +97,7 @@
 
 						foreach (var s in list)
 						{
-							Output += string.Format("{0}\n", s);
-							AppViewModel.OutputText = s;
+							AppViewModel.OutputText += string.Format("{0}\n", s);
 						}
 					}
 
@@ -107,16 +107,14 @@
 
 						foreach (var d in list)
 						{
-							Output += string.Format("{0}\n", d);
-							AppViewModel.OutputText = d.ToString();
+							AppViewModel.OutputText += string.Format("{0}\n", d);
 						}
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				Output = string.Format("{0}\n", e);
-				AppViewModel.OutputText = e.ToString();
+				Output += string.Format("\n\nException handling response: {0}\n", e);
 			}
 		}
 
