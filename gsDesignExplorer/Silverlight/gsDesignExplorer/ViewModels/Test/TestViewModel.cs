@@ -83,7 +83,7 @@
 		private void OnResponse(Response response, object context)
 		{
 			AppViewModel.OutputText = string.Empty;
-			Output = response.ToString();
+			Output = new DiagnosticInfo(response).ToString();
 
 			try
 			{
@@ -114,7 +114,7 @@
 			}
 			catch (Exception e)
 			{
-				Output += string.Format("\n\nException handling response: {0}\n", e);
+				Output += string.Format("\n\n(TODO) this response is currently unhandled, raising an exception: {0}\n", e);
 			}
 		}
 

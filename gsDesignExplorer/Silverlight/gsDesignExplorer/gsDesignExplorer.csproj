@@ -106,6 +106,7 @@
       <DependentUpon>AppViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DelegateCommand.cs" />
+    <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />

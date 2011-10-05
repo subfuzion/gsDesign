@@ -13,6 +13,10 @@
 				var offset = ProtocolHeader.HeaderSize + Header.PayloadOffset;
 				Payload = Payload.FromEncodedBytes(responseBytes, offset);
 			}
+			else
+			{
+				Payload = new Payload();
+			}
 		}
 
 		public bool IsOk
