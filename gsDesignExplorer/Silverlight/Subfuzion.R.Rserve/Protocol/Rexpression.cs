@@ -84,14 +84,13 @@ namespace Subfuzion.R.Rserve.Protocol
 			return new Rexpression(RexpressionType.StringVector, bytes);
 		}
 
+		#region Conversions
+
+		#region String List
+
 		public bool IsStringList
 		{
 			get { return RexpressionType == RexpressionType.StringArray || RexpressionType == RexpressionType.StringVector; }
-		}
-
-		public bool IsDoubleList
-		{
-			get { return RexpressionType == RexpressionType.DoubleArray; }
 		}
 
 		public List<string> ToStringList()
@@ -121,10 +120,19 @@ namespace Subfuzion.R.Rserve.Protocol
 					continue;
 				}
 
-				sb.Append((char)Data[i]);
+				sb.Append((char) Data[i]);
 			}
 
-				return list;
+			return list;
+		}
+
+		#endregion
+
+		#region Double List
+
+		public bool IsDoubleList
+		{
+			get { return RexpressionType == RexpressionType.DoubleArray; }
 		}
 
 		public List<double> ToDoubleList()
@@ -135,15 +143,19 @@ namespace Subfuzion.R.Rserve.Protocol
 			}
 
 			var list = new List<double>();
-			var totalDoubleCount = DataSize / sizeof (double);
+			var totalDoubleCount = DataSize/sizeof (double);
 
-			for (int offset = 0; offset < totalDoubleCount; offset += 8)
+			for (int offset = 0; offset < DataSize; offset += sizeof(double))
 			{
 				list.Add(BitConverter.ToDouble(Data, offset));
 			}
 
 			return list;
 		}
+
+		#endregion
+
+		#endregion
 
 	}
 }

@@ -20,9 +20,15 @@
 
 		public byte[] Content { get; private set; }
 
-		public int ContentSize { get { return Content != null ? Content.Length : 0; } }
+		public int ContentSize
+		{
+			get { return Content != null ? Content.Length : 0; }
+		}
 
-		public int PayloadSize { get { return 4 + ContentSize; } }
+		public int PayloadSize
+		{
+			get { return 4 + ContentSize; }
+		}
 
 		public override string ToString()
 		{
@@ -34,7 +40,7 @@
 			var payload = new byte[PayloadSize];
 
 			// set the data transport type
-			payload[0] = (byte)PayloadCode;
+			payload[0] = (byte) PayloadCode;
 
 			// set the length
 			Array.Copy(BitConverter.GetBytes(ContentSize), 0, payload, 1, 3);
@@ -52,7 +58,7 @@
 		{
 			// get the data type (PayloadCode) of the payload content
 			// (it will be either Rexpression or ByteStream)
-			var transportCode = (PayloadCode)rawBytes[offset];
+			var transportCode = (PayloadCode) rawBytes[offset];
 
 			var lengthBytes = new byte[4];
 			Array.Copy(rawBytes, offset + 1, lengthBytes, 0, 3);

@@ -65,8 +65,9 @@
 							  HorizontalScrollBarVisibility="Hidden"
 							  Padding="0">
 					<TextBlock Name="outputText"
+							   Margin="2"
+							   Width="{Binding ElementName=scrollViewer, Path=Width, Mode=OneWay}"
 							   FontFamily="Courier New"
-							   Width="{Binding ElementName=scrollViewer, Path=ActualWidth, Mode=OneWay}"
 							   TextWrapping="Wrap"
 							   Text="{Binding Path=Output, Mode=OneWay}" />
 				</ScrollViewer>
