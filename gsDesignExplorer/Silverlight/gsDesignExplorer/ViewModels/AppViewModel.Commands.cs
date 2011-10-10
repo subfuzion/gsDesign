@@ -2,6 +2,7 @@
 {
 	using System.Threading;
 	using System.Windows;
+	using Subfuzion.Helpers;
 
 	public partial class AppViewModel
 	{

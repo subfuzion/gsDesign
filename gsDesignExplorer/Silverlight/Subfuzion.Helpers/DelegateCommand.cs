@@ -1,10 +1,9 @@
-﻿namespace gsDesign.Explorer.ViewModels
+﻿namespace Subfuzion.Helpers
 {
 	using System;
 	using System.ComponentModel;
 	using System.Windows;
 	using System.Windows.Input;
-	using Subfuzion.Helpers;
 
 	public class DelegateCommand : NotifyPropertyChangedBase, ICommand
 	{

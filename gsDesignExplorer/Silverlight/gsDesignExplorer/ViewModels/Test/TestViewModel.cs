@@ -1,6 +1,7 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Test
 {
 	using System;
+	using Subfuzion.Helpers;
 	using Subfuzion.R.Rserve.Protocol;
 
 	public class TestViewModel : ViewModelBase
