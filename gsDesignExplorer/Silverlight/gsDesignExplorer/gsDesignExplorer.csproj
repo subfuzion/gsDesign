@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\AppViewModel.Commands.cs">
       <DependentUpon>AppViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Test\CommandHistory.cs" />
     <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
