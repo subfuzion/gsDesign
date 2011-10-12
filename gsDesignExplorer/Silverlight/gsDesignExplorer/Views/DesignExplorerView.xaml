@@ -8,7 +8,7 @@
 	xmlns:Simulation="clr-namespace:gsDesign.Explorer.Views.Simulation"
 	xmlns:Test="clr-namespace:gsDesign.Explorer.Views.Test"
 	xmlns:ViewModels="clr-namespace:gsDesign.Explorer.ViewModels"
-	mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+	mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="400">
 	
 	<UserControl.Resources>
 		<ViewModels:ViewModeValueConverter x:Key="viewModeValueConverter" />
@@ -28,19 +28,25 @@
 				<RowDefinition />
 			</Grid.RowDefinitions>
 
+			<!--
 			<TextBlock Text="Design Navigator" Grid.Row="0" />
+			-->
 
-			<StackPanel Orientation="Horizontal" Grid.Row="1">
-				<ComboBox x:Name="ModeComboBox" Margin="2" Width="100" ItemsSource="{Binding Path=ViewModes, Mode=OneTime}" SelectedIndex="{Binding Path=CurrentViewMode, Mode=TwoWay, Converter={StaticResource viewModeValueConverter}}">
-
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<ComboBox x:Name="ModeComboBox" Width="100" Margin="2" ItemsSource="{Binding Path=ViewModes, Mode=OneTime}" SelectedIndex="{Binding Path=CurrentViewMode, Mode=TwoWay, Converter={StaticResource viewModeValueConverter}}" />
+				<!--
+				<ComboBox Width="193" Margin="2" ItemsSource="{Binding Path=Designs, Mode=OneWay}" SelectedItem="{Binding Path=CurrentDesign, Mode=TwoWay}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBox Width="160" BorderThickness="1" Margin="1" Text="{Binding Name, Mode=TwoWay}"></TextBox>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 				</ComboBox>
-
-				<ComboBox x:Name="DesignComboBox" Margin="2" Width="140">
-
-				</ComboBox>
+				-->
+				<ComboBox Width="193" Margin="2" ItemsSource="{Binding Path=Designs, Mode=OneWay}" SelectedItem="{Binding Path=CurrentDesign, Mode=TwoWay}" />
 			</StackPanel>
 
-			<TextBox x:Name="DescriptionTextBox" Grid.Row="2" Margin="2" Text="Design description..." />
+			<TextBox x:Name="DescriptionTextBox" Grid.Row="2" Margin="2" Foreground="#444" Text="{Binding Path=CurrentDesign.Description, Mode=TwoWay}" GotFocus="DescriptionTextBox_GotFocus"/>
 
 		</Grid>
 

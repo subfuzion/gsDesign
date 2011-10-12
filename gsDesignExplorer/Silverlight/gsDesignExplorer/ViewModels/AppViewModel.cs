@@ -1,6 +1,9 @@
 namespace gsDesign.Explorer.ViewModels
 {
+	using System.Collections.Generic;
 	using System.Windows;
+	using Design;
+	using Models;
 	using Subfuzion.Helpers;
 	using Subfuzion.R.Rserve;
 
@@ -8,7 +11,9 @@ namespace gsDesign.Explorer.ViewModels
 	{
 		#region Fields
 
-		private ViewMode _currentViewMode;
+		private readonly GSDesignApplication _gsDesign;
+
+		private ViewMode _currentViewMode = (ViewMode) (-1);
 
 		private Visibility _analysisPanelVisibility;
 		private Visibility _designPanelVisibility;
@@ -24,7 +29,9 @@ namespace gsDesign.Explorer.ViewModels
 
 		public AppViewModel()
 		{
-			CurrentViewMode = ViewMode.Test;
+			_gsDesign = new GSDesignApplication();
+
+			CurrentViewMode = ViewMode.Design;
 
 			BeforeRunExecutedVisibility = Visibility.Visible;
 			AfterRunExecutedVisibility = Visibility.Collapsed;
@@ -32,13 +39,36 @@ namespace gsDesign.Explorer.ViewModels
 			RserveClient = new RserveClient();
 
 			InitCommands();
+			InitHandlers();
+		}
+
+		public GSDesignApplication GSDesign
+		{
+			get { return _gsDesign; }
+		}
+
+		public void InitHandlers()
+		{
+			GSDesign.PropertyChanged += (sender, propertyChangedEventArgs) =>
+			    {
+			    	switch (propertyChangedEventArgs.PropertyName)
+			    	{
+			    		case "Designs":
+							RaisePropertyChanged("Designs");
+			    			break;
+
+						case "CurrentDesign":
+							RaisePropertyChanged("CurrentDesign");
+			    			break;
+			    	}
+			    };
 		}
 
 		public RserveClient RserveClient { get; private set; }
 
 		#region View mode (Design, Analysis, Simulation...) management
 
-		public string[] ViewModes
+		public IEnumerable<string> ViewModes
 		{
 			get { return EnumHelper.GetNames<ViewMode>(); }
 		}
@@ -177,5 +207,58 @@ namespace gsDesign.Explorer.ViewModels
 				}
 			}
 		}
+
+
+
+
+		//#region Design property
+
+		//private Design _design;
+
+		//public Design Design
+		//{
+		//    get { return _design; }
+
+		//    set
+		//    {
+		//        if (_design != value)
+		//        {
+		//            RemoveDesignHandlers();
+		//            _design = value;
+		//            AddDesignHandlers();
+		//            Update();
+		//        }
+		//    }
+		//}
+
+		//#endregion // Design
+
+
+
+
+		//public readonly DesignViewModel DesignViewModel = new DesignViewModel();
+
+
+		#region Designs property
+
+		public DesignCollection Designs
+		{
+			get { return GSDesign.Designs; }
+		}
+
+		#endregion // Designs
+
+		#region CurrentDesign property
+
+		public Models.Design CurrentDesign
+		{
+			get { return GSDesign.CurrentDesign; }
+			set { GSDesign.CurrentDesign = value; }
+		}
+
+		#endregion // CurrentDesign
+
+
+
 	}
 }

@@ -9,9 +9,17 @@
 		// Called by constructor
 		private void InitCommands()
 		{
+			NewDesignCommand = new DelegateCommand {ExecuteAction = NewDesign};
 			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true };
 			ConnectCommand = new DelegateCommand {ExecuteAction = Connect, Async = true};
 			ToggleConnectCommand = new DelegateCommand { ExecuteAction = ToggleConnect, Async = true };
+		}
+
+		public DelegateCommand NewDesignCommand { get; set; }
+
+		private void NewDesign(object parameter = null)
+		{
+			GSDesign.CreateDesign();
 		}
 
 		public DelegateCommand RunDesignCommand { get; private set; }

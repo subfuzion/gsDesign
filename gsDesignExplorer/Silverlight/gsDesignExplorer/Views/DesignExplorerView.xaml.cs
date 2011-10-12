@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace gsDesign.Explorer.Views
 {
@@ -17,6 +8,13 @@ namespace gsDesign.Explorer.Views
 		public DesignExplorerView()
 		{
 			InitializeComponent();
+		}
+
+		// for a better solution see
+		// http://dnchannel.blogspot.com/2010/01/silverlight-3-auto-select-text-in.html
+		private void DescriptionTextBox_GotFocus(object sender, RoutedEventArgs e)
+		{
+			((TextBox)sender).SelectAll();
 		}
 	}
 }
