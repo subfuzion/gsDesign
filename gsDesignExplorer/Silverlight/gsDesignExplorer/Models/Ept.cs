@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using Subfuzion.Helpers;
 
 	public class Ept : NotifyPropertyChangedBase
@@ -115,10 +116,11 @@
 
 			set
 			{
-				if (_intervalCount != value && value > MinimumIntervalCount && value <= MaximumIntervalCount)
+				if (_intervalCount != value && value >= MinimumIntervalCount && value <= MaximumIntervalCount)
 				{
 					_intervalCount = value;
 					RaisePropertyChanged("IntervalCount");
+					UpdateTimingTable();
 				}
 			}
 		}
@@ -165,8 +167,6 @@
 
 		#endregion // MaximumIntervalCount
 
-
-
 		#region Spacing property
 
 		private EptSpacing _spacing;
@@ -186,6 +186,8 @@
 				{
 					_spacing = value;
 					RaisePropertyChanged("Spacing");
+					RaisePropertyChanged("IsTimingTableEnabled");
+					UpdateTimingTable();
 				}
 			}
 		}
@@ -194,20 +196,12 @@
 
 		#region TimingTable property
 
-		private List<Timing> _timingTable = new List<Timing>
+		private ObservableCollection<Timing> _timingTable = new ObservableCollection<Timing>
 		    {
-		        new Timing { Index = 1, Value = 0.5 },
-		        new Timing { Index = 2, Value = 0.5 },
-		        new Timing { Index = 3, Value = 0.5 },
-		        new Timing { Index = 4, Value = 0.5 },
-		        new Timing { Index = 5, Value = 0.5 },
-		        new Timing { Index = 6, Value = 0.5 },
-		        new Timing { Index = 7, Value = 0.5 },
-		        new Timing { Index = 8, Value = 0.5 },
-		        new Timing { Index = 9, Value = 0.5 },
+		        new Timing {Index = 1, Value = 0.5},
 		    };
 
-		public List<Timing> TimingTable
+		public ObservableCollection<Timing> TimingTable
 		{
 			get { return _timingTable; }
 
@@ -223,6 +217,36 @@
 
 		#endregion // TimingTable
 
+		#region IsTimingTableEnabled property
+
+		public bool IsTimingTableEnabled
+		{
+			get { return Spacing == EptSpacing.Unequal; }
+		}
+
+		#endregion // IsTimingTableEnabled
+
+		private void UpdateTimingTable()
+		{
+			if (TimingTable.Count < IntervalCount)
+			{
+				var increment = 0.5;
+				for (int i = TimingTable.Count; i < IntervalCount; i++)
+				{
+					TimingTable.Add(new Timing { Index = i+1, Value = increment});
+				}
+			}
+			else if (TimingTable.Count > IntervalCount)
+			{
+				for (int i = IntervalCount, count = TimingTable.Count - IntervalCount; count > 0; count--)
+				{
+					TimingTable.RemoveAt(i);
+				}
+			}
+
+
+			RaisePropertyChanged("TimingTable");
+		}
 	}
 
 	public class Timing

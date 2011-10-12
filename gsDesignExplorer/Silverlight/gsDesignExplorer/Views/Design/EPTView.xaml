@@ -35,7 +35,7 @@
 			
 			<TextBlock Canvas.Left="32" Canvas.Top="50" Height="23" Name="textBlock2" Text="Type I Error (1-sided &#945; x 100)" />
 
-			<toolkit:NumericUpDown Canvas.Left="216" Canvas.Top="50" Height="23" Width="84" Name="numericUpDown1"
+			<toolkit:NumericUpDown Canvas.Left="220" Canvas.Top="50" Height="23" Width="84" Name="numericUpDown1"
 								   Minimum="0"
 								   Maximum="100"
 								   DecimalPlaces="1"
@@ -56,11 +56,11 @@
 
 			<TextBlock Canvas.Left="32" Canvas.Top="127" Height="23" Name="textBlock3" Text="Power (100 x [1-&#946;])" />
 
-			<toolkit:NumericUpDown Canvas.Left="216" Canvas.Top="127" Height="23" Width="84" Name="numericUpDown2"
+			<toolkit:NumericUpDown Canvas.Left="220" Canvas.Top="127" Height="23" Width="84" Name="numericUpDown2"
 								   Minimum="{Binding CurrentDesign.Ept.MinimumValidPower, Mode=OneWay}"
 								   Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
 								   DecimalPlaces="4"
-								   Increment="0.0001"
+								   Increment="0.1"
 								   Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}"
 								   />
 
@@ -76,7 +76,7 @@
 			
 			<TextBlock Canvas.Left="14" Canvas.Top="211" FontWeight="Bold" Height="23" Name="textBlock4" Text="Timing of interim analyses" />
 			<TextBlock Canvas.Left="32" Canvas.Top="242" Height="23" Name="textBlock5" Text="Number of interim analyses" />
-			<toolkit:NumericUpDown Canvas.Left="216" Canvas.Top="242" Height="23" Width="84"
+			<toolkit:NumericUpDown Canvas.Left="220" Canvas.Top="242" Height="23" Width="84"
 								   Increment="1"
 								   Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
 								   Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
@@ -84,23 +84,27 @@
 								   />
 			
 			<TextBlock Canvas.Left="142" Canvas.Top="281" Height="23" Name="textBlock6" Text="Spacing" />
-			<ComboBox Canvas.Left="216" Canvas.Top="279" Height="23" Width="84"
+			<ComboBox Canvas.Left="220" Canvas.Top="279" Height="23" Width="84"
 					  ItemsSource="{Binding Path=CurrentDesign.Ept.SpacingValues, Mode=OneTime}"
 					  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}"
 					  />
-			<ScrollViewer Canvas.Left="204" Canvas.Top="308" Height="105" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" Padding="0">
+			<ScrollViewer Canvas.Left="220" Canvas.Top="308" Height="73"
+						  HorizontalScrollBarVisibility="Hidden"
+						  VerticalScrollBarVisibility="Auto"
+						  Padding="0" Width="84">
 				<ListBox Name="listBox1" BorderThickness="0"
+						 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
 						 ItemContainerStyle="{StaticResource ListBoxStyle}"
 						 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}" Margin="0" Padding="0">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid>
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="20"/>
+									<ColumnDefinition Width="16"/>
 									<ColumnDefinition Width="*"/>
 								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0" Margin="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Index}" />
-								<toolkit:NumericUpDown Grid.Column="1" Margin="0" Width="70" Value="{Binding Value}" />
+								<TextBlock Grid.Column="0" FontSize="10" FontFamily="Lucida Sans Unicode" Margin="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Index}" />
+								<toolkit:NumericUpDown Grid.Column="1" Margin="0" Value="{Binding Value}" />
 							</Grid>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
