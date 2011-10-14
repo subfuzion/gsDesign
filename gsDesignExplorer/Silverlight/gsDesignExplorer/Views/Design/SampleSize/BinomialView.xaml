@@ -4,12 +4,13 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:UI="clr-namespace:Subfuzion.Helpers.UI;assembly=Subfuzion.Helpers"
 	mc:Ignorable="d"
 	d:DesignHeight="800" d:DesignWidth="400">
 	
-	<Grid x:Name="LayoutRoot">
+	<Grid x:Name="LayoutRoot" Width="400">
 		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0">
-			<StackPanel Background="White">
+			<UI:FlowPanel Background="White">
 
 				<Border BorderBrush="Silver" BorderThickness="1" Margin="10" Background="White">
 					<Grid>
@@ -102,7 +103,7 @@
 						</Grid>
 					</Grid>
 				</Border>
-			</StackPanel>
+			</UI:FlowPanel>
 		</ScrollViewer>
 	</Grid>
 </UserControl>
