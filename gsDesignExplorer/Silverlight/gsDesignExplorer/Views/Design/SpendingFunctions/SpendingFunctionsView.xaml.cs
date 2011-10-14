@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Views.Design
+﻿namespace gsDesign.Explorer.Views.Design.SpendingFunctions
 {
 	using System.Windows.Controls;
 

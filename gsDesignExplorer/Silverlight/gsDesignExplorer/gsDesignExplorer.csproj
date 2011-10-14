@@ -126,13 +126,22 @@
     <Compile Include="Views\Design\DesignView.xaml.cs">
       <DependentUpon>DesignView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Design\EPTView.xaml.cs">
+    <Compile Include="Views\Design\EPT\EPTView.xaml.cs">
       <DependentUpon>EPTView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Design\SampleSizeView.xaml.cs">
+    <Compile Include="Views\Design\SampleSize\BinomialView.xaml.cs">
+      <DependentUpon>BinomialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Design\SampleSize\SampleSizeView.xaml.cs">
       <DependentUpon>SampleSizeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Design\SpendingFunctionsView.xaml.cs">
+    <Compile Include="Views\Design\SampleSize\TimeToEventView.xaml.cs">
+      <DependentUpon>TimeToEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Design\SampleSize\UserInputView.xaml.cs">
+      <DependentUpon>UserInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Design\SpendingFunctions\SpendingFunctionsView.xaml.cs">
       <DependentUpon>SpendingFunctionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
@@ -188,15 +197,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Design\EPTView.xaml">
+    <Page Include="Views\Design\EPT\EPTView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Design\SampleSizeView.xaml">
+    <Page Include="Views\Design\SampleSize\BinomialView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Design\SpendingFunctionsView.xaml">
+    <Page Include="Views\Design\SampleSize\SampleSizeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Design\SampleSize\TimeToEventView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Design\SampleSize\UserInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Design\SpendingFunctions\SpendingFunctionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Views.Design
+﻿namespace gsDesign.Explorer.Views.Design.EPT
 {
 	using System.Windows.Controls;
 

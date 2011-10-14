@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="gsDesign.Explorer.Views.Design.SampleSize.TimeToEventView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+			<Canvas Height="720">
+				<Border BorderBrush="Silver" BorderThickness="1" Canvas.Left="6" Canvas.Top="6" Height="228" Width="320">
+					<Canvas>
+						<TextBlock Canvas.Left="16" Canvas.Top="17" Height="23" Text="Event Rates / Median Times to Events" FontWeight="Bold" />
+						<TextBlock Canvas.Left="107" Canvas.Top="46" Height="23" Text="Specification" />
+						<ComboBox Canvas.Left="194" Canvas.Top="44" ItemsSource="{Binding}" SelectedIndex="1" Width="100">
+							<ComboBoxItem Content="Event Rate" />
+							<ComboBoxItem Content="Median Time" />
+						</ComboBox>
+
+						<TextBlock Canvas.Left="137" Canvas.Top="76" Height="23" Text="Control" />
+						<toolkit:NumericUpDown Canvas.Left="194" Canvas.Top="74" Height="22" Width="100" />
+
+						<TextBlock Canvas.Left="104" Canvas.Top="108" Height="23" Text="Experimental" />
+						<toolkit:NumericUpDown Canvas.Left="194" Canvas.Top="106" Height="22" Width="100" />
+
+						<TextBlock Canvas.Left="132" Canvas.Top="140" Height="23" Text="Dropout" />
+						<toolkit:NumericUpDown Canvas.Left="194" Canvas.Top="138" Height="22" Width="100" />
+
+						<Border Width="287" Height="36" Canvas.Left="16" Canvas.Top="173">
+							<Canvas>
+								<TextBlock Height="23" Text="Hazard Ratio" FontStyle="Italic" Canvas.Left="89" Canvas.Top="8" />
+								<toolkit:NumericUpDown Height="22" Width="100" Canvas.Left="177" Canvas.Top="6" />
+							</Canvas>
+						</Border>
+					</Canvas>
+				</Border>
+
+				<Border BorderBrush="Silver" BorderThickness="1" Canvas.Left="8" Canvas.Top="251" Height="181" Width="318">
+					<Canvas>
+						<TextBlock Canvas.Left="15" Canvas.Top="19" FontWeight="Bold" Height="23" Text="Other Event Parameters" />
+
+						<TextBlock Canvas.Left="89" Canvas.Top="48" Height="23" Text="Acrual Duration" />
+						<toolkit:NumericUpDown Canvas.Left="193" Canvas.Top="46" Height="22" Width="100" />
+
+						<TextBlock Canvas.Left="66" Canvas.Top="80" Height="23" Text="Minimum Follow-Up" />
+						<toolkit:NumericUpDown Canvas.Left="193" Canvas.Top="78" Height="22" Width="100" />
+
+						<TextBlock Canvas.Left="54" Canvas.Top="112" Height="23" Text="Randomization Ration" />
+						<toolkit:NumericUpDown Canvas.Left="193" Canvas.Top="110" Height="22" Width="100" />
+
+						<TextBlock Canvas.Left="114" Canvas.Top="144" Height="23" Text="Hypothesis" />
+						<ComboBox Canvas.Left="193" Canvas.Top="142" ItemsSource="{Binding}" SelectedIndex="1" Width="100">
+							<ComboBoxItem Content="Risk Ratio" />
+							<ComboBoxItem Content="Risk Difference" />
+						</ComboBox>
+					</Canvas>
+				</Border>
+
+				<Border BorderBrush="Silver" BorderThickness="1" Canvas.Left="7" Canvas.Top="452" Height="110" Width="320">
+					<Canvas>
+						<TextBlock Canvas.Left="16" Canvas.Top="17" FontWeight="Bold" Height="23" Text="Accrual" />
+						<ComboBox Canvas.Left="193" Canvas.Top="41" ItemsSource="{Binding}" SelectedIndex="1" Width="100">
+							<ComboBoxItem Content="Uniform" />
+							<ComboBoxItem Content="Exponential" />
+						</ComboBox>
+						<TextBlock Canvas.Left="133" Canvas.Top="73" Height="23" Text="Gamma" />
+						<toolkit:NumericUpDown Canvas.Left="194" Canvas.Top="71" Height="22" Width="100" />
+					</Canvas>
+				</Border>
+
+				<Border BorderBrush="Silver" BorderThickness="1" Canvas.Left="7" Canvas.Top="580" Height="122" Width="316">
+					<Canvas>
+						<TextBlock Canvas.Left="14" Canvas.Top="24" FontWeight="Bold" Height="23" Text="Fixed Design" />
+						<toolkit:NumericUpDown Canvas.Left="187" Canvas.Top="46" Height="22" Width="100" />
+						<TextBlock Canvas.Left="107" Canvas.Top="48" Height="23" Text="Sample Size" />
+
+						<TextBlock Canvas.Left="139" Canvas.Top="81" Height="23" Text="Events" />
+						<toolkit:NumericUpDown Canvas.Left="187" Canvas.Top="79" Height="22" Width="100" />
+					</Canvas>
+				</Border>
+			</Canvas>
+		</ScrollViewer>
+	</Grid>
+</UserControl>
