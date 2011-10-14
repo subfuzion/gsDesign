@@ -78,6 +78,8 @@
 
 		#endregion // Ept
 
+		#region General properties
+
 		#region IsModified property
 
 		private bool _isModified;
@@ -98,11 +100,16 @@
 
 		#endregion // IsModified
 
+		#endregion
+
+		#region Object overrides
 
 		public override string ToString()
 		{
 			return Name ?? "(Design)";
 		}
+
+		#region Equality and HashCode
 
 		public bool Equals(Design other)
 		{
@@ -133,5 +140,9 @@
 		{
 			return !Equals(left, right);
 		}
+
+		#endregion
+
+		#endregion
 	}
 }

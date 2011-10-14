@@ -19,6 +19,7 @@
 		<Views:ToolBar Grid.Row="0" />
 		
 		<!-- main content -->
+		<!-- MainPage > Views\MainView > Views\DesignExplorerView -->
 		<Views:MainView Grid.Row="1" />
 		
 		<!-- status bar (bottom row) -->
