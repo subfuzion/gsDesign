@@ -4,22 +4,19 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-    xmlns:UI="clr-namespace:Subfuzion.Helpers.UI;assembly=Subfuzion.Helpers"
-	mc:Ignorable="d"
-	d:DesignHeight="800" d:DesignWidth="400">
-	
-	<Grid x:Name="LayoutRoot" Width="400">
-		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0">
-			<UI:FlowPanel Background="White">
+	mc:Ignorable="d">
 
-				<Border BorderBrush="Silver" BorderThickness="1" Margin="10" Background="White">
+	<Grid x:Name="LayoutRoot" Margin="0" Background="White">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+			<StackPanel Orientation="Vertical">
+				<Border BorderBrush="#eee" BorderThickness="1">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
-						<Grid Grid.Row="0" Background="#eee">
+						<Grid Grid.Row="0" Background="White">
 							<TextBlock Text="Event Rates" FontWeight="Bold" Margin="8"/>
 						</Grid>
 
@@ -45,15 +42,14 @@
 						</Grid>
 					</Grid>
 				</Border>
-
-				<Border BorderBrush="Silver" BorderThickness="1" Margin="10" Background="White">
+				<Border BorderBrush="#eee" BorderThickness="1">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
-						<Grid Grid.Row="0" Background="#eee">
+						<Grid Grid.Row="0" Background="White">
 							<TextBlock Text="Testing" FontWeight="Bold" Margin="8"/>
 						</Grid>
 
@@ -77,15 +73,14 @@
 						</Grid>
 					</Grid>
 				</Border>
-
-				<Border BorderBrush="Silver" BorderThickness="1" Margin="10" Background="White">
+				<Border BorderBrush="#eee" BorderThickness="1">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
-						<Grid Grid.Row="0" Background="#eee">
+						<Grid Grid.Row="0" Background="White">
 							<TextBlock Text="Fixed Design" FontWeight="Bold" Margin="8"/>
 						</Grid>
 
@@ -103,7 +98,7 @@
 						</Grid>
 					</Grid>
 				</Border>
-			</UI:FlowPanel>
+			</StackPanel>
 		</ScrollViewer>
 	</Grid>
 </UserControl>

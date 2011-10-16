@@ -4,8 +4,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 			 xmlns:Models="clr-namespace:gsDesign.Explorer.Models"
-			 mc:Ignorable="d"
-			 d:DesignHeight="460" d:DesignWidth="400">
+			 mc:Ignorable="d">
 
 	<UserControl.Resources>
 		<Models:EptSpacingValueConverter x:Key="spacingValueConverter" />
@@ -15,11 +14,8 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="ListBoxItem">
 						<Grid Background="{TemplateBinding Background}">
-							<ContentPresenter HorizontalAlignment="Stretch" 
-													  Margin="{TemplateBinding Padding}" 
-													  x:Name="contentPresenter"                                                       
-													  Content="{TemplateBinding Content}" 
-													  ContentTemplate="{TemplateBinding ContentTemplate}" />
+							<ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}" x:Name="contentPresenter"
+											  Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
 						</Grid>
 					</ControlTemplate>
 				</Setter.Value>
@@ -29,87 +25,130 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
-		<Canvas>
-			<TextBlock Canvas.Left="14" Canvas.Top="19" Height="23" Name="textBlock1" Text="Type I Error and Power"
-					   FontWeight="Bold" />
-			
-			<TextBlock Canvas.Left="32" Canvas.Top="50" Height="23" Name="textBlock2" Text="Type I Error (1-sided &#945; x 100)" />
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+			<StackPanel Orientation="Vertical">
+				<Border BorderBrush="#eee" BorderThickness="1">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
 
-			<toolkit:NumericUpDown Canvas.Left="220" Canvas.Top="50" Height="23" Width="84" Name="numericUpDown1"
-								   Minimum="0"
-								   Maximum="100"
-								   DecimalPlaces="1"
-								   Increment="0.1"
-								   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay}"
-								   />
-			
-			<Slider Canvas.Left="32" Canvas.Top="79" Height="22" Name="slider1" Width="272"
-					Minimum="0"
-					Maximum="100"
-					SmallChange="0.5"
-					LargeChange="5"
-					Value="{Binding ElementName=numericUpDown1, Path=Value, Mode=TwoWay}"
-					/>
-			
-			<TextBlock Text="0" Canvas.Left="34" Canvas.Top="100" Foreground="#444" />
-			<TextBlock Canvas.Left="283" Canvas.Top="100" Text="100" Foreground="#444" />
+						<Grid Grid.Row="0" Background="White">
+							<TextBlock Text="Type I Error and Power" FontWeight="Bold" Margin="8" />
+						</Grid>
 
-			<TextBlock Canvas.Left="32" Canvas.Top="127" Height="23" Name="textBlock3" Text="Power (100 x [1-&#946;])" />
+						<Grid Grid.Row="1" Margin="16">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="60*" />
+								<ColumnDefinition Width="40*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
 
-			<toolkit:NumericUpDown Canvas.Left="220" Canvas.Top="127" Height="23" Width="84" Name="numericUpDown2"
-								   Minimum="{Binding CurrentDesign.Ept.MinimumValidPower, Mode=OneWay}"
-								   Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
-								   DecimalPlaces="4"
-								   Increment="0.1"
-								   Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}"
-								   />
+							<TextBlock Grid.Row="0" Grid.Column="0" Text="Type I Error (1-sided &#945; x 100)" TextAlignment="Right"
+									   VerticalAlignment="Center" Margin="4 4 16 4" />
+							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" Name="numericUpDown1" VerticalAlignment="Center" Margin="4"
+												   Height="22" Minimum="0" Maximum="100" DecimalPlaces="1" Increment="0.1"
+												   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay}" />
 
-			<Slider Canvas.Left="32" Canvas.Top="156" Height="22" Width="272" Name="slider2"
-					Maximum="100"
-					LargeChange="5"
-					SmallChange="0.5"
-					Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}"
-					/>
-			<TextBlock Text="0" Canvas.Left="34" Canvas.Top="176" Foreground="#444" />
-			<TextBlock Canvas.Left="283" Canvas.Top="176" Text="100" Foreground="#444" />
-			
-			
-			<TextBlock Canvas.Left="14" Canvas.Top="211" FontWeight="Bold" Height="23" Name="textBlock4" Text="Timing of interim analyses" />
-			<TextBlock Canvas.Left="32" Canvas.Top="242" Height="23" Name="textBlock5" Text="Number of interim analyses" />
-			<toolkit:NumericUpDown Canvas.Left="220" Canvas.Top="242" Height="23" Width="84"
-								   Increment="1"
-								   Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
-								   Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
-								   Value="{Binding CurrentDesign.Ept.IntervalCount, Mode=TwoWay}"
-								   />
-			
-			<TextBlock Canvas.Left="142" Canvas.Top="281" Height="23" Name="textBlock6" Text="Spacing" />
-			<ComboBox Canvas.Left="220" Canvas.Top="279" Height="23" Width="84"
-					  ItemsSource="{Binding Path=CurrentDesign.Ept.SpacingValues, Mode=OneTime}"
-					  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}"
-					  />
-			<ScrollViewer Canvas.Left="220" Canvas.Top="308" Height="73"
-						  HorizontalScrollBarVisibility="Hidden"
-						  VerticalScrollBarVisibility="Auto"
-						  Padding="0" Width="84">
-				<ListBox Name="listBox1" BorderThickness="0"
-						 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
-						 ItemContainerStyle="{StaticResource ListBoxStyle}"
-						 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}" Margin="0" Padding="0">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="16"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0" FontSize="10" FontFamily="Lucida Sans Unicode" Margin="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Index}" />
-								<toolkit:NumericUpDown Grid.Column="1" Margin="0" Value="{Binding Value}" />
-							</Grid>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</ScrollViewer>
-		</Canvas>
+							<Slider Grid.Row="1" Grid.ColumnSpan="2" Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="5"
+									Value="{Binding ElementName=numericUpDown1, Path=Value, Mode=TwoWay}" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="0" Foreground="#444" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="100" TextAlignment="Right" Foreground="#444" />
+
+
+							<TextBlock Grid.Row="3" Grid.Column="0" Text="Power (100 x [1-&#946;])" TextAlignment="Right"
+									   VerticalAlignment="Center" Margin="4 4 16 4" />
+							<toolkit:NumericUpDown Grid.Row="3" Grid.Column="1" x:Name="numericUpDown2" VerticalAlignment="Center"
+												   Margin="4" Height="22" DecimalPlaces="4" Increment="0.1"
+												   Minimum="{Binding CurrentDesign.Ept.MinimumValidPower, Mode=OneWay}"
+												   Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
+												   Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}" />
+
+							<Slider Grid.Row="4" Grid.ColumnSpan="2" Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="5"
+									Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}" />
+							<TextBlock Grid.Row="5" Grid.Column="0" Text="0" Foreground="#444" />
+							<TextBlock Grid.Row="5" Grid.Column="1" Text="100" TextAlignment="Right" Foreground="#444" />
+
+
+						</Grid>
+					</Grid>
+				</Border>
+				<Border BorderBrush="#eee" BorderThickness="1">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<Grid Grid.Row="0" Background="White">
+							<TextBlock Text="Timing of interim analyses" FontWeight="Bold" Margin="8" />
+						</Grid>
+
+						<Grid Grid.Row="1" Margin="16">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="60*" />
+								<ColumnDefinition Width="40*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+
+							<TextBlock Grid.Row="0" Grid.Column="0" Text="Number of interim analyses" TextAlignment="Right"
+									   VerticalAlignment="Center" Margin="4 4 16 4" />
+							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="numberOfInterimAnalyses" VerticalAlignment="Center"
+												   Margin="4" Height="22" Increment="1" Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
+												   Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
+												   Value="{Binding CurrentDesign.Ept.IntervalCount, Mode=TwoWay}" />
+
+							<Slider Grid.Row="1" Grid.ColumnSpan="2" Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
+									Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" SmallChange="1" LargeChange="5"
+									Value="{Binding ElementName=numberOfInterimAnalyses, Path=Value, Mode=TwoWay}" />
+
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}" Foreground="#444" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" />
+
+							<TextBlock Grid.Row="3" Grid.Column="0" Text="Spacing" TextAlignment="Right" VerticalAlignment="Center"
+									   Margin="4 4 16 4" />
+
+							<ComboBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+									  ItemsSource="{Binding Path=CurrentDesign.Ept.SpacingValues, Mode=OneTime}"
+									  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}" />
+
+							<ListBox Grid.Row="4" Grid.Column="0" Margin="0 4 0 4" Padding="0"
+									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}" ItemContainerStyle="{StaticResource ListBoxStyle}"
+									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
+								<ListBox.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Height="22" Margin="0" TextAlignment="Right" VerticalAlignment="Center" Text="{Binding Index}" />
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
+
+							<ListBox Grid.Row="4" Grid.Column="1" Margin="0 4 0 4" Padding="0"
+									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}" ItemContainerStyle="{StaticResource ListBoxStyle}"
+									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
+								<ListBox.ItemTemplate>
+									<DataTemplate>
+										<toolkit:NumericUpDown Height="22" Margin="0" VerticalAlignment="Center" Value="{Binding Value}" />
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
+						</Grid>
+					</Grid>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </UserControl>

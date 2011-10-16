@@ -6,7 +6,11 @@ namespace Subfuzion.Helpers
 
 	public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
 	{
+		#region INotifyPropertyChanged Members
+
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion
 
 		protected void RaisePropertyChanged(string property)
 		{
@@ -14,7 +18,14 @@ namespace Subfuzion.Helpers
 			{
 				if (PropertyChanged != null)
 				{
-					Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs(property)));
+					Deployment.Current.Dispatcher.BeginInvoke(() =>
+					                                          {
+					                                          	// the double check is necessary in case anything has changed by the time this is invoked on the UI thread
+					                                          	if (PropertyChanged != null)
+					                                          	{
+					                                          		PropertyChanged(this, new PropertyChangedEventArgs(property));
+					                                          	}
+					                                          });
 				}
 			}
 			catch (Exception e)
