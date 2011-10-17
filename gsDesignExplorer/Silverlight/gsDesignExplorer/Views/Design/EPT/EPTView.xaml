@@ -27,7 +27,7 @@
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 			<StackPanel Orientation="Vertical">
-				<Border BorderBrush="#eee" BorderThickness="1">
+				<Border BorderBrush="#d8d8d8" BorderThickness="1" Margin="0 0 0 4">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
@@ -77,8 +77,8 @@
 
 							<Slider Grid.Row="1" Grid.ColumnSpan="2" Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="5"
 									Value="{Binding ElementName=numericUpDown1, Path=Value, Mode=TwoWay}" />
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumValidError}" Foreground="#444" />
-							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumValidError}" TextAlignment="Right" Foreground="#444" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumValidError}" Foreground="#444" FontSize="9" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumValidError}" TextAlignment="Right" Foreground="#444" FontSize="9" />
 
 
 							<!-- Power -->
@@ -103,15 +103,18 @@
 									SmallChange="1"
 									LargeChange="5"
 									Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}" />
-							<TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumPowerDisplay, Mode=OneWay}" Foreground="#444" />
-							<TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}" TextAlignment="Right" Foreground="#444" />
+							<toolkit:DockPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+								<TextBlock toolkit:DockPanel.Dock="Left" Text="0.1" TextAlignment="Left" Foreground="#444" FontSize="9" />
+								<TextBlock toolkit:DockPanel.Dock="Right" Text="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
+								<TextBlock Text="{Binding CurrentDesign.Ept.MinimumPowerDisplay, Mode=OneWay}" TextAlignment="Center" Foreground="#444" FontSize="9" />
+							</toolkit:DockPanel>
 
 
 						</Grid>
 					</Grid>
 				</Border>
-				
-				<Border BorderBrush="#eee" BorderThickness="1">
+
+				<Border BorderBrush="#d8d8d8" BorderThickness="1" Margin="0 0 0 4">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
@@ -139,16 +142,20 @@
 							<TextBlock Grid.Row="0" Grid.Column="0" Text="Number of interim analyses" TextAlignment="Right"
 									   VerticalAlignment="Center" Margin="4 4 16 4" />
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="numberOfInterimAnalyses" VerticalAlignment="Center"
-												   Margin="4" Height="22" Increment="1" Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
+												   Margin="4" Height="22"
+												   Increment="1"
+												   Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
 												   Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
 												   Value="{Binding CurrentDesign.Ept.IntervalCount, Mode=TwoWay}" />
 
-							<Slider Grid.Row="1" Grid.ColumnSpan="2" Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
-									Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" SmallChange="1" LargeChange="5"
+							<Slider Grid.Row="1" Grid.ColumnSpan="2"
+									SmallChange="1" LargeChange="5"
+									Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
+									Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
 									Value="{Binding ElementName=numberOfInterimAnalyses, Path=Value, Mode=TwoWay}" />
 
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}" Foreground="#444" />
-							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}" Foreground="#444" FontSize="9" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
 
 							<!-- Spacing -->
 							<TextBlock Grid.Row="3" Grid.Column="0" Text="Spacing" TextAlignment="Right" VerticalAlignment="Center"
@@ -159,22 +166,35 @@
 									  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}" />
 
 							<!-- Timing values -->
-							<ListBox Grid.Row="4" Grid.Column="0" Margin="0 4 0 4" Padding="0"
-									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}" ItemContainerStyle="{StaticResource ListBoxStyle}"
+							<ListBox Grid.Row="4" Grid.Column="0" Margin="0 4 0 4" Padding="0" BorderThickness="0"
+									 HorizontalAlignment="Right"
+									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
+									 ItemContainerStyle="{StaticResource ListBoxStyle}"
 									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
 								<ListBox.ItemTemplate>
 									<DataTemplate>
-										<TextBlock Height="22" Margin="0" TextAlignment="Right" VerticalAlignment="Center" Text="{Binding Index}" />
+										<Grid Height="22">
+											<TextBlock Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+													   Foreground="#222"
+													   FontSize="10"
+													   Text="{Binding Index}"/>
+										</Grid>
 									</DataTemplate>
 								</ListBox.ItemTemplate>
 							</ListBox>
 
 							<ListBox Grid.Row="4" Grid.Column="1" Margin="0 4 0 4" Padding="0"
-									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}" ItemContainerStyle="{StaticResource ListBoxStyle}"
+									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
+									 ItemContainerStyle="{StaticResource ListBoxStyle}"
 									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
 								<ListBox.ItemTemplate>
 									<DataTemplate>
-										<toolkit:NumericUpDown Height="22" Margin="0" VerticalAlignment="Center" Value="{Binding Value}" />
+										<toolkit:NumericUpDown Height="22" Margin="0" VerticalAlignment="Center"
+															   Minimum="0"
+															   Maximum="1"
+															   Increment="0.1"
+															   DecimalPlaces="4"
+															   Value="{Binding Value, Mode=TwoWay}" />
 									</DataTemplate>
 								</ListBox.ItemTemplate>
 							</ListBox>

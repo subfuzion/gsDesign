@@ -43,11 +43,6 @@
 
 		#endregion // Error
 
-		public bool ValidateErrorValue(double value)
-		{
-			return !(MinimumValidError - value > double.Epsilon || value - MaximumValidError > double.Epsilon);
-		}
-
 		#region MinimumValidError property
 
 		public double MinimumValidError
@@ -65,8 +60,6 @@
 		}
 
 		#endregion // MaximumValidError
-
-
 
 		#region Power property
 
@@ -113,12 +106,16 @@
 			get { return 100.0; }
 		}
 
+		#endregion // MaximumValidPower
+
+		#region MinimumPowerDisplay
+
 		public string MinimumPowerDisplay
 		{
-			get { return string.Format("0.1 (current value={0}, minimum={1})", Power, MinimumValidPower); }
+			get { return string.Format("min={0}", MinimumValidPower); }
 		}
 
-		#endregion // MaximumValidPower
+		#endregion
 
 		#region IntervalCount property
 
@@ -163,7 +160,7 @@
 
 		#region MaximumIntervalCount property
 
-		private int _maximumIntervalCount = 99;
+		private int _maximumIntervalCount = 20;
 
 		public int MaximumIntervalCount
 		{
@@ -242,6 +239,11 @@
 
 		#region Implementation
 
+		private bool ValidateErrorValue(double value)
+		{
+			return !(MinimumValidError - value > double.Epsilon || value - MaximumValidError > double.Epsilon);
+		}
+
 		private double ComputeValidPower(double power, double error)
 		{
 			if (power - error < 0.1)
@@ -267,10 +269,12 @@
 		{
 			if (TimingTable.Count < IntervalCount)
 			{
-				var increment = 0.5;
-				for (int i = TimingTable.Count; i < IntervalCount; i++)
+				var baseValue = TimingTable[TimingTable.Count - 1].Value;
+				var increment = (1.0 - baseValue) / (IntervalCount - TimingTable.Count + 1);
+
+				for (int i = TimingTable.Count; i < IntervalCount; i++, baseValue += increment)
 				{
-					TimingTable.Add(new Timing {Index = i + 1, Value = increment});
+					TimingTable.Add(new Timing {Index = i + 1, Value = baseValue + increment});
 				}
 			}
 			else if (TimingTable.Count > IntervalCount)
@@ -281,6 +285,15 @@
 				}
 			}
 
+			if (Spacing == EptSpacing.Equal)
+			{
+				var timing = 1.0 / (IntervalCount + 1);
+
+				for (int i = 0; i < TimingTable.Count; i++)
+				{
+					TimingTable[i].Value = Math.Round(timing * (i + 1), 4);
+				}
+			}
 
 			RaisePropertyChanged("TimingTable");
 		}
@@ -288,9 +301,52 @@
 		#endregion
 	}
 
-	public class Timing
+	public class Timing : NotifyPropertyChangedBase
 	{
-		public int Index { get; set; }
-		public double Value { get; set; }
+		#region Index property
+
+		private int _index;
+
+		[Display(Name = "Index",
+			Description = "")]
+		public int Index
+		{
+			get { return _index; }
+
+			set
+			{
+				if (_index != value)
+				{
+					_index = value;
+					RaisePropertyChanged("Index");
+				}
+			}
+		}
+
+		#endregion // Index
+
+		#region Value property
+
+		private double _value;
+
+		[Display(Name = "Value",
+			Description = "")]
+		public double Value
+		{
+			get { return _value; }
+
+			set
+			{
+				if (Math.Abs(_value - value) > double.Epsilon)
+				{
+					_value = value;
+					RaisePropertyChanged("Value");
+				}
+			}
+		}
+
+		#endregion // Value
+
+
 	}
 }
