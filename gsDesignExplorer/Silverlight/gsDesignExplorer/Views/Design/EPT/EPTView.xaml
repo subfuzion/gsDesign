@@ -4,7 +4,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 			 xmlns:Models="clr-namespace:gsDesign.Explorer.Models"
-			 mc:Ignorable="d">
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d">
 
 	<UserControl.Resources>
 		<Models:EptSpacingValueConverter x:Key="spacingValueConverter" />
@@ -42,6 +42,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*" />
 								<ColumnDefinition Width="40*" />
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition />
@@ -52,35 +53,64 @@
 								<RowDefinition />
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Type I Error (1-sided &#945; x 100)" TextAlignment="Right"
-									   VerticalAlignment="Center" Margin="4 4 16 4" />
+							<!-- Error -->
+							<sdk:Label Grid.Row="0" Grid.Column="0"
+									   HorizontalAlignment="Right"
+									   VerticalAlignment="Center"
+									   Margin="4 4 16 4"
+									   Target="{Binding ElementName=numericUpDown1}"
+									   />
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" Name="numericUpDown1" VerticalAlignment="Center" Margin="4"
-												   Height="22" Minimum="0" Maximum="100" DecimalPlaces="1" Increment="0.1"
-												   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay}" />
+												   Height="22"
+												   DecimalPlaces="4"
+												   Increment="0.1"
+												   Minimum="{Binding CurrentDesign.Ept.MinimumValidError, Mode=OneWay}"
+												   Maximum="{Binding CurrentDesign.Ept.MaximumValidError, Mode=OneWay}"
+												   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True}">
+								<!--
+								<ToolTipService.ToolTip>
+									<ToolTip Content="0 &lt; Type I Error &lt; Power &lt; 100"/>
+								</ToolTipService.ToolTip>
+								-->
+							</toolkit:NumericUpDown>
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=numericUpDown1}" />
 
 							<Slider Grid.Row="1" Grid.ColumnSpan="2" Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="5"
 									Value="{Binding ElementName=numericUpDown1, Path=Value, Mode=TwoWay}" />
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="0" Foreground="#444" />
-							<TextBlock Grid.Row="2" Grid.Column="1" Text="100" TextAlignment="Right" Foreground="#444" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumValidError}" Foreground="#444" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumValidError}" TextAlignment="Right" Foreground="#444" />
 
 
-							<TextBlock Grid.Row="3" Grid.Column="0" Text="Power (100 x [1-&#946;])" TextAlignment="Right"
-									   VerticalAlignment="Center" Margin="4 4 16 4" />
+							<!-- Power -->
+							<sdk:Label Grid.Row="3" Grid.Column="0" 
+									   HorizontalAlignment="Right"
+									   VerticalAlignment="Center"
+									   Margin="4 4 16 4"
+									   Target="{Binding ElementName=numericUpDown2}"
+									   />
 							<toolkit:NumericUpDown Grid.Row="3" Grid.Column="1" x:Name="numericUpDown2" VerticalAlignment="Center"
-												   Margin="4" Height="22" DecimalPlaces="4" Increment="0.1"
+												   Margin="4" Height="22"
+												   DecimalPlaces="1"
+												   Increment="0.1"
 												   Minimum="{Binding CurrentDesign.Ept.MinimumValidPower, Mode=OneWay}"
 												   Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
 												   Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}" />
+							<sdk:DescriptionViewer Grid.Row="3" Grid.Column="2" Target="{Binding ElementName=numericUpDown2}" />
 
-							<Slider Grid.Row="4" Grid.ColumnSpan="2" Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="5"
+							<Slider Grid.Row="4" Grid.ColumnSpan="2"
+									Minimum="0.1"
+									Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
+									SmallChange="1"
+									LargeChange="5"
 									Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}" />
-							<TextBlock Grid.Row="5" Grid.Column="0" Text="0" Foreground="#444" />
-							<TextBlock Grid.Row="5" Grid.Column="1" Text="100" TextAlignment="Right" Foreground="#444" />
+							<TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumPowerDisplay, Mode=OneWay}" Foreground="#444" />
+							<TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}" TextAlignment="Right" Foreground="#444" />
 
 
 						</Grid>
 					</Grid>
 				</Border>
+				
 				<Border BorderBrush="#eee" BorderThickness="1">
 					<Grid>
 						<Grid.RowDefinitions>
@@ -105,6 +135,7 @@
 								<RowDefinition />
 							</Grid.RowDefinitions>
 
+							<!-- Number of interim analyses -->
 							<TextBlock Grid.Row="0" Grid.Column="0" Text="Number of interim analyses" TextAlignment="Right"
 									   VerticalAlignment="Center" Margin="4 4 16 4" />
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="numberOfInterimAnalyses" VerticalAlignment="Center"
@@ -119,6 +150,7 @@
 							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}" Foreground="#444" />
 							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" />
 
+							<!-- Spacing -->
 							<TextBlock Grid.Row="3" Grid.Column="0" Text="Spacing" TextAlignment="Right" VerticalAlignment="Center"
 									   Margin="4 4 16 4" />
 
@@ -126,6 +158,7 @@
 									  ItemsSource="{Binding Path=CurrentDesign.Ept.SpacingValues, Mode=OneTime}"
 									  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}" />
 
+							<!-- Timing values -->
 							<ListBox Grid.Row="4" Grid.Column="0" Margin="0 4 0 4" Padding="0"
 									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}" ItemContainerStyle="{StaticResource ListBoxStyle}"
 									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
