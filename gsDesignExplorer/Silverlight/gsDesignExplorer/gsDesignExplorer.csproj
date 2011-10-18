@@ -103,8 +103,11 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DesignScript.cs" />
+    <Compile Include="Models\GSEpt.cs" />
     <Compile Include="Models\LowerBoundSpending.cs" />
     <Compile Include="Models\LowerBoundTesting.cs" />
+    <Compile Include="Models\GSSampleSize.cs" />
+    <Compile Include="Models\SampleSizeType.cs" />
     <Compile Include="Models\TestType.cs" />
     <Compile Include="ViewModels\Design\Design.cs" />
     <Compile Include="Models\DesignCollection.cs" />
