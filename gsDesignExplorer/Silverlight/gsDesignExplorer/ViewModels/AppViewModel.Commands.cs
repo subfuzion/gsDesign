@@ -19,7 +19,7 @@
 
 		private void NewDesign(object parameter = null)
 		{
-			GSDesign.CreateDesign();
+			CreateDesign();
 		}
 
 		public DelegateCommand RunDesignCommand { get; private set; }

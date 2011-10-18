@@ -13,6 +13,9 @@
 			<sdk:TabItem Header="Plot">
 				<Output:ChartOutputView />
 			</sdk:TabItem>
+			<sdk:TabItem Header="Script">
+				<Output:ScriptView />
+			</sdk:TabItem>
 		</sdk:TabControl>
 	</Grid>
 </UserControl>

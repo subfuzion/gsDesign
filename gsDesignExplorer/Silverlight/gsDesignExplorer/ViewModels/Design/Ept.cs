@@ -1,9 +1,10 @@
-﻿namespace gsDesign.Explorer.Models
+﻿namespace gsDesign.Explorer.ViewModels.Design
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel.DataAnnotations;
+	using Models;
 	using Subfuzion.Helpers;
 
 	public class Ept : NotifyPropertyChangedBase

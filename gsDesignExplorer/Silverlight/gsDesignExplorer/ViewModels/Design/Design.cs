@@ -1,6 +1,7 @@
-﻿namespace gsDesign.Explorer.Models
+﻿namespace gsDesign.Explorer.ViewModels.Design
 {
 	using System;
+	using Models;
 	using Subfuzion.Helpers;
 
 	public class Design : NotifyPropertyChangedBase
@@ -8,6 +9,7 @@
 		public Design(Func<string, bool> nameValidator)
 		{
 			NameValidator = nameValidator;
+			_designScript = new DesignScript {Design = this};
 		}
 
 		#region Name property
@@ -77,6 +79,17 @@
 		}
 
 		#endregion // Ept
+
+		#region DesignScript property
+
+		private DesignScript _designScript;
+
+		public DesignScript DesignScript
+		{
+			get { return _designScript; }
+		}
+
+		#endregion // DesignScript
 
 		#region General properties
 

@@ -1,23 +1,35 @@
-﻿namespace gsDesign.Explorer.Models
+﻿namespace gsDesign.Explorer.ViewModels
 {
-	using System.ComponentModel;
 	using System.Text.RegularExpressions;
-	using Subfuzion.Helpers;
+	using Models;
 
-	public class GSDesignApplication : NotifyPropertyChangedBase
+	public partial class AppViewModel
 	{
-		public GSDesignApplication()
+		#region Designs property
+
+		private DesignCollection _designs;
+
+		public DesignCollection Designs
 		{
-			CreateDesign();
+			get { return _designs ?? (_designs = new DesignCollection()); }
+
+			set
+			{
+				if (_designs != value)
+				{
+					_designs = value;
+					RaisePropertyChanged("Designs");
+				}
+			}
 		}
 
-		public readonly DesignCollection Designs = new DesignCollection();
+		#endregion // Designs
 
 		#region CurrentDesign property
 
-		private Design _currentDesign;
+		private Design.Design _currentDesign;
 
-		public Design CurrentDesign
+		public Design.Design CurrentDesign
 		{
 			get { return _currentDesign; }
 
@@ -43,7 +55,7 @@
 			get { return "Design" + (Designs.Count + 1); }
 		}
 
-		public void AddDesign(Design design)
+		public void AddDesign(Design.Design design)
 		{
 			if (Designs.Contains(design) == false)
 			{
@@ -52,9 +64,9 @@
 			}
 		}
 
-		public Design CreateDesign(string name = null)
+		public Design.Design CreateDesign(string name = null)
 		{
-			var design = new Design(IsValidDesignName) { Name = name ?? NewDesignDefaultName };
+			var design = new Design.Design(IsValidDesignName) { Name = name ?? NewDesignDefaultName };
 			CurrentDesign = design;
 			return design;
 		}
@@ -74,18 +86,18 @@
 			return true;
 		}
 
-		public Design OpenDesign(string pathName)
+		public Design.Design OpenDesign(string pathName)
 		{
 			// TODO
 			return null;
 		}
-		
-		public void SaveDesign(Design design, string pathName)
+
+		public void SaveDesign(Design.Design design, string pathName)
 		{
 			// TODO
 		}
 
-		public void CloseDesign(Design design)
+		public void CloseDesign(Design.Design design)
 		{
 			// TODO
 		}

@@ -1,8 +1,6 @@
 ﻿namespace gsDesign.Explorer.Models
 {
-	public enum EptSpacing
+	public class GSDesign
 	{
-		Equal,
-		Unequal,
 	}
 }

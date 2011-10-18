@@ -3,11 +3,11 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-			 xmlns:Models="clr-namespace:gsDesign.Explorer.Models"
-			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d">
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+			 xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design" mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<Models:EptSpacingValueConverter x:Key="spacingValueConverter" />
+		<Design:EptSpacingValueConverter x:Key="spacingValueConverter" />
 		<Style x:Key="ListBoxStyle" TargetType="ListBoxItem">
 			<!-- Below setter disables selection, and stretches content -->
 			<Setter Property="Template">
