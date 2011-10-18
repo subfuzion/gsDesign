@@ -9,30 +9,37 @@
 
 	public class Ept : NotifyPropertyChangedBase
 	{
-		public Ept()
+		private GSDesign _design;
+
+		public Ept(GSDesign design)
 		{
+			_design = design;
+
 			Error = 2.5;
 			Power = 90.0;
 		}
 
-		#region Error property
+		private GSEpt Model
+		{
+			get { return _design.Ept; }
+		}
 
-		private double _error;
+		#region Error property
 
 		[Display(Name = "Type I Error (1-sided \u03B1 x 100)",
 			Description = "0 < Type I Error < Power < 100")]
 		public double Error
 		{
-			get { return _error; }
+			get { return Math.Round(Model.Alpha * 100, 4); }
 
 			set
 			{
-				if (Math.Abs(_error - value) >= double.Epsilon)
+				if (Math.Abs(Error - value) >= double.Epsilon)
 				{
 					if (!ValidateErrorValue(value))
 						throw new ArgumentException("Error must be a value between 0.0 and 100.0, inclusive");
 
-					_error = Math.Round(value, 4);
+					Model.Alpha = value / 100;
 					RaisePropertyChanged("Error");
 
 					UpdatePower();
@@ -70,14 +77,14 @@
 			Description = "0 < Type I Error < Power < 100")]
 		public double Power
 		{
-			get { return _power; }
+			get { return Math.Round(100.0 * (1.0 - Model.Beta), 1); }
 
 			set
 			{
 				var power = ComputeValidPower(value, Error);
-				if (Math.Abs(_power - power) > double.Epsilon)
+				if (Math.Abs(Power - power) >= 0.09)
 				{
-					_power = power;
+					Model.Beta = 1.0 - (power / 100.0);
 				}
 
 				// because of slider to spinner binding, we need this out

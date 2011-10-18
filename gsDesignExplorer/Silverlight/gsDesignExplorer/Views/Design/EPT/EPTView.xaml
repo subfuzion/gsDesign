@@ -102,7 +102,7 @@
 									Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
 									SmallChange="1"
 									LargeChange="5"
-									Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}" />
+									Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}" />
 							<toolkit:DockPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
 								<TextBlock toolkit:DockPanel.Dock="Left" Text="0.1" TextAlignment="Left" Foreground="#444" FontSize="9" />
 								<TextBlock toolkit:DockPanel.Dock="Right" Text="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />

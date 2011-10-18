@@ -6,30 +6,35 @@
 
 	public class Design : NotifyPropertyChangedBase
 	{
+		private GSDesign _gsDesign;
+
 		public Design(Func<string, bool> nameValidator)
 		{
 			NameValidator = nameValidator;
 			_designScript = new DesignScript {Design = this};
 		}
 
-		#region Name property
+		private GSDesign Model
+		{
+			get { return _gsDesign ?? (_gsDesign = new GSDesign()); }
+		}
 
-		private string _name;
+		#region Name property
 
 		public string Name
 		{
-			get { return _name; }
+			get { return Model.Name; }
 
 			set
 			{
-				if (_name != value)
+				if (Model.Name != value)
 				{
 					// test here instead of above because we do want
 					// to fire the property changed event to force the
 					// the UI to refresh regardless
 					if (NameValidator == null || (NameValidator != null && NameValidator(value)))
 					{
-						_name = value;
+						Model.Name = value;
 					}
 					RaisePropertyChanged("Name");
 				}
@@ -42,17 +47,15 @@
 
 		#region Description property
 
-		private string _description;
-
 		public string Description
 		{
-			get { return _description ?? string.Format("{0} description...", Name ?? "Design"); }
+			get { return Model.Description ?? string.Format("{0} description...", Name ?? "Design"); }
 
 			set
 			{
-				if (_description != value)
+				if (Model.Description != value)
 				{
-					_description = value;
+					Model.Description = value;
 					RaisePropertyChanged("Description");
 				}
 			}
@@ -66,7 +69,16 @@
 
 		public Ept Ept
 		{
-			get { return _ept ?? (_ept = new Ept()); }
+			get
+			{
+				if (_ept == null)
+				{
+					_ept = new Ept(Model);
+					RaisePropertyChanged("Ept");
+				}
+
+				return _ept;
+			}
 
 			set
 			{
@@ -128,7 +140,7 @@
 		{
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
-			return Equals(other._name, _name);
+			return Equals(other.Model.Name, Model.Name);
 		}
 
 		public override bool Equals(object obj)
@@ -141,7 +153,7 @@
 
 		public override int GetHashCode()
 		{
-			return (_name != null ? _name.GetHashCode() : 0);
+			return (Model.Name != null ? Model.Name.GetHashCode() : 0);
 		}
 
 		public static bool operator ==(Design left, Design right)
