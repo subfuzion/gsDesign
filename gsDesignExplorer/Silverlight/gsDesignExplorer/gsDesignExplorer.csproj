@@ -103,6 +103,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DesignScript.cs" />
+    <Compile Include="Models\LowerBoundSpending.cs" />
+    <Compile Include="Models\LowerBoundTesting.cs" />
+    <Compile Include="Models\TestType.cs" />
     <Compile Include="ViewModels\Design\Design.cs" />
     <Compile Include="Models\DesignCollection.cs" />
     <Compile Include="ViewModels\Design\Ept.cs" />
@@ -120,6 +123,9 @@
       <DependentUpon>AppViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EptSpacing.cs" />
+    <Compile Include="ViewModels\Design\LowerBoundSpendingValueConverter.cs" />
+    <Compile Include="ViewModels\Design\LowerBoundTestingValueConverter.cs" />
+    <Compile Include="ViewModels\Design\TestTypeValueConverter.cs" />
     <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
