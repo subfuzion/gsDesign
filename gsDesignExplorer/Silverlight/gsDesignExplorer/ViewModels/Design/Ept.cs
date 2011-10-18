@@ -87,9 +87,9 @@
 					Model.Beta = 1.0 - (power / 100.0);
 				}
 
-				// because of slider to spinner binding, we need this out
-				// here, otherwise slider doesn't always update properly
-				// (depending on when the mouse button is actually released)
+				// notifications out here inside of previous block
+				// to force the slider to re-update if attempting to
+				// set value too low.
 				RaisePropertyChanged("Power");
 				RaisePropertyChanged("MinimumValidPower");
 				RaisePropertyChanged("MinimumPowerDisplay");

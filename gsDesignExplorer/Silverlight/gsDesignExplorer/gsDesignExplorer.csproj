@@ -102,7 +102,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\DesignScript.cs" />
+    <Compile Include="Models\DesignScriptGenerator.cs" />
+    <Compile Include="ViewModels\Design\DesignScript.cs" />
     <Compile Include="Models\GSEpt.cs" />
     <Compile Include="Models\LowerBoundSpending.cs" />
     <Compile Include="Models\LowerBoundTesting.cs" />

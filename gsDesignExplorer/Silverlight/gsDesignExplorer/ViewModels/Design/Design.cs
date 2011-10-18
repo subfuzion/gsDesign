@@ -14,7 +14,7 @@
 			_designScript = new DesignScript {Design = this};
 		}
 
-		private GSDesign Model
+		internal GSDesign Model
 		{
 			get { return _gsDesign ?? (_gsDesign = new GSDesign()); }
 		}

@@ -1,14 +1,14 @@
-﻿namespace gsDesign.Explorer.Models
+﻿namespace gsDesign.Explorer.ViewModels.Design
 {
-	using System;
 	using System.ComponentModel;
 	using System.ComponentModel.DataAnnotations;
-	using System.IO;
+	using Models;
 	using Subfuzion.Helpers;
-	using ViewModels.Design;
 
 	public class DesignScript : NotifyPropertyChangedBase
 	{
+		private DesignScriptGenerator _designScriptGenerator = new DesignScriptGenerator();
+
 		#region Design property
 
 		private Design _design;
@@ -56,30 +56,6 @@
 
 		#endregion // Output
 
-		#region GeneratedTimestamp property
-
-		private DateTime _generatedTimestamp;
-
-		[Display(Name = "GeneratedTimestamp",
-			Description = "")]
-		public DateTime GeneratedTimestamp
-		{
-			get { return _generatedTimestamp; }
-
-			set
-			{
-				if (_generatedTimestamp != value)
-				{
-					_generatedTimestamp = value;
-					RaisePropertyChanged("GeneratedTimestamp");
-				}
-			}
-		}
-
-		#endregion // GeneratedTimestamp
-
-
-
 		private void RemoveHandlers()
 		{
 			if (Design == null) return;
@@ -105,31 +81,9 @@
 		{
 			if (Design == null) return null;
 
-			GeneratedTimestamp = DateTime.Now;
-
-			var writer = new StringWriter();
-
-			AppendHeader(writer);
-
-			return writer.ToString();
+			return _designScriptGenerator.GenerateScript(Design.Model);
 		}
 
-		private void AppendHeader(TextWriter writer)
-		{
-			AppendComment(writer, "This R script was created via an export of a group sequential design");
-			AppendComment(writer, "developed in gsDesign Explorer version 2.0 on {0}", GeneratedTimestamp.ToString());
-			writer.WriteLine();
-			writer.WriteLine("###");
-			AppendComment(writer, "Design      : {0}", Design.Name);
-			AppendComment(writer, "Description : {0}", Design.Description);
-			writer.WriteLine("###");
-			writer.WriteLine();
-		}
-
-		private void AppendComment(TextWriter writer, string comment, params string[] args)
-		{
-			writer.WriteLine("# {0}", string.Format(comment, args));
-		}
 
 
 	}
