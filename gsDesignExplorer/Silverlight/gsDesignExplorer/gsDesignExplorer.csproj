@@ -103,6 +103,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DesignScriptGenerator.cs" />
+    <Compile Include="Models\GSSpendingFunctions.cs" />
     <Compile Include="ViewModels\Design\DesignScript.cs" />
     <Compile Include="Models\GSEpt.cs" />
     <Compile Include="Models\LowerBoundSpending.cs" />
@@ -129,6 +130,9 @@
     <Compile Include="Models\EptSpacing.cs" />
     <Compile Include="ViewModels\Design\LowerBoundSpendingValueConverter.cs" />
     <Compile Include="ViewModels\Design\LowerBoundTestingValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SampleSize.cs" />
+    <Compile Include="ViewModels\Design\SampleSizeTypeValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SpendingFunctions.cs" />
     <Compile Include="ViewModels\Design\TestTypeValueConverter.cs" />
     <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />

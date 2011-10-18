@@ -92,6 +92,64 @@
 
 		#endregion // Ept
 
+		#region SampleSize property
+
+		private SampleSize _sampleSize;
+
+		public SampleSize SampleSize
+		{
+			get
+			{
+				if (_sampleSize == null)
+				{
+					_sampleSize = new SampleSize(Model);
+					RaisePropertyChanged("SampleSize");
+				}
+
+				return _sampleSize;
+			}
+
+			set
+			{
+				if (_sampleSize != value)
+				{
+					_sampleSize = value;
+					RaisePropertyChanged("SampleSize");
+				}
+			}
+		}
+
+		#endregion // SampleSize
+
+		#region SpendingFunctions property
+
+		private SpendingFunctions _spendingFunctions;
+
+		public SpendingFunctions SpendingFunctions
+		{
+			get
+			{
+				if (_spendingFunctions == null)
+				{
+					_spendingFunctions = new SpendingFunctions(Model);
+					RaisePropertyChanged("SpendingFunctions");
+				}
+
+				return _spendingFunctions;
+			}
+
+			set
+			{
+				if (_spendingFunctions != value)
+				{
+					_spendingFunctions = value;
+					RaisePropertyChanged("SpendingFunctions");
+				}
+			}
+		}
+
+		#endregion // SpendingFunctions
+
 		#region DesignScript property
 
 		private DesignScript _designScript;

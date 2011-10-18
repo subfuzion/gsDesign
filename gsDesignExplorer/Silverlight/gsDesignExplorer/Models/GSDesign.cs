@@ -66,5 +66,21 @@
 
 		#endregion // SampleSize
 
+		#region SpendingFunctions property
+
+		private GSSpendingFunctions _spendingFunctions;
+
+		public GSSpendingFunctions SpendingFunctions
+		{
+			get { return _spendingFunctions ?? (_spendingFunctions = new GSSpendingFunctions()); }
+
+			set
+			{
+				_spendingFunctions = value;
+			}
+		}
+
+		#endregion // SpendingFunctions
+
 	}
 }

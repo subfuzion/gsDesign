@@ -5,6 +5,8 @@
 
 	public class DesignScriptGenerator
 	{
+		private StringWriter _writer;
+
 		public string GenerateScript(GSDesign design)
 		{
 			if (design == null) return null;
@@ -13,11 +15,24 @@
 
 			GeneratedTimestamp = DateTime.Now;
 
-			var writer = new StringWriter();
+			_writer = new StringWriter();
 
-			AppendHeader(writer);
+			AppendHeader();
+			AppendK();
+			AppendTestType();
+			AppendAlpha();
+			AppendBeta();
+			AppendNFix();
 
-			return writer.ToString();
+			var script = _writer.ToString();
+			_writer.Close();
+			_writer = null;
+			return script;
+		}
+
+		private StringWriter Writer
+		{
+			get { return _writer; }
 		}
 
 		private GSDesign Design { get; set; }
@@ -38,21 +53,51 @@
 
 		#endregion // GeneratedTimestamp
 
-		private void AppendHeader(TextWriter writer)
+		private void AppendComment(string comment, params string[] args)
 		{
-			AppendComment(writer, "This R script was created via an export of a group sequential design");
-			AppendComment(writer, "developed in gsDesign Explorer version 2.0 on {0}", GeneratedTimestamp.ToString());
-			writer.WriteLine();
-			writer.WriteLine("###");
-			AppendComment(writer, "Design      : {0}", Design.Name);
-			AppendComment(writer, "Description : {0}", Design.Description);
-			writer.WriteLine("###");
-			writer.WriteLine();
+			Writer.WriteLine("# {0}", string.Format(comment, args));
 		}
 
-		private void AppendComment(TextWriter writer, string comment, params string[] args)
+		private void AppendAssignment(object property, object value)
 		{
-			writer.WriteLine("# {0}", string.Format(comment, args));
+			Writer.WriteLine("{0} <- {1}", property, value);
+		}
+
+		private void AppendHeader()
+		{
+			AppendComment("This R script was created via an export of a group sequential design");
+			AppendComment("developed in gsDesign Explorer version 2.0 on {0}", GeneratedTimestamp.ToString());
+			Writer.WriteLine();
+			Writer.WriteLine("###");
+			AppendComment("Design      : {0}", Design.Name);
+			AppendComment("Description : {0}", Design.Description);
+			Writer.WriteLine("###");
+			Writer.WriteLine();
+		}
+
+		private void AppendK()
+		{
+			AppendAssignment("k", Design.Ept.K);
+		}
+
+		private void AppendTestType()
+		{
+			AppendAssignment("test.type", Design.SpendingFunctions.TestTypeCode);
+		}
+	
+		private void AppendAlpha()
+		{
+			AppendAssignment("alpha", Math.Round(Design.Ept.Alpha, 6));
+		}
+
+		private void AppendBeta()
+		{
+			AppendAssignment("beta", Math.Round(Design.Ept.Beta, 6));
+		}
+
+		private void AppendNFix()
+		{
+			AppendAssignment("n.fix", Design.SampleSize.NFix);
 		}
 	}
 }

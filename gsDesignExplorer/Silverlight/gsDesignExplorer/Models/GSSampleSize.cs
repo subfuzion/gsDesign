@@ -2,6 +2,28 @@
 {
 	public class GSSampleSize
 	{
+		#region NFix property
+
+		public string NFix
+		{
+			get
+			{
+				if (SampleSizeType == SampleSizeType.UserInput)
+					return FixedDesignSampleSize.ToString();
+
+				if (SampleSizeType == SampleSizeType.Binomial)
+					return "(not implemented yet)";
+
+				if (SampleSizeType == SampleSizeType.TimeToEvent)
+					return "(not implemented yet)";
+
+				return null;
+			}
+		}
+
+		#endregion // NFix
+
+
 		#region SampleSizeType property
 
 		private SampleSizeType _sampleSizeType;
@@ -12,10 +34,7 @@
 
 			set
 			{
-				if (_sampleSizeType != value)
-				{
-					_sampleSizeType = value;
-				}
+				_sampleSizeType = value;
 			}
 		}
 

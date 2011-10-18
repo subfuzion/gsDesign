@@ -62,6 +62,8 @@
 
 			Design.PropertyChanged -= OnDesignPropertiesChanged;
 			Design.Ept.PropertyChanged -= OnDesignPropertiesChanged;
+			Design.SampleSize.PropertyChanged -= OnDesignPropertiesChanged;
+			Design.SpendingFunctions.PropertyChanged -= OnDesignPropertiesChanged;
 		}
 
 		private void AddHandlers()
@@ -70,6 +72,8 @@
 
 			Design.PropertyChanged += OnDesignPropertiesChanged;
 			Design.Ept.PropertyChanged += OnDesignPropertiesChanged;
+			Design.SampleSize.PropertyChanged += OnDesignPropertiesChanged;
+			Design.SpendingFunctions.PropertyChanged += OnDesignPropertiesChanged;
 		}
 
 		private void OnDesignPropertiesChanged(object sender, PropertyChangedEventArgs e)

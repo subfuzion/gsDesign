@@ -11,7 +11,7 @@
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is TestType == false)
+			if (value is LowerBoundTesting == false)
 			{
 				throw new NotImplementedException();
 			}

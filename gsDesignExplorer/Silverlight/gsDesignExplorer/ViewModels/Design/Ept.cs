@@ -17,6 +17,7 @@
 
 			Error = 2.5;
 			Power = 90.0;
+			IntervalCount = 2;
 		}
 
 		private GSEpt Model
@@ -127,17 +128,15 @@
 
 		#region IntervalCount property
 
-		private int _intervalCount = 1;
-
 		public int IntervalCount
 		{
-			get { return _intervalCount; }
+			get { return Model.K - 1; }
 
 			set
 			{
-				if (_intervalCount != value && value >= MinimumIntervalCount && value <= MaximumIntervalCount)
+				if (Model.K != value + 1 && value >= MinimumIntervalCount && value <= MaximumIntervalCount)
 				{
-					_intervalCount = value;
+					Model.K = value + 1;
 					RaisePropertyChanged("IntervalCount");
 					UpdateTimingTable();
 				}

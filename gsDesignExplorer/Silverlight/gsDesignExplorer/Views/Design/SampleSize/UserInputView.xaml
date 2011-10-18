@@ -5,8 +5,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	mc:Ignorable="d">
-	
-	<Grid x:Name="LayoutRoot" Background="White">
+
+	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 			<StackPanel Orientation="Vertical">
 				<Border BorderBrush="#eee" BorderThickness="1">
@@ -30,7 +30,8 @@
 							</Grid.RowDefinitions>
 
 							<TextBlock Grid.Row="0" Grid.Column="0" Text="Fixed Design Sample Size" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22" Minimum="1" Value="1"/>
+							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22" Minimum="1"
+												   Value="{Binding Path=CurrentDesign.SampleSize.FixedDesignSampleSize, Mode=TwoWay}"/>
 						</Grid>
 					</Grid>
 				</Border>

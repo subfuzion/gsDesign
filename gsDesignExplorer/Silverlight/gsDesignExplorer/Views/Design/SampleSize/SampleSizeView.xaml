@@ -4,25 +4,26 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-    xmlns:SampleSize="clr-namespace:gsDesign.Explorer.Views.Design.SampleSize"
+	xmlns:SampleSize="clr-namespace:gsDesign.Explorer.Views.Design.SampleSize"
+	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
 	mc:Ignorable="d"
 	d:DesignHeight="800" d:DesignWidth="448">
-	
+
 	<UserControl.Resources>
+		<Design:SampleSizeTypeValueConverter x:Key="sampleSizeTypeValueConverter"/>
 	</UserControl.Resources>
 	
-	<Grid x:Name="LayoutRoot" Background="White">
-		<sdk:TabControl x:Name="SampleSizeTabControl">
-			<sdk:TabItem Header="User Input">
+	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
+		<sdk:TabControl x:Name="SampleSizeTabControl" SelectedIndex="{Binding Path=CurrentDesign.SampleSize.CurrentSampleSizeType, Mode=TwoWay}">
+			<sdk:TabItem Header="{Binding Path=CurrentDesign.SampleSize.SampleSizeTypes[0]}">
 				<SampleSize:UserInputView />
 			</sdk:TabItem>
-			
-			<sdk:TabItem Header="Binomial">
+
+			<sdk:TabItem Header="{Binding Path=CurrentDesign.SampleSize.SampleSizeTypes[1]}">
 				<SampleSize:BinomialView />
 			</sdk:TabItem>
-			
-			<sdk:TabItem Header="Time to Event">
+
+			<sdk:TabItem Header="{Binding Path=CurrentDesign.SampleSize.SampleSizeTypes[2]}">
 				<SampleSize:TimeToEventView />
 			</sdk:TabItem>
 		</sdk:TabControl>
