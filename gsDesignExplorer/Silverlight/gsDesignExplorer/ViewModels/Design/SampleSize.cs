@@ -13,9 +13,6 @@
 		public SampleSize(GSDesign design)
 		{
 			_design = design;
-
-			SampleSizeType = SampleSizeType.UserInput;
-			FixedDesignSampleSize = 1;
 		}
 
 		private GSSampleSize Model
@@ -49,7 +46,6 @@
 		}
 
 		#endregion // CurrentSampleSizeType
-
 
 		#region SampleSizeType property
 
@@ -92,7 +88,7 @@
 		#region RandomizationRatio property
 
 		[Display(Name = "Randomization Ratio",
-			Description = "Experimental / control relative sample size")]
+			Description = "Experimental/control relative sample size:\n0 \u003C Ratio \u2264 1000")]
 		public double RandomizationRatio
 		{
 			get { return Model.RandomizationRatio; }
@@ -153,8 +149,83 @@
 
 		#endregion // MaximumRandomizationRatio
 
+		#region ControlEventRate property
 
+		 [Display(Name = "Control",
+			Description = "Control event rate:\n0 \u003C Control \u003C 1")]
+		public double ControlEventRate
+		{
+			get { return Model.ControlEventRate; }
 
+			set
+			{
+				if (Math.Abs(Model.ControlEventRate - value) > double.Epsilon)
+				{
+					Model.ControlEventRate = value;
+					RaisePropertyChanged("ControlEventRate");
+				}
+			}
+		}
+
+		#endregion // ControlEventRate
+
+		#region MinimumControlEventRate property
+
+		public double MinimumControlEventRate
+		{
+			get { return 0.0001; }
+		}
+
+		#endregion // MinimumControlEventRate
+
+		#region MaximumControlEventRate property
+
+		public double MaximumControlEventRate
+		{
+			get { return 0.9999; }
+		}
+
+		#endregion // MaximumControlEventRate
+
+		#region ExperimentalEventRate property
+
+		private double _experimentalEventRate;
+
+		 [Display(Name = "Experimental",
+			Description = "Experimental event rate:\n0 \u003C Experimental \u003C 1")]
+		public double ExperimentalEventRate
+		{
+			get { return _experimentalEventRate; }
+
+			set
+			{
+				if (Math.Abs(_experimentalEventRate - value) > double.Epsilon)
+				{
+					_experimentalEventRate = value;
+					RaisePropertyChanged("ExperimentalEventRate");
+				}
+			}
+		}
+
+		#endregion // ExperimentalEventRate
+
+		#region MinimumExperimentalEventRate property
+
+		public double MinimumExperimentalEventRate
+		{
+			get { return 0.0001; }
+		}
+
+		 #endregion // MinimumExperimentalEventRate
+
+		#region MaximumExperimentalEventRate property
+
+		public double MaximumExperimentalEventRate
+		{
+			get { return 0.9999; }
+		}
+
+		#endregion // MaximumExperimentalEventRate
 
 	}
 }

@@ -42,7 +42,7 @@
 
 		#region FixedDesignSampleSize property
 
-		private int _fixedDesignSampleSize;
+		private int _fixedDesignSampleSize = 1;
 
 		public int FixedDesignSampleSize
 		{
@@ -58,7 +58,7 @@
 
 		#region RandomizationRatio property
 
-		private double _randomizationRatio;
+		private double _randomizationRatio = 1.0;
 
 		public double RandomizationRatio
 		{
@@ -71,6 +71,23 @@
 		}
 
 		#endregion // RandomizationRatio
+
+		#region ControlEventRate property
+
+		private double _controlEventRate = 0.15;
+
+		public double ControlEventRate
+		{
+			get { return _controlEventRate; }
+
+			set
+			{
+				_controlEventRate = value;
+			}
+		}
+
+		#endregion // ControlEventRate
+
 
 	}
 }

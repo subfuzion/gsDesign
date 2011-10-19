@@ -14,10 +14,6 @@
 		public Ept(GSDesign design)
 		{
 			_design = design;
-
-			Error = 2.5;
-			Power = 90.0;
-			IntervalCount = 2;
 		}
 
 		private GSEpt Model
@@ -28,7 +24,7 @@
 		#region Error property
 
 		[Display(Name = "Type I Error (1-sided \u03B1 x 100)",
-			Description = "0 < Type I Error < Power < 100")]
+			Description = "0 \u2264 Type I Error \u003C Power \u2264 100")]
 		public double Error
 		{
 			get { return Math.Round(Model.Alpha * 100, 4); }
@@ -45,7 +41,7 @@
 
 					UpdatePower();
 					RaisePropertyChanged("MinimumValidPower");
-					RaisePropertyChanged("MinimumPowerDisplay");
+					RaisePropertyChanged("MinimumPowerDisplayText");
 				}
 			}
 		}
@@ -75,7 +71,7 @@
 		private double _power;
 
 		[Display(Name = "Power (100 x [1-\u03B2])",
-			Description = "0 < Type I Error < Power < 100")]
+			Description = "0 \u2264 Type I Error \u003C Power \u2264 100")]
 		public double Power
 		{
 			get { return Math.Round(100.0 * (1.0 - Model.Beta), 1); }
@@ -93,7 +89,7 @@
 				// set value too low.
 				RaisePropertyChanged("Power");
 				RaisePropertyChanged("MinimumValidPower");
-				RaisePropertyChanged("MinimumPowerDisplay");
+				RaisePropertyChanged("MinimumPowerDisplayText");
 			}
 		}
 
@@ -117,9 +113,9 @@
 
 		#endregion // MaximumValidPower
 
-		#region MinimumPowerDisplay
+		#region MinimumPowerDisplayText
 
-		public string MinimumPowerDisplay
+		public string MinimumPowerDisplayText
 		{
 			get { return string.Format("min={0}", MinimumValidPower); }
 		}
@@ -129,7 +125,7 @@
 		#region IntervalCount property
 
 		[Display(Name = "Number of interim analyses",
-			Description = "Count must be > 0")]
+			Description = "Number \u003E 0")]
 		public int IntervalCount
 		{
 			get { return Model.K - 1; }
@@ -220,7 +216,8 @@
 
 		private ObservableCollection<Timing> _timingTable = new ObservableCollection<Timing>
 		    {
-		        new Timing {Index = 1, Value = 0.5},
+		        new Timing {Index = 1, Value = 0.3333},
+		        new Timing {Index = 2, Value = 0.6667},
 		    };
 
 		public ObservableCollection<Timing> TimingTable
@@ -306,6 +303,12 @@
 				}
 			}
 
+			Model.Timing.Clear();
+			foreach (var timing in TimingTable)
+			{
+				Model.Timing.Add(timing.Value);
+			}
+
 			RaisePropertyChanged("TimingTable");
 		}
 
@@ -318,8 +321,6 @@
 
 		private int _index;
 
-		[Display(Name = "Index",
-			Description = "")]
 		public int Index
 		{
 			get { return _index; }
@@ -340,8 +341,6 @@
 
 		private double _value;
 
-		[Display(Name = "Value",
-			Description = "")]
 		public double Value
 		{
 			get { return _value; }
