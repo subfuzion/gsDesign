@@ -23,7 +23,6 @@
 
 		#endregion // NFix
 
-
 		#region SampleSizeType property
 
 		private SampleSizeType _sampleSizeType;
@@ -103,7 +102,6 @@
 		}
 
 		#endregion // NonInferiorityTesting
-
 
 		#region Delta property
 

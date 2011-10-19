@@ -230,8 +230,8 @@
 		#region NonInferiorityTesting property
 
 		 [Display(Name = "",
-			Description = "Specify either 'Superiority' or" +
-			              "'Non-Inferiority - superiority with margin' along with the delta")]
+			Description = "Specify either 'Superiority' or\n" +
+			              "'Non-Inferiority - superiority with margin'")]
 		public BinomialNonInferiorityTesting NonInferiorityTesting
 		{
 			get { return Model.NonInferiorityTesting; }
@@ -253,8 +253,8 @@
 
 		#region Delta property
 
-		// [Display(Name = "Delta",
-		//	Description = "Margin for treatment difference")]
+		 [Display(Name = "Delta",
+			Description = "Margin for treatment difference")]
 		public double Delta
 		{
 			get { return Model.Delta; }
@@ -299,7 +299,26 @@
 
 		#endregion // MaximumDelta
 
+		#region BinomialSampleSize property
 
+		private int _binomialSampleSize = 0;
 
+		 [Display(Name = "Sample Size",
+			Description = "Can't be set")]
+		public int BinomialSampleSize
+		{
+			get { return _binomialSampleSize; }
+
+			set
+			{
+				if (_binomialSampleSize != value)
+				{
+					_binomialSampleSize = value;
+					RaisePropertyChanged("BinomialSampleSize");
+				}
+			}
+		}
+
+		#endregion // BinomialSampleSize
 	}
 }

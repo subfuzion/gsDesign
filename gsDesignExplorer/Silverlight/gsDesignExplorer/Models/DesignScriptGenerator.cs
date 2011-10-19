@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.IO;
+	using System.Text;
 
 	public class DesignScriptGenerator
 	{
@@ -22,7 +23,27 @@
 			AppendTestType();
 			AppendAlpha();
 			AppendBeta();
+
+			Writer.WriteLine("### still in work ###");
 			AppendNFix();
+			AppendAssignment("FixedDesignSampleSize", Design.SampleSize.FixedDesignSampleSize);
+			AppendAssignment("RandomizationRatio", Design.SampleSize.RandomizationRatio);
+			AppendAssignment("ControlEventRate", Design.SampleSize.ControlEventRate);
+			AppendAssignment("NonInferiorityTesting", Design.SampleSize.NonInferiorityTesting.ToString());
+			AppendAssignment("Delta", Design.SampleSize.Delta);
+			Writer.WriteLine("###");
+			AppendAssignment("timing", "[TBD]");
+			AppendAssignment("sfu", "[TBD]");
+			AppendAssignment("sfupar", "[TBD]");
+			AppendAssignment("sfl", "[TBD]");
+			AppendAssignment("sflpar", "[TBD]");
+			AppendAssignment("endpoint", "[TBD]");
+			Writer.WriteLine("###");
+
+			Writer.WriteLine();
+			AppendGSDesignFunction();
+			Writer.WriteLine();
+			AppendPlot();
 
 			var script = _writer.ToString();
 			_writer.Close();
@@ -98,6 +119,31 @@
 		private void AppendNFix()
 		{
 			AppendAssignment("n.fix", Design.SampleSize.NFix);
+		}
+
+		private void AppendGSDesignFunction()
+		{
+			var sb = new StringBuilder();
+			sb.Append("gsDesign(k=k, test.type=test.type, alpha=alpha, beta=beta, n.fix=n.fix\n")
+				.Append("  timing=timing, sfu=sfu, sfupar=sfupar, sfl=sfl, sflpar=sflpar, endpoint=endpoint)");
+
+			AppendAssignment(Design.Name, sb.ToString());
+
+			Writer.WriteLine();
+
+			AppendAssignment("fixedDesign", "list(events = 1, sampleSize = 0)");
+		}
+
+		private void AppendPlot()
+		{
+			AppendComment("Boundaries Plot");
+			Writer.WriteLine("plot({0}", Design.Name);
+			Writer.WriteLine("  plottype=1,");
+			Writer.WriteLine("  base=TRUE,");
+			Writer.WriteLine("  col=c(\"black\", \"black\"),");
+			Writer.WriteLine("  lwd=c(1, 1),");
+			Writer.WriteLine("  lty=c(\"solid\", \"solid\"),");
+			Writer.WriteLine("  dgt=c(2, 2))");
 		}
 	}
 }

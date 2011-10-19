@@ -140,8 +140,14 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Sample Size" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   FontStyle="Italic"/>
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="binomialSampleSize"
+												   IsEnabled="False"
+												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialSampleSize, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2"
+												   Target="{Binding ElementName=binomialSampleSize}" />
 						</Grid>
 					</Grid>
 				</Border>
