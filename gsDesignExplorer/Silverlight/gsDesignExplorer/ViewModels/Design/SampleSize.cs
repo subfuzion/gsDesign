@@ -13,9 +13,6 @@
 		public SampleSize(GSDesign design)
 		{
 			_design = design;
-
-			SampleSizeType = SampleSizeType.UserInput;
-			FixedDesignSampleSize = 1;
 		}
 
 		private GSSampleSize Model
@@ -49,7 +46,6 @@
 		}
 
 		#endregion // CurrentSampleSizeType
-
 
 		#region SampleSizeType property
 
@@ -92,7 +88,7 @@
 		#region RandomizationRatio property
 
 		[Display(Name = "Randomization Ratio",
-			Description = "Experimental / control relative sample size")]
+			Description = "Experimental/control relative sample size:\n0 \u003C Ratio \u2264 1000")]
 		public double RandomizationRatio
 		{
 			get { return Model.RandomizationRatio; }
@@ -153,6 +149,155 @@
 
 		#endregion // MaximumRandomizationRatio
 
+		#region ControlEventRate property
+
+		 [Display(Name = "Control",
+			Description = "Control event rate:\n0 \u003C Control \u003C 1")]
+		public double ControlEventRate
+		{
+			get { return Model.ControlEventRate; }
+
+			set
+			{
+				if (Math.Abs(Model.ControlEventRate - value) > double.Epsilon)
+				{
+					Model.ControlEventRate = value;
+					RaisePropertyChanged("ControlEventRate");
+				}
+			}
+		}
+
+		#endregion // ControlEventRate
+
+		#region MinimumControlEventRate property
+
+		public double MinimumControlEventRate
+		{
+			get { return 0.0001; }
+		}
+
+		#endregion // MinimumControlEventRate
+
+		#region MaximumControlEventRate property
+
+		public double MaximumControlEventRate
+		{
+			get { return 0.9999; }
+		}
+
+		#endregion // MaximumControlEventRate
+
+		#region ExperimentalEventRate property
+
+		private double _experimentalEventRate;
+
+		 [Display(Name = "Experimental",
+			Description = "Experimental event rate:\n0 \u003C Experimental \u003C 1")]
+		public double ExperimentalEventRate
+		{
+			get { return _experimentalEventRate; }
+
+			set
+			{
+				if (Math.Abs(_experimentalEventRate - value) > double.Epsilon)
+				{
+					_experimentalEventRate = value;
+					RaisePropertyChanged("ExperimentalEventRate");
+				}
+			}
+		}
+
+		#endregion // ExperimentalEventRate
+
+		#region MinimumExperimentalEventRate property
+
+		public double MinimumExperimentalEventRate
+		{
+			get { return 0.0001; }
+		}
+
+		 #endregion // MinimumExperimentalEventRate
+
+		#region MaximumExperimentalEventRate property
+
+		public double MaximumExperimentalEventRate
+		{
+			get { return 0.9999; }
+		}
+
+		#endregion // MaximumExperimentalEventRate
+
+		#region NonInferiorityTesting property
+
+		 [Display(Name = "",
+			Description = "Specify either 'Superiority' or" +
+			              "'Non-Inferiority - superiority with margin' along with the delta")]
+		public BinomialNonInferiorityTesting NonInferiorityTesting
+		{
+			get { return Model.NonInferiorityTesting; }
+
+			set
+			{
+				if (Model.NonInferiorityTesting != value)
+				{
+					Model.NonInferiorityTesting = value;
+					RaisePropertyChanged("NonInferiorityTesting");
+
+					Delta = 0.0;
+					RaisePropertyChanged("DeltaIsEnabled");
+				}
+			}
+		}
+
+		#endregion // NonInferiorityTesting
+
+		#region Delta property
+
+		// [Display(Name = "Delta",
+		//	Description = "Margin for treatment difference")]
+		public double Delta
+		{
+			get { return Model.Delta; }
+
+			set
+			{
+				if (Math.Abs(Model.Delta - value) > double.Epsilon)
+				{
+					Model.Delta = value;
+					RaisePropertyChanged("Delta");
+					RaisePropertyChanged("DeltaIsEnabled");
+				}
+			}
+		}
+
+		#endregion // Delta
+
+		#region DeltaIsEnabled property
+
+		public bool DeltaIsEnabled
+		{
+			get { return Model.NonInferiorityTesting == BinomialNonInferiorityTesting.SuperiorityWithMargin; }
+		}
+
+		#endregion // DeltaIsEnabled
+
+		#region MinimumDelta property
+
+		public double MinimumDelta
+		{
+			get { return -0.0101; }
+		}
+
+		#endregion // MinimumDelta
+
+		#region MaximumDelta property
+
+		public double MaximumDelta
+		{
+			get { return 0.9899; }
+		}
+
+		#endregion // MaximumDelta
 
 
 

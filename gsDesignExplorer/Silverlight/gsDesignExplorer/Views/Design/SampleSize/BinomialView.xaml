@@ -5,7 +5,14 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
 	mc:Ignorable="d">
+	
+	<UserControl.Resources>
+		<!-- duplicated because of bug in the designer (not runtime) -->
+		<Design:BinomialNonInferiorityTestingValueConverter x:Name="testingValueConverter" />
+		<Design:BinomialNonInferiorityTestingValueConverter x:Name="testingValueConverter2" />
+	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Margin="0" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee">
@@ -44,11 +51,27 @@
 												   Value="{Binding Path=CurrentDesign.SampleSize.RandomizationRatio, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=randomizationRatioSpinner}"/>
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Control" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=controlSpinner}"/>
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="controlSpinner"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumControlEventRate, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumControlEventRate, Mode=OneWay}"
+												   Increment="0.001"
+												   DecimalPlaces="4"
+												   Value="{Binding Path=CurrentDesign.SampleSize.ControlEventRate, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=controlSpinner}" />
 
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="Experimental" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=experimentalSpinner}"/>
+							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="experimentalSpinner"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumExperimentalEventRate, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumExperimentalEventRate, Mode=OneWay}"
+												   Increment="0.001"
+												   DecimalPlaces="4"
+												   Value="{Binding Path=CurrentDesign.SampleSize.ExperimentalEventRate, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=experimentalSpinner}" />
 						</Grid>
 					</Grid>
 				</Border>
@@ -74,13 +97,25 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" ItemsSource="{Binding}" SelectedIndex="0">
-								<ComboBoxItem Content="Superiority" />
-								<ComboBoxItem Content="Non-inferiority / sup with margin" />
-							</ComboBox>
+							<ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="4"
+									  x:Name="nonInferiorityComboBox"
+									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=OneTime, Converter={StaticResource testingValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=TwoWay, Converter={StaticResource testingValueConverter2}}"
+									  />
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=nonInferiorityComboBox}" />
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Delta" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=deltaSpinner}"/>
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="deltaSpinner"
+												   IsEnabled="{Binding Path=CurrentDesign.SampleSize.DeltaIsEnabled, Mode=OneWay}"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumDelta, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumDelta, Mode=OneWay}"
+												   DecimalPlaces="4"
+												   Increment="0.1"
+												   Value="{Binding Path=CurrentDesign.SampleSize.Delta, Mode=TwoWay}"
+												   />
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=deltaSpinner}" />
 						</Grid>
 					</Grid>
 				</Border>

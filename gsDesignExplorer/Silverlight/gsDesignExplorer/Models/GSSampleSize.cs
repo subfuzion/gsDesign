@@ -42,7 +42,7 @@
 
 		#region FixedDesignSampleSize property
 
-		private int _fixedDesignSampleSize;
+		private int _fixedDesignSampleSize = 1;
 
 		public int FixedDesignSampleSize
 		{
@@ -58,7 +58,7 @@
 
 		#region RandomizationRatio property
 
-		private double _randomizationRatio;
+		private double _randomizationRatio = 1.0;
 
 		public double RandomizationRatio
 		{
@@ -71,6 +71,55 @@
 		}
 
 		#endregion // RandomizationRatio
+
+		#region ControlEventRate property
+
+		private double _controlEventRate = 0.15;
+
+		public double ControlEventRate
+		{
+			get { return _controlEventRate; }
+
+			set
+			{
+				_controlEventRate = value;
+			}
+		}
+
+		#endregion // ControlEventRate
+
+		#region NonInferiorityTesting property
+
+		private BinomialNonInferiorityTesting _nonInferiorityTesting = BinomialNonInferiorityTesting.Superiority;
+
+		public BinomialNonInferiorityTesting NonInferiorityTesting
+		{
+			get { return _nonInferiorityTesting; }
+
+			set
+			{
+				_nonInferiorityTesting = value;
+			}
+		}
+
+		#endregion // NonInferiorityTesting
+
+
+		#region Delta property
+
+		private double _delta = 0;
+
+		public double Delta
+		{
+			get { return _delta; }
+
+			set
+			{
+				_delta = value;
+			}
+		}
+
+		#endregion // Delta
 
 	}
 }

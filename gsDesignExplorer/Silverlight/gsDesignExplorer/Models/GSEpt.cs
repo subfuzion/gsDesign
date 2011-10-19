@@ -6,7 +6,7 @@
 	{
 		#region Alpha property
 
-		private double _alpha;
+		private double _alpha = 0.025;
 
 		public double Alpha
 		{
@@ -22,7 +22,7 @@
 
 		#region Beta property
 
-		private double _beta;
+		private double _beta = 0.1;
 
 		public double Beta
 		{
@@ -38,7 +38,7 @@
 
 		#region K property
 
-		private int _k;
+		private int _k = 3;
 
 		public int K
 		{
@@ -54,11 +54,15 @@
 
 		#region Timing property
 
-		private List<double> _timing;
+		private List<double> _timing = new List<double>
+		                               {
+		                               	0.3333,
+		                               	0.6667,
+		                               };
 
 		public List<double> Timing
 		{
-			get { return _timing ?? (_timing = new List<double>()); }
+			get { return _timing ?? (_timing = new List<double>{0.3333, 0.6667}); }
 
 			set
 			{
