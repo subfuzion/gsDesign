@@ -230,7 +230,7 @@
 		#region NonInferiorityTesting property
 
 		 [Display(Name = "",
-			Description = "Specify either 'Superiority' or" +
+			Description = "Specify either 'Superiority' or\n" +
 			              "'Non-Inferiority - superiority with margin' along with the delta")]
 		public BinomialNonInferiorityTesting NonInferiorityTesting
 		{
