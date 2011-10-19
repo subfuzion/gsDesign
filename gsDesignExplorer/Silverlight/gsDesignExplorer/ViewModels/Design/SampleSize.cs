@@ -151,8 +151,8 @@
 
 		#region ControlEventRate property
 
-		 [Display(Name = "Control",
-			Description = "Control event rate:\n0 \u003C Control \u003C 1")]
+		[Display(Name = "Control",
+		   Description = "Control event rate:\n0 \u003C Control \u003C 1")]
 		public double ControlEventRate
 		{
 			get { return Model.ControlEventRate; }
@@ -191,8 +191,8 @@
 
 		private double _experimentalEventRate;
 
-		 [Display(Name = "Experimental",
-			Description = "Experimental event rate:\n0 \u003C Experimental \u003C 1")]
+		[Display(Name = "Experimental",
+		   Description = "Experimental event rate:\n0 \u003C Experimental \u003C 1")]
 		public double ExperimentalEventRate
 		{
 			get { return _experimentalEventRate; }
@@ -216,7 +216,7 @@
 			get { return 0.0001; }
 		}
 
-		 #endregion // MinimumExperimentalEventRate
+		#endregion // MinimumExperimentalEventRate
 
 		#region MaximumExperimentalEventRate property
 
@@ -229,9 +229,9 @@
 
 		#region NonInferiorityTesting property
 
-		 [Display(Name = "",
-			Description = "Specify either 'Superiority' or\n" +
-			              "'Non-Inferiority - superiority with margin'")]
+		[Display(Name = "",
+		   Description = "Specify either 'Superiority' or\n" +
+						 "'Non-Inferiority - superiority with margin'")]
 		public BinomialNonInferiorityTesting NonInferiorityTesting
 		{
 			get { return Model.NonInferiorityTesting; }
@@ -253,8 +253,8 @@
 
 		#region Delta property
 
-		 [Display(Name = "Delta",
-			Description = "Margin for treatment difference")]
+		[Display(Name = "Delta",
+		   Description = "Margin for treatment difference")]
 		public double Delta
 		{
 			get { return Model.Delta; }
@@ -303,8 +303,8 @@
 
 		private int _binomialSampleSize = 0;
 
-		 [Display(Name = "Sample Size",
-			Description = "Can't be set")]
+		[Display(Name = "Sample Size",
+		   Description = "Can't be set")]
 		public int BinomialSampleSize
 		{
 			get { return _binomialSampleSize; }
