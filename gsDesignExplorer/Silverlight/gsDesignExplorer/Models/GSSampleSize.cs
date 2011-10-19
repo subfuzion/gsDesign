@@ -56,6 +56,21 @@
 
 		#endregion // FixedDesignSampleSize
 
+		#region RandomizationRatio property
+
+		private double _randomizationRatio;
+
+		public double RandomizationRatio
+		{
+			get { return _randomizationRatio; }
+
+			set
+			{
+				_randomizationRatio = value;
+			}
+		}
+
+		#endregion // RandomizationRatio
 
 	}
 }

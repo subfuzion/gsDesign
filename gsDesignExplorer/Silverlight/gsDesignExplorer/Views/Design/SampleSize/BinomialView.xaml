@@ -4,10 +4,11 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	mc:Ignorable="d">
 
-	<Grid x:Name="LayoutRoot" Margin="0" Background="White">
-		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+	<Grid x:Name="LayoutRoot" Margin="0" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee">
 			<StackPanel Orientation="Vertical">
 				<Border BorderBrush="#eee" BorderThickness="1">
 					<Grid>
@@ -24,6 +25,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -31,8 +33,16 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Randomization Ratio" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=randomizationRatioSpinner}"/>
+							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="randomizationRatioSpinner"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumRandomizationRatio, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumRandomizationRatio, Mode=OneWay}"
+												   Increment="0.5"
+												   DecimalPlaces="3"
+												   Value="{Binding Path=CurrentDesign.SampleSize.RandomizationRatio, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=randomizationRatioSpinner}"/>
 
 							<TextBlock Grid.Row="1" Grid.Column="0" Text="Control" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
 							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
@@ -57,6 +67,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -88,6 +99,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>

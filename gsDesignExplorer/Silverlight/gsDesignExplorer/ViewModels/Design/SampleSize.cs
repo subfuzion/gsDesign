@@ -1,6 +1,8 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design
 {
+	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
 	using Models;
 	using Subfuzion.Helpers;
 
@@ -69,6 +71,8 @@
 
 		#region FixedDesignSampleSize property
 
+		[Display(Name = "Fixed Design Sample Size",
+			Description = "Set the sample size for a fixed design")]
 		public int FixedDesignSampleSize
 		{
 			get { return Model.FixedDesignSampleSize; }
@@ -84,6 +88,73 @@
 		}
 
 		#endregion // FixedDesignSampleSize
+
+		#region RandomizationRatio property
+
+		[Display(Name = "Randomization Ratio",
+			Description = "Experimental / control relative sample size")]
+		public double RandomizationRatio
+		{
+			get { return Model.RandomizationRatio; }
+
+			set
+			{
+				if (Math.Abs(Model.RandomizationRatio - value) > double.Epsilon)
+				{
+					Model.RandomizationRatio = value;
+					RaisePropertyChanged("RandomizationRatio");
+				}
+			}
+		}
+
+		#endregion // RandomizationRatio
+
+		#region MinimumRandomizationRatio property
+
+		private double _minimumRandomizationRatio = 0.001;
+
+		// [Display(Name = "MinimumRandomizationRatio",
+		//	Description = "")]
+		public double MinimumRandomizationRatio
+		{
+			get { return _minimumRandomizationRatio; }
+
+			set
+			{
+				if (Math.Abs(_minimumRandomizationRatio - value) > double.Epsilon)
+				{
+					_minimumRandomizationRatio = value;
+					RaisePropertyChanged("MinimumRandomizationRatio");
+				}
+			}
+		}
+
+		#endregion // MinimumRandomizationRatio
+
+		#region MaximumRandomizationRatio property
+
+		private double _maximumRandomizationRatio = 1000.0;
+
+		// [Display(Name = "MaximumRandomizationRatio",
+		//	Description = "")]
+		public double MaximumRandomizationRatio
+		{
+			get { return _maximumRandomizationRatio; }
+
+			set
+			{
+				if (Math.Abs(_maximumRandomizationRatio - value) > double.Epsilon)
+				{
+					_maximumRandomizationRatio = value;
+					RaisePropertyChanged("MaximumRandomizationRatio");
+				}
+			}
+		}
+
+		#endregion // MaximumRandomizationRatio
+
+
+
 
 	}
 }

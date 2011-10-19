@@ -128,6 +128,8 @@
 
 		#region IntervalCount property
 
+		[Display(Name = "Number of interim analyses",
+			Description = "Count must be > 0")]
 		public int IntervalCount
 		{
 			get { return Model.K - 1; }
@@ -194,6 +196,8 @@
 			get { return EnumHelper.GetNames<EptSpacing>(); }
 		}
 
+		[Display(Name = "Spacing",
+			Description = "Interim analyses timing: equal intervals or unequal (set timings manually)")]
 		public EptSpacing Spacing
 		{
 			get { return _spacing; }

@@ -4,11 +4,12 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	mc:Ignorable="d"
 	>
 	
 	<Grid x:Name="LayoutRoot" Background="White">
-		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee">
 			<StackPanel Orientation="Vertical">
 				<Border BorderBrush="#eee" BorderThickness="1">
 					<Grid>
@@ -25,6 +26,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -73,6 +75,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -114,6 +117,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -147,6 +151,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>

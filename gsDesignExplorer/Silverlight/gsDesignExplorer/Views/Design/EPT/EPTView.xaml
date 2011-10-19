@@ -25,9 +25,10 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
-		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+					  BorderThickness="1" BorderBrush="#eee">
 			<StackPanel Orientation="Vertical">
-				<Border BorderBrush="#d8d8d8" BorderThickness="1" Margin="0 0 0 4">
+				<Border BorderBrush="#eee" BorderThickness="1" Margin="0 0 0 4">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
@@ -66,7 +67,7 @@
 												   Increment="0.1"
 												   Minimum="{Binding CurrentDesign.Ept.MinimumValidError, Mode=OneWay}"
 												   Maximum="{Binding CurrentDesign.Ept.MaximumValidError, Mode=OneWay}"
-												   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True}">
+												   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True, StringFormat='F4 %'}">
 								<!--
 								<ToolTipService.ToolTip>
 									<ToolTip Content="0 &lt; Type I Error &lt; Power &lt; 100"/>
@@ -114,7 +115,7 @@
 					</Grid>
 				</Border>
 
-				<Border BorderBrush="#d8d8d8" BorderThickness="1" Margin="0 0 0 4">
+				<Border BorderBrush="#eee" BorderThickness="1" Margin="0 0 0 4">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
@@ -129,6 +130,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*" />
 								<ColumnDefinition Width="40*" />
+								<ColumnDefinition Width="Auto" />
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition />
@@ -139,14 +141,15 @@
 							</Grid.RowDefinitions>
 
 							<!-- Number of interim analyses -->
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Number of interim analyses" TextAlignment="Right"
-									   VerticalAlignment="Center" Margin="4 4 16 4" />
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=numberOfInterimAnalyses}"/>
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="numberOfInterimAnalyses" VerticalAlignment="Center"
 												   Margin="4" Height="22"
 												   Increment="1"
 												   Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
 												   Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
 												   Value="{Binding CurrentDesign.Ept.IntervalCount, Mode=TwoWay}" />
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=numberOfInterimAnalyses}" />
 
 							<Slider Grid.Row="1" Grid.ColumnSpan="2"
 									SmallChange="1" LargeChange="5"
@@ -158,12 +161,14 @@
 							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
 
 							<!-- Spacing -->
-							<TextBlock Grid.Row="3" Grid.Column="0" Text="Spacing" TextAlignment="Right" VerticalAlignment="Center"
-									   Margin="4 4 16 4" />
-
-							<ComboBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+							<sdk:Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=spacingComboBox}"/>
+							<ComboBox Grid.Row="3" Grid.Column="1"
+									  x:Name="spacingComboBox"
+									  VerticalAlignment="Center" Margin="4" Height="22"
 									  ItemsSource="{Binding Path=CurrentDesign.Ept.SpacingValues, Mode=OneTime}"
 									  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}" />
+							<sdk:DescriptionViewer Grid.Row="3" Grid.Column="2" Target="{Binding ElementName=spacingComboBox}" />
 
 							<!-- Timing values -->
 							<ListBox Grid.Row="4" Grid.Column="0" Margin="0 4 0 4" Padding="0" BorderThickness="0"
@@ -182,7 +187,6 @@
 									</DataTemplate>
 								</ListBox.ItemTemplate>
 							</ListBox>
-
 							<ListBox Grid.Row="4" Grid.Column="1" Margin="0 4 0 4" Padding="0"
 									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
 									 ItemContainerStyle="{StaticResource ListBoxStyle}"
