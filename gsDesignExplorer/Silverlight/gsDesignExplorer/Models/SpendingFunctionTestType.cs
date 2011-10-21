@@ -1,6 +1,6 @@
 ﻿namespace gsDesign.Explorer.Models
 {
-	public enum TestType
+	public enum SpendingFunctionTestType
 	{
 		OneSided,
 		TwoSidedSymmetric,

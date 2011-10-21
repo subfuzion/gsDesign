@@ -2,42 +2,68 @@
 {
 	public class GSSpendingFunctions
 	{
-		public GSSpendingFunctions()
-		{
-			TestType = TestType.TwoSidedWithFutility;
-			LowerBoundSpending = LowerBoundSpending.BetaSpending;
-			LowerBoundTesting = LowerBoundTesting.NonBinding;
-		}
-
 		#region TestTypeDefinition property
 
-		public int TestTypeCode
+		#region SpendingFunctionBounds property
+
+		private SpendingFunctionBounds _spendingFunctionBounds;
+
+		public SpendingFunctionBounds SpendingFunctionBounds
+		{
+			get { return _spendingFunctionBounds; }
+
+			set
+			{
+				_spendingFunctionBounds = value;
+			}
+		}
+
+		#endregion // SpendingFunctionBounds
+
+		#region SpendingFunctionType property
+
+		private SpendingFunctionType _spendingFunctionType;
+
+		public SpendingFunctionType SpendingFunctionType
+		{
+			get { return _spendingFunctionType; }
+
+			set
+			{
+				_spendingFunctionType = value;
+			}
+		}
+
+		#endregion // SpendingFunctionType
+
+
+		public int SpendingFunctionTestTypeCode
 		{
 			get
 			{
-				if (TestType == TestType.OneSided)
+				if (SpendingFunctionTestType == SpendingFunctionTestType.OneSided)
 					return 1;
 
-				if (TestType == TestType.TwoSidedSymmetric)
+				if (SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedSymmetric)
 					return 2;
 
-				if (TestType == TestType.TwoSidedWithFutility)
+				if (SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility)
 				{
-					if (LowerBoundSpending == LowerBoundSpending.BetaSpending)
+					if (SpendingFunctionLowerBoundSpending == SpendingFunctionLowerBoundSpending.BetaSpending)
 					{
-						if (LowerBoundTesting == LowerBoundTesting.Binding)
+						if (SpendingFunctionLowerBoundTesting == SpendingFunctionLowerBoundTesting.Binding)
 							return 3;
 
-						if (LowerBoundTesting == LowerBoundTesting.NonBinding)
+						if (SpendingFunctionLowerBoundTesting == SpendingFunctionLowerBoundTesting.NonBinding)
 							return 4;
 					}
 
-					if (LowerBoundSpending == LowerBoundSpending.H0Spending)
+					if (SpendingFunctionLowerBoundSpending == SpendingFunctionLowerBoundSpending.H0Spending)
 					{
-						if (LowerBoundTesting == LowerBoundTesting.Binding)
+						if (SpendingFunctionLowerBoundTesting == SpendingFunctionLowerBoundTesting.Binding)
 							return 5;
 
-						if (LowerBoundTesting == LowerBoundTesting.NonBinding)
+						if (SpendingFunctionLowerBoundTesting == SpendingFunctionLowerBoundTesting.NonBinding)
 							return 6;
 					}
 				}
@@ -48,53 +74,53 @@
 
 		#endregion // TestTypeDefinition
 
-		#region TestType property
+		#region SpendingFunctionTestType property
 
-		private TestType _testType;
+		private SpendingFunctionTestType _spendingFunctionTestType = SpendingFunctionTestType.TwoSidedWithFutility;
 
-		public TestType TestType
+		public SpendingFunctionTestType SpendingFunctionTestType
 		{
-			get { return _testType; }
+			get { return _spendingFunctionTestType; }
 
 			set
 			{
-				_testType = value;
+				_spendingFunctionTestType = value;
 			}
 		}
 
-		#endregion // TestType
+		#endregion // SpendingFunctionTestType
 
-		#region LowerBoundSpending property
+		#region SpendingFunctionLowerBoundSpending property
 
-		private LowerBoundSpending _lowerBoundSpending;
+		private SpendingFunctionLowerBoundSpending _spendingFunctionLowerBoundSpending = SpendingFunctionLowerBoundSpending.BetaSpending;
 
-		public LowerBoundSpending LowerBoundSpending
+		public SpendingFunctionLowerBoundSpending SpendingFunctionLowerBoundSpending
 		{
-			get { return _lowerBoundSpending; }
+			get { return _spendingFunctionLowerBoundSpending; }
 
 			set
 			{
-				_lowerBoundSpending = value;
+				_spendingFunctionLowerBoundSpending = value;
 			}
 		}
 
-		#endregion // LowerBoundSpending
+		#endregion // SpendingFunctionLowerBoundSpending
 
-		#region LowerBoundTesting property
+		#region SpendingFunctionLowerBoundTesting property
 
-		private LowerBoundTesting _lowerBoundTesting;
+		private SpendingFunctionLowerBoundTesting _spendingFunctionLowerBoundTesting = SpendingFunctionLowerBoundTesting.NonBinding;
 
-		public LowerBoundTesting LowerBoundTesting
+		public SpendingFunctionLowerBoundTesting SpendingFunctionLowerBoundTesting
 		{
-			get { return _lowerBoundTesting; }
+			get { return _spendingFunctionLowerBoundTesting; }
 
 			set
 			{
-				_lowerBoundTesting = value;
+				_spendingFunctionLowerBoundTesting = value;
 			}
 		}
 
-		#endregion // LowerBoundTesting
+		#endregion // SpendingFunctionLowerBoundTesting
 
 	}
 }

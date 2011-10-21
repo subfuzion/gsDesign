@@ -1,7 +1,7 @@
 <OutOfBrowserSettings ShortName="gsDesignExplorer" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
   <OutOfBrowserSettings.Blurb>Merck gsDesignExplorer</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="Merck gsDesign Explorer" />
+    <WindowSettings Title="Merck gsDesign Explorer" Height="700" Width="900" />
   </OutOfBrowserSettings.WindowSettings>
   <OutOfBrowserSettings.Icons />
 </OutOfBrowserSettings>

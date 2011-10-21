@@ -1,17 +1,25 @@
 ﻿<UserControl x:Class="gsDesign.Explorer.Views.Design.SpendingFunctions.SpendingFunctionsView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
+	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
 	mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot" Background="White">
-		<sdk:TabControl x:Name="SpendingFunctionTabControl">
+	d:DesignHeight="300" d:DesignWidth="400">
+	
+	<UserControl.Resources>
+		<Design:SpendingFunctionBoundsValueConverter x:Key="spendingFunctionBoundsValueConverter" />
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
+		<sdk:TabControl x:Name="SpendingFunctionTabControl" SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionBounds, Mode=TwoWay, Converter={StaticResource spendingFunctionBoundsValueConverter}}">
 			<sdk:TabItem Header="Lower Spending">
+				<SpendingFunctions:LowerSpendingView />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Upper Spending">
+				<SpendingFunctions:UpperSpendingView />
 			</sdk:TabItem>
 		</sdk:TabControl>
 	</Grid>

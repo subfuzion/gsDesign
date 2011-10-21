@@ -1,6 +1,6 @@
 ﻿namespace gsDesign.Explorer.Models
 {
-	public enum LowerBoundTesting
+	public enum SpendingFunctionLowerBoundTesting
 	{
 		Binding,
 		NonBinding,

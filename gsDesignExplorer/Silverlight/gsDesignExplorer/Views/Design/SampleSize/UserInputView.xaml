@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	mc:Ignorable="d">
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
@@ -21,7 +21,7 @@
 							<TextBlock Text="" FontWeight="Bold" Margin="8"/>
 						</Grid>
 
-						<Grid Grid.Row="1" Margin="16">
+						<Grid Grid.Row="1" Margin="8 16 16 16">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="60*"/>
 								<ColumnDefinition Width="40*"/>
@@ -31,7 +31,7 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2 4 8 4"
 									   Target="{Binding ElementName=fixedSampleSizeSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1"
 												   x:Name="fixedSampleSizeSpinner"

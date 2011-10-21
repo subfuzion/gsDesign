@@ -28,6 +28,9 @@
 			Writer.WriteLine("##################################################");
 			Writer.WriteLine("### (still in work)");
 			AppendNFix();
+			Writer.WriteLine("# Sample Size:");
+			Writer.WriteLine("# =================================");
+			Writer.WriteLine("(Active tab: {0})", Design.SampleSize.SampleSizeType);
 			Writer.WriteLine("# Sample Size tab - User Input:");
 			Writer.WriteLine("# =================================");
 			AppendAssignment("FixedDesignSampleSize", Design.SampleSize.FixedDesignSampleSize);
@@ -54,6 +57,10 @@
 			AppendAssignment("Gamma", Design.SampleSize.TimeToEventGamma);
 			AppendAssignment("Time to Event Fixed Design Sample Size", Design.SampleSize.TimeToEventFixedDesignSampleSize);
 			AppendAssignment("Time to Event Fixed Design Events", Design.SampleSize.TimeToEventFixedDesignEvents);
+			Writer.WriteLine("# Spending Functions:");
+			Writer.WriteLine("# =================================");
+			Writer.WriteLine("(Active tab: {0})", Design.SpendingFunctions.SpendingFunctionBounds);
+			Writer.WriteLine("(Active spending function: {0})", Design.SpendingFunctions.SpendingFunctionType);
 			Writer.WriteLine("###");
 			Writer.WriteLine();
 			Writer.WriteLine("gsDesign function parameters (TBD)");
@@ -137,7 +144,7 @@
 
 		private void AppendTestType()
 		{
-			AppendAssignment("test.type", Design.SpendingFunctions.TestTypeCode);
+			//AppendAssignment("test.type", Design.SpendingFunctions.SpendingFunctionTestTypeCode);
 		}
 	
 		private void AppendAlpha()
