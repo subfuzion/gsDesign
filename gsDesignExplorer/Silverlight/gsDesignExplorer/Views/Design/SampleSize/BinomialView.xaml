@@ -9,9 +9,7 @@
 	mc:Ignorable="d">
 	
 	<UserControl.Resources>
-		<!-- duplicated because of bug in the designer (not runtime) -->
 		<Design:BinomialNonInferiorityTestingValueConverter x:Name="testingValueConverter" />
-		<Design:BinomialNonInferiorityTestingValueConverter x:Name="testingValueConverter2" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Margin="0" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
@@ -99,8 +97,8 @@
 
 							<ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="4"
 									  x:Name="nonInferiorityComboBox"
-									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=OneTime, Converter={StaticResource testingValueConverter}}"
-									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=TwoWay, Converter={StaticResource testingValueConverter2}}"
+									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=OneWay, Converter={StaticResource testingValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=TwoWay, Converter={StaticResource testingValueConverter}}"
 									  />
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=nonInferiorityComboBox}" />
 

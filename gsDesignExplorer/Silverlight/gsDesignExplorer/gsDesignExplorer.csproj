@@ -105,6 +105,10 @@
     <Compile Include="Models\BinomialNonInferiorityTesting.cs" />
     <Compile Include="Models\DesignScriptGenerator.cs" />
     <Compile Include="Models\GSSpendingFunctions.cs" />
+    <Compile Include="Models\TimeToEventAccrual.cs" />
+    <Compile Include="Models\TimeToEventHypothesis.cs" />
+    <Compile Include="Models\TimeToEventSpecification.cs" />
+    <Compile Include="Models\TimeToTestHypothesis.cs" />
     <Compile Include="ViewModels\Design\BinomialNonInferiorityTestingValueConverter.cs" />
     <Compile Include="ViewModels\Design\DesignScript.cs" />
     <Compile Include="Models\GSEpt.cs" />
@@ -136,6 +140,9 @@
     <Compile Include="ViewModels\Design\SampleSizeTypeValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions.cs" />
     <Compile Include="ViewModels\Design\TestTypeValueConverter.cs" />
+    <Compile Include="ViewModels\Design\TimeToEventAccrualValueConverter.cs" />
+    <Compile Include="ViewModels\Design\TimeToEventHypothesisValueConverter.cs" />
+    <Compile Include="ViewModels\Design\TimeToEventSpecificationValueConverter.cs" />
     <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />

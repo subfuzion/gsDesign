@@ -5,8 +5,15 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
 	mc:Ignorable="d"
 	>
+	
+	<UserControl.Resources>
+		<Design:TimeToEventSpecificationValueConverter x:Key="timeToEventSpecificationValueConverter" />
+		<Design:TimeToEventAccrualValueConverter x:Key="timeToEventAccrualValueConverter" />
+		<Design:TimeToEventHypothesisValueConverter x:Key="timeToEventHypothesisValueConverter" />
+	</UserControl.Resources>
 	
 	<Grid x:Name="LayoutRoot" Background="White">
 		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee">
@@ -36,26 +43,57 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Specification" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding}" SelectedIndex="1" Margin="4">
-								<ComboBoxItem Content="Event Rate" />
-								<ComboBoxItem Content="Median Time" />
-							</ComboBox>
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=specificationComboBox}" />
+							<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
+									  x:Name="specificationComboBox"
+									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.TimeToEventSpecification, Mode=OneWay, Converter={StaticResource timeToEventSpecificationValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.TimeToEventSpecification, Mode=TwoWay, Converter={StaticResource timeToEventSpecificationValueConverter}}"
+									  />
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=specificationComboBox}" />
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Control" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventControl}" />
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventControl"
+												   DecimalPlaces="5"
+												   Increment="0.5"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventControl, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventControl, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventControl, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=timeToEventControl}" />
 
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="Experimental" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventExperimental}" />
+							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventExperimental"
+												   DecimalPlaces="1"
+												   Increment="0.5"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventExperimental, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventExperimental, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventExperimental, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="2" Grid.Column="3" Target="{Binding ElementName=timeToEventExperimental}" />
 
 							<TextBlock Grid.Row="3" Grid.Column="0" Text="Dropout" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<toolkit:NumericUpDown Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventDropout"
+												   DecimalPlaces="1"
+												   Increment="0.5"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventDropout, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventDropout, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventDropout, Mode=TwoWay}"/>
 
 							<Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Silver" BorderThickness="2" Margin="0 4 0 4" Background="#eee" />
-							<TextBlock Grid.Row="4" Grid.Column="0" Text="Hazard Ratio" FontStyle="Italic" TextAlignment="Right"  VerticalAlignment="Center" Margin="4 10 16 10"/>
+							<sdk:Label Grid.Row="4" Grid.Column="0" FontStyle="Italic" HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="4 10 16 10"
+									   Target="{Binding ElementName=timeToEventHazardRatio}"/>
 							<Border Grid.Row="4" Grid.Column="1" BorderThickness="0" Background="White" Margin="4 9 5 9">
-								<toolkit:NumericUpDown Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Height="22" />
+								<TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Height="22"
+										x:Name="timeToEventHazardRatio"
+										TextAlignment="Right" 
+										IsReadOnly="True"
+										Text="{Binding Path=CurrentDesign.SampleSize.TimeToEventHazardRatio, Mode=OneWay}"/>
 							</Border>
+							<sdk:DescriptionViewer Grid.Row="4" Grid.Column="2" Target="{Binding ElementName=timeToEventHazardRatio}"/>
 						</Grid>
 					</Grid>
 				</Border>
@@ -84,20 +122,47 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Acrual Duration" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventAccrualDuration}" />
+							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventAccrualDuration"
+												   DecimalPlaces="4"
+												   Increment="0.001"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventAccrualDuration, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventAccrualDuration, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventAccrualDuration, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=timeToEventAccrualDuration}" />
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Minimum Follow-Up" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventMinimumFollowUp}" />
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventMinimumFollowUp"
+												   DecimalPlaces="4"
+												   Increment="0.001"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventMinimumFollowUp, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventMinimumFollowUp, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventMinimumFollowUp, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=timeToEventMinimumFollowUp}" />
 
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="Randomization Ratio" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventMinimumRandomizationRatio}"/>
+							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventMinimumRandomizationRatio"
+												   DecimalPlaces="4"
+												   Increment="0.001"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventRandomizationRatio, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventRandomizationRatio, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventRandomizationRatio, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=timeToEventMinimumRandomizationRatio}" />
 
-							<TextBlock Grid.Row="3" Grid.Column="0" Text="Hypothesis" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding}" SelectedIndex="1" Margin="4">
-								<ComboBoxItem Content="Risk Ratio" />
-								<ComboBoxItem Content="Risk Difference" />
-							</ComboBox>
+							<sdk:Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventHypothesis}" />
+							<ComboBox Grid.Row="3" Grid.Column="1" Margin="4"
+								x:Name="timeToEventHypothesis"
+								ItemsSource="{Binding Path=CurrentDesign.SampleSize.TimeToEventHypothesis, Mode=OneWay, Converter={StaticResource timeToEventHypothesisValueConverter}}"
+								SelectedItem="{Binding Path=CurrentDesign.SampleSize.TimeToEventHypothesis, Mode=TwoWay, Converter={StaticResource timeToEventHypothesisValueConverter}}"
+								/>
+							<sdk:DescriptionViewer Grid.Row="3" Grid.Column="2" Target="{Binding ElementName=timeToEventHypothesis}" />
 						</Grid>
 					</Grid>
 				</Border>
@@ -124,14 +189,25 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding}" SelectedIndex="1" Margin="4">
-								<ComboBoxItem Content="Uniform" />
-								<ComboBoxItem Content="Exponential" />
-							</ComboBox>
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventAccrual}"/>
+							<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
+									  x:Name="timeToEventAccrual"
+									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.TimeToEventAccrual, Mode=OneWay, Converter={StaticResource timeToEventAccrualValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.TimeToEventAccrual, Mode=TwoWay, Converter={StaticResource timeToEventAccrualValueConverter}}"
+									  />
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=timeToEventAccrual}"/>
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Gamma" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventGamma}"/>
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventGamma"
+												   DecimalPlaces="4"
+												   Increment="0.001"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumTimeToEventGamma, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumTimeToEventGamma, Mode=OneWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventGamma, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=timeToEventGamma}" />
 						</Grid>
 					</Grid>
 				</Border>
@@ -158,11 +234,22 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Sample Size" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventFixedDesignSampleSize}" />
+							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventFixedDesignSampleSize"
+												   IsEnabled="False"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventFixedDesignSampleSize, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=timeToEventFixedDesignSampleSize}" />
 
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Events" TextAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"/>
-							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"/>
+							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
+									   Target="{Binding ElementName=timeToEventFixedDesignEvents}" />
+							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
+												   x:Name="timeToEventFixedDesignEvents"
+												   IsEnabled="False"
+												   Value="{Binding Path=CurrentDesign.SampleSize.TimeToEventFixedDesignEvents, Mode=TwoWay}"/>
+							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=timeToEventFixedDesignEvents}" />
+
 						</Grid>
 					</Grid>
 				</Border>
