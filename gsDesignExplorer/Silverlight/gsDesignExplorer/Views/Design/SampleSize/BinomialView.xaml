@@ -42,33 +42,33 @@
 									   Target="{Binding ElementName=randomizationRatioSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="randomizationRatioSpinner"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumRandomizationRatio, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumRandomizationRatio, Mode=OneWay}"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialRandomizationRatio, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialRandomizationRatio, Mode=OneWay}"
 												   Increment="0.5"
 												   DecimalPlaces="3"
-												   Value="{Binding Path=CurrentDesign.SampleSize.RandomizationRatio, Mode=TwoWay}"/>
+												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialRandomizationRatio, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=randomizationRatioSpinner}"/>
 
 							<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
 									   Target="{Binding ElementName=controlSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="controlSpinner"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumControlEventRate, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumControlEventRate, Mode=OneWay}"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialControlEventRate, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialControlEventRate, Mode=OneWay}"
 												   Increment="0.001"
 												   DecimalPlaces="4"
-												   Value="{Binding Path=CurrentDesign.SampleSize.ControlEventRate, Mode=TwoWay}"/>
+												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialControlEventRate, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=controlSpinner}" />
 
 							<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
 									   Target="{Binding ElementName=experimentalSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="experimentalSpinner"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumExperimentalEventRate, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumExperimentalEventRate, Mode=OneWay}"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialExperimentalEventRate, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialExperimentalEventRate, Mode=OneWay}"
 												   Increment="0.001"
 												   DecimalPlaces="4"
-												   Value="{Binding Path=CurrentDesign.SampleSize.ExperimentalEventRate, Mode=TwoWay}"/>
+												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialExperimentalEventRate, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=experimentalSpinner}" />
 						</Grid>
 					</Grid>
@@ -97,8 +97,8 @@
 
 							<ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="4"
 									  x:Name="nonInferiorityComboBox"
-									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=OneWay, Converter={StaticResource testingValueConverter}}"
-									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.NonInferiorityTesting, Mode=TwoWay, Converter={StaticResource testingValueConverter}}"
+									  ItemsSource="{Binding Path=CurrentDesign.SampleSize.BinomialNonInferiorityTesting, Mode=OneWay, Converter={StaticResource testingValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SampleSize.BinomialNonInferiorityTesting, Mode=TwoWay, Converter={StaticResource testingValueConverter}}"
 									  />
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=nonInferiorityComboBox}" />
 
@@ -106,12 +106,12 @@
 									   Target="{Binding ElementName=deltaSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="deltaSpinner"
-												   IsEnabled="{Binding Path=CurrentDesign.SampleSize.DeltaIsEnabled, Mode=OneWay}"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumDelta, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumDelta, Mode=OneWay}"
+												   IsEnabled="{Binding Path=CurrentDesign.SampleSize.BinomialDeltaIsEnabled, Mode=OneWay}"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialDelta, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialDelta, Mode=OneWay}"
 												   DecimalPlaces="4"
 												   Increment="0.1"
-												   Value="{Binding Path=CurrentDesign.SampleSize.Delta, Mode=TwoWay}"
+												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialDelta, Mode=TwoWay}"
 												   />
 							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=deltaSpinner}" />
 						</Grid>

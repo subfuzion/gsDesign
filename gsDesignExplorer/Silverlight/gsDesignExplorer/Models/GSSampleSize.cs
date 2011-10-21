@@ -58,57 +58,73 @@
 
 		#region Binomial
 
-		#region RandomizationRatio property
+		#region BinomialRandomizationRatio property
 
-		private double _randomizationRatio = 1.0;
+		private double _binomialRandomizationRatio = 1.0;
 
-		public double RandomizationRatio
+		public double BinomialRandomizationRatio
 		{
-			get { return _randomizationRatio; }
+			get { return _binomialRandomizationRatio; }
 
-			set { _randomizationRatio = value; }
+			set { _binomialRandomizationRatio = value; }
 		}
 
-		#endregion // RandomizationRatio
+		#endregion // BinomialRandomizationRatio
 
-		#region ControlEventRate property
+		#region BinomialControlEventRate property
 
-		private double _controlEventRate = 0.15;
+		private double _binomialControlEventRate = 0.15;
 
-		public double ControlEventRate
+		public double BinomialControlEventRate
 		{
-			get { return _controlEventRate; }
+			get { return _binomialControlEventRate; }
 
-			set { _controlEventRate = value; }
+			set { _binomialControlEventRate = value; }
 		}
 
-		#endregion // ControlEventRate
+		#endregion // BinomialControlEventRate
 
-		#region NonInferiorityTesting property
+		#region BinomialExperimentalEventRate property
 
-		private BinomialNonInferiorityTesting _nonInferiorityTesting = BinomialNonInferiorityTesting.Superiority;
+		private double _binomialExperimentalEventRate = 0.1;
 
-		public BinomialNonInferiorityTesting NonInferiorityTesting
+		public double BinomialExperimentalEventRate
 		{
-			get { return _nonInferiorityTesting; }
+			get { return _binomialExperimentalEventRate; }
 
-			set { _nonInferiorityTesting = value; }
+			set
+			{
+				_binomialExperimentalEventRate = value;
+			}
 		}
 
-		#endregion // NonInferiorityTesting
+		#endregion // BinomialExperimentalEventRate
 
-		#region Delta property
+		#region BinomialNonInferiorityTesting property
 
-		private double _delta = 0;
+		private BinomialNonInferiorityTesting _binomialNonInferiorityTesting = BinomialNonInferiorityTesting.Superiority;
 
-		public double Delta
+		public BinomialNonInferiorityTesting BinomialNonInferiorityTesting
 		{
-			get { return _delta; }
+			get { return _binomialNonInferiorityTesting; }
 
-			set { _delta = value; }
+			set { _binomialNonInferiorityTesting = value; }
 		}
 
-		#endregion // Delta
+		#endregion // BinomialNonInferiorityTesting
+
+		#region BinomialDelta property
+
+		private double _binomialDelta = 0;
+
+		public double BinomialDelta
+		{
+			get { return _binomialDelta; }
+
+			set { _binomialDelta = value; }
+		}
+
+		#endregion // BinomialDelta
 
 		#region BinomialFixedDesignSampleSize property
 
@@ -125,7 +141,6 @@
 		}
 
 		#endregion // BinomialFixedDesignSampleSize
-
 
 		#endregion // Binomial
 

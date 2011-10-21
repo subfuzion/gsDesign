@@ -92,219 +92,217 @@
 
 		#region Binomial
 
-		#region RandomizationRatio property
+		#region BinomialRandomizationRatio property
 
 		[Display(Name = "Randomization Ratio",
 			Description = "Experimental/control relative sample size:\n0 \u003C Ratio \u2264 1000")]
-		public double RandomizationRatio
+		public double BinomialRandomizationRatio
 		{
-			get { return Model.RandomizationRatio; }
+			get { return Model.BinomialRandomizationRatio; }
 
 			set
 			{
-				if (Math.Abs(Model.RandomizationRatio - value) > double.Epsilon)
+				if (Math.Abs(Model.BinomialRandomizationRatio - value) > double.Epsilon)
 				{
-					Model.RandomizationRatio = value;
-					RaisePropertyChanged("RandomizationRatio");
+					Model.BinomialRandomizationRatio = value;
+					RaisePropertyChanged("BinomialRandomizationRatio");
 				}
 			}
 		}
 
-		#endregion // RandomizationRatio
+		#endregion // BinomialRandomizationRatio
 
-		#region MinimumRandomizationRatio property
+		#region MinimumBinomialRandomizationRatio property
 
-		private double _minimumRandomizationRatio = 0.001;
+		private double _minimumBinomialRandomizationRatio = 0.001;
 
-		// [Display(Name = "MinimumRandomizationRatio",
+		// [Display(Name = "MinimumBinomialRandomizationRatio",
 		//	Description = "")]
-		public double MinimumRandomizationRatio
+		public double MinimumBinomialRandomizationRatio
 		{
-			get { return _minimumRandomizationRatio; }
+			get { return _minimumBinomialRandomizationRatio; }
 
 			set
 			{
-				if (Math.Abs(_minimumRandomizationRatio - value) > double.Epsilon)
+				if (Math.Abs(_minimumBinomialRandomizationRatio - value) > double.Epsilon)
 				{
-					_minimumRandomizationRatio = value;
-					RaisePropertyChanged("MinimumRandomizationRatio");
+					_minimumBinomialRandomizationRatio = value;
+					RaisePropertyChanged("MinimumBinomialRandomizationRatio");
 				}
 			}
 		}
 
-		#endregion // MinimumRandomizationRatio
+		#endregion // MinimumBinomialRandomizationRatio
 
-		#region MaximumRandomizationRatio property
+		#region MaximumBinomialRandomizationRatio property
 
-		private double _maximumRandomizationRatio = 1000.0;
+		private double _maximumBinomialRandomizationRatio = 1000.0;
 
-		// [Display(Name = "MaximumRandomizationRatio",
+		// [Display(Name = "MaximumBinomialRandomizationRatio",
 		//	Description = "")]
-		public double MaximumRandomizationRatio
+		public double MaximumBinomialRandomizationRatio
 		{
-			get { return _maximumRandomizationRatio; }
+			get { return _maximumBinomialRandomizationRatio; }
 
 			set
 			{
-				if (Math.Abs(_maximumRandomizationRatio - value) > double.Epsilon)
+				if (Math.Abs(_maximumBinomialRandomizationRatio - value) > double.Epsilon)
 				{
-					_maximumRandomizationRatio = value;
-					RaisePropertyChanged("MaximumRandomizationRatio");
+					_maximumBinomialRandomizationRatio = value;
+					RaisePropertyChanged("MaximumBinomialRandomizationRatio");
 				}
 			}
 		}
 
-		#endregion // MaximumRandomizationRatio
+		#endregion // MaximumBinomialRandomizationRatio
 
-		#region ControlEventRate property
+		#region BinomialControlEventRate property
 
 		[Display(Name = "Control",
 			Description = "Control event rate:\n0 \u003C Control \u003C 1")]
-		public double ControlEventRate
+		public double BinomialControlEventRate
 		{
-			get { return Model.ControlEventRate; }
+			get { return Model.BinomialControlEventRate; }
 
 			set
 			{
-				if (Math.Abs(Model.ControlEventRate - value) > double.Epsilon)
+				if (Math.Abs(Model.BinomialControlEventRate - value) > double.Epsilon)
 				{
-					Model.ControlEventRate = value;
-					RaisePropertyChanged("ControlEventRate");
+					Model.BinomialControlEventRate = value;
+					RaisePropertyChanged("BinomialControlEventRate");
 				}
 			}
 		}
 
-		#endregion // ControlEventRate
+		#endregion // BinomialControlEventRate
 
-		#region MinimumControlEventRate property
+		#region MinimumBinomialControlEventRate property
 
-		public double MinimumControlEventRate
+		public double MinimumBinomialControlEventRate
 		{
 			get { return 0.0001; }
 		}
 
-		#endregion // MinimumControlEventRate
+		#endregion // MinimumBinomialControlEventRate
 
-		#region MaximumControlEventRate property
+		#region MaximumBinomialControlEventRate property
 
-		public double MaximumControlEventRate
+		public double MaximumBinomialControlEventRate
 		{
 			get { return 0.9999; }
 		}
 
-		#endregion // MaximumControlEventRate
+		#endregion // MaximumBinomialControlEventRate
 
-		#region ExperimentalEventRate property
-
-		private double _experimentalEventRate;
+		#region BinomialExperimentalEventRate property
 
 		[Display(Name = "Experimental",
 			Description = "Experimental event rate:\n0 \u003C Experimental \u003C 1")]
-		public double ExperimentalEventRate
+		public double BinomialExperimentalEventRate
 		{
-			get { return _experimentalEventRate; }
+			get { return Model.BinomialExperimentalEventRate; }
 
 			set
 			{
-				if (Math.Abs(_experimentalEventRate - value) > double.Epsilon)
+				if (Math.Abs(Model.BinomialExperimentalEventRate - value) > double.Epsilon)
 				{
-					_experimentalEventRate = value;
-					RaisePropertyChanged("ExperimentalEventRate");
+					Model.BinomialExperimentalEventRate = value;
+					RaisePropertyChanged("BinomialExperimentalEventRate");
 				}
 			}
 		}
 
-		#endregion // ExperimentalEventRate
+		#endregion // BinomialExperimentalEventRate
 
-		#region MinimumExperimentalEventRate property
+		#region MinimumBinomialExperimentalEventRate property
 
-		public double MinimumExperimentalEventRate
+		public double MinimumBinomialExperimentalEventRate
 		{
 			get { return 0.0001; }
 		}
 
-		#endregion // MinimumExperimentalEventRate
+		#endregion // MinimumBinomialExperimentalEventRate
 
-		#region MaximumExperimentalEventRate property
+		#region MaximumBinomialExperimentalEventRate property
 
-		public double MaximumExperimentalEventRate
+		public double MaximumBinomialExperimentalEventRate
 		{
 			get { return 0.9999; }
 		}
 
-		#endregion // MaximumExperimentalEventRate
+		#endregion // MaximumBinomialExperimentalEventRate
 
-		#region NonInferiorityTesting property
+		#region BinomialNonInferiorityTesting property
 
 		[Display(Name = "",
 			Description = "Specify either 'Superiority' or\n" +
 			              "'Non-Inferiority - superiority with margin'")]
-		public BinomialNonInferiorityTesting NonInferiorityTesting
+		public BinomialNonInferiorityTesting BinomialNonInferiorityTesting
 		{
-			get { return Model.NonInferiorityTesting; }
+			get { return Model.BinomialNonInferiorityTesting; }
 
 			set
 			{
-				if (Model.NonInferiorityTesting != value)
+				if (Model.BinomialNonInferiorityTesting != value)
 				{
-					Model.NonInferiorityTesting = value;
-					RaisePropertyChanged("NonInferiorityTesting");
+					Model.BinomialNonInferiorityTesting = value;
+					RaisePropertyChanged("BinomialNonInferiorityTesting");
 
-					Delta = 0.0;
-					RaisePropertyChanged("DeltaIsEnabled");
+					BinomialDelta = 0.0;
+					RaisePropertyChanged("BinomialDeltaIsEnabled");
 				}
 			}
 		}
 
-		#endregion // NonInferiorityTesting
+		#endregion // BinomialNonInferiorityTesting
 
-		#region Delta property
+		#region BinomialDelta property
 
 		[Display(Name = "Delta",
 			Description = "Margin for treatment difference")]
-		public double Delta
+		public double BinomialDelta
 		{
-			get { return Model.Delta; }
+			get { return Model.BinomialDelta; }
 
 			set
 			{
-				if (Math.Abs(Model.Delta - value) > double.Epsilon)
+				if (Math.Abs(Model.BinomialDelta - value) > double.Epsilon)
 				{
-					Model.Delta = value;
-					RaisePropertyChanged("Delta");
-					RaisePropertyChanged("DeltaIsEnabled");
+					Model.BinomialDelta = value;
+					RaisePropertyChanged("BinomialDelta");
+					RaisePropertyChanged("BinomialDeltaIsEnabled");
 				}
 			}
 		}
 
-		#endregion // Delta
+		#endregion // BinomialDelta
 
-		#region DeltaIsEnabled property
+		#region BinomialDeltaIsEnabled property
 
-		public bool DeltaIsEnabled
+		public bool BinomialDeltaIsEnabled
 		{
-			get { return Model.NonInferiorityTesting == BinomialNonInferiorityTesting.SuperiorityWithMargin; }
+			get { return Model.BinomialNonInferiorityTesting == BinomialNonInferiorityTesting.SuperiorityWithMargin; }
 		}
 
-		#endregion // DeltaIsEnabled
+		#endregion // BinomialDeltaIsEnabled
 
-		#region MinimumDelta property
+		#region MinimumBinomialDelta property
 
-		public double MinimumDelta
+		public double MinimumBinomialDelta
 		{
 			get { return -0.0101; }
 		}
 
-		#endregion // MinimumDelta
+		#endregion // MinimumBinomialDelta
 
-		#region MaximumDelta property
+		#region MaximumBinomialDelta property
 
-		public double MaximumDelta
+		public double MaximumBinomialDelta
 		{
 			get { return 0.9899; }
 		}
 
-		#endregion // MaximumDelta
+		#endregion // MaximumBinomialDelta
 
 		#region BinomialSampleSize property
 
