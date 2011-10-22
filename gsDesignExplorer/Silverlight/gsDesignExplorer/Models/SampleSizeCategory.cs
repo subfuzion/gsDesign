@@ -1,6 +1,6 @@
 ﻿namespace gsDesign.Explorer.Models
 {
-	public enum SampleSizeType
+	public enum SampleSizeCategory
 	{
 		UserInput,
 		Binomial,

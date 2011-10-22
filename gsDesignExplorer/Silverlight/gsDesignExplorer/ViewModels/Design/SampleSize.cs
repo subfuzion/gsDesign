@@ -20,50 +20,32 @@
 			get { return _design.SampleSize; }
 		}
 
-		#region SampleSizeTypes property
+		#region SampleSizeCategories property
 
-		public IEnumerable<string> SampleSizeTypes
+		public IEnumerable<string> SampleSizeCategories
 		{
-			get { return EnumHelper.GetNames<SampleSizeType>(); }
+			get { return EnumHelper.GetNames<SampleSizeCategory>(); }
 		}
 
-		#endregion // SampleSizeTypes
+		#endregion // SampleSizeCategories
 
-		#region CurrentSampleSizeType property
+		#region SampleSizeCategory property
 
-		public int CurrentSampleSizeType
+		public SampleSizeCategory SampleSizeCategory
 		{
-			get { return (int)SampleSizeType; }
+			get { return Model.SampleSizeCategory; }
 
 			set
 			{
-				if (SampleSizeType != (SampleSizeType)value)
+				if (Model.SampleSizeCategory != value)
 				{
-					SampleSizeType = (SampleSizeType)value;
-					RaisePropertyChanged("CurrentSampleSizeType");
+					Model.SampleSizeCategory = value;
+					RaisePropertyChanged("SampleSizeCategory");
 				}
 			}
 		}
 
-		#endregion // CurrentSampleSizeType
-
-		#region SampleSizeType property
-
-		public SampleSizeType SampleSizeType
-		{
-			get { return Model.SampleSizeType; }
-
-			set
-			{
-				if (Model.SampleSizeType != value)
-				{
-					Model.SampleSizeType = value;
-					RaisePropertyChanged("SampleSizeType");
-				}
-			}
-		}
-
-		#endregion // SampleSizeType
+		#endregion // SampleSizeCategory
 
 		#region User Input
 

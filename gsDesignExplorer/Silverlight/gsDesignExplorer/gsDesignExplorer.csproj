@@ -123,7 +123,7 @@
     <Compile Include="Models\SpendingFunctionLowerBoundSpending.cs" />
     <Compile Include="Models\SpendingFunctionLowerBoundTesting.cs" />
     <Compile Include="Models\GSSampleSize.cs" />
-    <Compile Include="Models\SampleSizeType.cs" />
+    <Compile Include="Models\SampleSizeCategory.cs" />
     <Compile Include="Models\SpendingFunctionTestType.cs" />
     <Compile Include="ViewModels\Design\Design.cs" />
     <Compile Include="ViewModels\Design\DesignCollection.cs" />
@@ -145,7 +145,7 @@
     <Compile Include="ViewModels\Design\SpendingFunctionLowerBoundSpendingValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctionLowerBoundTestingValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize.cs" />
-    <Compile Include="ViewModels\Design\SampleSizeTypeValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SampleSizeCategoryValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctionTestTypeValueConverter.cs" />
     <Compile Include="ViewModels\Design\TimeToEventAccrualValueConverter.cs" />

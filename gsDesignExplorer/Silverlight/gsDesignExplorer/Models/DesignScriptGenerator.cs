@@ -30,7 +30,7 @@
 			AppendNFix();
 			Writer.WriteLine("# Sample Size:");
 			Writer.WriteLine("# =================================");
-			Writer.WriteLine("(Active tab: {0})", Design.SampleSize.SampleSizeType);
+			Writer.WriteLine("(Active tab: {0})", Design.SampleSize.SampleSizeCategory);
 			Writer.WriteLine("# Sample Size tab - User Input:");
 			Writer.WriteLine("# =================================");
 			AppendAssignment("FixedDesignSampleSize", Design.SampleSize.FixedDesignSampleSize);

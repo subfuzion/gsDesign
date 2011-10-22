@@ -8,13 +8,13 @@
 		{
 			get
 			{
-				if (SampleSizeType == SampleSizeType.UserInput)
+				if (SampleSizeCategory == SampleSizeCategory.UserInput)
 					return FixedDesignSampleSize.ToString();
 
-				if (SampleSizeType == SampleSizeType.Binomial)
+				if (SampleSizeCategory == SampleSizeCategory.Binomial)
 					return "(not implemented yet)";
 
-				if (SampleSizeType == SampleSizeType.TimeToEvent)
+				if (SampleSizeCategory == SampleSizeCategory.TimeToEvent)
 					return "(not implemented yet)";
 
 				return null;
@@ -23,21 +23,21 @@
 
 		#endregion // NFix
 
-		#region SampleSizeType property
+		#region SampleSizeCategory property
 
-		private SampleSizeType _sampleSizeType;
+		private SampleSizeCategory _sampleSizeCategory;
 
-		public SampleSizeType SampleSizeType
+		public SampleSizeCategory SampleSizeCategory
 		{
-			get { return _sampleSizeType; }
+			get { return _sampleSizeCategory; }
 
 			set
 			{
-				_sampleSizeType = value;
+				_sampleSizeCategory = value;
 			}
 		}
 
-		#endregion // SampleSizeType
+		#endregion // SampleSizeCategory
 
 		#region User Input
 
