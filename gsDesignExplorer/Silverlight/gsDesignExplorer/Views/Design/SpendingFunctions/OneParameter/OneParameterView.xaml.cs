@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Views.Design.SpendingFunctions
+﻿namespace gsDesign.Explorer.Views.Design.SpendingFunctions.OneParameter
 {
 	using System.Windows.Controls;
 

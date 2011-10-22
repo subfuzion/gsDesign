@@ -19,6 +19,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 			get { return _designParameters.SpendingFunctionParameters; }
 		}
 
+
 		#region SpendingFunctionBounds property
 
 		public SpendingFunctionBounds SpendingFunctionBounds
@@ -114,6 +115,46 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		}
 
 		#endregion // SpendingFunctionLowerBoundTesting
+
+
+
+
+		#region LowerSpendingParameters property
+
+		public LowerSpendingParameters LowerSpendingParameters
+		{
+			get { return Model.LowerSpendingParameters; }
+
+			set
+			{
+				if (Model.LowerSpendingParameters != value)
+				{
+					Model.LowerSpendingParameters = value;
+					RaisePropertyChanged("LowerSpendingParameters");
+				}
+			}
+		}
+
+		#endregion // LowerSpendingParameters
+
+		#region UpperSpendingParameters property
+
+		public UpperSpendingParameters UpperSpendingParameters
+		{
+			get { return Model.UpperSpendingParameters; }
+
+			set
+			{
+				if (Model.UpperSpendingParameters != value)
+				{
+					Model.UpperSpendingParameters = value;
+					RaisePropertyChanged("UpperSpendingParameters");
+				}
+			}
+		}
+
+		#endregion // UpperSpendingParameters
+
 
 	}
 }

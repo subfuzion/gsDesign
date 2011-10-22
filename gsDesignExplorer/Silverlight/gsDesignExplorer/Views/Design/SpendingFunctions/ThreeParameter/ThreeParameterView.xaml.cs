@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Views.Design.SpendingFunctions
+﻿namespace gsDesign.Explorer.Views.Design.SpendingFunctions.ThreeParameter
 {
 	using System.Windows.Controls;
 

@@ -3,16 +3,17 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:ViewModels="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions"
 	xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
 	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
-	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-             xmlns:SpendingFunctions1="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions" mc:Ignorable="d"
+	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 
 	<UserControl.Resources>
-		<SpendingFunctions1:SpendingFunctionTestTypeValueConverter x:Key="spendingFunctionTestTypeValueConverter" />
-		<SpendingFunctions1:SpendingFunctionLowerBoundSpendingValueConverter x:Key="spendingFunctionLowerBoundSpendingValueConverter" />
-		<SpendingFunctions1:SpendingFunctionLowerBoundTestingValueConverter x:Key="spendingFunctionLowerBoundTestingValueConverter" />
+		<ViewModels:SpendingFunctionTestTypeValueConverter x:Key="spendingFunctionTestTypeValueConverter" />
+		<ViewModels:SpendingFunctionLowerBoundSpendingValueConverter x:Key="spendingFunctionLowerBoundSpendingValueConverter" />
+		<ViewModels:SpendingFunctionLowerBoundTestingValueConverter x:Key="spendingFunctionLowerBoundTestingValueConverter" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">

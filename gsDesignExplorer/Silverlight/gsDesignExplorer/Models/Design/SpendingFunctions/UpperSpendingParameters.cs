@@ -1,6 +1,6 @@
 ﻿namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 {
-	public class UpperSpendingParameters
+	public class UpperSpendingParameters : LowerSpendingParameters
 	{
 	}
 }

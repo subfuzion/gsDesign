@@ -4,33 +4,38 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-	xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
 	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
-             xmlns:SpendingFunctions1="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions" mc:Ignorable="d"
+	xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions"
+	xmlns:ParameterFree="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.ParameterFree"
+	xmlns:OneParameter="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.OneParameter"
+	xmlns:TwoParameter="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.TwoParameter"
+	xmlns:ThreeParameter="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.ThreeParameter"
+	xmlns:PiecewiseLinear="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.PiecewiseLinear"
+	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 
 	<UserControl.Resources>
-		<SpendingFunctions1:SpendingFunctionCategoryValueConverter x:Key="spendingFunctionTypeValueConverter" />
+		<SpendingFunctions:SpendingFunctionCategoryValueConverter x:Key="spendingFunctionTypeValueConverter" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<toolkit:Accordion HorizontalAlignment="Stretch"
 						   VerticalAlignment="Stretch"
 						   SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTypeValueConverter}}">
-			<toolkit:AccordionItem Header="Parameter Free">
-				<SpendingFunctions:ParameterFreeView />
+			<toolkit:AccordionItem Header="Parameter Free" HorizontalContentAlignment="Stretch">
+				<ParameterFree:ParameterFreeView />
 			</toolkit:AccordionItem>
-			<toolkit:AccordionItem Header="1-Parameter">
-				<SpendingFunctions:ParameterFreeView />
+			<toolkit:AccordionItem Header="1-Parameter" HorizontalContentAlignment="Stretch">
+				<OneParameter:OneParameterView/>
 			</toolkit:AccordionItem>
-			<toolkit:AccordionItem Header="2-Parameter">
-				<SpendingFunctions:ParameterFreeView />
+			<toolkit:AccordionItem Header="2-Parameter" HorizontalContentAlignment="Stretch">
+				<TwoParameter:TwoParameterView />
 			</toolkit:AccordionItem>
-			<toolkit:AccordionItem Header="3-Parameter">
-				<SpendingFunctions:ParameterFreeView />
+			<toolkit:AccordionItem Header="3-Parameter" HorizontalContentAlignment="Stretch">
+				<ThreeParameter:ThreeParameterView />
 			</toolkit:AccordionItem>
-			<toolkit:AccordionItem Header="Piecewise Linear">
-				<SpendingFunctions:ParameterFreeView />
+			<toolkit:AccordionItem Header="Piecewise Linear" HorizontalContentAlignment="Stretch">
+				<PiecewiseLinear:PiecewiseLinearView />
 			</toolkit:AccordionItem>
 		</toolkit:Accordion>
 	</Grid>

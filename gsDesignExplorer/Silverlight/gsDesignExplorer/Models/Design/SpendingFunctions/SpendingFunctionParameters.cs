@@ -8,7 +8,8 @@ namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 
 		public LowerSpendingParameters LowerSpendingParameters
 		{
-			get { return _lowerSpendingParameters; }
+			get { return _lowerSpendingParameters
+				?? (_lowerSpendingParameters = new LowerSpendingParameters()); }
 
 			set
 			{
@@ -24,7 +25,8 @@ namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 
 		public UpperSpendingParameters UpperSpendingParameters
 		{
-			get { return _upperSpendingParameters; }
+			get { return _upperSpendingParameters
+				?? (_upperSpendingParameters = new UpperSpendingParameters()); }
 
 			set
 			{
