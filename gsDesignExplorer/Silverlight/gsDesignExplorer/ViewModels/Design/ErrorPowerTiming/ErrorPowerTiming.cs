@@ -8,11 +8,11 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 	using Models.Design.ErrorPowerTiming;
 	using Subfuzion.Helpers;
 
-	public class Ept : NotifyPropertyChangedBase
+	public class ErrorPowerTiming : NotifyPropertyChangedBase
 	{
 		private DesignParameters _designParameters;
 
-		public Ept(DesignParameters designParameters)
+		public ErrorPowerTiming(DesignParameters designParameters)
 		{
 			_designParameters = designParameters;
 		}

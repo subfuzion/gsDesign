@@ -66,27 +66,27 @@
 
 		#region ErrorPowerTimingParameters property
 
-		private Ept _ept;
+		private ErrorPowerTiming.ErrorPowerTiming _errorPowerTiming;
 
-		public Ept Ept
+		public ErrorPowerTiming.ErrorPowerTiming ErrorPowerTiming
 		{
 			get
 			{
-				if (_ept == null)
+				if (_errorPowerTiming == null)
 				{
-					_ept = new Ept(Model);
-					RaisePropertyChanged("Ept");
+					_errorPowerTiming = new ErrorPowerTiming.ErrorPowerTiming(Model);
+					RaisePropertyChanged("ErrorPowerTiming");
 				}
 
-				return _ept;
+				return _errorPowerTiming;
 			}
 
 			set
 			{
-				if (_ept != value)
+				if (_errorPowerTiming != value)
 				{
-					_ept = value;
-					RaisePropertyChanged("Ept");
+					_errorPowerTiming = value;
+					RaisePropertyChanged("ErrorPowerTiming");
 				}
 			}
 		}

@@ -112,16 +112,21 @@
     <Compile Include="Models\Design\SampleSize\TimeToEventHypothesis.cs" />
     <Compile Include="Models\Design\SampleSize\TimeToEventSpecification.cs" />
     <Compile Include="Models\Design\SampleSize\TimeToTestHypothesis.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunction.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\PiecewiseLinear\PiecewiseLinearSpendingFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionParameters.cs" />
-    <Compile Include="Models\Design\SpendingFunctions\LanDeMetsApproximation.cs" />
-    <Compile Include="Models\Design\SpendingFunctions\OneParameterFamily.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\ParameterFree\LanDeMetsApproximation.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\OneParameter\OneParameterFamily.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionBounds.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionLowerBoundSpending.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionLowerBoundTesting.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionTestCategory.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionCategory.cs" />
-    <Compile Include="Models\Design\SpendingFunctions\SpendingShapeFunction.cs" />
-    <Compile Include="ViewModels\Design\ErrorPowerTiming\Ept.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\TwoParameter\SpendingShapeFunction.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\TwoParameter\TwoParameterSpendingFunction.cs" />
+    <Compile Include="ViewModels\Design\ErrorPowerTiming\ErrorPowerTiming.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\IntervalSpacingValueConverter.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\IntervalTiming.cs" />
     <Compile Include="ViewModels\Design\SampleSize\BinomialNonInferiorityTestingValueConverter.cs" />
@@ -414,6 +419,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ViewModels\Design\SpendingFunctions\OneParameter\" />
+    <Folder Include="ViewModels\Design\SpendingFunctions\ParameterFree\" />
+    <Folder Include="ViewModels\Design\SpendingFunctions\PiecewiseLinear\" />
+    <Folder Include="ViewModels\Design\SpendingFunctions\ThreeParameter\" />
+    <Folder Include="ViewModels\Design\SpendingFunctions\TwoParameter\" />
+    <Folder Include="Views\Design\SpendingFunctions\OneParameter\" />
+    <Folder Include="Views\Design\SpendingFunctions\ParameterFree\" />
+    <Folder Include="Views\Design\SpendingFunctions\PiecewiseLinear\" />
+    <Folder Include="Views\Design\SpendingFunctions\ThreeParameter\" />
+    <Folder Include="Views\Design\SpendingFunctions\TwoParameter\" />
     <Folder Include="Views\Test\Console\" />
   </ItemGroup>
   <ItemGroup>

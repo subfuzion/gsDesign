@@ -61,7 +61,7 @@
 			if (Design == null) return;
 
 			Design.PropertyChanged -= OnDesignPropertiesChanged;
-			Design.Ept.PropertyChanged -= OnDesignPropertiesChanged;
+			Design.ErrorPowerTiming.PropertyChanged -= OnDesignPropertiesChanged;
 			Design.SampleSize.PropertyChanged -= OnDesignPropertiesChanged;
 			Design.SpendingFunctions.PropertyChanged -= OnDesignPropertiesChanged;
 		}
@@ -71,7 +71,7 @@
 			if (Design == null) return;
 
 			Design.PropertyChanged += OnDesignPropertiesChanged;
-			Design.Ept.PropertyChanged += OnDesignPropertiesChanged;
+			Design.ErrorPowerTiming.PropertyChanged += OnDesignPropertiesChanged;
 			Design.SampleSize.PropertyChanged += OnDesignPropertiesChanged;
 			Design.SpendingFunctions.PropertyChanged += OnDesignPropertiesChanged;
 		}

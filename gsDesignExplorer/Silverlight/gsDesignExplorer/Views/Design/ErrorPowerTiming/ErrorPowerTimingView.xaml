@@ -66,9 +66,9 @@
 												   Height="22"
 												   DecimalPlaces="4"
 												   Increment="0.1"
-												   Minimum="{Binding CurrentDesign.Ept.MinimumValidError, Mode=OneWay}"
-												   Maximum="{Binding CurrentDesign.Ept.MaximumValidError, Mode=OneWay}"
-												   Value="{Binding CurrentDesign.Ept.Error, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True}">
+												   Minimum="{Binding CurrentDesign.ErrorPowerTiming.MinimumValidError, Mode=OneWay}"
+												   Maximum="{Binding CurrentDesign.ErrorPowerTiming.MaximumValidError, Mode=OneWay}"
+												   Value="{Binding CurrentDesign.ErrorPowerTiming.Error, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True}">
 								<!--
 								<ToolTipService.ToolTip>
 									<ToolTip Content="0 &lt; Type I Error &lt; Power &lt; 100"/>
@@ -79,8 +79,8 @@
 
 							<Slider Grid.Row="1" Grid.ColumnSpan="2" Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="5"
 									Value="{Binding ElementName=numericUpDown1, Path=Value, Mode=TwoWay}" />
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumValidError}" Foreground="#444" FontSize="9" />
-							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumValidError}" TextAlignment="Right" Foreground="#444" FontSize="9" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.ErrorPowerTiming.MinimumValidError}" Foreground="#444" FontSize="9" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.ErrorPowerTiming.MaximumValidError}" TextAlignment="Right" Foreground="#444" FontSize="9" />
 
 
 							<!-- Power -->
@@ -94,21 +94,21 @@
 												   Margin="4" Height="22"
 												   DecimalPlaces="1"
 												   Increment="0.1"
-												   Minimum="{Binding CurrentDesign.Ept.MinimumValidPower, Mode=OneWay}"
-												   Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
-												   Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}" />
+												   Minimum="{Binding CurrentDesign.ErrorPowerTiming.MinimumValidPower, Mode=OneWay}"
+												   Maximum="{Binding CurrentDesign.ErrorPowerTiming.MaximumValidPower, Mode=OneWay}"
+												   Value="{Binding CurrentDesign.ErrorPowerTiming.Power, Mode=TwoWay}" />
 							<sdk:DescriptionViewer Grid.Row="3" Grid.Column="2" Target="{Binding ElementName=numericUpDown2}" />
 
 							<Slider Grid.Row="4" Grid.ColumnSpan="2"
 									Minimum="0.1"
-									Maximum="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}"
+									Maximum="{Binding CurrentDesign.ErrorPowerTiming.MaximumValidPower, Mode=OneWay}"
 									SmallChange="1"
 									LargeChange="5"
-									Value="{Binding CurrentDesign.Ept.Power, Mode=TwoWay}" />
+									Value="{Binding CurrentDesign.ErrorPowerTiming.Power, Mode=TwoWay}" />
 							<toolkit:DockPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
 								<TextBlock toolkit:DockPanel.Dock="Left" Text="0.1" TextAlignment="Left" Foreground="#444" FontSize="9" />
-								<TextBlock toolkit:DockPanel.Dock="Right" Text="{Binding CurrentDesign.Ept.MaximumValidPower, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
-								<TextBlock Text="{Binding CurrentDesign.Ept.MinimumPowerDisplayText, Mode=OneWay}" TextAlignment="Center" Foreground="#444" FontSize="9" />
+								<TextBlock toolkit:DockPanel.Dock="Right" Text="{Binding CurrentDesign.ErrorPowerTiming.MaximumValidPower, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
+								<TextBlock Text="{Binding CurrentDesign.ErrorPowerTiming.MinimumPowerDisplayText, Mode=OneWay}" TextAlignment="Center" Foreground="#444" FontSize="9" />
 							</toolkit:DockPanel>
 
 
@@ -147,19 +147,19 @@
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="numberOfInterimAnalyses" VerticalAlignment="Center"
 												   Margin="4" Height="22"
 												   Increment="1"
-												   Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
-												   Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
-												   Value="{Binding CurrentDesign.Ept.IntervalCount, Mode=TwoWay}" />
+												   Minimum="{Binding CurrentDesign.ErrorPowerTiming.MinimumIntervalCount, Mode=OneWay}"
+												   Maximum="{Binding CurrentDesign.ErrorPowerTiming.MaximumIntervalCount, Mode=OneWay}"
+												   Value="{Binding CurrentDesign.ErrorPowerTiming.IntervalCount, Mode=TwoWay}" />
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=numberOfInterimAnalyses}" />
 
 							<Slider Grid.Row="1" Grid.ColumnSpan="2"
 									SmallChange="1" LargeChange="5"
-									Minimum="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}"
-									Maximum="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}"
+									Minimum="{Binding CurrentDesign.ErrorPowerTiming.MinimumIntervalCount, Mode=OneWay}"
+									Maximum="{Binding CurrentDesign.ErrorPowerTiming.MaximumIntervalCount, Mode=OneWay}"
 									Value="{Binding ElementName=numberOfInterimAnalyses, Path=Value, Mode=TwoWay}" />
 
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.Ept.MinimumIntervalCount, Mode=OneWay}" Foreground="#444" FontSize="9" />
-							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.Ept.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrentDesign.ErrorPowerTiming.MinimumIntervalCount, Mode=OneWay}" Foreground="#444" FontSize="9" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentDesign.ErrorPowerTiming.MaximumIntervalCount, Mode=OneWay}" TextAlignment="Right" Foreground="#444" FontSize="9" />
 
 							<!-- Spacing -->
 							<sdk:Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 16 4"
@@ -167,16 +167,16 @@
 							<ComboBox Grid.Row="3" Grid.Column="1"
 									  x:Name="spacingComboBox"
 									  VerticalAlignment="Center" Margin="4" Height="22"
-									  ItemsSource="{Binding Path=CurrentDesign.Ept.SpacingValues, Mode=OneTime}"
-									  SelectedItem="{Binding Path=CurrentDesign.Ept.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}" />
+									  ItemsSource="{Binding Path=CurrentDesign.ErrorPowerTiming.SpacingValues, Mode=OneTime}"
+									  SelectedItem="{Binding Path=CurrentDesign.ErrorPowerTiming.Spacing, Mode=TwoWay, Converter={StaticResource spacingValueConverter}}" />
 							<sdk:DescriptionViewer Grid.Row="3" Grid.Column="2" Target="{Binding ElementName=spacingComboBox}" />
 
 							<!-- Timing values -->
 							<ListBox Grid.Row="4" Grid.Column="0" Margin="0 4 0 4" Padding="0" BorderThickness="0"
 									 HorizontalAlignment="Right"
-									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
+									 IsEnabled="{Binding CurrentDesign.ErrorPowerTiming.IsTimingTableEnabled}"
 									 ItemContainerStyle="{StaticResource ListBoxStyle}"
-									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
+									 ItemsSource="{Binding Path=CurrentDesign.ErrorPowerTiming.TimingTable}">
 								<ListBox.ItemTemplate>
 									<DataTemplate>
 										<Grid Height="22">
@@ -189,9 +189,9 @@
 								</ListBox.ItemTemplate>
 							</ListBox>
 							<ListBox Grid.Row="4" Grid.Column="1" Margin="0 4 0 4" Padding="0"
-									 IsEnabled="{Binding CurrentDesign.Ept.IsTimingTableEnabled}"
+									 IsEnabled="{Binding CurrentDesign.ErrorPowerTiming.IsTimingTableEnabled}"
 									 ItemContainerStyle="{StaticResource ListBoxStyle}"
-									 ItemsSource="{Binding Path=CurrentDesign.Ept.TimingTable}">
+									 ItemsSource="{Binding Path=CurrentDesign.ErrorPowerTiming.TimingTable}">
 								<ListBox.ItemTemplate>
 									<DataTemplate>
 										<toolkit:NumericUpDown Height="22" Margin="0" VerticalAlignment="Center"
