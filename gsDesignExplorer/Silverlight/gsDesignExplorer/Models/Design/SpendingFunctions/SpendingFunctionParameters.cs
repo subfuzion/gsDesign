@@ -2,6 +2,44 @@ namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 {
 	public class SpendingFunctionParameters
 	{
+		#region LowerSpendingParameters property
+
+		private LowerSpendingParameters _lowerSpendingParameters;
+
+		public LowerSpendingParameters LowerSpendingParameters
+		{
+			get { return _lowerSpendingParameters; }
+
+			set
+			{
+				_lowerSpendingParameters = value;
+			}
+		}
+
+		#endregion // LowerSpendingParameters
+
+		#region UpperSpendingParameters property
+
+		private UpperSpendingParameters _upperSpendingParameters;
+
+		public UpperSpendingParameters UpperSpendingParameters
+		{
+			get { return _upperSpendingParameters; }
+
+			set
+			{
+				_upperSpendingParameters = value;
+			}
+		}
+
+		#endregion // UpperSpendingParameters
+
+
+
+
+
+
+
 		#region SpendingFunctionBounds property
 
 		private SpendingFunctionBounds _spendingFunctionBounds;

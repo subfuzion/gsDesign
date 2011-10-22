@@ -112,6 +112,7 @@
     <Compile Include="Models\Design\SampleSize\TimeToEventHypothesis.cs" />
     <Compile Include="Models\Design\SampleSize\TimeToEventSpecification.cs" />
     <Compile Include="Models\Design\SampleSize\TimeToTestHypothesis.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\LowerSpendingParameters.cs" />
     <Compile Include="Models\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\PiecewiseLinear\PiecewiseLinearSpendingFunction.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Models\Design\SpendingFunctions\TwoParameter\SpendingShapeFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\TwoParameter\TwoParameterSpendingFunction.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\UpperSpendingParameters.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\ErrorPowerTiming.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\IntervalSpacingValueConverter.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\IntervalTiming.cs" />
