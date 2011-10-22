@@ -61,6 +61,8 @@
 			Writer.WriteLine("# =================================");
 			Writer.WriteLine("(Active tab: {0})", Design.SpendingFunctions.SpendingFunctionBounds);
 			Writer.WriteLine("(Active spending function: {0})", Design.SpendingFunctions.SpendingFunctionType);
+			Writer.WriteLine("# Spending Functions tab - Upper Spending:");
+			Writer.WriteLine("# =================================");
 			Writer.WriteLine("###");
 			Writer.WriteLine();
 			Writer.WriteLine("gsDesign function parameters (TBD)");

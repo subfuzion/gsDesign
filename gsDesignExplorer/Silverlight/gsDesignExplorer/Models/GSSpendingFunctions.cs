@@ -2,8 +2,6 @@
 {
 	public class GSSpendingFunctions
 	{
-		#region TestTypeDefinition property
-
 		#region SpendingFunctionBounds property
 
 		private SpendingFunctionBounds _spendingFunctionBounds;
@@ -36,6 +34,7 @@
 
 		#endregion // SpendingFunctionType
 
+		#region SpendingFunctionTestTypeCode property
 
 		public int SpendingFunctionTestTypeCode
 		{
@@ -72,7 +71,7 @@
 			}
 		}
 
-		#endregion // TestTypeDefinition
+		#endregion // SpendingFunctionTestTypeCode
 
 		#region SpendingFunctionTestType property
 

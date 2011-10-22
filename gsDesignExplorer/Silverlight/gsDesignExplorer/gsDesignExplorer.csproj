@@ -104,7 +104,11 @@
     </Compile>
     <Compile Include="Models\BinomialNonInferiorityTesting.cs" />
     <Compile Include="Models\DesignScriptGenerator.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\LanDeMetsApproximation.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\OneParameterFamily.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\SpendingShapeFunction.cs" />
     <Compile Include="Models\GSSpendingFunctions.cs" />
+    <Compile Include="Models\SpendingFunctionParameters.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctionBoundsValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctionTypeValueConverter.cs" />
     <Compile Include="Models\TimeToEventAccrual.cs" />
@@ -122,7 +126,7 @@
     <Compile Include="Models\SampleSizeType.cs" />
     <Compile Include="Models\SpendingFunctionTestType.cs" />
     <Compile Include="ViewModels\Design\Design.cs" />
-    <Compile Include="Models\DesignCollection.cs" />
+    <Compile Include="ViewModels\Design\DesignCollection.cs" />
     <Compile Include="ViewModels\Design\Ept.cs" />
     <Compile Include="ViewModels\Design\EptSpacingValueConverter.cs" />
     <Compile Include="Models\GSDesign.cs" />

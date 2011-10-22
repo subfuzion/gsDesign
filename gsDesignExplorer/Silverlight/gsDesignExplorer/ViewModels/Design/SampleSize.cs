@@ -87,6 +87,23 @@
 
 		#endregion // FixedDesignSampleSize
 
+		#region MinimumFixedSampleSize property
+
+		public int MinimumFixedSampleSize
+		{
+			get { return 1; }
+		}
+
+		#endregion // MinimumFixedSampleSize
+
+		#region MaximumFixedSampleSize property
+
+		public int MaximumFixedSampleSize
+		{
+			get { return 100000; }
+		}
+
+		#endregion // MaximumFixedSampleSize
 
 		#endregion
 

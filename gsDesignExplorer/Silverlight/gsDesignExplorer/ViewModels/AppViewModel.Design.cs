@@ -1,6 +1,7 @@
 ﻿namespace gsDesign.Explorer.ViewModels
 {
 	using System.Text.RegularExpressions;
+	using Design;
 	using Models;
 
 	public partial class AppViewModel

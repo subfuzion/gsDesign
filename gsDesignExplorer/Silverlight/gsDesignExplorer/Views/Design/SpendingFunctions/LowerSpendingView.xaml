@@ -8,10 +8,6 @@
 	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 
-	<UserControl.Resources>
-		<Design:SpendingFunctionTypeValueConverter x:Key="spendingFunctionTypeValueConverter" />
-	</UserControl.Resources>
-
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<SpendingFunctions:AccordionView />
 	</Grid>
