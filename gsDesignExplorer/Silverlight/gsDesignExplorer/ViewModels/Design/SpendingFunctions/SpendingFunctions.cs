@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
 	using System.ComponentModel.DataAnnotations;
 	using Models;
@@ -38,8 +38,6 @@
 		#endregion // SpendingFunctionBounds
 
 		#region SpendingFunctionCategory property
-
-		private SpendingFunctionCategory _spendingFunctionCategory;
 
 		public SpendingFunctionCategory SpendingFunctionCategory
 		{
@@ -116,9 +114,6 @@
 		}
 
 		#endregion // SpendingFunctionLowerBoundTesting
-
-
-
 
 	}
 }

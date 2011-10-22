@@ -1,21 +1,20 @@
-﻿namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 {
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models;
 	using Models.Design.SampleSize;
 
-	public class TimeToEventAccrualValueConverter : IValueConverter
+	public class TimeToEventHypothesisValueConverter : IValueConverter
 	{
-		private const string Uniform = "Uniform";
-		private const string Exponential = "Exponential";
+		private const string RiskRatio = "Risk Ratio";
+		private const string RiskDifference = "Risk Difference";
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is TimeToEventAccrual == false)
+			if (value is TimeToEventHypothesis == false)
 			{
 				throw new NotImplementedException();
 			}
@@ -24,8 +23,8 @@
 			{
 				var values = new List<string>
 				             {
-				             	Uniform,
-								Exponential,
+				             	RiskRatio,
+								RiskDifference,
 				             };
 
 				return values;
@@ -33,14 +32,14 @@
 
 			if (targetType.Equals(typeof(object)) || targetType.Equals(typeof(string)))
 			{
-				var binomialTesting = (TimeToEventAccrual)value;
+				var binomialTesting = (TimeToEventHypothesis)value;
 				switch (binomialTesting)
 				{
-					case TimeToEventAccrual.Uniform:
-						return Uniform;
+					case TimeToEventHypothesis.RiskRatio:
+						return RiskRatio;
 
-					case TimeToEventAccrual.Exponential:
-						return Exponential;
+					case TimeToEventHypothesis.RiskDifference:
+						return RiskDifference;
 				}
 
 				return binomialTesting.ToString();
@@ -58,14 +57,14 @@
 
 			switch (value.ToString())
 			{
-				case Uniform:
-					return TimeToEventAccrual.Uniform;
+				case RiskRatio:
+					return TimeToEventHypothesis.RiskRatio;
 
-				case Exponential:
-					return TimeToEventAccrual.Exponential;
+				case RiskDifference:
+					return TimeToEventHypothesis.RiskDifference;
 			}
 
-			return (TimeToEventAccrual)Enum.Parse(typeof(TimeToEventAccrual), value.ToString(), true);
+			return (TimeToEventHypothesis)Enum.Parse(typeof(TimeToEventHypothesis), value.ToString(), true);
 		}
 	}
 }

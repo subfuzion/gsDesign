@@ -1,6 +1,7 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design
 {
 	using System;
+	using ErrorPowerTiming;
 	using Models;
 	using Subfuzion.Helpers;
 
@@ -94,15 +95,15 @@
 
 		#region SampleSize property
 
-		private SampleSize _sampleSize;
+		private SampleSize.SampleSize _sampleSize;
 
-		public SampleSize SampleSize
+		public SampleSize.SampleSize SampleSize
 		{
 			get
 			{
 				if (_sampleSize == null)
 				{
-					_sampleSize = new SampleSize(Model);
+					_sampleSize = new SampleSize.SampleSize(Model);
 					RaisePropertyChanged("SampleSize");
 				}
 
@@ -123,15 +124,15 @@
 
 		#region SpendingFunctions property
 
-		private SpendingFunctions _spendingFunctions;
+		private SpendingFunctions.SpendingFunctions _spendingFunctions;
 
-		public SpendingFunctions SpendingFunctions
+		public SpendingFunctions.SpendingFunctions SpendingFunctions
 		{
 			get
 			{
 				if (_spendingFunctions == null)
 				{
-					_spendingFunctions = new SpendingFunctions(Model);
+					_spendingFunctions = new SpendingFunctions.SpendingFunctions(Model);
 					RaisePropertyChanged("SpendingFunctions");
 				}
 

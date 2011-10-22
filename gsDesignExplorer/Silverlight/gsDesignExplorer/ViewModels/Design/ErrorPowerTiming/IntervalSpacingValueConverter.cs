@@ -1,4 +1,4 @@
-namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 {
 	using System;
 	using System.Globalization;

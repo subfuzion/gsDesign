@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 {
 	using System;
 	using System.Collections.Generic;
@@ -68,8 +68,6 @@
 		#endregion // MaximumValidError
 
 		#region Power property
-
-		private double _power;
 
 		[Display(Name = "Power (100 x [1-\u03B2])",
 			Description = "0 \u2264 Type I Error \u003C Power \u2264 100")]

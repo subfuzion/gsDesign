@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 {
 	using System;
 	using System.Collections.Generic;

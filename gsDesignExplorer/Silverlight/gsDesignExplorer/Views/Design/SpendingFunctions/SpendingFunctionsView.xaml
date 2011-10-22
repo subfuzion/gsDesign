@@ -6,11 +6,11 @@
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
 	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
-	mc:Ignorable="d"
+             xmlns:SpendingFunctions1="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions" mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 	
 	<UserControl.Resources>
-		<Design:SpendingFunctionBoundsValueConverter x:Key="spendingFunctionBoundsValueConverter" />
+		<SpendingFunctions1:SpendingFunctionBoundsValueConverter x:Key="spendingFunctionBoundsValueConverter" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">

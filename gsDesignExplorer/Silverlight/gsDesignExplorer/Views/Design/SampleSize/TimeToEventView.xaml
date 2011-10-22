@@ -6,13 +6,13 @@
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
-	mc:Ignorable="d"
+             xmlns:SampleSize="clr-namespace:gsDesign.Explorer.ViewModels.Design.SampleSize" mc:Ignorable="d"
 	>
 	
 	<UserControl.Resources>
-		<Design:TimeToEventSpecificationValueConverter x:Key="timeToEventSpecificationValueConverter" />
-		<Design:TimeToEventAccrualValueConverter x:Key="timeToEventAccrualValueConverter" />
-		<Design:TimeToEventHypothesisValueConverter x:Key="timeToEventHypothesisValueConverter" />
+		<SampleSize:TimeToEventSpecificationValueConverter x:Key="timeToEventSpecificationValueConverter" />
+		<SampleSize:TimeToEventAccrualValueConverter x:Key="timeToEventAccrualValueConverter" />
+		<SampleSize:TimeToEventHypothesisValueConverter x:Key="timeToEventHypothesisValueConverter" />
 	</UserControl.Resources>
 	
 	<Grid x:Name="LayoutRoot" Background="White">

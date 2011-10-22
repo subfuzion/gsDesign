@@ -6,11 +6,11 @@
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:SampleSize="clr-namespace:gsDesign.Explorer.Views.Design.SampleSize"
 	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
-	mc:Ignorable="d"
+             xmlns:SampleSize1="clr-namespace:gsDesign.Explorer.ViewModels.Design.SampleSize" mc:Ignorable="d"
 	d:DesignHeight="800" d:DesignWidth="448">
 
 	<UserControl.Resources>
-		<Design:SampleSizeCategoryValueConverter x:Key="sampleSizeCategoryValueConverter"/>
+		<SampleSize1:SampleSizeCategoryValueConverter x:Key="sampleSizeCategoryValueConverter"/>
 	</UserControl.Resources>
 	
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">

@@ -1,21 +1,20 @@
-﻿namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 {
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models;
 	using Models.Design.SampleSize;
 
-	public class TimeToEventHypothesisValueConverter : IValueConverter
+	public class TimeToEventSpecificationValueConverter : IValueConverter
 	{
-		private const string RiskRatio = "Risk Ratio";
-		private const string RiskDifference = "Risk Difference";
+		private const string EventRate = "Event Rate";
+		private const string MedianTime = "Median Time";
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is TimeToEventHypothesis == false)
+			if (value is TimeToEventSpecification == false)
 			{
 				throw new NotImplementedException();
 			}
@@ -24,8 +23,8 @@
 			{
 				var values = new List<string>
 				             {
-				             	RiskRatio,
-								RiskDifference,
+				             	EventRate,
+								MedianTime,
 				             };
 
 				return values;
@@ -33,17 +32,17 @@
 
 			if (targetType.Equals(typeof(object)) || targetType.Equals(typeof(string)))
 			{
-				var binomialTesting = (TimeToEventHypothesis)value;
-				switch (binomialTesting)
+				var specification = (TimeToEventSpecification)value;
+				switch (specification)
 				{
-					case TimeToEventHypothesis.RiskRatio:
-						return RiskRatio;
+					case TimeToEventSpecification.EventRate:
+						return EventRate;
 
-					case TimeToEventHypothesis.RiskDifference:
-						return RiskDifference;
+					case TimeToEventSpecification.MedianTime:
+						return MedianTime;
 				}
 
-				return binomialTesting.ToString();
+				return specification.ToString();
 			}
 
 			throw new NotImplementedException("Unhandled targetType: " + targetType);
@@ -58,14 +57,14 @@
 
 			switch (value.ToString())
 			{
-				case RiskRatio:
-					return TimeToEventHypothesis.RiskRatio;
+				case EventRate:
+					return TimeToEventSpecification.EventRate;
 
-				case RiskDifference:
-					return TimeToEventHypothesis.RiskDifference;
+				case MedianTime:
+					return TimeToEventSpecification.MedianTime;
 			}
 
-			return (TimeToEventHypothesis)Enum.Parse(typeof(TimeToEventHypothesis), value.ToString(), true);
+			return (TimeToEventSpecification)Enum.Parse(typeof(TimeToEventSpecification), value.ToString(), true);
 		}
 	}
 }

@@ -5,14 +5,14 @@
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:SampleSize="clr-namespace:gsDesign.Explorer.Views.Design.SampleSize"
 			 xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
-			 xmlns:EPT="clr-namespace:gsDesign.Explorer.Views.Design.EPT"
+			 xmlns:ept="clr-namespace:gsDesign.Explorer.Views.Design.ErrorPowerTiming"
 			 mc:Ignorable="d"
 			 d:DesignHeight="600" d:DesignWidth="400">
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<sdk:TabControl x:Name="DesignTabControl">
 			<sdk:TabItem Header="&#945; &#8226; &#946; &#8226; Timing">
-				<EPT:EPTView />
+				<ept:ErrorPowerTimingView />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Sample Size">
 				<SampleSize:SampleSizeView />

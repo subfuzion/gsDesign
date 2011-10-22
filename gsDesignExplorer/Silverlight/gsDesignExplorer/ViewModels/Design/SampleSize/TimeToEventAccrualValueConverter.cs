@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.ViewModels.Design
+namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 {
 	using System;
 	using System.Collections;
@@ -7,14 +7,14 @@
 	using System.Windows.Data;
 	using Models.Design.SampleSize;
 
-	public class BinomialNonInferiorityTestingValueConverter : IValueConverter
+	public class TimeToEventAccrualValueConverter : IValueConverter
 	{
-		private const string Superiority = "Superiority";
-		private const string SuperiorityWithMargin = "Non-inferiority - superiority with margin";
+		private const string Uniform = "Uniform";
+		private const string Exponential = "Exponential";
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is BinomialNonInferiorityTesting == false)
+			if (value is TimeToEventAccrual == false)
 			{
 				throw new NotImplementedException();
 			}
@@ -23,8 +23,8 @@
 			{
 				var values = new List<string>
 				             {
-				             	Superiority,
-								SuperiorityWithMargin,
+				             	Uniform,
+								Exponential,
 				             };
 
 				return values;
@@ -32,14 +32,14 @@
 
 			if (targetType.Equals(typeof(object)) || targetType.Equals(typeof(string)))
 			{
-				var binomialTesting = (BinomialNonInferiorityTesting)value;
+				var binomialTesting = (TimeToEventAccrual)value;
 				switch (binomialTesting)
 				{
-					case BinomialNonInferiorityTesting.Superiority:
-						return Superiority;
+					case TimeToEventAccrual.Uniform:
+						return Uniform;
 
-					case BinomialNonInferiorityTesting.SuperiorityWithMargin:
-						return SuperiorityWithMargin;
+					case TimeToEventAccrual.Exponential:
+						return Exponential;
 				}
 
 				return binomialTesting.ToString();
@@ -57,14 +57,14 @@
 
 			switch (value.ToString())
 			{
-				case Superiority:
-					return BinomialNonInferiorityTesting.Superiority;
+				case Uniform:
+					return TimeToEventAccrual.Uniform;
 
-				case SuperiorityWithMargin:
-					return BinomialNonInferiorityTesting.SuperiorityWithMargin;
+				case Exponential:
+					return TimeToEventAccrual.Exponential;
 			}
 
-			return (BinomialNonInferiorityTesting)Enum.Parse(typeof(BinomialNonInferiorityTesting), value.ToString(), true);
+			return (TimeToEventAccrual)Enum.Parse(typeof(TimeToEventAccrual), value.ToString(), true);
 		}
 	}
 }
