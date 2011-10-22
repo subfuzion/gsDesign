@@ -5,20 +5,21 @@
 	using System.Collections.ObjectModel;
 	using System.ComponentModel.DataAnnotations;
 	using Models;
+	using Models.Design.ErrorPowerTiming;
 	using Subfuzion.Helpers;
 
 	public class Ept : NotifyPropertyChangedBase
 	{
-		private GSDesign _design;
+		private DesignParameters _designParameters;
 
-		public Ept(GSDesign design)
+		public Ept(DesignParameters designParameters)
 		{
-			_design = design;
+			_designParameters = designParameters;
 		}
 
-		private GSEpt Model
+		private ErrorPowerTimingParameters Model
 		{
-			get { return _design.Ept; }
+			get { return _designParameters.ErrorPowerTimingParameters; }
 		}
 
 		#region Error property
@@ -185,16 +186,16 @@
 
 		#region Spacing property
 
-		private EptSpacing _spacing;
+		private IntervalSpacing _spacing;
 
 		public IEnumerable<string> SpacingValues
 		{
-			get { return EnumHelper.GetNames<EptSpacing>(); }
+			get { return EnumHelper.GetNames<IntervalSpacing>(); }
 		}
 
 		[Display(Name = "Spacing",
 			Description = "Interim analyses timing: equal intervals or unequal (set timings manually)")]
-		public EptSpacing Spacing
+		public IntervalSpacing Spacing
 		{
 			get { return _spacing; }
 
@@ -214,13 +215,13 @@
 
 		#region TimingTable property
 
-		private ObservableCollection<Timing> _timingTable = new ObservableCollection<Timing>
+		private ObservableCollection<IntervalTiming> _timingTable = new ObservableCollection<IntervalTiming>
 		    {
-		        new Timing {Index = 1, Value = 0.3333},
-		        new Timing {Index = 2, Value = 0.6667},
+		        new IntervalTiming {Index = 1, Value = 0.3333},
+		        new IntervalTiming {Index = 2, Value = 0.6667},
 		    };
 
-		public ObservableCollection<Timing> TimingTable
+		public ObservableCollection<IntervalTiming> TimingTable
 		{
 			get { return _timingTable; }
 
@@ -240,7 +241,7 @@
 
 		public bool IsTimingTableEnabled
 		{
-			get { return Spacing == EptSpacing.Unequal; }
+			get { return Spacing == IntervalSpacing.Unequal; }
 		}
 
 		#endregion // IsTimingTableEnabled
@@ -282,7 +283,7 @@
 
 				for (int i = TimingTable.Count; i < IntervalCount; i++, baseValue += increment)
 				{
-					TimingTable.Add(new Timing {Index = i + 1, Value = baseValue + increment});
+					TimingTable.Add(new IntervalTiming {Index = i + 1, Value = baseValue + increment});
 				}
 			}
 			else if (TimingTable.Count > IntervalCount)
@@ -293,7 +294,7 @@
 				}
 			}
 
-			if (Spacing == EptSpacing.Equal)
+			if (Spacing == IntervalSpacing.Equal)
 			{
 				var timing = 1.0 / (IntervalCount + 1);
 
@@ -313,50 +314,5 @@
 		}
 
 		#endregion
-	}
-
-	public class Timing : NotifyPropertyChangedBase
-	{
-		#region Index property
-
-		private int _index;
-
-		public int Index
-		{
-			get { return _index; }
-
-			set
-			{
-				if (_index != value)
-				{
-					_index = value;
-					RaisePropertyChanged("Index");
-				}
-			}
-		}
-
-		#endregion // Index
-
-		#region Value property
-
-		private double _value;
-
-		public double Value
-		{
-			get { return _value; }
-
-			set
-			{
-				if (Math.Abs(_value - value) > double.Epsilon)
-				{
-					_value = value;
-					RaisePropertyChanged("Value");
-				}
-			}
-		}
-
-		#endregion // Value
-
-
 	}
 }

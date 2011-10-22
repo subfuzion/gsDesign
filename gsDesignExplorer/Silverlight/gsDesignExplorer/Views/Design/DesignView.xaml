@@ -11,7 +11,7 @@
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<sdk:TabControl x:Name="DesignTabControl">
-			<sdk:TabItem Header="&#945; &#8226; Power &#8226; Timing">
+			<sdk:TabItem Header="&#945; &#8226; &#946; &#8226; Timing">
 				<EPT:EPTView />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Sample Size">

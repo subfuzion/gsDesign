@@ -7,7 +7,7 @@
 			 xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design" mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<Design:EptSpacingValueConverter x:Key="spacingValueConverter" />
+		<Design:IntervalSpacingValueConverter x:Key="spacingValueConverter" />
 		<Style x:Key="ListBoxStyle" TargetType="ListBoxItem">
 			<!-- Below setter disables selection, and stretches content -->
 			<Setter Property="Template">

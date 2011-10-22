@@ -4,20 +4,21 @@
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using Models;
+	using Models.Design.SampleSize;
 	using Subfuzion.Helpers;
 
 	public class SampleSize : NotifyPropertyChangedBase
 	{
-		private GSDesign _design;
+		private DesignParameters _designParameters;
 
-		public SampleSize(GSDesign design)
+		public SampleSize(DesignParameters designParameters)
 		{
-			_design = design;
+			_designParameters = designParameters;
 		}
 
-		private GSSampleSize Model
+		private SampleSizeParameters Model
 		{
-			get { return _design.SampleSize; }
+			get { return _designParameters.SampleSizeParameters; }
 		}
 
 		#region SampleSizeCategories property

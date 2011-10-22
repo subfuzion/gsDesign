@@ -8,11 +8,11 @@
 	{
 		private StringWriter _writer;
 
-		public string GenerateScript(GSDesign design)
+		public string GenerateScript(DesignParameters designParameters)
 		{
-			if (design == null) return null;
+			if (designParameters == null) return null;
 
-			Design = design;
+			DesignParameters = designParameters;
 
 			GeneratedTimestamp = DateTime.Now;
 
@@ -30,37 +30,37 @@
 			AppendNFix();
 			Writer.WriteLine("# Sample Size:");
 			Writer.WriteLine("# =================================");
-			Writer.WriteLine("(Active tab: {0})", Design.SampleSize.SampleSizeCategory);
+			Writer.WriteLine("(Active tab: {0})", DesignParameters.SampleSizeParameters.SampleSizeCategory);
 			Writer.WriteLine("# Sample Size tab - User Input:");
 			Writer.WriteLine("# =================================");
-			AppendAssignment("FixedDesignSampleSize", Design.SampleSize.FixedDesignSampleSize);
+			AppendAssignment("FixedDesignSampleSize", DesignParameters.SampleSizeParameters.FixedDesignSampleSize);
 			Writer.WriteLine("# Sample Size tab - Binomial:");
 			Writer.WriteLine("# =================================");
-			AppendAssignment("Randomization Ratio", Design.SampleSize.BinomialRandomizationRatio);
-			AppendAssignment("Control", Design.SampleSize.BinomialControlEventRate);
-			AppendAssignment("Experimental", Design.SampleSize.BinomialExperimentalEventRate);
-			AppendAssignment("Non-Inferiority Testing", Design.SampleSize.BinomialNonInferiorityTesting.ToString());
-			AppendAssignment("Delta", Design.SampleSize.BinomialDelta);
-			AppendAssignment("Binomial Fixed Design Sample Size", Design.SampleSize.BinomialFixedDesignSampleSize);
+			AppendAssignment("Randomization Ratio", DesignParameters.SampleSizeParameters.BinomialRandomizationRatio);
+			AppendAssignment("Control", DesignParameters.SampleSizeParameters.BinomialControlEventRate);
+			AppendAssignment("Experimental", DesignParameters.SampleSizeParameters.BinomialExperimentalEventRate);
+			AppendAssignment("Non-Inferiority Testing", DesignParameters.SampleSizeParameters.BinomialNonInferiorityTesting.ToString());
+			AppendAssignment("Delta", DesignParameters.SampleSizeParameters.BinomialDelta);
+			AppendAssignment("Binomial Fixed Design Sample Size", DesignParameters.SampleSizeParameters.BinomialFixedDesignSampleSize);
 			Writer.WriteLine("# Sample Size tab - Time to Event:");
 			Writer.WriteLine("# =================================");
-			AppendAssignment("Specification", Design.SampleSize.TimeToEventSpecification.ToString());
-			AppendAssignment("Control", Design.SampleSize.TimeToEventControl);
-			AppendAssignment("Experimental", Design.SampleSize.TimeToEventExperimental);
-			AppendAssignment("Dropout", Design.SampleSize.TimeToEventDropout);
-			AppendAssignment("Hazard Ratio", Design.SampleSize.TimeToEventHazardRatio);
-			AppendAssignment("Accrual Duration", Design.SampleSize.TimeToEventAccrualDuration);
-			AppendAssignment("Minimum Follow-Up", Design.SampleSize.TimeToEventMinimumFollowUp);
-			AppendAssignment("Randomization Ratio", Design.SampleSize.TimeToEventRandomizationRatio);
-			AppendAssignment("Hypothesis", Design.SampleSize.TimeToEventHypothesis.ToString());
-			AppendAssignment("Accrual Patient Entry Type", Design.SampleSize.TimeToEventAccrual.ToString());
-			AppendAssignment("Gamma", Design.SampleSize.TimeToEventGamma);
-			AppendAssignment("Time to Event Fixed Design Sample Size", Design.SampleSize.TimeToEventFixedDesignSampleSize);
-			AppendAssignment("Time to Event Fixed Design Events", Design.SampleSize.TimeToEventFixedDesignEvents);
+			AppendAssignment("Specification", DesignParameters.SampleSizeParameters.TimeToEventSpecification.ToString());
+			AppendAssignment("Control", DesignParameters.SampleSizeParameters.TimeToEventControl);
+			AppendAssignment("Experimental", DesignParameters.SampleSizeParameters.TimeToEventExperimental);
+			AppendAssignment("Dropout", DesignParameters.SampleSizeParameters.TimeToEventDropout);
+			AppendAssignment("Hazard Ratio", DesignParameters.SampleSizeParameters.TimeToEventHazardRatio);
+			AppendAssignment("Accrual Duration", DesignParameters.SampleSizeParameters.TimeToEventAccrualDuration);
+			AppendAssignment("Minimum Follow-Up", DesignParameters.SampleSizeParameters.TimeToEventMinimumFollowUp);
+			AppendAssignment("Randomization Ratio", DesignParameters.SampleSizeParameters.TimeToEventRandomizationRatio);
+			AppendAssignment("Hypothesis", DesignParameters.SampleSizeParameters.TimeToEventHypothesis.ToString());
+			AppendAssignment("Accrual Patient Entry Type", DesignParameters.SampleSizeParameters.TimeToEventAccrual.ToString());
+			AppendAssignment("Gamma", DesignParameters.SampleSizeParameters.TimeToEventGamma);
+			AppendAssignment("Time to Event Fixed Design Sample Size", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignSampleSize);
+			AppendAssignment("Time to Event Fixed Design Events", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignEvents);
 			Writer.WriteLine("# Spending Functions:");
 			Writer.WriteLine("# =================================");
-			Writer.WriteLine("(Active tab: {0})", Design.SpendingFunctions.SpendingFunctionBounds);
-			Writer.WriteLine("(Active spending function: {0})", Design.SpendingFunctions.SpendingFunctionType);
+			Writer.WriteLine("(Active tab: {0})", DesignParameters.SpendingFunctionParameters.SpendingFunctionBounds);
+			Writer.WriteLine("(Active spending function: {0})", DesignParameters.SpendingFunctionParameters.SpendingFunctionCategory);
 			Writer.WriteLine("# Spending Functions tab - Upper Spending:");
 			Writer.WriteLine("# =================================");
 			Writer.WriteLine("###");
@@ -99,7 +99,7 @@
 			get { return _writer; }
 		}
 
-		private GSDesign Design { get; set; }
+		private DesignParameters DesignParameters { get; set; }
 
 		#region GeneratedTimestamp property
 
@@ -133,35 +133,35 @@
 			AppendComment("developed in gsDesign Explorer version 2.0 on {0}", GeneratedTimestamp.ToString());
 			Writer.WriteLine();
 			Writer.WriteLine("###");
-			AppendComment("Design      : {0}", Design.Name);
-			AppendComment("Description : {0}", Design.Description);
+			AppendComment("Design      : {0}", DesignParameters.Name);
+			AppendComment("Description : {0}", DesignParameters.Description);
 			Writer.WriteLine("###");
 			Writer.WriteLine();
 		}
 
 		private void AppendK()
 		{
-			AppendAssignment("k", Design.Ept.K);
+			AppendAssignment("k", DesignParameters.ErrorPowerTimingParameters.K);
 		}
 
 		private void AppendTestType()
 		{
-			//AppendAssignment("test.type", Design.SpendingFunctions.SpendingFunctionTestTypeCode);
+			//AppendAssignment("test.type", Design.SpendingFunctionParameters.SpendingFunctionTestTypeCode);
 		}
 	
 		private void AppendAlpha()
 		{
-			AppendAssignment("alpha", Math.Round(Design.Ept.Alpha, 6));
+			AppendAssignment("alpha", Math.Round(DesignParameters.ErrorPowerTimingParameters.Alpha, 6));
 		}
 
 		private void AppendBeta()
 		{
-			AppendAssignment("beta", Math.Round(Design.Ept.Beta, 6));
+			AppendAssignment("beta", Math.Round(DesignParameters.ErrorPowerTimingParameters.Beta, 6));
 		}
 
 		private void AppendNFix()
 		{
-			AppendAssignment("n.fix", Design.SampleSize.NFix);
+			AppendAssignment("n.fix", DesignParameters.SampleSizeParameters.NFix);
 		}
 
 		private void AppendGSDesignFunction()
@@ -170,7 +170,7 @@
 			sb.Append("gsDesign(k=k, test.type=test.type, alpha=alpha, beta=beta, n.fix=n.fix\n")
 				.Append("  timing=timing, sfu=sfu, sfupar=sfupar, sfl=sfl, sflpar=sflpar, endpoint=endpoint)");
 
-			AppendAssignment(Design.Name, sb.ToString());
+			AppendAssignment(DesignParameters.Name, sb.ToString());
 
 			Writer.WriteLine();
 
@@ -180,7 +180,7 @@
 		private void AppendPlot()
 		{
 			AppendComment("Boundaries Plot");
-			Writer.WriteLine("plot({0}", Design.Name);
+			Writer.WriteLine("plot({0}", DesignParameters.Name);
 			Writer.WriteLine("  plottype=1,");
 			Writer.WriteLine("  base=TRUE,");
 			Writer.WriteLine("  col=c(\"black\", \"black\"),");

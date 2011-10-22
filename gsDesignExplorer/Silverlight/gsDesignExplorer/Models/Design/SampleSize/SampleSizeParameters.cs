@@ -1,6 +1,6 @@
-﻿namespace gsDesign.Explorer.Models
+namespace gsDesign.Explorer.Models.Design.SampleSize
 {
-	public class GSSampleSize
+	public class SampleSizeParameters
 	{
 		#region NFix property
 

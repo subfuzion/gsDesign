@@ -6,7 +6,7 @@
 
 	public class Design : NotifyPropertyChangedBase
 	{
-		private GSDesign _gsDesign;
+		private DesignParameters _designParameters;
 
 		public Design(Func<string, bool> nameValidator)
 		{
@@ -14,9 +14,9 @@
 			_designScript = new DesignScript {Design = this};
 		}
 
-		internal GSDesign Model
+		internal DesignParameters Model
 		{
-			get { return _gsDesign ?? (_gsDesign = new GSDesign()); }
+			get { return _designParameters ?? (_designParameters = new DesignParameters()); }
 		}
 
 		#region Name property
@@ -63,7 +63,7 @@
 
 		#endregion // Description
 
-		#region Ept property
+		#region ErrorPowerTimingParameters property
 
 		private Ept _ept;
 
@@ -90,7 +90,7 @@
 			}
 		}
 
-		#endregion // Ept
+		#endregion // ErrorPowerTimingParameters
 
 		#region SampleSize property
 

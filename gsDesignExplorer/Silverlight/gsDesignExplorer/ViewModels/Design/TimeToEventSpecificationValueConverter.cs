@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using gsDesign.Explorer.Models;
 
 namespace gsDesign.Explorer.ViewModels.Design
 {
@@ -7,6 +6,7 @@ namespace gsDesign.Explorer.ViewModels.Design
 	using System.Collections;
 	using System.Globalization;
 	using System.Windows.Data;
+	using Models.Design.SampleSize;
 
 	public class TimeToEventSpecificationValueConverter : IValueConverter
 	{

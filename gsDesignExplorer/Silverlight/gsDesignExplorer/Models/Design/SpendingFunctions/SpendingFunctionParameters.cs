@@ -1,6 +1,6 @@
-﻿namespace gsDesign.Explorer.Models
+namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 {
-	public class GSSpendingFunctions
+	public class SpendingFunctionParameters
 	{
 		#region SpendingFunctionBounds property
 
@@ -18,21 +18,21 @@
 
 		#endregion // SpendingFunctionBounds
 
-		#region SpendingFunctionType property
+		#region SpendingFunctionCategory property
 
-		private SpendingFunctionType _spendingFunctionType;
+		private SpendingFunctionCategory _spendingFunctionCategory;
 
-		public SpendingFunctionType SpendingFunctionType
+		public SpendingFunctionCategory SpendingFunctionCategory
 		{
-			get { return _spendingFunctionType; }
+			get { return _spendingFunctionCategory; }
 
 			set
 			{
-				_spendingFunctionType = value;
+				_spendingFunctionCategory = value;
 			}
 		}
 
-		#endregion // SpendingFunctionType
+		#endregion // SpendingFunctionCategory
 
 		#region SpendingFunctionTestTypeCode property
 
@@ -40,13 +40,13 @@
 		{
 			get
 			{
-				if (SpendingFunctionTestType == SpendingFunctionTestType.OneSided)
+				if (SpendingFunctionTestCategory == SpendingFunctionTestCategory.OneSided)
 					return 1;
 
-				if (SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedSymmetric)
+				if (SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedSymmetric)
 					return 2;
 
-				if (SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility)
+				if (SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedWithFutility)
 				{
 					if (SpendingFunctionLowerBoundSpending == SpendingFunctionLowerBoundSpending.BetaSpending)
 					{
@@ -73,21 +73,21 @@
 
 		#endregion // SpendingFunctionTestTypeCode
 
-		#region SpendingFunctionTestType property
+		#region SpendingFunctionTestCategory property
 
-		private SpendingFunctionTestType _spendingFunctionTestType = SpendingFunctionTestType.TwoSidedWithFutility;
+		private SpendingFunctionTestCategory _spendingFunctionTestCategory = SpendingFunctionTestCategory.TwoSidedWithFutility;
 
-		public SpendingFunctionTestType SpendingFunctionTestType
+		public SpendingFunctionTestCategory SpendingFunctionTestCategory
 		{
-			get { return _spendingFunctionTestType; }
+			get { return _spendingFunctionTestCategory; }
 
 			set
 			{
-				_spendingFunctionTestType = value;
+				_spendingFunctionTestCategory = value;
 			}
 		}
 
-		#endregion // SpendingFunctionTestType
+		#endregion // SpendingFunctionTestCategory
 
 		#region SpendingFunctionLowerBoundSpending property
 

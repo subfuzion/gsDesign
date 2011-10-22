@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models
+namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 {
 	public enum SpendingFunctionLowerBoundSpending
 	{

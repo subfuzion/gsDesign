@@ -1,8 +1,8 @@
-﻿namespace gsDesign.Explorer.Models
+namespace gsDesign.Explorer.Models.Design.ErrorPowerTiming
 {
 	using System.Collections.Generic;
 
-	public class GSEpt
+	public class ErrorPowerTimingParameters
 	{
 		#region Alpha property
 

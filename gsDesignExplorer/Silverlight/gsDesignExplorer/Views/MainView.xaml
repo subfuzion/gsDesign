@@ -11,7 +11,7 @@
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="343" />
+			<ColumnDefinition Width="390" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>

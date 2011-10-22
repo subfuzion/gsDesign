@@ -23,7 +23,7 @@
 				<SampleSize:BinomialView />
 			</sdk:TabItem>
 
-			<sdk:TabItem Header="{Binding Path=CurrentDesign.SampleSize.SampleSizeCategories[0], Mode=OneWay}">
+			<sdk:TabItem Header="{Binding Path=CurrentDesign.SampleSize.SampleSizeCategories[2], Mode=OneWay}">
 				<SampleSize:TimeToEventView />
 			</sdk:TabItem>
 		</sdk:TabControl>

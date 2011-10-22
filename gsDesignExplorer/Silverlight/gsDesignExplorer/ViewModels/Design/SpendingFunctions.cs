@@ -2,20 +2,21 @@
 {
 	using System.ComponentModel.DataAnnotations;
 	using Models;
+	using Models.Design.SpendingFunctions;
 	using Subfuzion.Helpers;
 
 	public class SpendingFunctions : NotifyPropertyChangedBase
 	{
-		private GSDesign _design;
+		private DesignParameters _designParameters;
 
-		public SpendingFunctions(GSDesign design)
+		public SpendingFunctions(DesignParameters designParameters)
 		{
-			_design = design;
+			_designParameters = designParameters;
 		}
 
-		private GSSpendingFunctions Model
+		private SpendingFunctionParameters Model
 		{
-			get { return _design.SpendingFunctions; }
+			get { return _designParameters.SpendingFunctionParameters; }
 		}
 
 		#region SpendingFunctionBounds property
@@ -36,45 +37,45 @@
 
 		#endregion // SpendingFunctionBounds
 
-		#region SpendingFunctionType property
+		#region SpendingFunctionCategory property
 
-		private SpendingFunctionType _spendingFunctionType;
+		private SpendingFunctionCategory _spendingFunctionCategory;
 
-		public SpendingFunctionType SpendingFunctionType
+		public SpendingFunctionCategory SpendingFunctionCategory
 		{
-			get { return Model.SpendingFunctionType; }
+			get { return Model.SpendingFunctionCategory; }
 
 			set
 			{
-				if (Model.SpendingFunctionType != value)
+				if (Model.SpendingFunctionCategory != value)
 				{
-					Model.SpendingFunctionType = value;
-					RaisePropertyChanged("SpendingFunctionType");
+					Model.SpendingFunctionCategory = value;
+					RaisePropertyChanged("SpendingFunctionCategory");
 				}
 			}
 		}
 
-		#endregion // SpendingFunctionType
+		#endregion // SpendingFunctionCategory
 
-		#region SpendingFunctionTestType property
+		#region SpendingFunctionTestCategory property
 
 		 [Display(Name = "Test Type",
 			Description = "Select lower spending test type")]
-		public SpendingFunctionTestType SpendingFunctionTestType
+		public SpendingFunctionTestCategory SpendingFunctionTestCategory
 		{
-			get { return Model.SpendingFunctionTestType; }
+			get { return Model.SpendingFunctionTestCategory; }
 
 			set
 			{
-				if (Model.SpendingFunctionTestType != value)
+				if (Model.SpendingFunctionTestCategory != value)
 				{
-					Model.SpendingFunctionTestType = value;
-					RaisePropertyChanged("SpendingFunctionTestType");
+					Model.SpendingFunctionTestCategory = value;
+					RaisePropertyChanged("SpendingFunctionTestCategory");
 				}
 			}
 		}
 
-		#endregion // SpendingFunctionTestType
+		#endregion // SpendingFunctionTestCategory
 
 		#region SpendingFunctionLowerBoundSpending property
 

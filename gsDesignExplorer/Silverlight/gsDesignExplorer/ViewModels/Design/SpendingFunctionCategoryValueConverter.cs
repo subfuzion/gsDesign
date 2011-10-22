@@ -6,8 +6,9 @@ namespace gsDesign.Explorer.ViewModels.Design
 	using System.Globalization;
 	using System.Windows.Data;
 	using Models;
+	using Models.Design.SpendingFunctions;
 
-	public class SpendingFunctionTypeValueConverter : IValueConverter
+	public class SpendingFunctionCategoryValueConverter : IValueConverter
 	{
 		private const string ParameterFree = "Parameter Free";
 		private const string OneParameter = "1-Parameter";
@@ -21,28 +22,28 @@ namespace gsDesign.Explorer.ViewModels.Design
 		{
 			if (value == null) return null;
 			
-			if (!value.GetType().Equals(typeof(SpendingFunctionType))) throw new ArgumentException();
+			if (!value.GetType().Equals(typeof(SpendingFunctionCategory))) throw new ArgumentException();
 
-			if (targetType.Equals(typeof(int))) return (int)(SpendingFunctionType)value;
+			if (targetType.Equals(typeof(int))) return (int)(SpendingFunctionCategory)value;
 
 			if (targetType.Equals(typeof(object)) || targetType.Equals(typeof(string)))
 			{
-				var s = (SpendingFunctionType)value;
+				var s = (SpendingFunctionCategory)value;
 				switch (s)
 				{
-					case SpendingFunctionType.ParameterFree:
+					case SpendingFunctionCategory.ParameterFree:
 						return ParameterFree;
 
-					case SpendingFunctionType.OneParameter:
+					case SpendingFunctionCategory.OneParameter:
 						return OneParameter;
 
-					case SpendingFunctionType.TwoParameter:
+					case SpendingFunctionCategory.TwoParameter:
 						return TwoParameter;
 
-					case SpendingFunctionType.ThreeParameter:
+					case SpendingFunctionCategory.ThreeParameter:
 						return ThreeParameter;
 
-					case SpendingFunctionType.PiecewiseLinear:
+					case SpendingFunctionCategory.PiecewiseLinear:
 						return PiecewiseLinear;
 
 				}
@@ -71,11 +72,11 @@ namespace gsDesign.Explorer.ViewModels.Design
 		{
 			if (value == null) return null;
 			
-			if (!targetType.Equals(typeof(SpendingFunctionType))) throw new ArgumentException();
+			if (!targetType.Equals(typeof(SpendingFunctionCategory))) throw new ArgumentException();
 
 			var valueType = value.GetType();
 
-			if (valueType.Equals(typeof(int))) return (SpendingFunctionType)value;
+			if (valueType.Equals(typeof(int))) return (SpendingFunctionCategory)value;
 
 			if (valueType.Equals(typeof(string)) || valueType.Equals(typeof(object)))
 			{
@@ -84,22 +85,22 @@ namespace gsDesign.Explorer.ViewModels.Design
 				switch (s)
 				{
 					case ParameterFree:
-						return SpendingFunctionType.ParameterFree;
+						return SpendingFunctionCategory.ParameterFree;
 
 					case OneParameter:
-						return SpendingFunctionType.OneParameter;
+						return SpendingFunctionCategory.OneParameter;
 
 					case TwoParameter:
-						return SpendingFunctionType.TwoParameter;
+						return SpendingFunctionCategory.TwoParameter;
 
 					case ThreeParameter:
-						return SpendingFunctionType.ThreeParameter;
+						return SpendingFunctionCategory.ThreeParameter;
 
 					case PiecewiseLinear:
-						return SpendingFunctionType.PiecewiseLinear;
+						return SpendingFunctionCategory.PiecewiseLinear;
 
 					default:
-						return (SpendingFunctionType)Enum.Parse(typeof(SpendingFunctionType), (string)value, true);
+						return (SpendingFunctionCategory)Enum.Parse(typeof(SpendingFunctionCategory), (string)value, true);
 				}
 			}
 
