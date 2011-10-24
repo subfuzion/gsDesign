@@ -1,7 +1,6 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design
 {
 	using System;
-	using ErrorPowerTiming;
 	using Models;
 	using Subfuzion.Helpers;
 
@@ -18,6 +17,15 @@
 		internal DesignParameters Model
 		{
 			get { return _designParameters ?? (_designParameters = new DesignParameters()); }
+		}
+
+		public void Reset()
+		{
+			Model.Reset();
+			RaisePropertyChanged("CurrentDesign");
+			ErrorPowerTiming = new ErrorPowerTiming.ErrorPowerTiming(Model);
+			SampleSize = new SampleSize.SampleSize(Model);
+			SpendingFunctions = new SpendingFunctions.SpendingFunctions(Model);
 		}
 
 		#region Name property
@@ -64,7 +72,7 @@
 
 		#endregion // Description
 
-		#region ErrorPowerTimingParameters property
+		#region ErrorPowerTiming property
 
 		private ErrorPowerTiming.ErrorPowerTiming _errorPowerTiming;
 

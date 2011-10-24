@@ -9,11 +9,43 @@
 		// Called by constructor
 		private void InitCommands()
 		{
-			NewDesignCommand = new DelegateCommand {ExecuteAction = NewDesign};
-			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true };
-			ConnectCommand = new DelegateCommand {ExecuteAction = Connect, Async = true};
+			ConnectCommand = new DelegateCommand { ExecuteAction = Connect, Async = true };
 			ToggleConnectCommand = new DelegateCommand { ExecuteAction = ToggleConnect, Async = true };
+
+			NewDesignCommand = new DelegateCommand { ExecuteAction = NewDesign };
+			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true };
+			ResetDesignCommand = new DelegateCommand { ExecuteAction = ResetDesign };
 		}
+
+		#region Rserve commands
+
+		#region Connect command
+
+		public DelegateCommand ConnectCommand { get; private set; }
+
+		private void Connect(object parameter = null)
+		{
+			RserveClient.Connect();
+		}
+
+		#endregion
+
+		#region Toggle connect
+
+		public DelegateCommand ToggleConnectCommand { get; private set; }
+
+		private void ToggleConnect(object parameter = null)
+		{
+			RserveClient.ToggleConnect();
+		}
+
+		#endregion
+
+		#endregion // Rserve commands
+
+		#region Design commands
+
+		#region New design command
 
 		public DelegateCommand NewDesignCommand { get; set; }
 
@@ -21,6 +53,10 @@
 		{
 			CreateDesign();
 		}
+
+		#endregion
+
+		#region Run design command
 
 		public DelegateCommand RunDesignCommand { get; private set; }
 
@@ -35,18 +71,23 @@
 			AfterRunExecutedVisibility = Visibility.Visible;
 		}
 
-		public DelegateCommand ConnectCommand { get; private set; }
+		#endregion
 
-		private void Connect(object parameter = null)
+		#region Reset design command
+
+		public DelegateCommand ResetDesignCommand { get; private set; }
+
+		public void ResetDesign(object parameter = null)
 		{
-			RserveClient.Connect();
+			CurrentDesign.Reset();
 		}
 
-		public DelegateCommand ToggleConnectCommand { get; private set; }
+		#endregion
 
-		private void ToggleConnect(object parameter = null)
-		{
-			RserveClient.ToggleConnect();
-		}
+
+
+
+
+		#endregion // Design commands
 	}
 }

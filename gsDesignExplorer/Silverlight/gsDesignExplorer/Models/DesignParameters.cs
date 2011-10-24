@@ -6,6 +6,13 @@
 
 	public class DesignParameters
 	{
+		public void Reset()
+		{
+			ErrorPowerTimingParameters = new ErrorPowerTimingParameters();
+			SampleSizeParameters = new SampleSizeParameters();
+			SpendingFunctionParameters = new SpendingFunctionParameters();
+		}
+
 		#region Name property
 
 		private string _name;

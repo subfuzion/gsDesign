@@ -73,7 +73,7 @@
 
 			<Canvas Style="{StaticResource SeparatorStyle}" />
 
-			<Button Name="defaultButton" Style="{StaticResource ToolBarButtonStyle}" >
+			<Button Name="defaultButton" Style="{StaticResource ToolBarButtonStyle}"  Command="{Binding Path=ResetDesignCommand}" IsEnabled="{Binding Path=ResetDesignCommand.IsEnabled}">
 				<toolkit:DockPanel>
 					<TextBlock toolkit:DockPanel.Dock="Bottom" Text="Default" Style="{StaticResource ToolBarButtonTextStyle}" />
 					<Image Height="26" Width="26" Source="/Assets/Images/Toolbar/designDefault.png" Stretch="Uniform" />
