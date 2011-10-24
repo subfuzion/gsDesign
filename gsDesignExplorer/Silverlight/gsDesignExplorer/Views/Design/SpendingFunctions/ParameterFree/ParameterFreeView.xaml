@@ -33,17 +33,17 @@
 							<TextBlock Text="" FontWeight="Bold" Margin="8"/>
 						</Grid>
 
-						<Grid Grid.Row="1" Margin="8 16 16 16">
+						<Grid Grid.Row="1" Margin="16 16 16 16">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="60*"/>
-								<ColumnDefinition Width="40*"/>
+								<ColumnDefinition Width="55*"/>
+								<ColumnDefinition Width="45*"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 
-							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2 4 8 4"
+							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2 4 2 4"
 									   Target="{Binding ElementName=lanDeMetsApproximation}"/>
 							<ComboBox Grid.Row="0" Grid.Column="1"
 									  x:Name="lanDeMetsApproximation"

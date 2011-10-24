@@ -45,7 +45,7 @@
 
 					<Grid Grid.Row="1" Margin="8 8 2 8">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
@@ -58,8 +58,8 @@
 						<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
 									   Target="{Binding ElementName=spendingFunctionTestType}" />
 						<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
-									   x:Name="spendingFunctionTestType"
-									   IsEnabled="{Binding Path=IsEnabledSpendingFunctionTestCategory, Mode=OneTime}"
+									  x:Name="spendingFunctionTestType"
+									  IsEnabled="{Binding Path=IsEnabledSpendingFunctionTestCategory, Mode=OneTime}"
 									  ItemsSource="{Binding Path=SpendingFunctionTestCategory, Mode=OneWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
 									  SelectedItem="{Binding Path=SpendingFunctionTestCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
 									  />
@@ -87,6 +87,6 @@
 			</Border>
 		</StackPanel>
 
-		<SpendingFunctions:AccordionView Grid.Row="1" Grid.Column="0" Margin="0 4 0 0" />
+		<SpendingFunctions:AccordionView Grid.Row="1" Grid.Column="0" Margin="0 4 0 0" DataContext="{Binding}" />
 	</Grid>
 </UserControl>
