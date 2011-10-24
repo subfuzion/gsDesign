@@ -22,17 +22,15 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		#region SpendingFunctionBounds property
 
-		private SpendingFunctionBounds _spendingFunctionBounds = SpendingFunctionBounds.UpperSpending;
-
 		public SpendingFunctionBounds SpendingFunctionBounds
 		{
-			get { return _spendingFunctionBounds; }
+			get { return Model.CurrentSpendingFunctionBounds; }
 
 			set
 			{
-				if (_spendingFunctionBounds != value)
+				if (Model.CurrentSpendingFunctionBounds != value)
 				{
-					_spendingFunctionBounds = value;
+					Model.CurrentSpendingFunctionBounds = value;
 					RaisePropertyChanged("SpendingFunctionBounds");
 				}
 			}
@@ -112,6 +110,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		{
 			if (e.PropertyName.Equals("SpendingFunctionTestCategory"))
 			{
+				// Need this to ensure lower spending tab is disabled unless test type is 2-sided with futility
 				RaisePropertyChanged("IsLowerSpendingTabEnabled");
 			}
 		}

@@ -140,8 +140,6 @@
 
 		#endregion // ParameterFreeSpendingFunctionViewModel
 
-
-
 		#endregion
 	}
 }

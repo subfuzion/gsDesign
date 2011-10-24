@@ -64,6 +64,8 @@
 			Design.ErrorPowerTiming.PropertyChanged -= OnDesignPropertiesChanged;
 			Design.SampleSize.PropertyChanged -= OnDesignPropertiesChanged;
 			Design.SpendingFunctions.PropertyChanged -= OnDesignPropertiesChanged;
+			Design.SpendingFunctions.LowerSpendingFunction.PropertyChanged -= OnDesignPropertiesChanged;
+			Design.SpendingFunctions.UpperSpendingFunction.PropertyChanged -= OnDesignPropertiesChanged;
 		}
 
 		private void AddHandlers()
@@ -74,6 +76,8 @@
 			Design.ErrorPowerTiming.PropertyChanged += OnDesignPropertiesChanged;
 			Design.SampleSize.PropertyChanged += OnDesignPropertiesChanged;
 			Design.SpendingFunctions.PropertyChanged += OnDesignPropertiesChanged;
+			Design.SpendingFunctions.LowerSpendingFunction.PropertyChanged += OnDesignPropertiesChanged;
+			Design.SpendingFunctions.UpperSpendingFunction.PropertyChanged += OnDesignPropertiesChanged;
 		}
 
 		private void OnDesignPropertiesChanged(object sender, PropertyChangedEventArgs e)
