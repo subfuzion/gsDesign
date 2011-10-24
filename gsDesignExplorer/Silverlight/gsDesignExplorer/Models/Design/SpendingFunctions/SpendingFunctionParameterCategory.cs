@@ -1,6 +1,6 @@
 namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 {
-	public enum SpendingFunctionCategory
+	public enum SpendingFunctionParameterCategory
 	{
 		ParameterFree,
 		OneParameter,

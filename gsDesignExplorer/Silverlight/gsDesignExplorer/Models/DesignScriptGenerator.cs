@@ -59,8 +59,8 @@
 			AppendAssignment("Time to Event Fixed Design Events", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignEvents);
 			Writer.WriteLine("# Spending Functions:");
 			Writer.WriteLine("# =================================");
-			Writer.WriteLine("(Active tab: {0})", DesignParameters.SpendingFunctionParameters.SpendingFunctionBounds);
-			Writer.WriteLine("(Active spending function: {0})", DesignParameters.SpendingFunctionParameters.SpendingFunctionCategory);
+//			Writer.WriteLine("(Active tab: {0})", DesignParameters.SpendingFunctionParameters.SpendingFunctionBounds);
+//			Writer.WriteLine("(Active spending function: {0})", DesignParameters.SpendingFunctionParameters.SpendingFunctionParameterCategory);
 			Writer.WriteLine("# Spending Functions tab - Upper Spending:");
 			Writer.WriteLine("# =================================");
 			Writer.WriteLine("###");

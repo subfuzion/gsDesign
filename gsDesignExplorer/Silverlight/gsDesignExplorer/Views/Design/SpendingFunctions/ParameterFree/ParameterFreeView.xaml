@@ -9,11 +9,17 @@
 	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 	
+	<!--
+		NOTE: this view is used by both the Lower Spending Function and Upper Spending Function views
+		Therefore, the data context must be set by the parent view to the appropriate instance of a
+		ParameterFreeSpendingFunction
+	-->
+	
 	<UserControl.Resources>
 		<ParameterFree:LanDeMetsApproximationValueConverter x:Key="lanDeMetsApproximationValueConverter"/>
 	</UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
+	<Grid x:Name="LayoutRoot" Background="White">
 		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee">
 			<StackPanel Orientation="Vertical">
 				<Border BorderBrush="#eee" BorderThickness="1">
@@ -40,10 +46,10 @@
 							<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2 4 8 4"
 									   Target="{Binding ElementName=lanDeMetsApproximation}"/>
 							<ComboBox Grid.Row="0" Grid.Column="1"
-												   x:Name="lanDeMetsApproximation"
-												   VerticalAlignment="Center" Margin="4" Height="22"
-												   ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.LowerSpendingParameters.ParameterFreeSpendingFunction.LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
-												   SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.LowerSpendingParameters.ParameterFreeSpendingFunction.LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
+									  x:Name="lanDeMetsApproximation"
+									  VerticalAlignment="Center" Margin="4" Height="22"
+									  ItemsSource="{Binding Path=ParameterFreeSpendingFunction.LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
+									  SelectedItem="{Binding Path=ParameterFreeSpendingFunction.LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
 									  />
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=lanDeMetsApproximation}"/>
 						</Grid>

@@ -18,10 +18,10 @@
 		<SpendingFunctions:SpendingFunctionCategoryValueConverter x:Key="spendingFunctionTypeValueConverter" />
 	</UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
+	<Grid x:Name="LayoutRoot" Background="White">
 		<toolkit:Accordion HorizontalAlignment="Stretch"
 						   VerticalAlignment="Stretch"
-						   SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTypeValueConverter}}">
+						   SelectedIndex="{Binding Path=SpendingFunctionCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTypeValueConverter}}">
 			<toolkit:AccordionItem Header="Parameter Free" HorizontalContentAlignment="Stretch">
 				<ParameterFree:ParameterFreeView />
 			</toolkit:AccordionItem>

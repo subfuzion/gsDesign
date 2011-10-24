@@ -19,18 +19,19 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 			get { return _designParameters.SpendingFunctionParameters; }
 		}
 
-
 		#region SpendingFunctionBounds property
+
+		private SpendingFunctionBounds _spendingFunctionBounds = SpendingFunctionBounds.UpperSpending;
 
 		public SpendingFunctionBounds SpendingFunctionBounds
 		{
-			get { return Model.SpendingFunctionBounds; }
+			get { return _spendingFunctionBounds; }
 
 			set
 			{
-				if (Model.SpendingFunctionBounds != value)
+				if (_spendingFunctionBounds != value)
 				{
-					Model.SpendingFunctionBounds = value;
+					_spendingFunctionBounds = value;
 					RaisePropertyChanged("SpendingFunctionBounds");
 				}
 			}
@@ -38,123 +39,52 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		#endregion // SpendingFunctionBounds
 
-		#region SpendingFunctionCategory property
+		#region LowerSpendingFunction property
 
-		public SpendingFunctionCategory SpendingFunctionCategory
+		private SpendingFunctionViewModel _lowerSpendingFunction;
+
+		 [Display(Name = "Lower Spending",
+			Description = "Lower spending function")]
+		public SpendingFunctionViewModel LowerSpendingFunction
 		{
-			get { return Model.SpendingFunctionCategory; }
+			get { return _lowerSpendingFunction
+				?? (_lowerSpendingFunction = new SpendingFunctionViewModel(Model.LowerSpendingFunction)); }
 
 			set
 			{
-				if (Model.SpendingFunctionCategory != value)
+				if (_lowerSpendingFunction != value)
 				{
-					Model.SpendingFunctionCategory = value;
-					RaisePropertyChanged("SpendingFunctionCategory");
+					_lowerSpendingFunction = value;
+					RaisePropertyChanged("LowerSpendingFunction");
 				}
 			}
 		}
 
-		#endregion // SpendingFunctionCategory
+		#endregion // LowerSpendingFunction
 
-		#region SpendingFunctionTestCategory property
+		#region UpperSpendingFunction property
 
-		 [Display(Name = "Test Type",
-			Description = "Select lower spending test type")]
-		public SpendingFunctionTestCategory SpendingFunctionTestCategory
+		private SpendingFunctionViewModel _upperSpendingFunction;
+
+		[Display(Name = "Uppper Spending",
+		   Description = "Uppper spending function")]
+		public SpendingFunctionViewModel UpperSpendingFunction
 		{
-			get { return Model.SpendingFunctionTestCategory; }
+			get { return _upperSpendingFunction
+				?? (_upperSpendingFunction = new SpendingFunctionViewModel(Model.UpperSpendingFunction));
+			}
 
 			set
 			{
-				if (Model.SpendingFunctionTestCategory != value)
+				if (_upperSpendingFunction != value)
 				{
-					Model.SpendingFunctionTestCategory = value;
-					RaisePropertyChanged("SpendingFunctionTestCategory");
+					_upperSpendingFunction = value;
+					RaisePropertyChanged("UpperSpendingFunction");
 				}
 			}
 		}
 
-		#endregion // SpendingFunctionTestCategory
-
-		#region SpendingFunctionLowerBoundSpending property
-
-		 [Display(Name = "Lower Bound Spending",
-			Description = "Select lower bound spending for 2-sided futility test type")]
-		public SpendingFunctionLowerBoundSpending SpendingFunctionLowerBoundSpending
-		{
-			get { return Model.SpendingFunctionLowerBoundSpending; }
-
-			set
-			{
-				if (Model.SpendingFunctionLowerBoundSpending != value)
-				{
-					Model.SpendingFunctionLowerBoundSpending = value;
-					RaisePropertyChanged("SpendingFunctionLowerBoundSpending");
-				}
-			}
-		}
-
-		#endregion // SpendingFunctionLowerBoundSpending
-
-		#region SpendingFunctionLowerBoundTesting property
-
-		 [Display(Name = "Lower Bound Testing",
-			Description = "Select lower bound binding or non-binding testing")]
-		public SpendingFunctionLowerBoundTesting SpendingFunctionLowerBoundTesting
-		{
-			get { return Model.SpendingFunctionLowerBoundTesting; }
-
-			set
-			{
-				if (Model.SpendingFunctionLowerBoundTesting != value)
-				{
-					Model.SpendingFunctionLowerBoundTesting = value;
-					RaisePropertyChanged("SpendingFunctionLowerBoundTesting");
-				}
-			}
-		}
-
-		#endregion // SpendingFunctionLowerBoundTesting
-
-
-
-
-		#region LowerSpendingParameters property
-
-		public LowerSpendingParameters LowerSpendingParameters
-		{
-			get { return Model.LowerSpendingParameters; }
-
-			set
-			{
-				if (Model.LowerSpendingParameters != value)
-				{
-					Model.LowerSpendingParameters = value;
-					RaisePropertyChanged("LowerSpendingParameters");
-				}
-			}
-		}
-
-		#endregion // LowerSpendingParameters
-
-		#region UpperSpendingParameters property
-
-		public UpperSpendingParameters UpperSpendingParameters
-		{
-			get { return Model.UpperSpendingParameters; }
-
-			set
-			{
-				if (Model.UpperSpendingParameters != value)
-				{
-					Model.UpperSpendingParameters = value;
-					RaisePropertyChanged("UpperSpendingParameters");
-				}
-			}
-		}
-
-		#endregion // UpperSpendingParameters
-
+		#endregion // UpperSpendingFunction
 
 	}
 }

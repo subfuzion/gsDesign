@@ -6,7 +6,6 @@
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:sfViewModels="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions"
 	xmlns:sfViews="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
-	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
 	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 	
@@ -17,10 +16,10 @@
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<sdk:TabControl x:Name="SpendingFunctionTabControl" SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionBounds, Mode=TwoWay, Converter={StaticResource spendingFunctionBoundsValueConverter}}">
 			<sdk:TabItem Header="Lower Spending">
-				<sfViews:LowerSpendingView />
+				<sfViews:SpendingView DataContext="{Binding Path=CurrentDesign.SpendingFunctions.LowerSpendingFunction, Mode=OneWay}" />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Upper Spending">
-				<sfViews:UpperSpendingView />
+				<sfViews:SpendingView DataContext="{Binding Path=CurrentDesign.SpendingFunctions.UpperSpendingFunction, Mode=OneWay}" />
 			</sdk:TabItem>
 		</sdk:TabControl>
 	</Grid>

@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace gsDesign.Explorer.Views.Design.SpendingFunctions
 {
-	public partial class UpperSpendingView : UserControl
+	public partial class SpendingView : UserControl
 	{
-		public UpperSpendingView()
+		public SpendingView()
 		{
 			InitializeComponent();
 		}
