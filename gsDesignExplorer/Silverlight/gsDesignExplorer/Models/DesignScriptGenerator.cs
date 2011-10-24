@@ -23,83 +23,83 @@
 			AppendTestType();
 			AppendAlpha();
 			AppendBeta();
-
-			Writer.WriteLine();
-			Writer.WriteLine("##################################################");
-			Writer.WriteLine("### (still in work)");
 			AppendNFix();
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Sample Size tab");
-			Writer.WriteLine("# ---------------------------------");
-			Writer.WriteLine("(Active tab: {0})", DesignParameters.SampleSizeParameters.SampleSizeCategory);
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Sample Size - User Input tab");
-			Writer.WriteLine("# ---------------------------------");
-			AppendAssignment("FixedDesignSampleSize", DesignParameters.SampleSizeParameters.FixedDesignSampleSize);
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Sample Size - Binomial tab");
-			Writer.WriteLine("# ---------------------------------");
-			AppendAssignment("Randomization Ratio", DesignParameters.SampleSizeParameters.BinomialRandomizationRatio);
-			AppendAssignment("Control", DesignParameters.SampleSizeParameters.BinomialControlEventRate);
-			AppendAssignment("Experimental", DesignParameters.SampleSizeParameters.BinomialExperimentalEventRate);
-			AppendAssignment("Non-Inferiority Testing", DesignParameters.SampleSizeParameters.BinomialNonInferiorityTesting.ToString());
-			AppendAssignment("Delta", DesignParameters.SampleSizeParameters.BinomialDelta);
-			AppendAssignment("Binomial Fixed Design Sample Size", DesignParameters.SampleSizeParameters.BinomialFixedDesignSampleSize);
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Sample Size - Time to Event tab");
-			Writer.WriteLine("# ---------------------------------");
-			AppendAssignment("Specification", DesignParameters.SampleSizeParameters.TimeToEventSpecification.ToString());
-			AppendAssignment("Control", DesignParameters.SampleSizeParameters.TimeToEventControl);
-			AppendAssignment("Experimental", DesignParameters.SampleSizeParameters.TimeToEventExperimental);
-			AppendAssignment("Dropout", DesignParameters.SampleSizeParameters.TimeToEventDropout);
-			AppendAssignment("Hazard Ratio", DesignParameters.SampleSizeParameters.TimeToEventHazardRatio);
-			AppendAssignment("Accrual Duration", DesignParameters.SampleSizeParameters.TimeToEventAccrualDuration);
-			AppendAssignment("Minimum Follow-Up", DesignParameters.SampleSizeParameters.TimeToEventMinimumFollowUp);
-			AppendAssignment("Randomization Ratio", DesignParameters.SampleSizeParameters.TimeToEventRandomizationRatio);
-			AppendAssignment("Hypothesis", DesignParameters.SampleSizeParameters.TimeToEventHypothesis.ToString());
-			AppendAssignment("Accrual Patient Entry Type", DesignParameters.SampleSizeParameters.TimeToEventAccrual.ToString());
-			AppendAssignment("Gamma", DesignParameters.SampleSizeParameters.TimeToEventGamma);
-			AppendAssignment("Time to Event Fixed Design Sample Size", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignSampleSize);
-			AppendAssignment("Time to Event Fixed Design Events", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignEvents);
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Spending Functions tab");
-			Writer.WriteLine("# ---------------------------------");
-			Writer.WriteLine("(Active tab: {0})", DesignParameters.SpendingFunctionParameters.CurrentSpendingFunctionBounds);
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Spending Functions - Lower Spending tab");
-			Writer.WriteLine("# ---------------------------------");
-			Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestCategory);
-			Writer.WriteLine("Lower bound spending: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending);
-			Writer.WriteLine("Lower bound testing: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting);
-			Writer.WriteLine("(Selected lower spending function: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionParameterCategory);
-			Writer.WriteLine("Parameter free spending function: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.ParameterFreeSpendingFunction.LanDeMetsApproximation);
-			Writer.WriteLine("# =================================");
-			Writer.WriteLine("# Spending Functions - Upper Spending tab");
-			Writer.WriteLine("# ---------------------------------");
-			Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestCategory);
-			Writer.WriteLine("Lower bound spending: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending);
-			Writer.WriteLine("Lower bound testing: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting);
-			Writer.WriteLine("(Selected upper spending function: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory);
-			Writer.WriteLine("Parameter free spending function: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.ParameterFreeSpendingFunction.LanDeMetsApproximation);
-			Writer.WriteLine("###");
-			Writer.WriteLine();
-			Writer.WriteLine("gsDesign function parameters (TBD)");
-			AppendAssignment("timing", "[TBD]");
-			AppendAssignment("sfu", "[TBD]");
-			AppendAssignment("sfupar", "[TBD]");
-			AppendAssignment("sfl", "[TBD]");
-			AppendAssignment("sflpar", "[TBD]");
-			AppendAssignment("endpoint", "[TBD]");
+			AppendTiming();
+			AppendSfu();
+			AppendSfupar();
+			AppendSfl();
+			AppendSflpar();
+			AppendEndpoint();
 
-			AppendAssignment("astar", "[TBD]");
-			AppendAssignment("tol", "[TBD]");
-			AppendAssignment("r", "[TBD]");
-			AppendAssignment("upper", "[TBD]");
-			AppendAssignment("lower", "[TBD]");
-			AppendAssignment("n.I", "[TBD]");
-			AppendAssignment("maxn.IPlan", "[TBD]");
+			//Writer.WriteLine();
+			//Writer.WriteLine("##################################################");
+			//Writer.WriteLine("### (still in work)");
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Sample Size tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//Writer.WriteLine("(Active tab: {0})", DesignParameters.SampleSizeParameters.SampleSizeCategory);
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Sample Size - User Input tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//AppendAssignment("FixedDesignSampleSize", DesignParameters.SampleSizeParameters.FixedDesignSampleSize);
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Sample Size - Binomial tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//AppendAssignment("Randomization Ratio", DesignParameters.SampleSizeParameters.BinomialRandomizationRatio);
+			//AppendAssignment("Control", DesignParameters.SampleSizeParameters.BinomialControlEventRate);
+			//AppendAssignment("Experimental", DesignParameters.SampleSizeParameters.BinomialExperimentalEventRate);
+			//AppendAssignment("Non-Inferiority Testing", DesignParameters.SampleSizeParameters.BinomialNonInferiorityTesting.ToString());
+			//AppendAssignment("Delta", DesignParameters.SampleSizeParameters.BinomialDelta);
+			//AppendAssignment("Binomial Fixed Design Sample Size", DesignParameters.SampleSizeParameters.BinomialFixedDesignSampleSize);
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Sample Size - Time to Event tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//AppendAssignment("Specification", DesignParameters.SampleSizeParameters.TimeToEventSpecification.ToString());
+			//AppendAssignment("Control", DesignParameters.SampleSizeParameters.TimeToEventControl);
+			//AppendAssignment("Experimental", DesignParameters.SampleSizeParameters.TimeToEventExperimental);
+			//AppendAssignment("Dropout", DesignParameters.SampleSizeParameters.TimeToEventDropout);
+			//AppendAssignment("Hazard Ratio", DesignParameters.SampleSizeParameters.TimeToEventHazardRatio);
+			//AppendAssignment("Accrual Duration", DesignParameters.SampleSizeParameters.TimeToEventAccrualDuration);
+			//AppendAssignment("Minimum Follow-Up", DesignParameters.SampleSizeParameters.TimeToEventMinimumFollowUp);
+			//AppendAssignment("Randomization Ratio", DesignParameters.SampleSizeParameters.TimeToEventRandomizationRatio);
+			//AppendAssignment("Hypothesis", DesignParameters.SampleSizeParameters.TimeToEventHypothesis.ToString());
+			//AppendAssignment("Accrual Patient Entry Type", DesignParameters.SampleSizeParameters.TimeToEventAccrual.ToString());
+			//AppendAssignment("Gamma", DesignParameters.SampleSizeParameters.TimeToEventGamma);
+			//AppendAssignment("Time to Event Fixed Design Sample Size", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignSampleSize);
+			//AppendAssignment("Time to Event Fixed Design Events", DesignParameters.SampleSizeParameters.TimeToEventFixedDesignEvents);
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Spending Functions tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//Writer.WriteLine("(Active tab: {0})", DesignParameters.SpendingFunctionParameters.CurrentSpendingFunctionBounds);
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Spending Functions - Lower Spending tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestCategory);
+			//Writer.WriteLine("Lower bound spending: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending);
+			//Writer.WriteLine("Lower bound testing: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting);
+			//Writer.WriteLine("(Selected lower spending function: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionParameterCategory);
+			//Writer.WriteLine("Parameter free spending function: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.ParameterFreeSpendingFunction.LanDeMetsApproximation);
+			//Writer.WriteLine("# =================================");
+			//Writer.WriteLine("# Spending Functions - Upper Spending tab");
+			//Writer.WriteLine("# ---------------------------------");
+			//Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestCategory);
+			//Writer.WriteLine("Lower bound spending: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending);
+			//Writer.WriteLine("Lower bound testing: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting);
+			//Writer.WriteLine("(Selected upper spending function: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory);
+			//Writer.WriteLine("Parameter free spending function: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.ParameterFreeSpendingFunction.LanDeMetsApproximation);
+			//Writer.WriteLine("###");
+			//Writer.WriteLine();
+			//Writer.WriteLine("gsDesign function parameters (TBD)");
 
-			Writer.WriteLine("##################################################");
+			//AppendAssignment("astar", "[TBD]");
+			//AppendAssignment("tol", "[TBD]");
+			//AppendAssignment("r", "[TBD]");
+			//AppendAssignment("upper", "[TBD]");
+			//AppendAssignment("lower", "[TBD]");
+			//AppendAssignment("n.I", "[TBD]");
+			//AppendAssignment("maxn.IPlan", "[TBD]");
+
+			//Writer.WriteLine("##################################################");
 
 			Writer.WriteLine();
 			AppendGSDesignFunction();
@@ -140,9 +140,9 @@
 			Writer.WriteLine("# {0}", string.Format(comment, args));
 		}
 
-		private void AppendAssignment(object property, object value)
+		private void AppendAssignment(object property, object value, params string[] args)
 		{
-			Writer.WriteLine("{0} <- {1}", property, value);
+			Writer.WriteLine("{0} <- {1}", property, string.Format(value.ToString(), args));
 		}
 
 		private void AppendHeader()
@@ -155,31 +155,6 @@
 			AppendComment("Description : {0}", DesignParameters.Description);
 			Writer.WriteLine("###");
 			Writer.WriteLine();
-		}
-
-		private void AppendK()
-		{
-			AppendAssignment("k", DesignParameters.ErrorPowerTimingParameters.K);
-		}
-
-		private void AppendTestType()
-		{
-			//AppendAssignment("test.type", Design.SpendingFunctionParameters.SpendingFunctionTestTypeCode);
-		}
-	
-		private void AppendAlpha()
-		{
-			AppendAssignment("alpha", Math.Round(DesignParameters.ErrorPowerTimingParameters.Alpha, 6));
-		}
-
-		private void AppendBeta()
-		{
-			AppendAssignment("beta", Math.Round(DesignParameters.ErrorPowerTimingParameters.Beta, 6));
-		}
-
-		private void AppendNFix()
-		{
-			AppendAssignment("n.fix", DesignParameters.SampleSizeParameters.NFix);
 		}
 
 		private void AppendGSDesignFunction()
@@ -206,5 +181,72 @@
 			Writer.WriteLine("  lty=c(\"solid\", \"solid\"),");
 			Writer.WriteLine("  dgt=c(2, 2))");
 		}
+
+		private void AppendK()
+		{
+			AppendAssignment("k", DesignParameters.ErrorPowerTimingParameters.K);
+		}
+
+		private void AppendTestType()
+		{
+			AppendAssignment("test.type", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestTypeCode);
+		}
+	
+		private void AppendAlpha()
+		{
+			AppendAssignment("alpha", Math.Round(DesignParameters.ErrorPowerTimingParameters.Alpha, 6));
+		}
+
+		private void AppendBeta()
+		{
+			AppendAssignment("beta", Math.Round(DesignParameters.ErrorPowerTimingParameters.Beta, 6));
+		}
+
+		private void AppendNFix()
+		{
+			// TODO: n.fix only calculated for fixed design
+			AppendAssignment("n.fix", DesignParameters.SampleSizeParameters.NFix);
+		}
+
+		private void AppendTiming()
+		{
+			var sb = new StringBuilder();
+
+			// number of timings is always >= 1
+			sb.Append(Math.Round(DesignParameters.ErrorPowerTimingParameters.Timing[0], 4));
+
+			for (int i = 1; i < DesignParameters.ErrorPowerTimingParameters.Timing.Count; i++)
+			{
+				sb.Append(", ").Append(Math.Round(DesignParameters.ErrorPowerTimingParameters.Timing[i], 4));
+			}
+
+			AppendAssignment("timing", "c({0})", sb.ToString());
+		}
+
+		private void AppendSfu()
+		{
+			AppendAssignment("sfu", "sfHSD");
+		}
+
+		private void AppendSfupar()
+		{
+			AppendAssignment("sfupar", "-8");
+		}
+
+		private void AppendSfl()
+		{
+			AppendAssignment("sfl", "sfHSD");
+		}
+
+		private void AppendSflpar()
+		{
+			AppendAssignment("sflpar", "-8");
+		}
+
+		private void AppendEndpoint()
+		{
+			AppendAssignment("endpoint", "user");
+		}
+
 	}
 }
