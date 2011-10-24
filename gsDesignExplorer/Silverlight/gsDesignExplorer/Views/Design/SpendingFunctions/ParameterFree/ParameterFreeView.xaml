@@ -48,8 +48,8 @@
 							<ComboBox Grid.Row="0" Grid.Column="1"
 									  x:Name="lanDeMetsApproximation"
 									  VerticalAlignment="Center" Margin="4" Height="22"
-									  ItemsSource="{Binding Path=ParameterFreeSpendingFunction.LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
-									  SelectedItem="{Binding Path=ParameterFreeSpendingFunction.LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
+									  ItemsSource="{Binding Path=LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
+									  SelectedItem="{Binding Path=LanDeMetsApproximation, Mode=TwoWay, Converter={StaticResource lanDeMetsApproximationValueConverter}}"
 									  />
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=lanDeMetsApproximation}"/>
 						</Grid>

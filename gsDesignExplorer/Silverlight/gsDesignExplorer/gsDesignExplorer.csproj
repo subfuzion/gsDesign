@@ -152,10 +152,11 @@
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventAccrualValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventHypothesisValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventSpecificationValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\LanDeMetsApproximationValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionBoundsValueConverter.cs" />
-    <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionCategoryValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionParameterCategoryValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionLowerBoundSpendingValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionLowerBoundTestingValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctions.cs" />

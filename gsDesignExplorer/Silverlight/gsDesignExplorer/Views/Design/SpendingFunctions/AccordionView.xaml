@@ -15,15 +15,15 @@
 	d:DesignHeight="300" d:DesignWidth="400">
 
 	<UserControl.Resources>
-		<SpendingFunctions:SpendingFunctionCategoryValueConverter x:Key="spendingFunctionTypeValueConverter" />
+		<SpendingFunctions:SpendingFunctionParameterCategoryValueConverter x:Key="spendingFunctionParmameterCategoryValueConverter" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<toolkit:Accordion HorizontalAlignment="Stretch"
 						   VerticalAlignment="Stretch"
-						   SelectedIndex="{Binding Path=SpendingFunctionCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTypeValueConverter}}">
-			<toolkit:AccordionItem Header="Parameter Free" HorizontalContentAlignment="Stretch">
-				<ParameterFree:ParameterFreeView />
+						   SelectedIndex="{Binding Path=SpendingFunctionParameterCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionParmameterCategoryValueConverter}}">
+			<toolkit:AccordionItem Header="Parameter Free" HorizontalContentAlignment="Stretch" >
+				<ParameterFree:ParameterFreeView DataContext="{Binding Path=ParameterFreeSpendingFunctionViewModel}" />
 			</toolkit:AccordionItem>
 			<toolkit:AccordionItem Header="1-Parameter" HorizontalContentAlignment="Stretch">
 				<OneParameter:OneParameterView/>

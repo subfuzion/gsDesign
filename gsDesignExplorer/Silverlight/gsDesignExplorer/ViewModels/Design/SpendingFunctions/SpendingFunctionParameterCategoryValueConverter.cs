@@ -7,7 +7,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 	using System.Windows.Data;
 	using Models.Design.SpendingFunctions;
 
-	public class SpendingFunctionCategoryValueConverter : IValueConverter
+	public class SpendingFunctionParameterCategoryValueConverter : IValueConverter
 	{
 		private const string ParameterFree = "Parameter Free";
 		private const string OneParameter = "1-Parameter";
