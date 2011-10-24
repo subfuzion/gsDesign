@@ -16,6 +16,26 @@
 
 		#region Testing parameters
 
+		#region IsEnabledSpendingFunctionTestCategory property
+
+		private bool _isEnabledSpendingFunctionTestCategory = true;
+
+		public bool IsEnabledSpendingFunctionTestCategory
+		{
+			get { return _isEnabledSpendingFunctionTestCategory; }
+
+			set
+			{
+				if (_isEnabledSpendingFunctionTestCategory != value)
+				{
+					_isEnabledSpendingFunctionTestCategory = value;
+					RaisePropertyChanged("IsEnabledSpendingFunctionTestCategory");
+				}
+			}
+		}
+
+		#endregion // IsEnabledSpendingFunctionTestCategory
+
 		#region SpendingFunctionTestCategory property
 
 		[Display(Name = "Test Type",

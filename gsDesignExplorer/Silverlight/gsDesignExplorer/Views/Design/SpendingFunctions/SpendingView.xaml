@@ -57,7 +57,8 @@
 						<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
 									   Target="{Binding ElementName=spendingFunctionTestType}" />
 						<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
-									  x:Name="spendingFunctionTestType"
+									   x:Name="spendingFunctionTestType"
+									   IsEnabled="{Binding Path=IsEnabledSpendingFunctionTestCategory, Mode=OneTime}"
 									  ItemsSource="{Binding Path=SpendingFunctionTestCategory, Mode=OneWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
 									  SelectedItem="{Binding Path=SpendingFunctionTestCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
 									  />

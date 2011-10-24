@@ -1,5 +1,6 @@
 namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
+	using System.ComponentModel;
 	using System.ComponentModel.DataAnnotations;
 	using Models;
 	using Models.Design.SpendingFunctions;
@@ -39,6 +40,15 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		#endregion // SpendingFunctionBounds
 
+		#region IsLowerSpendingTabEnabled property
+
+		public bool IsLowerSpendingTabEnabled
+		{
+			get { return UpperSpendingFunction.SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedWithFutility; }
+		}
+
+		#endregion // IsLowerSpendingTabEnabled
+
 		#region LowerSpendingFunction property
 
 		private SpendingFunctionViewModel _lowerSpendingFunction;
@@ -48,7 +58,11 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		public SpendingFunctionViewModel LowerSpendingFunction
 		{
 			get { return _lowerSpendingFunction
-				?? (_lowerSpendingFunction = new SpendingFunctionViewModel(Model.LowerSpendingFunction)); }
+				?? (_lowerSpendingFunction =
+					new SpendingFunctionViewModel(Model.LowerSpendingFunction)
+					{
+						IsEnabledSpendingFunctionTestCategory = false
+					}); }
 
 			set
 			{
@@ -71,20 +85,35 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		public SpendingFunctionViewModel UpperSpendingFunction
 		{
 			get { return _upperSpendingFunction
-				?? (_upperSpendingFunction = new SpendingFunctionViewModel(Model.UpperSpendingFunction));
+				?? (UpperSpendingFunction = new SpendingFunctionViewModel(Model.UpperSpendingFunction));
 			}
 
 			set
 			{
 				if (_upperSpendingFunction != value)
 				{
+					if (_upperSpendingFunction != null)
+					{
+						_upperSpendingFunction.PropertyChanged -= OnUpperSpendingFunctionPropertyChanged;
+					}
+
 					_upperSpendingFunction = value;
+					_upperSpendingFunction.PropertyChanged += OnUpperSpendingFunctionPropertyChanged;
+
 					RaisePropertyChanged("UpperSpendingFunction");
+					RaisePropertyChanged("IsLowerSpendingTabEnabled");
 				}
 			}
 		}
 
 		#endregion // UpperSpendingFunction
 
+		private void OnUpperSpendingFunctionPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName.Equals("SpendingFunctionTestCategory"))
+			{
+				RaisePropertyChanged("IsLowerSpendingTabEnabled");
+			}
+		}
 	}
 }

@@ -15,7 +15,7 @@
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<sdk:TabControl x:Name="SpendingFunctionTabControl" SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionBounds, Mode=TwoWay, Converter={StaticResource spendingFunctionBoundsValueConverter}}">
-			<sdk:TabItem Header="Lower Spending">
+			<sdk:TabItem Header="Lower Spending" IsEnabled="{Binding Path=CurrentDesign.SpendingFunctions.IsLowerSpendingTabEnabled, Mode=OneWay}">
 				<sfViews:SpendingView DataContext="{Binding Path=CurrentDesign.SpendingFunctions.LowerSpendingFunction, Mode=OneWay}" />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Upper Spending">

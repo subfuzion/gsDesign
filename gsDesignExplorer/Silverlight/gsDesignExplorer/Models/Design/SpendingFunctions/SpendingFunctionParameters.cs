@@ -8,13 +8,18 @@ namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 
 		public SpendingFunction LowerSpendingFunction
 		{
-			get { return _lowerSpendingFunction
-				?? (_lowerSpendingFunction = new SpendingFunction()); }
-
-			set
+			get
 			{
-				_lowerSpendingFunction = value;
+				return _lowerSpendingFunction ?? (_lowerSpendingFunction = new SpendingFunction
+				{
+					SpendingFunctionTestingParameters =
+					{
+						SpendingFunctionTestCategory = SpendingFunctionTestCategory.TwoSidedWithFutility
+					}
+				});
 			}
+
+			set { _lowerSpendingFunction = value; }
 		}
 
 		#endregion // LowerSpendingFunction
@@ -25,14 +30,13 @@ namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 
 		public SpendingFunction UpperSpendingFunction
 		{
-			get { return _upperSpendingFunction
-				?? (_upperSpendingFunction = new SpendingFunction());
+			get
+			{
+				return _upperSpendingFunction
+				       ?? (_upperSpendingFunction = new SpendingFunction());
 			}
 
-			set
-			{
-				_upperSpendingFunction = value;
-			}
+			set { _upperSpendingFunction = value; }
 		}
 
 		#endregion // UpperSpendingFunction
