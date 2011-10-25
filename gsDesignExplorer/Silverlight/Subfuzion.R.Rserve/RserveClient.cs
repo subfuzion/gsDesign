@@ -45,12 +45,27 @@ namespace Subfuzion.R.Rserve
 		private readonly byte[] _messageBuffer = new byte[DefaultBufferSize];
 		private ConnectionState _connectionState;
 
-		private RserveProtocolSettings _rserveProtocolSettings;
+		private ProtocolSettings _protocolSettings;
 		private Socket _socket;
+
+		private bool _isBusy;
 
 		#endregion
 
 		#region Properties
+
+		public bool IsBusy
+		{
+			get { return _isBusy; }
+			set
+			{
+				if (_isBusy != value)
+				{
+					_isBusy = value;
+					RaisePropertyChanged("IsBusy");
+				}
+			}
+		}
 
 		public ConnectionState ConnectionState
 		{
@@ -65,14 +80,17 @@ namespace Subfuzion.R.Rserve
 			}
 		}
 
-		public RserveProtocolSettings ProtocolSettings
+		/// <summary>
+		/// From the Rserve handshake
+		/// </summary>
+		public ProtocolSettings ProtocolSettings
 		{
-			get { return _rserveProtocolSettings; }
+			get { return _protocolSettings; }
 			private set
 			{
-				if (_rserveProtocolSettings != value)
+				if (_protocolSettings != value)
 				{
-					_rserveProtocolSettings = value;
+					_protocolSettings = value;
 					RaisePropertyChanged("ProtocolSettings");
 				}
 			}
@@ -166,7 +184,7 @@ namespace Subfuzion.R.Rserve
 					Disconnect();
 				}
 
-				ProtocolSettings = RserveProtocolSettings.Parse(socketAsyncEventArgs.Buffer);
+				ProtocolSettings = ProtocolSettings.Parse(socketAsyncEventArgs.Buffer);
 
 				socketAsyncEventArgs.Completed -= OnReceiveServerHandshake;
 			}
@@ -188,6 +206,9 @@ namespace Subfuzion.R.Rserve
 		{
 			try
 			{
+				if (IsBusy) return;
+				IsBusy = true;
+
 				//var args = new SocketAsyncEventArgs
 				//            {
 				//				  UserToken = new RequestContext {Request = request},
@@ -253,6 +274,8 @@ namespace Subfuzion.R.Rserve
 
 		private void OnReceiveCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
 		{
+			IsBusy = false;
+
 			var context = (RequestContext)socketAsyncEventArgs.UserToken;
 
 			try

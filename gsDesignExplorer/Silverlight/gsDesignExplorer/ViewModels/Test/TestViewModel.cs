@@ -2,6 +2,7 @@
 {
 	using System;
 	using Subfuzion.Helpers;
+	using Subfuzion.R.Rserve;
 	using Subfuzion.R.Rserve.Protocol;
 
 	public class TestViewModel : ViewModelBase
@@ -13,6 +14,12 @@
 		{
 			NewCommand = new DelegateCommand {ExecuteAction = New};
 			RunCommand = new DelegateCommand {ExecuteAction = Run, CanExecuteFunc = CanRun};
+
+			AppViewModel.PropertyChanged += (sender, propertyChangedEventArgs) =>
+			                                {
+			                                	if (propertyChangedEventArgs.Equals("RserveClient"))
+			                                		RaisePropertyChanged("RserveClient");
+			                                };
 		}
 
 		public AppViewModel AppViewModel
@@ -23,6 +30,11 @@
 		public override void Requery()
 		{
 			RunCommand.Requery();
+		}
+
+		public RserveClient RserveClient
+		{
+			get { return App.AppViewModel.RserveClient; }
 		}
 
 		public string Input

@@ -5,46 +5,58 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	mc:Ignorable="d"
-	d:DesignHeight="32" d:DesignWidth="800">
+	d:DesignHeight="26" d:DesignWidth="800">
 	
 	<!-- DataContext MUST be set by parent container -->
 	
-	<Grid x:Name="LayoutRoot" Background="#eee">
-		<toolkit:WrapPanel>
+	<Grid x:Name="LayoutRoot">
+		<Grid.Resources>
+			<Style x:Key="SeparatorStyle" TargetType="Canvas">
+				<Setter Property="VerticalAlignment" Value="Center"/>
+				<Setter Property="Width" Value="2"/>
+				<Setter Property="Height" Value="26"/>
+				<Setter Property="Margin" Value="2,0"/>
+				<Setter Property="Background" Value="#FFDDDDDD"/>
+			</Style>
+		</Grid.Resources>
 
-			<Button Name="newButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" Command="{Binding Path=NewCommand}" >
-				<Image Source="/Assets/Images/Toolbar/designNew.png" Stretch="Uniform" />
-				<ToolTipService.ToolTip>
-					<ToolTip Content="New R file" Style="{StaticResource TooltipStyle}" />
-				</ToolTipService.ToolTip>
-			</Button>
+		<Border BorderBrush="#bbb" BorderThickness="1" Background="#eee" Margin="0" CornerRadius="3">
+			<toolkit:WrapPanel Margin="1">
 
-			<Button Name="openButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
-				<Image Source="/Assets/Images/Toolbar/designLoad.png" Stretch="Uniform" />
-				<ToolTipService.ToolTip>
-					<ToolTip Content="Open R file..." Style="{StaticResource TooltipStyle}" />
-				</ToolTipService.ToolTip>
-			</Button>
+				<Button Name="newButton" Height="26" Width="26" Style="{StaticResource ToolBarButtonStyle}" Command="{Binding Path=NewCommand}" >
+					<Image Source="/Assets/Images/Toolbar/designNew.png" Stretch="Uniform" />
+					<ToolTipService.ToolTip>
+						<ToolTip Content="New R file" Style="{StaticResource TooltipStyle}" />
+					</ToolTipService.ToolTip>
+				</Button>
 
-			<Button Name="saveButton" Height="32" Width="32" Style="{StaticResource ToolBarButtonStyle}" >
-				<Image Source="/Assets/Images/Toolbar/fileSave.png" Stretch="Uniform" />
-				<ToolTipService.ToolTip>
-					<ToolTip Content="Save R file..." Style="{StaticResource TooltipStyle}" />
-				</ToolTipService.ToolTip>
-			</Button>
+				<Button Name="openButton" IsEnabled="False" Height="26" Width="26" Style="{StaticResource ToolBarButtonStyle}" >
+					<Image Source="/Assets/Images/Toolbar/designLoad.png" Stretch="Uniform" />
+					<ToolTipService.ToolTip>
+						<ToolTip Content="Open R file..." Style="{StaticResource TooltipStyle}" />
+					</ToolTipService.ToolTip>
+				</Button>
 
-			<Canvas Style="{StaticResource SeparatorStyle}" />
+				<Button Name="saveButton" IsEnabled="False" Height="26" Width="26" Style="{StaticResource ToolBarButtonStyle}" >
+					<Image Source="/Assets/Images/Toolbar/fileSave.png" Stretch="Uniform" />
+					<ToolTipService.ToolTip>
+						<ToolTip Content="Save R file..." Style="{StaticResource TooltipStyle}" />
+					</ToolTipService.ToolTip>
+				</Button>
 
-			<Button Name="runButton" Height="32" Width="32"
+				<Canvas Style="{StaticResource SeparatorStyle}" />
+
+				<Button Name="runButton" Height="26" Width="26"
 					Style="{StaticResource ToolBarButtonStyle}"
 					Command="{Binding Path=RunCommand}"
 					IsEnabled="{Binding Path=IsRunEnabled, Mode=TwoWay}" >
-				<Image Source="/Assets/Images/Toolbar/designExecute.png" Stretch="Uniform" />
-				<ToolTipService.ToolTip>
-					<ToolTip Content="Run" Style="{StaticResource TooltipStyle}" />
-				</ToolTipService.ToolTip>
-			</Button>
+					<Image Source="/Assets/Images/Toolbar/designExecute.png" Stretch="Uniform" />
+					<ToolTipService.ToolTip>
+						<ToolTip Content="Run" Style="{StaticResource TooltipStyle}" />
+					</ToolTipService.ToolTip>
+				</Button>
 
-		</toolkit:WrapPanel>
+			</toolkit:WrapPanel>
+		</Border>
 	</Grid>
 </UserControl>

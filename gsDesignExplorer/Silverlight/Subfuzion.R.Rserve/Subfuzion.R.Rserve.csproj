@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionState.cs" />
+    <Compile Include="ConnectionStateValueConverter.cs" />
     <Compile Include="PasswordEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\CommandCode.cs" />

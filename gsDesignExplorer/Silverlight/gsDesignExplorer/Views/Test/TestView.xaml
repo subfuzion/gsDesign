@@ -40,8 +40,9 @@
 							  HorizontalScrollBarVisibility="Auto"
 							  Padding="0">
 					<TextBox Name="inputText"
+							 AcceptsReturn="True"
 							 Text="{Binding Path=Input, Mode=TwoWay}"
-							 TextChanged="inputText_TextChanged" />
+							 TextChanged="inputText_TextChanged" TextWrapping="Wrap" />
 				</ScrollViewer>
 			</Grid>
 
@@ -55,6 +56,7 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0" Text="Rserve diagnostics" />
 				<ScrollViewer Grid.Row="1"
@@ -71,6 +73,47 @@
 							   TextWrapping="Wrap"
 							   Text="{Binding Path=Output, Mode=OneWay}" />
 				</ScrollViewer>
+				<Border Grid.Row="2" BorderBrush="SlateGray" BorderThickness="1">
+					<Grid Background="#eee" Margin="2">
+						<StackPanel Orientation="Horizontal">
+							<StackPanel.Resources>
+								<Style x:Key="textBlockStyle" TargetType="TextBlock">
+									<Setter Property="VerticalAlignment" Value="Center"/>
+								</Style>
+								<Style x:Key="borderStyle" TargetType="Border">
+									<Setter Property="BorderBrush" Value="SlateGray"/>
+									<Setter Property="BorderThickness" Value="1"/>
+									<Setter Property="Margin" Value="2"/>
+									<Setter Property="Padding" Value="2 0 2 0" />
+								</Style>
+							</StackPanel.Resources>
+
+							<TextBlock Text="Rserve " Style="{StaticResource textBlockStyle}" />
+
+							<Border Style="{StaticResource borderStyle}">
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="protocol: " Style="{StaticResource textBlockStyle}" />
+									<TextBlock Text="{Binding Path=RserveClient.ProtocolSettings.Name, Mode=OneWay}" Style="{StaticResource textBlockStyle}" />
+								</StackPanel>
+							</Border>
+
+							<Border Style="{StaticResource borderStyle}">
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="version: " Style="{StaticResource textBlockStyle}" />
+									<TextBlock Text="{Binding Path=RserveClient.ProtocolSettings.Version, Mode=OneWay}" Style="{StaticResource textBlockStyle}" />
+								</StackPanel>
+							</Border>
+
+							<Border Style="{StaticResource borderStyle}">
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="secure: " Style="{StaticResource textBlockStyle}" />
+									<TextBlock Text="{Binding Path=RserveClient.ProtocolSettings.IsAuthorizationRequired, Mode=OneWay}" Style="{StaticResource textBlockStyle}" />
+								</StackPanel>
+							</Border>
+
+						</StackPanel>
+					</Grid>
+				</Border>
 			</Grid>
 		</Grid>
 	</Grid>
