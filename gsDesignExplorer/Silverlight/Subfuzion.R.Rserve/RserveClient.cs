@@ -83,6 +83,7 @@ namespace Subfuzion.R.Rserve
 		/// <summary>
 		/// From the Rserve handshake
 		/// </summary>
+		/// <see cref="OnReceiveServerHandshake"/>
 		public ProtocolSettings ProtocolSettings
 		{
 			get { return _protocolSettings; }

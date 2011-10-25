@@ -4,7 +4,7 @@ namespace Subfuzion.R.Rserve
 	using System.Text;
 	using Helpers;
 
-	public class RserveProtocolSettings : NotifyPropertyChangedBase
+	public class ProtocolSettings : NotifyPropertyChangedBase
 	{
 		private string _signature;
 		private string _version;
@@ -13,14 +13,14 @@ namespace Subfuzion.R.Rserve
 		private PasswordEncryption _passwordEncryption;
 		private string _passwordEncryptionKey;
 
-		public static RserveProtocolSettings Parse(byte[] bytes)
+		public static ProtocolSettings Parse(byte[] bytes)
 		{
 			if (bytes == null || bytes.Length != 32)
 			{
 				throw new ArgumentException("Expected 32 bytes for Rserve identification");
 			}
 
-			var protocol = new RserveProtocolSettings
+			var protocol = new ProtocolSettings
 			               	{
 			               		Signature = Encoding.UTF8.GetString(bytes, 0, 4),
 			               		Version = Encoding.UTF8.GetString(bytes, 4, 4),
