@@ -4,23 +4,6 @@
 
 	public class SpendingFunction
 	{
-		#region SpendingFunctionTestingParameters property
-
-		private SpendingFunctionTestingParameters _spendingFunctionTestingParameters;
-
-		public SpendingFunctionTestingParameters SpendingFunctionTestingParameters
-		{
-			get
-			{
-				return _spendingFunctionTestingParameters
-				       ?? (_spendingFunctionTestingParameters = new SpendingFunctionTestingParameters());
-			}
-
-			set { _spendingFunctionTestingParameters = value; }
-		}
-
-		#endregion // SpendingFunctionTestingParameters
-
 		#region Spending function parameters
 
 		#region SpendingFunctionParameterCategory property

@@ -11,10 +11,73 @@
 	
 	<UserControl.Resources>
 		<sfViewModels:SpendingFunctionBoundsValueConverter x:Key="spendingFunctionBoundsValueConverter" />
+		<sfViewModels:SpendingFunctionTestTypeValueConverter x:Key="spendingFunctionTestTypeValueConverter" />
+		<sfViewModels:SpendingFunctionLowerBoundSpendingValueConverter x:Key="spendingFunctionLowerBoundSpendingValueConverter" />
+		<sfViewModels:SpendingFunctionLowerBoundTestingValueConverter x:Key="spendingFunctionLowerBoundTestingValueConverter" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
-		<sdk:TabControl x:Name="SpendingFunctionTabControl" SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionBounds, Mode=TwoWay, Converter={StaticResource spendingFunctionBoundsValueConverter}}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="2 2 2 4">
+			<Border BorderBrush="#eee" BorderThickness="1">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+
+					<Grid Grid.Row="0" Background="White">
+						<TextBlock Text="Testing" FontWeight="Bold" Margin="8"/>
+					</Grid>
+
+					<Grid Grid.Row="1" Margin="8 8 2 8">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
+									   Target="{Binding ElementName=spendingFunctionTestType}" />
+						<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
+									  x:Name="spendingFunctionTestType"
+									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionTestCategory, Mode=OneWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionTestCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
+									  />
+						<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=spendingFunctionTestType}" />
+
+						<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
+									   Target="{Binding ElementName=lowerBoundSpending}" />
+						<ComboBox Grid.Row="1" Grid.Column="1" Margin="4"
+									  x:Name="lowerBoundSpending"
+									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundSpending, Mode=OneWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundSpending, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}"
+									  />
+						<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=lowerBoundSpending}" />
+
+						<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
+									   Target="{Binding ElementName=lowerBoundTesting}" />
+						<ComboBox Grid.Row="2" Grid.Column="1" Margin="4"
+									  x:Name="lowerBoundTesting"
+									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundTesting, Mode=OneWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundTesting, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}"
+									  />
+						<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=lowerBoundTesting}" />
+					</Grid>
+				</Grid>
+			</Border>
+		</StackPanel>
+
+		<sdk:TabControl Grid.Row="1" x:Name="SpendingFunctionTabControl" SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionBounds, Mode=TwoWay, Converter={StaticResource spendingFunctionBoundsValueConverter}}">
 			<sdk:TabItem Header="Lower Spending" IsEnabled="{Binding Path=CurrentDesign.SpendingFunctions.IsLowerSpendingTabEnabled, Mode=OneWay}">
 				<sfViews:SpendingView DataContext="{Binding Path=CurrentDesign.SpendingFunctions.LowerSpendingFunction, Mode=OneWay}" />
 			</sdk:TabItem>

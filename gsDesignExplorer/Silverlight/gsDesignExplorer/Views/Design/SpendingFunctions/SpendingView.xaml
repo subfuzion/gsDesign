@@ -3,17 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-	xmlns:ViewModels="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions"
 	xmlns:SpendingFunctions="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions"
 	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
-
-	<UserControl.Resources>
-		<ViewModels:SpendingFunctionTestTypeValueConverter x:Key="spendingFunctionTestTypeValueConverter" />
-		<ViewModels:SpendingFunctionLowerBoundSpendingValueConverter x:Key="spendingFunctionLowerBoundSpendingValueConverter" />
-		<ViewModels:SpendingFunctionLowerBoundTestingValueConverter x:Key="spendingFunctionLowerBoundTestingValueConverter" />
-	</UserControl.Resources>
 
 	<!--
 		This view is used for both the Lower Spending and Upper Spending tabs;
@@ -30,62 +22,6 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-
-		<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-			<Border BorderBrush="#eee" BorderThickness="1">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="*"/>
-					</Grid.RowDefinitions>
-
-					<Grid Grid.Row="0" Background="White">
-						<TextBlock Text="Testing" FontWeight="Bold" Margin="8"/>
-					</Grid>
-
-					<Grid Grid.Row="1" Margin="8 8 2 8">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="Auto"/>
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition/>
-							<RowDefinition/>
-							<RowDefinition/>
-						</Grid.RowDefinitions>
-
-						<sdk:Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
-									   Target="{Binding ElementName=spendingFunctionTestType}" />
-						<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
-									  x:Name="spendingFunctionTestType"
-									  IsEnabled="{Binding Path=IsEnabledSpendingFunctionTestCategory, Mode=OneTime}"
-									  ItemsSource="{Binding Path=SpendingFunctionTestCategory, Mode=OneWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
-									  SelectedItem="{Binding Path=SpendingFunctionTestCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
-									  />
-						<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=spendingFunctionTestType}" />
-
-						<sdk:Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
-									   Target="{Binding ElementName=lowerBoundSpending}" />
-						<ComboBox Grid.Row="1" Grid.Column="1" Margin="4"
-									  x:Name="lowerBoundSpending"
-									  ItemsSource="{Binding Path=SpendingFunctionLowerBoundSpending, Mode=OneWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}"
-									  SelectedItem="{Binding Path=SpendingFunctionLowerBoundSpending, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}"
-									  />
-						<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=lowerBoundSpending}" />
-
-						<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
-									   Target="{Binding ElementName=lowerBoundTesting}" />
-						<ComboBox Grid.Row="2" Grid.Column="1" Margin="4"
-									  x:Name="lowerBoundTesting"
-									  ItemsSource="{Binding Path=SpendingFunctionLowerBoundTesting, Mode=OneWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}"
-									  SelectedItem="{Binding Path=SpendingFunctionLowerBoundTesting, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}"
-									  />
-						<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=lowerBoundTesting}" />
-					</Grid>
-				</Grid>
-			</Border>
-		</StackPanel>
 
 		<SpendingFunctions:AccordionView Grid.Row="1" Grid.Column="0" Margin="0 4 0 0" DataContext="{Binding}" />
 	</Grid>

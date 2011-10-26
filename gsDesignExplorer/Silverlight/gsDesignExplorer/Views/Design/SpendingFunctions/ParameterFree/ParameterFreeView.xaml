@@ -20,9 +20,9 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White">
-		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderBrush="#eee" BorderThickness="0">
 			<StackPanel Orientation="Vertical">
-				<Border BorderBrush="#eee" BorderThickness="1">
+				<Border BorderBrush="#eee" BorderThickness="0">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>

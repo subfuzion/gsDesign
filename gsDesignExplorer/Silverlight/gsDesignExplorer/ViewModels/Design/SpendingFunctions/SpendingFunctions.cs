@@ -8,6 +8,8 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 	public class SpendingFunctions : NotifyPropertyChangedBase
 	{
+		#region Initialization
+
 		private DesignParameters _designParameters;
 
 		public SpendingFunctions(DesignParameters designParameters)
@@ -20,32 +22,102 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 			get { return _designParameters.SpendingFunctionParameters; }
 		}
 
-		#region SpendingFunctionBounds property
+		#endregion
 
-		public SpendingFunctionBounds SpendingFunctionBounds
+		#region Testing parameters
+
+		#region SpendingFunctionTestCategory property
+
+		[Display(Name = "Test Type",
+		   Description = "Lower spending test type")]
+		public SpendingFunctionTestCategory SpendingFunctionTestCategory
 		{
-			get { return Model.CurrentSpendingFunctionBounds; }
+			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory; }
 
 			set
 			{
-				if (Model.CurrentSpendingFunctionBounds != value)
+				if (Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory != value)
 				{
-					Model.CurrentSpendingFunctionBounds = value;
+					Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory = value;
+					RaisePropertyChanged("SpendingFunctionTestCategory");
+					RaisePropertyChanged("IsLowerSpendingTabEnabled");
+					RaisePropertyChanged("SpendingFunctionBounds");
+				}
+			}
+		}
+
+		#endregion // SpendingFunctionTestCategory
+
+		#region SpendingFunctionLowerBoundSpending property
+
+		[Display(Name = "Lower Bound Spending",
+		   Description = "Lower bound spending for 2-sided futility test type")]
+		public SpendingFunctionLowerBoundSpending SpendingFunctionLowerBoundSpending
+		{
+			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending; }
+
+			set
+			{
+				if (Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending != value)
+				{
+					Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending = value;
+					RaisePropertyChanged("SpendingFunctionLowerBoundSpending");
+				}
+			}
+		}
+
+		#endregion // SpendingFunctionLowerBoundSpending
+
+		#region SpendingFunctionLowerBoundTesting property
+
+		[Display(Name = "Lower Bound Testing",
+		   Description = "Binding or non-binding testing")]
+		public SpendingFunctionLowerBoundTesting SpendingFunctionLowerBoundTesting
+		{
+			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting; }
+
+			set
+			{
+				if (Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting != value)
+				{
+					Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting = value;
+					RaisePropertyChanged("SpendingFunctionLowerBoundTesting");
+				}
+			}
+		}
+
+		#endregion // SpendingFunctionLowerBoundTesting
+
+		#endregion // Testing parameters
+
+		#region IsLowerSpendingTabEnabled property
+
+		public bool IsLowerSpendingTabEnabled
+		{
+			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedWithFutility; }
+		}
+
+		#endregion // IsLowerSpendingTabEnabled
+
+		#region SpendingFunctionBounds property
+
+		private SpendingFunctionBounds _currentBounds = SpendingFunctionBounds.UpperSpending;
+
+		public SpendingFunctionBounds SpendingFunctionBounds
+		{
+			get { return IsLowerSpendingTabEnabled ? _currentBounds : SpendingFunctionBounds.UpperSpending; }
+
+			set
+			{
+				if (_currentBounds != value)
+				{
+					_currentBounds = value;
 					RaisePropertyChanged("SpendingFunctionBounds");
 				}
 			}
 		}
 
 		#endregion // SpendingFunctionBounds
-
-		#region IsLowerSpendingTabEnabled property
-
-		public bool IsLowerSpendingTabEnabled
-		{
-			get { return UpperSpendingFunction.SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedWithFutility; }
-		}
-
-		#endregion // IsLowerSpendingTabEnabled
 
 		#region LowerSpendingFunction property
 
@@ -56,11 +128,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		public SpendingFunctionViewModel LowerSpendingFunction
 		{
 			get { return _lowerSpendingFunction
-				?? (_lowerSpendingFunction =
-					new SpendingFunctionViewModel(Model.LowerSpendingFunction)
-					{
-						IsEnabledSpendingFunctionTestCategory = false
-					}); }
+				?? (_lowerSpendingFunction = new SpendingFunctionViewModel(Model.LowerSpendingFunction)); }
 
 			set
 			{
@@ -90,14 +158,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 			{
 				if (_upperSpendingFunction != value)
 				{
-					if (_upperSpendingFunction != null)
-					{
-						_upperSpendingFunction.PropertyChanged -= OnUpperSpendingFunctionPropertyChanged;
-					}
-
 					_upperSpendingFunction = value;
-					_upperSpendingFunction.PropertyChanged += OnUpperSpendingFunctionPropertyChanged;
-
 					RaisePropertyChanged("UpperSpendingFunction");
 					RaisePropertyChanged("IsLowerSpendingTabEnabled");
 				}
@@ -105,14 +166,5 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		}
 
 		#endregion // UpperSpendingFunction
-
-		private void OnUpperSpendingFunctionPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName.Equals("SpendingFunctionTestCategory"))
-			{
-				// Need this to ensure lower spending tab is disabled unless test type is 2-sided with futility
-				RaisePropertyChanged("IsLowerSpendingTabEnabled");
-			}
-		}
 	}
 }

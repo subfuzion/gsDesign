@@ -189,7 +189,7 @@
 
 		private void AppendTestType()
 		{
-			AppendAssignment("test.type", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestTypeCode);
+			AppendAssignment("test.type", DesignParameters.SpendingFunctionParameters.SpendingFunctionTestingParameters.SpendingFunctionTestTypeCode);
 		}
 	
 		private void AppendAlpha()
