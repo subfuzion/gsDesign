@@ -74,7 +74,7 @@
 			//Writer.WriteLine("# =================================");
 			//Writer.WriteLine("# Spending Functions - Lower Spending tab");
 			//Writer.WriteLine("# ---------------------------------");
-			//Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestCategory);
+			//Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestType);
 			//Writer.WriteLine("Lower bound spending: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending);
 			//Writer.WriteLine("Lower bound testing: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting);
 			//Writer.WriteLine("(Selected lower spending function: {0})", DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionParameterCategory);
@@ -82,7 +82,7 @@
 			//Writer.WriteLine("# =================================");
 			//Writer.WriteLine("# Spending Functions - Upper Spending tab");
 			//Writer.WriteLine("# ---------------------------------");
-			//Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestCategory);
+			//Writer.WriteLine("Test type: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionTestType);
 			//Writer.WriteLine("Lower bound spending: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending);
 			//Writer.WriteLine("Lower bound testing: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting);
 			//Writer.WriteLine("(Selected upper spending function: {0})", DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory);

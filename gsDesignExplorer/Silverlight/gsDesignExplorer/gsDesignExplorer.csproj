@@ -122,7 +122,7 @@
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionBounds.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionLowerBoundSpending.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionLowerBoundTesting.cs" />
-    <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionTestCategory.cs" />
+    <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionTestType.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionParameterCategory.cs" />
     <Compile Include="Models\Design\SpendingFunctions\TwoParameter\SpendingShapeFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs" />

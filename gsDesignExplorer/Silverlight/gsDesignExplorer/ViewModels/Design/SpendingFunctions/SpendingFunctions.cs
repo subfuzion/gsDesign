@@ -26,27 +26,27 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		#region Testing parameters
 
-		#region SpendingFunctionTestCategory property
+		#region SpendingFunctionTestType property
 
 		[Display(Name = "Test Type",
 		   Description = "Lower spending test type")]
-		public SpendingFunctionTestCategory SpendingFunctionTestCategory
+		public SpendingFunctionTestType SpendingFunctionTestType
 		{
-			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory; }
+			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestType; }
 
 			set
 			{
-				if (Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory != value)
+				if (Model.SpendingFunctionTestingParameters.SpendingFunctionTestType != value)
 				{
-					Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory = value;
-					RaisePropertyChanged("SpendingFunctionTestCategory");
+					Model.SpendingFunctionTestingParameters.SpendingFunctionTestType = value;
+					RaisePropertyChanged("SpendingFunctionTestType");
 					RaisePropertyChanged("IsLowerSpendingTabEnabled");
 					RaisePropertyChanged("SpendingFunctionBounds");
 				}
 			}
 		}
 
-		#endregion // SpendingFunctionTestCategory
+		#endregion // SpendingFunctionTestType
 
 		#region SpendingFunctionLowerBoundSpending property
 
@@ -94,7 +94,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		public bool IsLowerSpendingTabEnabled
 		{
-			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedWithFutility; }
+			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility; }
 		}
 
 		#endregion // IsLowerSpendingTabEnabled
@@ -105,7 +105,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		public SpendingFunctionBounds SpendingFunctionBounds
 		{
-			get { return IsLowerSpendingTabEnabled ? _currentBounds : SpendingFunctionBounds.UpperSpending; }
+			get { return IsLowerSpendingTabEnabled ? _currentBounds : (_currentBounds = SpendingFunctionBounds.UpperSpending); }
 
 			set
 			{

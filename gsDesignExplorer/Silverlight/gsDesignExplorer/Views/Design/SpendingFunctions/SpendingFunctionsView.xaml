@@ -50,8 +50,8 @@
 									   Target="{Binding ElementName=spendingFunctionTestType}" />
 						<ComboBox Grid.Row="0" Grid.Column="1" Margin="4"
 									  x:Name="spendingFunctionTestType"
-									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionTestCategory, Mode=OneWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
-									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionTestCategory, Mode=TwoWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
+									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionTestType, Mode=OneWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
+									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionTestType, Mode=TwoWay, Converter={StaticResource spendingFunctionTestTypeValueConverter}}"
 									  />
 						<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=spendingFunctionTestType}" />
 

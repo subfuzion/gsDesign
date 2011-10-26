@@ -13,8 +13,8 @@ namespace gsDesign.Explorer.Models.Design.SpendingFunctions
 				return _spendingFunctionTestingParameters
 				       ?? (_spendingFunctionTestingParameters = new SpendingFunctionTestingParameters
 																{
-																	SpendingFunctionTestCategory =
-																	SpendingFunctionTestCategory.TwoSidedWithFutility
+																	SpendingFunctionTestType =
+																	SpendingFunctionTestType.TwoSidedWithFutility
 																});
 			}
 

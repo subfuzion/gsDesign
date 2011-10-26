@@ -17,22 +17,22 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		{
 			if (value == null) return null;
 			
-			if (!value.GetType().Equals(typeof(SpendingFunctionTestCategory))) throw new ArgumentException();
+			if (!value.GetType().Equals(typeof(SpendingFunctionTestType))) throw new ArgumentException();
 
-			if (targetType.Equals(typeof(int))) return (int)(SpendingFunctionTestCategory)value;
+			if (targetType.Equals(typeof(int))) return (int)(SpendingFunctionTestType)value;
 
 			if (targetType.Equals(typeof(object)) || targetType.Equals(typeof(string)))
 			{
-				var s = (SpendingFunctionTestCategory)value;
+				var s = (SpendingFunctionTestType)value;
 				switch (s)
 				{
-					case SpendingFunctionTestCategory.OneSided:
+					case SpendingFunctionTestType.OneSided:
 						return OneSided;
 
-					case SpendingFunctionTestCategory.TwoSidedSymmetric:
+					case SpendingFunctionTestType.TwoSidedSymmetric:
 						return TwoSidedSymmetric;
 
-					case SpendingFunctionTestCategory.TwoSidedWithFutility:
+					case SpendingFunctionTestType.TwoSidedWithFutility:
 						return TwoSidedWithFutility;
 
 				}
@@ -59,11 +59,11 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		{
 			if (value == null) return null;
 			
-			if (!targetType.Equals(typeof(SpendingFunctionTestCategory))) throw new ArgumentException();
+			if (!targetType.Equals(typeof(SpendingFunctionTestType))) throw new ArgumentException();
 
 			var valueType = value.GetType();
 
-			if (valueType.Equals(typeof(int))) return (SpendingFunctionTestCategory)value;
+			if (valueType.Equals(typeof(int))) return (SpendingFunctionTestType)value;
 
 			if (valueType.Equals(typeof(string)) || valueType.Equals(typeof(object)))
 			{
@@ -72,16 +72,16 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				switch (s)
 				{
 					case OneSided:
-						return SpendingFunctionTestCategory.OneSided;
+						return SpendingFunctionTestType.OneSided;
 
 					case TwoSidedSymmetric:
-						return SpendingFunctionTestCategory.TwoSidedSymmetric;
+						return SpendingFunctionTestType.TwoSidedSymmetric;
 
 					case TwoSidedWithFutility:
-						return SpendingFunctionTestCategory.TwoSidedWithFutility;
+						return SpendingFunctionTestType.TwoSidedWithFutility;
 
 					default:
-						return (SpendingFunctionTestCategory)Enum.Parse(typeof(SpendingFunctionTestCategory), (string)value, true);
+						return (SpendingFunctionTestType)Enum.Parse(typeof(SpendingFunctionTestType), (string)value, true);
 				}
 			}
 

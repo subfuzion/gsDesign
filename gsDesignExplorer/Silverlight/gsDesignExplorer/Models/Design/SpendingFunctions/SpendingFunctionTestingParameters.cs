@@ -8,13 +8,13 @@
 		{
 			get
 			{
-				if (SpendingFunctionTestCategory == SpendingFunctionTestCategory.OneSided)
+				if (SpendingFunctionTestType == SpendingFunctionTestType.OneSided)
 					return 1;
 
-				if (SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedSymmetric)
+				if (SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedSymmetric)
 					return 2;
 
-				if (SpendingFunctionTestCategory == SpendingFunctionTestCategory.TwoSidedWithFutility)
+				if (SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility)
 				{
 					if (SpendingFunctionLowerBoundSpending == SpendingFunctionLowerBoundSpending.BetaSpending)
 					{
@@ -41,21 +41,21 @@
 
 		#endregion // SpendingFunctionTestTypeCode
 
-		#region SpendingFunctionTestCategory property
+		#region SpendingFunctionTestType property
 
-		private SpendingFunctionTestCategory _spendingFunctionTestCategory = SpendingFunctionTestCategory.TwoSidedWithFutility;
+		private SpendingFunctionTestType _spendingFunctionTestType = SpendingFunctionTestType.TwoSidedWithFutility;
 
-		public SpendingFunctionTestCategory SpendingFunctionTestCategory
+		public SpendingFunctionTestType SpendingFunctionTestType
 		{
-			get { return _spendingFunctionTestCategory; }
+			get { return _spendingFunctionTestType; }
 
 			set
 			{
-				_spendingFunctionTestCategory = value;
+				_spendingFunctionTestType = value;
 			}
 		}
 
-		#endregion // SpendingFunctionTestCategory
+		#endregion // SpendingFunctionTestType
 
 		#region SpendingFunctionLowerBoundSpending property
 
