@@ -24,7 +24,7 @@ namespace gsDesign.Explorer.ViewModels.Test
 					.Append("For command: ").Append(Response.Request.CommandCode).Append('\n')
 					.Append("IsOK: ").Append(Response.IsOk).Append('\n')
 					.Append("IsError: ").Append(Response.IsError).Append('\n')
-					.Append("ErrorCode: ").Append(Response.ErrorCode).Append('\n')
+					.Append("ErrorCode: ").Append(Response.ErrorCode.ToString()).Append('\n')
 					.Append('\n')
 					;
 

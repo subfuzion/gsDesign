@@ -14,5 +14,10 @@
 			bytes[s.Length] = 0;
 			return bytes;
 		}
+
+		public static string GetUTF8String(this byte[] bytes, int offset = 0, int count = -1)
+		{
+			return bytes == null ? null : Encoding.UTF8.GetString(bytes, offset, count == -1 ? bytes.Length : count);
+		}
 	}
 }

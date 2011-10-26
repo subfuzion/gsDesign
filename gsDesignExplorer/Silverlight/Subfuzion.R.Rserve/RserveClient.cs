@@ -48,6 +48,7 @@ namespace Subfuzion.R.Rserve
 		private ProtocolSettings _protocolSettings;
 		private Socket _socket;
 
+		private int _pending;
 		private bool _isBusy;
 
 		#endregion
@@ -115,7 +116,7 @@ namespace Subfuzion.R.Rserve
 		{
 			Disconnect();
 
-			// can't run on different thread and will be null anyway when launched from file system
+			// can't run on different thread and will be null anyway when launched from file system:
 			// var endPoint = new DnsEndPoint(Application.Current.Host.Source.DnsSafeHost, 4502);
 			var endPoint = new DnsEndPoint("localhost", 4502);
 
@@ -188,6 +189,8 @@ namespace Subfuzion.R.Rserve
 				ProtocolSettings = ProtocolSettings.Parse(socketAsyncEventArgs.Buffer);
 
 				socketAsyncEventArgs.Completed -= OnReceiveServerHandshake;
+
+				IsBusy = false;
 			}
 			catch (Exception e)
 			{
@@ -207,7 +210,7 @@ namespace Subfuzion.R.Rserve
 		{
 			try
 			{
-				if (IsBusy) return;
+				if (IsBusy || ConnectionState != ConnectionState.Connected) return;
 				IsBusy = true;
 
 				//var args = new SocketAsyncEventArgs
@@ -219,23 +222,33 @@ namespace Subfuzion.R.Rserve
 				//                                },
 				//            };
 
-				var args = new SocketAsyncEventArgs
-				           	{
-				           		UserToken = new RequestContext
-				           		            	{
+				//socketAsyncEventArgs.UserToken = new RequestContext
+				//{
+				//    CompletedAction = completed,
+				//    ErrorAction = error,
+				//    Context = context,
+				//    Request = request,
+				//};
+
+				var socketAsyncEventArgs = new SocketAsyncEventArgs
+							{
+								UserToken = new RequestContext
+												{
 													CompletedAction = completed,
 													ErrorAction = error,
 													Context = context,
-				           		            		Request = request,
-				           		            	},
-				           	};
-
+													Request = request,
+												},
+							};
 
 				byte[] buffer = request.ToEncodedBytes();
-				args.SetBuffer(buffer, 0, buffer.Length);
+				socketAsyncEventArgs.SetBuffer(buffer, 0, buffer.Length);
 
-				args.Completed += OnSocketAsyncCompleted;
-				_socket.SendAsync(args);
+				socketAsyncEventArgs.Completed += OnSocketAsyncCompleted;
+				if (!_socket.SendAsync(socketAsyncEventArgs))
+				{
+					OnSocketAsyncCompleted(_socket, socketAsyncEventArgs);
+				}
 			}
 			catch (Exception e)
 			{
@@ -257,10 +270,14 @@ namespace Subfuzion.R.Rserve
 					try
 					{
 						socketAsyncEventArgs.Completed -= OnConnectAsyncCompleted;
-						var args = new SocketAsyncEventArgs {UserToken = socketAsyncEventArgs.UserToken};
-						args.SetBuffer(new byte[1024], 0, 1024);
-						args.Completed += OnReceiveCompleted;
-						_socket.ReceiveAsync(args);
+						socketAsyncEventArgs.Completed -= OnReceiveCompleted;
+						// var args = new SocketAsyncEventArgs {UserToken = socketAsyncEventArgs.UserToken};
+						socketAsyncEventArgs.SetBuffer(new byte[1024], 0, 1024);
+						socketAsyncEventArgs.Completed += OnReceiveCompleted;
+						if (!_socket.ReceiveAsync(socketAsyncEventArgs))
+						{
+							OnReceiveCompleted(_socket, socketAsyncEventArgs);
+						}
 					}
 					catch (Exception e)
 					{
@@ -269,14 +286,13 @@ namespace Subfuzion.R.Rserve
 					break;
 
 				case SocketAsyncOperation.Receive:
+					OnReceiveCompleted(_socket, socketAsyncEventArgs);
 					break;
 			}
 		}
 
 		private void OnReceiveCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
 		{
-			IsBusy = false;
-
 			var context = (RequestContext)socketAsyncEventArgs.UserToken;
 
 			try
@@ -301,10 +317,27 @@ namespace Subfuzion.R.Rserve
 				Console.WriteLine(e);
 			}
 
+
+			if (socketAsyncEventArgs.Buffer[0] == 0)
+			{
+				for (int i = 1; i < 32; i++)
+				{
+					if (socketAsyncEventArgs.Buffer[i] != 0) break;
+				}
+
+				if (!_socket.ReceiveAsync(socketAsyncEventArgs))
+				{
+					OnReceiveCompleted(_socket, socketAsyncEventArgs);
+				}
+				return;
+			}
+
 			if (context != null)
 			{
+				// TODO need to handle when Rserve is going to send more data than the buffer size
 				var response = new Response(context.Request, socketAsyncEventArgs.Buffer);
 				ReturnResult(context, response);
+				IsBusy = false;
 			}
 		}
 

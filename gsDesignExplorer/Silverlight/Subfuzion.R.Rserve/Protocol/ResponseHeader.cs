@@ -19,23 +19,28 @@
 
 		public bool IsOk
 		{
-			get { return (Code & 15) == 1; }
+			get { return (Code & 0x01FFFF) == 0x010001; }
 		}
 
 		public bool IsError
 		{
-			get { return (Code & 15) == 2; }
+			get { return (Code & 0x01FFFF) == 0x010002; }
 		}
 
-		public int ErrorCode
+		public ErrorCode ErrorCode
 		{
-			get { return ((Code >> 24) & 127); }
+			get { return (ErrorCode)ErrorValue; }
+		}
+
+		public int ErrorValue
+		{
+			get { return ((Code >> 24) & 0x7F); }
 		}
 
 		public override string ToString()
 		{
-			return string.Format("IsOk:{0} IsError:{1} ErrorCode:{2} PayloadSize:{3} PayloadOffset:{4} PayloadSize2:{5}",
-				IsOk, IsError, (CommandCode)Code, PayloadSize, PayloadOffset, PayloadSize2);
+			return string.Format("IsOk:{0} IsError:{1} Code:{2} ErrorCode:{3} PayloadSize:{4} PayloadOffset:{5} PayloadSize2:{6}",
+				IsOk, IsError, Code, ErrorCode, PayloadSize, PayloadOffset, PayloadSize2);
 		}
 	}
 }

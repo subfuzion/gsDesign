@@ -1,7 +1,14 @@
 ﻿namespace Subfuzion.R.Rserve.Protocol
 {
+	using System;
+	using Helpers;
+
 	public class Response
 	{
+		private byte[] _previousBuffer1 = new byte[1024];
+		private byte[] _previousBuffer2 = new byte[1024];
+		private byte[] _previousBuffer3 = new byte[1024];
+
 		public Response(Request request, byte[] responseBytes)
 		{
 			Request = request;
@@ -15,8 +22,16 @@
 			}
 			else
 			{
+				var previous3 = _previousBuffer3.GetUTF8String();
+				var previous2 = _previousBuffer2.GetUTF8String();
+				var previous1 = _previousBuffer1.GetUTF8String();
+				var current = responseBytes.GetUTF8String();
 				Payload = new Payload();
 			}
+
+			Array.Copy(_previousBuffer2, _previousBuffer3, 1024);
+			Array.Copy(_previousBuffer1, _previousBuffer2, 1024);
+			Array.Copy(responseBytes, _previousBuffer1, 1024);
 		}
 
 		public bool IsOk
@@ -29,9 +44,14 @@
 			get { return Header.IsError; }
 		}
 
-		public int ErrorCode
+		public ErrorCode ErrorCode
 		{
 			get { return Header.ErrorCode; }
+		}
+
+		public int ErrorValue
+		{
+			get { return Header.ErrorValue; }
 		}
 
 		/// <summary>
