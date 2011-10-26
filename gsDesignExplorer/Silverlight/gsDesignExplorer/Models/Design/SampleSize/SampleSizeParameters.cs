@@ -12,6 +12,7 @@ namespace gsDesign.Explorer.Models.Design.SampleSize
 					return FixedDesignSampleSize.ToString();
 
 				if (SampleSizeCategory == SampleSizeCategory.Binomial)
+					// nBinomial(p1=p1, p2=p2, alpha=0.025, beta=0.1, delta0=delta0, ratio=1)
 					return "(not implemented yet)";
 
 				if (SampleSizeCategory == SampleSizeCategory.TimeToEvent)

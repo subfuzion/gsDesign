@@ -3,6 +3,8 @@
 	using System;
 	using System.IO;
 	using System.Text;
+	using Design.SampleSize;
+	using Design.SpendingFunctions;
 
 	public class DesignScriptGenerator
 	{
@@ -23,6 +25,8 @@
 			AppendTestType();
 			AppendAlpha();
 			AppendBeta();
+			AppendBinomial();
+			AppendTTE();
 			AppendNFix();
 			AppendTiming();
 			AppendSfu();
@@ -204,8 +208,30 @@
 
 		private void AppendNFix()
 		{
-			// TODO: n.fix only calculated for fixed design
-			AppendAssignment("n.fix", DesignParameters.SampleSizeParameters.NFix);
+			string s = "?";
+
+			switch (DesignParameters.SampleSizeParameters.SampleSizeCategory)
+			{
+				case SampleSizeCategory.UserInput:
+					// s = DesignParameters.SampleSizeParameters.NFix;
+					s = DesignParameters.SampleSizeParameters.FixedDesignSampleSize.ToString();
+					break;
+
+				case SampleSizeCategory.Binomial:
+					s = string.Format("nBinomial(p1=p1, p2=p2, alpha={0}, beta={1}, delta0=delta0, ratio={2})",
+						DesignParameters.ErrorPowerTimingParameters.Alpha,
+						DesignParameters.ErrorPowerTimingParameters.Beta,
+						DesignParameters.SampleSizeParameters.BinomialRandomizationRatio);
+					break;
+
+				case SampleSizeCategory.TimeToEvent:
+					s = string.Format("{0}Survival$nEvents", DesignParameters.Name);
+					break;
+
+			}
+
+
+			AppendAssignment("n.fix", s);
 		}
 
 		private void AppendTiming()
@@ -225,28 +251,150 @@
 
 		private void AppendSfu()
 		{
-			AppendAssignment("sfu", "sfHSD");
+			string s = "?";
+
+			switch (DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory)
+			{
+				case SpendingFunctionParameterCategory.ParameterFree:
+					s = "sfLDOF";
+					break;
+
+				case SpendingFunctionParameterCategory.OneParameter:
+					s = "sfHSD";
+					break;
+
+				case SpendingFunctionParameterCategory.TwoParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.ThreeParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.PiecewiseLinear:
+					break;
+			}
+
+			AppendAssignment("sfu", s);
 		}
 
 		private void AppendSfupar()
 		{
-			AppendAssignment("sfupar", "-8");
+			string s = "?";
+
+			switch (DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory)
+			{
+				case SpendingFunctionParameterCategory.ParameterFree:
+					s = "0";
+					break;
+
+				case SpendingFunctionParameterCategory.OneParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.TwoParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.ThreeParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.PiecewiseLinear:
+					break;
+			}
+
+			AppendAssignment("sfupar", s);
 		}
 
 		private void AppendSfl()
 		{
-			AppendAssignment("sfl", "sfHSD");
+			string s = "?";
+
+			switch (DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionParameterCategory)
+			{
+				case SpendingFunctionParameterCategory.ParameterFree:
+					s = "sfLDOF";
+					break;
+
+				case SpendingFunctionParameterCategory.OneParameter:
+					s = "sfHSD";
+					break;
+
+				case SpendingFunctionParameterCategory.TwoParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.ThreeParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.PiecewiseLinear:
+					break;
+			}
+
+			AppendAssignment("sfl", s);
 		}
 
 		private void AppendSflpar()
 		{
-			AppendAssignment("sflpar", "-8");
+			string s = "?";
+
+			switch (DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory)
+			{
+				case SpendingFunctionParameterCategory.ParameterFree:
+					s = "0";
+					break;
+
+				case SpendingFunctionParameterCategory.OneParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.TwoParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.ThreeParameter:
+					break;
+
+				case SpendingFunctionParameterCategory.PiecewiseLinear:
+					break;
+			}
+
+			AppendAssignment("sflpar", s);
 		}
 
 		private void AppendEndpoint()
 		{
-			AppendAssignment("endpoint", "user");
+			string s = "?";
+
+			switch (DesignParameters.SampleSizeParameters.SampleSizeCategory)
+			{
+				case SampleSizeCategory.UserInput:
+					s = "user";
+					break;
+
+				case SampleSizeCategory.Binomial:
+					s = "binomial";
+					break;
+
+				case SampleSizeCategory.TimeToEvent:
+					s = "tte";
+					break;
+
+			}
+
+			AppendAssignment("endpoint", "\"{0}\"", s);
 		}
 
+		private void AppendBinomial()
+		{
+			if (DesignParameters.SampleSizeParameters.SampleSizeCategory != SampleSizeCategory.Binomial) return;
+
+			AppendAssignment("p1", DesignParameters.SampleSizeParameters.BinomialControlEventRate);
+			AppendAssignment("p2", DesignParameters.SampleSizeParameters.BinomialExperimentalEventRate);
+			// AppendAssignment("delta0", DesignParameters.SampleSizeParameters.BinomialNonInferiorityTesting == BinomialNonInferiorityTesting.Superiority ? 0 : DesignParameters.SampleSizeParameters.BinomialDelta);
+			AppendAssignment("delta0", DesignParameters.SampleSizeParameters.BinomialDelta);
+			AppendAssignment("delta1", "p1 - p2");
+		}
+
+		private void AppendTTE()
+		{
+			if (DesignParameters.SampleSizeParameters.SampleSizeCategory != SampleSizeCategory.TimeToEvent) return;
+
+			var s = string.Format("nSurvival(lambda1=0.11552, lambda2=0.06931, eta=0.05776, Ts=30, Tr=18, ratio=1, alpha=0.025, beta=0.1, sided=1, type=\"rr\", entry=\"unif\", gamma=1e-04)");
+			AppendAssignment(string.Format("{0}Survival", DesignParameters.Name), s);
+		}
 	}
 }
