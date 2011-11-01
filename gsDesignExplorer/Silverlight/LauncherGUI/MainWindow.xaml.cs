@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Win32;
-using gsDesign.LauncherGUI.ViewModels;
 
 namespace gsDesign.LauncherGUI
 {
+	using Services;
+
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -13,6 +13,19 @@ namespace gsDesign.LauncherGUI
 		public MainWindow()
 		{
 			InitializeComponent();
+			ServiceManager.Instance.StartServices();
+		}
+
+		protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+		{
+			ServiceManager.Instance.StopServices();
+			StopSystem();
+			base.OnClosing(e);
+		}
+
+		protected override void OnClosed(System.EventArgs e)
+		{
+			base.OnClosed(e);
 		}
 
 		private void StartRserveButton_Click(object sender, RoutedEventArgs e)
@@ -93,6 +106,10 @@ namespace gsDesign.LauncherGUI
 			App.ViewModel.OpenExplorer();
 		}
 
-
+		private void StopSystem()
+		{
+			App.ViewModel.StopPolicyServer();
+			App.ViewModel.StopRserve();
+		}
 	}
 }

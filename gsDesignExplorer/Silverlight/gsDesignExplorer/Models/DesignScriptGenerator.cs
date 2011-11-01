@@ -164,7 +164,7 @@
 		private void AppendGSDesignFunction()
 		{
 			var sb = new StringBuilder();
-			sb.Append("gsDesign(k=k, test.type=test.type, alpha=alpha, beta=beta, n.fix=n.fix\n")
+			sb.Append("gsDesign(k=k, test.type=test.type, alpha=alpha, beta=beta, n.fix=n.fix,\n")
 				.Append("  timing=timing, sfu=sfu, sfupar=sfupar, sfl=sfl, sflpar=sflpar, endpoint=endpoint)");
 
 			AppendAssignment(DesignParameters.Name, sb.ToString());

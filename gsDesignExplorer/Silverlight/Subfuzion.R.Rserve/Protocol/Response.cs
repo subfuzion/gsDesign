@@ -5,9 +5,14 @@
 
 	public class Response
 	{
-		private byte[] _previousBuffer1 = new byte[1024];
-		private byte[] _previousBuffer2 = new byte[1024];
-		private byte[] _previousBuffer3 = new byte[1024];
+		private static byte[] _previousBuffer1 = new byte[1024];
+		private static string _previousBuffer1str;
+
+		private static byte[] _previousBuffer2 = new byte[1024];
+		private static string _previousBuffer2str;
+
+		private static byte[] _previousBuffer3 = new byte[1024];
+		private static string _previousBuffer3str;
 
 		public Response(Request request, byte[] responseBytes)
 		{
@@ -30,8 +35,13 @@
 			}
 
 			Array.Copy(_previousBuffer2, _previousBuffer3, 1024);
+			_previousBuffer3str = _previousBuffer3.GetUTF8String();
+
 			Array.Copy(_previousBuffer1, _previousBuffer2, 1024);
+			_previousBuffer2str = _previousBuffer2.GetUTF8String();
+
 			Array.Copy(responseBytes, _previousBuffer1, 1024);
+			_previousBuffer1str = _previousBuffer1.GetUTF8String();
 		}
 
 		public bool IsOk

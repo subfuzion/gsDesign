@@ -2,6 +2,7 @@
 {
 	using System.Threading;
 	using System.Windows;
+	using RService;
 	using Subfuzion.Helpers;
 
 	public partial class AppViewModel
@@ -64,7 +65,16 @@
 
 		private void RunDesign(object parameter = null)
 		{
-			Thread.Sleep(2000);
+			// Thread.Sleep(2000);
+
+			var rService = new RServiceClient();
+			rService.DoWorkCompleted += rService_DoWorkCompleted;
+			rService.DoWorkAsync();
+		}
+
+		void rService_DoWorkCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+		{
+			
 		}
 
 		private void RunDesignCompleted(object parameter = null)

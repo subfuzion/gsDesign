@@ -89,6 +89,12 @@ namespace gsDesign.LauncherGUI
 			Print("started Silverlight policy server on port {0}", 943.ToString());
 		}
 
+		public void StopProcesses()
+		{
+			StopSilverlightPolicyServer();
+			StopRserve();
+		}
+
 		private void Print(string s, params string[] args)
 		{
 			Console.Out.WriteLine(string.Format(s, args));
