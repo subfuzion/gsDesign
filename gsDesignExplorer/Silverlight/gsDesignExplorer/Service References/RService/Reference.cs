@@ -18,10 +18,10 @@ namespace gsDesign.Explorer.RService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RService.IRService")]
     public interface IRService {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRService/DoWork", ReplyAction="http://tempuri.org/IRService/DoWorkResponse")]
-        System.IAsyncResult BeginDoWork(System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRService/SaveScript", ReplyAction="http://tempuri.org/IRService/SaveScriptResponse")]
+        System.IAsyncResult BeginSaveScript(string script, System.AsyncCallback callback, object asyncState);
         
-        void EndDoWork(System.IAsyncResult result);
+        string EndSaveScript(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -30,13 +30,32 @@ namespace gsDesign.Explorer.RService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SaveScriptCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SaveScriptCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RServiceClient : System.ServiceModel.ClientBase<gsDesign.Explorer.RService.IRService>, gsDesign.Explorer.RService.IRService {
         
-        private BeginOperationDelegate onBeginDoWorkDelegate;
+        private BeginOperationDelegate onBeginSaveScriptDelegate;
         
-        private EndOperationDelegate onEndDoWorkDelegate;
+        private EndOperationDelegate onEndSaveScriptDelegate;
         
-        private System.Threading.SendOrPostCallback onDoWorkCompletedDelegate;
+        private System.Threading.SendOrPostCallback onSaveScriptCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -91,53 +110,56 @@ namespace gsDesign.Explorer.RService {
             }
         }
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DoWorkCompleted;
+        public event System.EventHandler<SaveScriptCompletedEventArgs> SaveScriptCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult gsDesign.Explorer.RService.IRService.BeginDoWork(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginDoWork(callback, asyncState);
+        System.IAsyncResult gsDesign.Explorer.RService.IRService.BeginSaveScript(string script, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveScript(script, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void gsDesign.Explorer.RService.IRService.EndDoWork(System.IAsyncResult result) {
-            base.Channel.EndDoWork(result);
+        string gsDesign.Explorer.RService.IRService.EndSaveScript(System.IAsyncResult result) {
+            return base.Channel.EndSaveScript(result);
         }
         
-        private System.IAsyncResult OnBeginDoWork(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((gsDesign.Explorer.RService.IRService)(this)).BeginDoWork(callback, asyncState);
+        private System.IAsyncResult OnBeginSaveScript(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string script = ((string)(inValues[0]));
+            return ((gsDesign.Explorer.RService.IRService)(this)).BeginSaveScript(script, callback, asyncState);
         }
         
-        private object[] OnEndDoWork(System.IAsyncResult result) {
-            ((gsDesign.Explorer.RService.IRService)(this)).EndDoWork(result);
-            return null;
+        private object[] OnEndSaveScript(System.IAsyncResult result) {
+            string retVal = ((gsDesign.Explorer.RService.IRService)(this)).EndSaveScript(result);
+            return new object[] {
+                    retVal};
         }
         
-        private void OnDoWorkCompleted(object state) {
-            if ((this.DoWorkCompleted != null)) {
+        private void OnSaveScriptCompleted(object state) {
+            if ((this.SaveScriptCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.DoWorkCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.SaveScriptCompleted(this, new SaveScriptCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void DoWorkAsync() {
-            this.DoWorkAsync(null);
+        public void SaveScriptAsync(string script) {
+            this.SaveScriptAsync(script, null);
         }
         
-        public void DoWorkAsync(object userState) {
-            if ((this.onBeginDoWorkDelegate == null)) {
-                this.onBeginDoWorkDelegate = new BeginOperationDelegate(this.OnBeginDoWork);
+        public void SaveScriptAsync(string script, object userState) {
+            if ((this.onBeginSaveScriptDelegate == null)) {
+                this.onBeginSaveScriptDelegate = new BeginOperationDelegate(this.OnBeginSaveScript);
             }
-            if ((this.onEndDoWorkDelegate == null)) {
-                this.onEndDoWorkDelegate = new EndOperationDelegate(this.OnEndDoWork);
+            if ((this.onEndSaveScriptDelegate == null)) {
+                this.onEndSaveScriptDelegate = new EndOperationDelegate(this.OnEndSaveScript);
             }
-            if ((this.onDoWorkCompletedDelegate == null)) {
-                this.onDoWorkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDoWorkCompleted);
+            if ((this.onSaveScriptCompletedDelegate == null)) {
+                this.onSaveScriptCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveScriptCompleted);
             }
-            base.InvokeAsync(this.onBeginDoWorkDelegate, null, this.onEndDoWorkDelegate, this.onDoWorkCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginSaveScriptDelegate, new object[] {
+                        script}, this.onEndSaveScriptDelegate, this.onSaveScriptCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -216,15 +238,17 @@ namespace gsDesign.Explorer.RService {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginDoWork(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
-                System.IAsyncResult _result = base.BeginInvoke("DoWork", _args, callback, asyncState);
+            public System.IAsyncResult BeginSaveScript(string script, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = script;
+                System.IAsyncResult _result = base.BeginInvoke("SaveScript", _args, callback, asyncState);
                 return _result;
             }
             
-            public void EndDoWork(System.IAsyncResult result) {
+            public string EndSaveScript(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("DoWork", _args, result);
+                string _result = ((string)(base.EndInvoke("SaveScript", _args, result)));
+                return _result;
             }
         }
     }

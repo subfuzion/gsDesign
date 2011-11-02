@@ -1,5 +1,6 @@
 ﻿namespace gsDesign.LauncherGUI.Services
 {
+	using System;
 	using System.IO;
 	using System.ServiceModel.Web;
 	using System.Text;
@@ -42,5 +43,41 @@
 		}
 
 		#endregion
+
+		private static readonly string UserFileDirectoryName = "User";
+		private static readonly string RExtension = ".R";
+
+		public string GetUserDirectory()
+		{
+			return UserFilePath;
+		}
+
+		public string SaveScript(string script)
+		{
+			var filename = Guid.NewGuid() + ".R";
+			var pathname = Path.Combine(UserFilePath, filename);
+
+			using (var w = new StreamWriter(pathname))
+			{
+				w.Write(script ?? string.Empty);
+			}
+
+			return pathname;
+		}
+
+		private string UserFilePath
+		{
+			get { return EnsurePath(UserFileDirectoryName); }
+		}
+
+		private string EnsurePath(string path)
+		{
+			if (!Directory.Exists(path))
+			{
+				Directory.CreateDirectory(path);
+			}
+
+			return Path.GetFullPath(path);
+		}
 	}
 }

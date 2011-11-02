@@ -27,6 +27,7 @@
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="c965bee3-ce9d-493d-a56e-982cbc82a506" SourceId="1" SourceUrl="http://localhost:4503/?disco" />
     <MetadataFile FileName="RService.wsdl" MetadataType="Wsdl" ID="46bcb776-c2e6-45bd-a8a9-adb4c7bae0ee" SourceId="1" SourceUrl="http://localhost:4503/?wsdl" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="b10d05a3-1dda-472f-8d9a-e2f2c37ab351" SourceId="1" SourceUrl="http://localhost:4503/?xsd=xsd0" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="1327dbdc-0047-4b08-ae48-77644b17df21" SourceId="1" SourceUrl="http://localhost:4503/?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -177,7 +177,7 @@
 		private void AppendPlot()
 		{
 			AppendComment("Boundaries Plot");
-			Writer.WriteLine("plot({0}", DesignParameters.Name);
+			Writer.WriteLine("plot({0},", DesignParameters.Name);
 			Writer.WriteLine("  plottype=1,");
 			Writer.WriteLine("  base=TRUE,");
 			Writer.WriteLine("  col=c(\"black\", \"black\"),");

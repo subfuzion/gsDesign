@@ -1,9 +1,11 @@
 ﻿namespace gsDesign.Explorer.ViewModels
 {
+	using System.ComponentModel;
 	using System.Threading;
 	using System.Windows;
 	using RService;
 	using Subfuzion.Helpers;
+	using Subfuzion.R.Rserve.Protocol;
 
 	public partial class AppViewModel
 	{
@@ -67,14 +69,19 @@
 		{
 			// Thread.Sleep(2000);
 
+			var design = CurrentDesign;
+			var script = design.DesignScript.Output;
+
 			var rService = new RServiceClient();
-			rService.DoWorkCompleted += rService_DoWorkCompleted;
-			rService.DoWorkAsync();
+			rService.SaveScriptCompleted += new System.EventHandler<SaveScriptCompletedEventArgs>(rService_SaveScriptCompleted);
+			rService.SaveScriptAsync(CurrentDesign.DesignScript.Output);
 		}
 
-		void rService_DoWorkCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+		void rService_SaveScriptCompleted(object sender, SaveScriptCompletedEventArgs e)
 		{
-			
+			var pathname = e.Result;
+			var request = Request.Eval(Input);
+			RserveClient.SendRequest(request, OnResponse, OnError, null);
 		}
 
 		private void RunDesignCompleted(object parameter = null)

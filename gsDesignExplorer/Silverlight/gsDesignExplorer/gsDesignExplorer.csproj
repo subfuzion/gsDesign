@@ -156,7 +156,10 @@
     <Compile Include="ViewModels\AppViewModel.ViewMode.cs">
       <DependentUpon>AppViewModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Design\SampleSize\TimeToEventAccrualValueConverter.cs" />
+		<Compile Include="ViewModels\AppViewModel.Rserve.cs">
+			<DependentUpon>AppViewModel.cs</DependentUpon>
+		</Compile>
+		<Compile Include="ViewModels\Design\SampleSize\TimeToEventAccrualValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventHypothesisValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventSpecificationValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunctionViewModel.cs" />
@@ -376,6 +379,9 @@
     <None Include="Service References\RService\item.disco" />
     <None Include="Service References\RService\configuration91.svcinfo" />
     <None Include="Service References\RService\configuration.svcinfo" />
+    <None Include="Service References\RService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\RService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
