@@ -11,7 +11,7 @@
 			ToggleConnectCommand = new DelegateCommand { ExecuteAction = ToggleConnect, Async = true };
 
 			NewDesignCommand = new DelegateCommand { ExecuteAction = NewDesign };
-			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = true };
+			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = false };
 			ResetDesignCommand = new DelegateCommand { ExecuteAction = ResetDesign };
 		}
 

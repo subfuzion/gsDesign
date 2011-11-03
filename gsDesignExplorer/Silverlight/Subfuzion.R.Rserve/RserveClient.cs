@@ -272,7 +272,7 @@ namespace Subfuzion.R.Rserve
 						socketAsyncEventArgs.Completed -= OnConnectAsyncCompleted;
 						socketAsyncEventArgs.Completed -= OnReceiveCompleted;
 						// var args = new SocketAsyncEventArgs {UserToken = socketAsyncEventArgs.UserToken};
-						socketAsyncEventArgs.SetBuffer(new byte[1024], 0, 1024);
+						socketAsyncEventArgs.SetBuffer(new byte[DefaultBufferSize], 0, DefaultBufferSize);
 						socketAsyncEventArgs.Completed += OnReceiveCompleted;
 						if (!_socket.ReceiveAsync(socketAsyncEventArgs))
 						{

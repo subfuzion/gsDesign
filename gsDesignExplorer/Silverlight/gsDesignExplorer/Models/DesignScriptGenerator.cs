@@ -108,7 +108,7 @@
 			Writer.WriteLine();
 			AppendGSDesignFunction();
 			Writer.WriteLine();
-			AppendPlot();
+//			AppendPlot();
 
 			var script = _writer.ToString();
 			_writer.Close();
@@ -169,9 +169,10 @@
 
 			AppendAssignment(DesignParameters.Name, sb.ToString());
 
-			Writer.WriteLine();
+			// Writer.WriteLine();
 
-			AppendAssignment("fixedDesign", "list(events = 1, sampleSize = 0)");
+			// TODO
+			// AppendAssignment("fixedDesign", "list(events = 1, sampleSize = 0)");
 		}
 
 		private void AppendPlot()

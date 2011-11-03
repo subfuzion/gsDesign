@@ -5,13 +5,14 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
-	
-	<Grid x:Name="LayoutRoot" Background="White">
+
+	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<TextBlock
 			Margin="10"
-			Visibility="{Binding Path=BeforeRunExecutedVisibility}"
-			Text="{Binding OutputText}" />
+			Text="{Binding Path=OutputText, Mode=OneWay}" FontFamily="Courier New" FontSize="12" />
 		<!--
+			Visibility="{Binding Path=BeforeRunExecutedVisibility}"
+
 		<Image Source="/gsDesignExplorer;component/Assets/Images/Samples/Text.png" Stretch="None" VerticalAlignment="Top"
 						   HorizontalAlignment="Left" Visibility="{Binding Path=AfterRunExecutedVisibility}" />
 		-->
