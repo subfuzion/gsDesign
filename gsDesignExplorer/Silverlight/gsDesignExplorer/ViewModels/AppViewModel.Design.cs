@@ -1,12 +1,16 @@
 ﻿namespace gsDesign.Explorer.ViewModels
 {
+	using System;
+	using System.IO;
 	using System.Text.RegularExpressions;
+	using System.Windows;
 	using Design;
-	using Models;
+	using RService;
+	using Subfuzion.R.Rserve.Protocol;
 
 	public partial class AppViewModel
 	{
-		#region Designs property
+		#region Designs collection property
 
 		private DesignCollection _designs;
 
@@ -51,12 +55,14 @@
 
 		#endregion // CurrentDesign
 
-		public string NewDesignDefaultName
+		#region Implementation
+
+		private string NewDesignDefaultName
 		{
 			get { return "Design" + (Designs.Count + 1); }
 		}
 
-		public void AddDesign(Design.Design design)
+		private void AddDesign(Design.Design design)
 		{
 			if (Designs.Contains(design) == false)
 			{
@@ -65,14 +71,14 @@
 			}
 		}
 
-		public Design.Design CreateDesign(string name = null)
+		private Design.Design CreateDesign(string name = null)
 		{
-			var design = new Design.Design(IsValidDesignName) { Name = name ?? NewDesignDefaultName };
+			var design = new Design.Design(IsValidDesignName) {Name = name ?? NewDesignDefaultName};
 			CurrentDesign = design;
 			return design;
 		}
 
-		public bool IsValidDesignName(string name)
+		private bool IsValidDesignName(string name)
 		{
 			if (!Regex.IsMatch(name, "^[^ ]+$"))
 			{
@@ -87,20 +93,76 @@
 			return true;
 		}
 
-		public Design.Design OpenDesign(string pathName)
+		private Design.Design OpenDesign(string pathName)
 		{
 			// TODO
 			return null;
 		}
 
-		public void SaveDesign(Design.Design design, string pathName)
+		private void SaveDesign(Design.Design design, string pathName)
 		{
 			// TODO
 		}
 
-		public void CloseDesign(Design.Design design)
+		private void CloseDesign(Design.Design design)
 		{
 			// TODO
+		}
+
+
+
+		#region Run Design implementation
+
+		private void RunDesign()
+		{
+			var design = CurrentDesign;
+			var script = design.DesignScript.Output;
+
+			var rService = new RServiceClient();
+			rService.SaveScriptCompleted += new EventHandler<SaveScriptCompletedEventArgs>(rService_SaveScriptCompleted);
+			rService.SaveScriptAsync(CurrentDesign.DesignScript.Output);
+		}
+
+		private void rService_SaveScriptCompleted(object sender, SaveScriptCompletedEventArgs e)
+		{
+			var pathname = e.Result;
+
+			var path = Path.GetDirectoryName(pathname);
+			var filename = Path.GetFileName(pathname);
+			var name = Path.GetFileNameWithoutExtension(pathname);
+			var ext = Path.GetExtension(pathname);
+
+			var cmd = string.Format(@"setwd(""{0}"")", path);
+
+			cmd = Escape(cmd);
+
+			var request = Request.Eval(cmd);
+			RserveClient.SendRequest(request, OnResponse, OnError, null);
+		}
+
+		private void RunDesignCompleted(object parameter = null)
+		{
+			BeforeRunExecutedVisibility = Visibility.Collapsed;
+			AfterRunExecutedVisibility = Visibility.Visible;
+		}
+
+		string Escape(string text)
+		{
+			return text.Replace('\\', '/');
+		}
+
+		#endregion Run Design implementation
+
+
+
+		#endregion Implementation
+	}
+
+	class RserveContext
+	{
+		public void AddCommand()
+		{
+			
 		}
 	}
 }

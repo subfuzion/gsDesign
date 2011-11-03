@@ -16,12 +16,14 @@
 		{
 		}
 
+		// NOTE must set at command prompt: netsh http add urlacl url=http://+:4503/ user=DOMAIN\user
 		public void StartServices()
 		{
 			try
 			{
 				Console.WriteLine("Starting RService");
 
+				// configure using code
 				/*
 				var baseAddress = new Uri("http://localhost:4503/");
 
@@ -38,6 +40,7 @@
 				
 				*/
 
+				// configure using app.config
 				_rServiceHost = new ServiceHost(typeof(RService));
 				_rServiceHost.Open(TimeSpan.FromSeconds(2));
 			}

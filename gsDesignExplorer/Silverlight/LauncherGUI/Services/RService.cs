@@ -54,7 +54,7 @@
 
 		public string SaveScript(string script)
 		{
-			var filename = Guid.NewGuid() + ".R";
+			var filename = Guid.NewGuid() + RExtension;
 			var pathname = Path.Combine(UserFilePath, filename);
 
 			using (var w = new StreamWriter(pathname))
