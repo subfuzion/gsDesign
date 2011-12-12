@@ -56,7 +56,7 @@
 				if (_canExecute != value)
 				{
 					_canExecute = value;
-					RaisePropertyChanged("IsEnabled");
+					NotifyPropertyChanged("IsEnabled");
 				}
 			}
 		}
@@ -96,7 +96,7 @@
 			{
 				_canExecute = canExecute;
 				RaiseCanExecuteChanged();
-				RaisePropertyChanged("IsEnabled");
+				NotifyPropertyChanged("IsEnabled");
 			}
 
 			return canExecute;

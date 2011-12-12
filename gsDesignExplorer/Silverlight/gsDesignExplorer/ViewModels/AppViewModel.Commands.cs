@@ -24,7 +24,7 @@
 		private void Connect(object parameter = null)
 		{
 			RserveClient.Connect();
-			RaisePropertyChanged("RserveClient");
+			NotifyPropertyChanged("RserveClient");
 		}
 
 		#endregion
@@ -36,7 +36,7 @@
 		private void ToggleConnect(object parameter = null)
 		{
 			RserveClient.ToggleConnect();
-			RaisePropertyChanged("RserveClient");
+			NotifyPropertyChanged("RserveClient");
 		}
 
 		#endregion

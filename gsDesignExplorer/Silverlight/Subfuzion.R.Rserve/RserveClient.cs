@@ -63,7 +63,7 @@ namespace Subfuzion.R.Rserve
 				if (_isBusy != value)
 				{
 					_isBusy = value;
-					RaisePropertyChanged("IsBusy");
+					NotifyPropertyChanged("IsBusy");
 				}
 			}
 		}
@@ -76,7 +76,7 @@ namespace Subfuzion.R.Rserve
 				if (_connectionState != value)
 				{
 					_connectionState = value;
-					RaisePropertyChanged("ConnectionState");
+					NotifyPropertyChanged("ConnectionState");
 				}
 			}
 		}
@@ -93,7 +93,7 @@ namespace Subfuzion.R.Rserve
 				if (_protocolSettings != value)
 				{
 					_protocolSettings = value;
-					RaisePropertyChanged("ProtocolSettings");
+					NotifyPropertyChanged("ProtocolSettings");
 				}
 			}
 		}

@@ -18,7 +18,7 @@
 			AppViewModel.PropertyChanged += (sender, propertyChangedEventArgs) =>
 			                                {
 			                                	if (propertyChangedEventArgs.Equals("RserveClient"))
-			                                		RaisePropertyChanged("RserveClient");
+			                                		NotifyPropertyChanged("RserveClient");
 			                                };
 		}
 
@@ -45,8 +45,8 @@
 				if (_input != value)
 				{
 					_input = value;
-					RaisePropertyChanged("Input");
-					RaisePropertyChanged("IsRunEnabled");
+					NotifyPropertyChanged("Input");
+					NotifyPropertyChanged("IsRunEnabled");
 				}
 			}
 		}
@@ -59,7 +59,7 @@
 				if (_output != value)
 				{
 					_output = value;
-					RaisePropertyChanged("Output");
+					NotifyPropertyChanged("Output");
 				}
 			}
 		}

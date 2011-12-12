@@ -28,7 +28,7 @@
 				if (Model.SpendingFunctionParameterCategory != value)
 				{
 					Model.SpendingFunctionParameterCategory = value;
-					RaisePropertyChanged("SpendingFunctionParameterCategory");
+					NotifyPropertyChanged("SpendingFunctionParameterCategory");
 				}
 			}
 		}
@@ -49,7 +49,7 @@
 				if (_parameterFreeSpendingFunctionSpendingViewModel != value)
 				{
 					_parameterFreeSpendingFunctionSpendingViewModel = value;
-					RaisePropertyChanged("ParameterFreeSpendingFunctionViewModel");
+					NotifyPropertyChanged("ParameterFreeSpendingFunctionViewModel");
 				}
 			}
 		}

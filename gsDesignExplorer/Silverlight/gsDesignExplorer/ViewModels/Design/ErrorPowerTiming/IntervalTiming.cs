@@ -18,7 +18,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (_index != value)
 				{
 					_index = value;
-					RaisePropertyChanged("Index");
+					NotifyPropertyChanged("Index");
 				}
 			}
 		}
@@ -38,7 +38,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (Math.Abs(_value - value) > double.Epsilon)
 				{
 					_value = value;
-					RaisePropertyChanged("Value");
+					NotifyPropertyChanged("Value");
 				}
 			}
 		}

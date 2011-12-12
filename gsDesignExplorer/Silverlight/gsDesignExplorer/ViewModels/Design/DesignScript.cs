@@ -26,7 +26,7 @@
 					RemoveHandlers();
 					_design = value;
 					AddHandlers();
-					RaisePropertyChanged("Design");
+					NotifyPropertyChanged("Design");
 					GenerateScript();
 				}
 			}
@@ -49,7 +49,7 @@
 				if (_output != value)
 				{
 					_output = value;
-					RaisePropertyChanged("Output");
+					NotifyPropertyChanged("Output");
 				}
 			}
 		}

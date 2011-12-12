@@ -27,7 +27,7 @@
 				if (_designs != value)
 				{
 					_designs = value;
-					RaisePropertyChanged("Designs");
+					NotifyPropertyChanged("Designs");
 				}
 			}
 		}
@@ -47,7 +47,7 @@
 				if (_currentDesign != value)
 				{
 					_currentDesign = value;
-					RaisePropertyChanged("CurrentDesign");
+					NotifyPropertyChanged("CurrentDesign");
 
 					if (Designs.Contains(value) == false)
 					{
@@ -71,7 +71,7 @@
 			if (Designs.Contains(design) == false)
 			{
 				Designs.Add(design);
-				RaisePropertyChanged("Designs");
+				NotifyPropertyChanged("Designs");
 			}
 		}
 

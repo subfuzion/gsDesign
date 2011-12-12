@@ -38,11 +38,11 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 						throw new ArgumentException("Error must be a value between 0.0 and 100.0, inclusive");
 
 					Model.Alpha = value / 100;
-					RaisePropertyChanged("Error");
+					NotifyPropertyChanged("Error");
 
 					UpdatePower();
-					RaisePropertyChanged("MinimumValidPower");
-					RaisePropertyChanged("MinimumPowerDisplayText");
+					NotifyPropertyChanged("MinimumValidPower");
+					NotifyPropertyChanged("MinimumPowerDisplayText");
 				}
 			}
 		}
@@ -86,9 +86,9 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				// notifications out here inside of previous block
 				// to force the slider to re-update if attempting to
 				// set value too low.
-				RaisePropertyChanged("Power");
-				RaisePropertyChanged("MinimumValidPower");
-				RaisePropertyChanged("MinimumPowerDisplayText");
+				NotifyPropertyChanged("Power");
+				NotifyPropertyChanged("MinimumValidPower");
+				NotifyPropertyChanged("MinimumPowerDisplayText");
 			}
 		}
 
@@ -134,7 +134,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (Model.K != value + 1 && value >= MinimumIntervalCount && value <= MaximumIntervalCount)
 				{
 					Model.K = value + 1;
-					RaisePropertyChanged("IntervalCount");
+					NotifyPropertyChanged("IntervalCount");
 					UpdateTimingTable();
 				}
 			}
@@ -155,7 +155,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (_minimumIntervalCount != value)
 				{
 					_minimumIntervalCount = value;
-					RaisePropertyChanged("MinimumIntervalCount");
+					NotifyPropertyChanged("MinimumIntervalCount");
 				}
 			}
 		}
@@ -175,7 +175,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (_maximumIntervalCount != value)
 				{
 					_maximumIntervalCount = value;
-					RaisePropertyChanged("MaximumIntervalCount");
+					NotifyPropertyChanged("MaximumIntervalCount");
 				}
 			}
 		}
@@ -202,8 +202,8 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (_spacing != value)
 				{
 					_spacing = value;
-					RaisePropertyChanged("Spacing");
-					RaisePropertyChanged("IsTimingTableEnabled");
+					NotifyPropertyChanged("Spacing");
+					NotifyPropertyChanged("IsTimingTableEnabled");
 					UpdateTimingTable();
 				}
 			}
@@ -228,7 +228,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				if (_timingTable != value)
 				{
 					_timingTable = value;
-					RaisePropertyChanged("TimingTable");
+					NotifyPropertyChanged("TimingTable");
 				}
 			}
 		}
@@ -308,7 +308,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 				Model.Timing.Add(timing.Value);
 			}
 
-			RaisePropertyChanged("TimingTable");
+			NotifyPropertyChanged("TimingTable");
 		}
 
 		#endregion

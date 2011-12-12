@@ -22,7 +22,7 @@
 		public void Reset()
 		{
 			Model.Reset();
-			RaisePropertyChanged("CurrentDesign");
+			NotifyPropertyChanged("CurrentDesign");
 			ErrorPowerTiming = new ErrorPowerTiming.ErrorPowerTiming(Model);
 			SampleSize = new SampleSize.SampleSize(Model);
 			SpendingFunctions = new SpendingFunctions.SpendingFunctions(Model);
@@ -45,7 +45,7 @@
 					{
 						Model.Name = value;
 					}
-					RaisePropertyChanged("Name");
+					NotifyPropertyChanged("Name");
 				}
 			}
 		}
@@ -65,7 +65,7 @@
 				if (Model.Description != value)
 				{
 					Model.Description = value;
-					RaisePropertyChanged("Description");
+					NotifyPropertyChanged("Description");
 				}
 			}
 		}
@@ -83,7 +83,7 @@
 				if (_errorPowerTiming == null)
 				{
 					_errorPowerTiming = new ErrorPowerTiming.ErrorPowerTiming(Model);
-					RaisePropertyChanged("ErrorPowerTiming");
+					NotifyPropertyChanged("ErrorPowerTiming");
 				}
 
 				return _errorPowerTiming;
@@ -94,7 +94,7 @@
 				if (_errorPowerTiming != value)
 				{
 					_errorPowerTiming = value;
-					RaisePropertyChanged("ErrorPowerTiming");
+					NotifyPropertyChanged("ErrorPowerTiming");
 				}
 			}
 		}
@@ -112,7 +112,7 @@
 				if (_sampleSize == null)
 				{
 					_sampleSize = new SampleSize.SampleSize(Model);
-					RaisePropertyChanged("SampleSize");
+					NotifyPropertyChanged("SampleSize");
 				}
 
 				return _sampleSize;
@@ -123,7 +123,7 @@
 				if (_sampleSize != value)
 				{
 					_sampleSize = value;
-					RaisePropertyChanged("SampleSize");
+					NotifyPropertyChanged("SampleSize");
 				}
 			}
 		}
@@ -141,7 +141,7 @@
 				if (_spendingFunctions == null)
 				{
 					_spendingFunctions = new SpendingFunctions.SpendingFunctions(Model);
-					RaisePropertyChanged("SpendingFunctions");
+					NotifyPropertyChanged("SpendingFunctions");
 				}
 
 				return _spendingFunctions;
@@ -152,7 +152,7 @@
 				if (_spendingFunctions != value)
 				{
 					_spendingFunctions = value;
-					RaisePropertyChanged("SpendingFunctions");
+					NotifyPropertyChanged("SpendingFunctions");
 				}
 			}
 		}
@@ -185,7 +185,7 @@
 				if (_isModified != value)
 				{
 					_isModified = value;
-					RaisePropertyChanged("IsModified");
+					NotifyPropertyChanged("IsModified");
 				}
 			}
 		}

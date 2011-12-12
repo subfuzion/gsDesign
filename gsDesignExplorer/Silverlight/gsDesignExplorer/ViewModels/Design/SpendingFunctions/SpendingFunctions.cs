@@ -39,9 +39,9 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				if (Model.SpendingFunctionTestingParameters.SpendingFunctionTestType != value)
 				{
 					Model.SpendingFunctionTestingParameters.SpendingFunctionTestType = value;
-					RaisePropertyChanged("SpendingFunctionTestType");
-					RaisePropertyChanged("IsLowerSpendingTabEnabled");
-					RaisePropertyChanged("SpendingFunctionBounds");
+					NotifyPropertyChanged("SpendingFunctionTestType");
+					NotifyPropertyChanged("IsLowerSpendingTabEnabled");
+					NotifyPropertyChanged("SpendingFunctionBounds");
 				}
 			}
 		}
@@ -61,7 +61,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				if (Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending != value)
 				{
 					Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending = value;
-					RaisePropertyChanged("SpendingFunctionLowerBoundSpending");
+					NotifyPropertyChanged("SpendingFunctionLowerBoundSpending");
 				}
 			}
 		}
@@ -81,7 +81,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				if (Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting != value)
 				{
 					Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting = value;
-					RaisePropertyChanged("SpendingFunctionLowerBoundTesting");
+					NotifyPropertyChanged("SpendingFunctionLowerBoundTesting");
 				}
 			}
 		}
@@ -112,7 +112,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				if (_currentBounds != value)
 				{
 					_currentBounds = value;
-					RaisePropertyChanged("SpendingFunctionBounds");
+					NotifyPropertyChanged("SpendingFunctionBounds");
 				}
 			}
 		}
@@ -135,7 +135,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				if (_lowerSpendingFunction != value)
 				{
 					_lowerSpendingFunction = value;
-					RaisePropertyChanged("LowerSpendingFunction");
+					NotifyPropertyChanged("LowerSpendingFunction");
 				}
 			}
 		}
@@ -159,8 +159,8 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 				if (_upperSpendingFunction != value)
 				{
 					_upperSpendingFunction = value;
-					RaisePropertyChanged("UpperSpendingFunction");
-					RaisePropertyChanged("IsLowerSpendingTabEnabled");
+					NotifyPropertyChanged("UpperSpendingFunction");
+					NotifyPropertyChanged("IsLowerSpendingTabEnabled");
 				}
 			}
 		}

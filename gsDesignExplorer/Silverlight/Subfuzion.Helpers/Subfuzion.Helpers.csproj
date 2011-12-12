@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="Formatters.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="Symbols.cs" />
     <Compile Include="UI\FlowPanel.cs" />
     <Compile Include="NotifyPropertyChangedBase.cs" />

@@ -6,10 +6,10 @@
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:Design="clr-namespace:gsDesign.Explorer.ViewModels.Design"
-			 xmlns:SampleSize="clr-namespace:gsDesign.Explorer.ViewModels.Design.SampleSize" mc:Ignorable="d">
+	xmlns:SampleSize="clr-namespace:gsDesign.Explorer.ViewModels.Design.SampleSize" mc:Ignorable="d">
 	
 	<UserControl.Resources>
-		<SampleSize:BinomialNonInferiorityTestingValueConverter x:Name="testingValueConverter" />
+		<SampleSize:BinomialNonInferiorityTestingValueConverter x:Key="testingValueConverter" />
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Margin="0" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
@@ -42,10 +42,10 @@
 									   Target="{Binding ElementName=randomizationRatioSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="randomizationRatioSpinner"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialRandomizationRatio, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialRandomizationRatio, Mode=OneWay}"
-												   Increment="0.5"
-												   DecimalPlaces="3"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.BinomialRandomizationRatioMinimum, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.BinomialRandomizationRatioMaximum, Mode=OneWay}"
+												   Increment="{Binding Path=CurrentDesign.SampleSize.BinomialRandomizationRatioIncrement, Mode=OneWay}"
+												   DecimalPlaces="{Binding Path=CurrentDesign.SampleSize.BinomialRandomizationRatioPrecision, Mode=OneWay}"
 												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialRandomizationRatio, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=randomizationRatioSpinner}"/>
 
@@ -53,10 +53,10 @@
 									   Target="{Binding ElementName=controlSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="controlSpinner"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialControlEventRate, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialControlEventRate, Mode=OneWay}"
-												   Increment="0.001"
-												   DecimalPlaces="4"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.BinomialControlEventRateMinimum, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.BinomialControlEventRateMaximum, Mode=OneWay}"
+												   Increment="{Binding Path=CurrentDesign.SampleSize.BinomialControlEventRateIncrement, Mode=OneWay}"
+												   DecimalPlaces="{Binding Path=CurrentDesign.SampleSize.BinomialControlEventRatePrecision, Mode=OneWay}"
 												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialControlEventRate, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=controlSpinner}" />
 
@@ -64,10 +64,10 @@
 									   Target="{Binding ElementName=experimentalSpinner}"/>
 							<toolkit:NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="experimentalSpinner"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialExperimentalEventRate, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialExperimentalEventRate, Mode=OneWay}"
-												   Increment="0.001"
-												   DecimalPlaces="4"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.BinomialExperimentalEventRateMinimum, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.BinomialExperimentalEventRateMaximum, Mode=OneWay}"
+												   Increment="{Binding Path=CurrentDesign.SampleSize.BinomialExperimentalEventRateIncrement, Mode=OneWay}"
+												   DecimalPlaces="{Binding Path=CurrentDesign.SampleSize.BinomialExperimentalEventRatePrecision, Mode=OneWay}"
 												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialExperimentalEventRate, Mode=TwoWay}"/>
 							<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=experimentalSpinner}" />
 						</Grid>
@@ -107,10 +107,10 @@
 							<toolkit:NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="4" Height="22"
 												   x:Name="deltaSpinner"
 												   IsEnabled="{Binding Path=CurrentDesign.SampleSize.BinomialDeltaIsEnabled, Mode=OneWay}"
-												   Minimum="{Binding Path=CurrentDesign.SampleSize.MinimumBinomialDelta, Mode=OneWay}"
-												   Maximum="{Binding Path=CurrentDesign.SampleSize.MaximumBinomialDelta, Mode=OneWay}"
-												   DecimalPlaces="4"
-												   Increment="0.1"
+												   Minimum="{Binding Path=CurrentDesign.SampleSize.BinomialDeltaMinimum, Mode=OneWay}"
+												   Maximum="{Binding Path=CurrentDesign.SampleSize.BinomialDeltaMaximum, Mode=OneWay}"
+												   DecimalPlaces="{Binding Path=CurrentDesign.SampleSize.BinomialDeltaPrecision, Mode=OneWay}"
+												   Increment="{Binding Path=CurrentDesign.SampleSize.BinomialDeltaIncrement, Mode=OneWay}"
 												   Value="{Binding Path=CurrentDesign.SampleSize.BinomialDelta, Mode=TwoWay}"
 												   />
 							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=deltaSpinner}" />

@@ -41,7 +41,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.SampleSizeCategory != value)
 				{
 					Model.SampleSizeCategory = value;
-					RaisePropertyChanged("SampleSizeCategory");
+					NotifyPropertyChanged("SampleSizeCategory");
 				}
 			}
 		}
@@ -63,7 +63,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.FixedDesignSampleSize != value)
 				{
 					Model.FixedDesignSampleSize = value;
-					RaisePropertyChanged("FixedDesignSampleSize");
+					NotifyPropertyChanged("FixedDesignSampleSize");
 				}
 			}
 		}
@@ -95,7 +95,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 		#region BinomialRandomizationRatio property
 
 		[Display(Name = "Randomization Ratio",
-			Description = "Experimental/control relative sample size:\n0 \u003C Ratio \u2264 1000")]
+			Description = "Experimental/control relative sample size:" + Strings.NewLine + "0.1 " + Symbols.LessThanOrEqual + " Ratio " + Symbols.LessThanOrEqual + " 10")]
 		public double BinomialRandomizationRatio
 		{
 			get { return Model.BinomialRandomizationRatio; }
@@ -105,61 +105,37 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.BinomialRandomizationRatio - value) > double.Epsilon)
 				{
 					Model.BinomialRandomizationRatio = value;
-					RaisePropertyChanged("BinomialRandomizationRatio");
+					NotifyPropertyChanged("BinomialRandomizationRatio");
 				}
 			}
+		}
+
+		public double BinomialRandomizationRatioMinimum
+		{
+			get { return 0.1; }
+		}
+
+		public double BinomialRandomizationRatioMaximum
+		{
+			get { return 10.0; }
+		}
+
+		public int BinomialRandomizationRatioPrecision
+		{
+			get { return 3; }
+		}
+
+		public double BinomialRandomizationRatioIncrement
+		{
+			get { return 0.5; }
 		}
 
 		#endregion // BinomialRandomizationRatio
 
-		#region MinimumBinomialRandomizationRatio property
-
-		private double _minimumBinomialRandomizationRatio = 0.001;
-
-		// [Display(Name = "MinimumBinomialRandomizationRatio",
-		//	Description = "")]
-		public double MinimumBinomialRandomizationRatio
-		{
-			get { return _minimumBinomialRandomizationRatio; }
-
-			set
-			{
-				if (Math.Abs(_minimumBinomialRandomizationRatio - value) > double.Epsilon)
-				{
-					_minimumBinomialRandomizationRatio = value;
-					RaisePropertyChanged("MinimumBinomialRandomizationRatio");
-				}
-			}
-		}
-
-		#endregion // MinimumBinomialRandomizationRatio
-
-		#region MaximumBinomialRandomizationRatio property
-
-		private double _maximumBinomialRandomizationRatio = 1000.0;
-
-		// [Display(Name = "MaximumBinomialRandomizationRatio",
-		//	Description = "")]
-		public double MaximumBinomialRandomizationRatio
-		{
-			get { return _maximumBinomialRandomizationRatio; }
-
-			set
-			{
-				if (Math.Abs(_maximumBinomialRandomizationRatio - value) > double.Epsilon)
-				{
-					_maximumBinomialRandomizationRatio = value;
-					RaisePropertyChanged("MaximumBinomialRandomizationRatio");
-				}
-			}
-		}
-
-		#endregion // MaximumBinomialRandomizationRatio
-
 		#region BinomialControlEventRate property
 
 		[Display(Name = "Control",
-			Description = "Control event rate:\n0 \u003C Control \u003C 1")]
+			Description = "Control event rate:" + Strings.NewLine + "0 " + Symbols.LessThan + " Control " + Symbols.LessThan + " 1")]
 		public double BinomialControlEventRate
 		{
 			get { return Model.BinomialControlEventRate; }
@@ -169,35 +145,37 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.BinomialControlEventRate - value) > double.Epsilon)
 				{
 					Model.BinomialControlEventRate = value;
-					RaisePropertyChanged("BinomialControlEventRate");
+					NotifyPropertyChanged("BinomialControlEventRate");
 				}
 			}
 		}
 
+		public double BinomialControlEventRateMinimum
+		{
+			get { return 0.00001; }
+		}
+
+		public double BinomialControlEventRateMaximum
+		{
+			get { return 0.99999; }
+		}
+
+		public double BinomialControlEventRateIncrement
+		{
+			get { return 0.001; }
+		}
+
+		public int BinomialControlEventRatePrecision
+		{
+			get { return 5; }
+		}
+
 		#endregion // BinomialControlEventRate
-
-		#region MinimumBinomialControlEventRate property
-
-		public double MinimumBinomialControlEventRate
-		{
-			get { return 0.0001; }
-		}
-
-		#endregion // MinimumBinomialControlEventRate
-
-		#region MaximumBinomialControlEventRate property
-
-		public double MaximumBinomialControlEventRate
-		{
-			get { return 0.9999; }
-		}
-
-		#endregion // MaximumBinomialControlEventRate
 
 		#region BinomialExperimentalEventRate property
 
 		[Display(Name = "Experimental",
-			Description = "Experimental event rate:\n0 \u003C Experimental \u003C 1")]
+			Description = "Experimental event rate:" + Strings.NewLine + "0 " + Symbols.LessThan + " Control " + Symbols.LessThan + " 1")]
 		public double BinomialExperimentalEventRate
 		{
 			get { return Model.BinomialExperimentalEventRate; }
@@ -207,30 +185,32 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.BinomialExperimentalEventRate - value) > double.Epsilon)
 				{
 					Model.BinomialExperimentalEventRate = value;
-					RaisePropertyChanged("BinomialExperimentalEventRate");
+					NotifyPropertyChanged("BinomialExperimentalEventRate");
 				}
 			}
 		}
 
+		public double BinomialExperimentalEventRateMinimum
+		{
+			get { return 0.00001; }
+		}
+
+		public double BinomialExperimentalEventRateMaximum
+		{
+			get { return 0.99999; }
+		}
+
+		public double BinomialExperimentalEventRateIncrement
+		{
+			get { return 0.001; }
+		}
+
+		public int BinomialExperimentalEventRatePrecision
+		{
+			get { return 5; }
+		}
+
 		#endregion // BinomialExperimentalEventRate
-
-		#region MinimumBinomialExperimentalEventRate property
-
-		public double MinimumBinomialExperimentalEventRate
-		{
-			get { return 0.0001; }
-		}
-
-		#endregion // MinimumBinomialExperimentalEventRate
-
-		#region MaximumBinomialExperimentalEventRate property
-
-		public double MaximumBinomialExperimentalEventRate
-		{
-			get { return 0.9999; }
-		}
-
-		#endregion // MaximumBinomialExperimentalEventRate
 
 		#region BinomialNonInferiorityTesting property
 
@@ -246,10 +226,10 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.BinomialNonInferiorityTesting != value)
 				{
 					Model.BinomialNonInferiorityTesting = value;
-					RaisePropertyChanged("BinomialNonInferiorityTesting");
+					NotifyPropertyChanged("BinomialNonInferiorityTesting");
 
 					BinomialDelta = 0.0;
-					RaisePropertyChanged("BinomialDeltaIsEnabled");
+					NotifyPropertyChanged("BinomialDeltaIsEnabled");
 				}
 			}
 		}
@@ -258,8 +238,13 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 
 		#region BinomialDelta property
 
+		public bool BinomialDeltaIsEnabled
+		{
+			get { return Model.BinomialNonInferiorityTesting == BinomialNonInferiorityTesting.SuperiorityWithMargin; }
+		}
+
 		[Display(Name = "Delta",
-			Description = "Margin for treatment difference")]
+			Description = "Margin for treatment difference:" + Strings.NewLine + "-1 " + Symbols.LessThan + " Delta " + Symbols.LessThan + " 1")]
 		public double BinomialDelta
 		{
 			get { return Model.BinomialDelta; }
@@ -269,40 +254,33 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.BinomialDelta - value) > double.Epsilon)
 				{
 					Model.BinomialDelta = value;
-					RaisePropertyChanged("BinomialDelta");
-					RaisePropertyChanged("BinomialDeltaIsEnabled");
+					NotifyPropertyChanged("BinomialDelta");
+					NotifyPropertyChanged("BinomialDeltaIsEnabled");
 				}
 			}
 		}
 
+		public double BinomialDeltaMinimum
+		{
+			get { return -0.9999; }
+		}
+
+		public double BinomialDeltaMaximum
+		{
+			get { return 0.9999; }
+		}
+
+		public double BinomialDeltaIncrement
+		{
+			get { return 0.1; }
+		}
+
+		public int BinomialDeltaPrecision
+		{
+			get { return 4; }
+		}
+
 		#endregion // BinomialDelta
-
-		#region BinomialDeltaIsEnabled property
-
-		public bool BinomialDeltaIsEnabled
-		{
-			get { return Model.BinomialNonInferiorityTesting == BinomialNonInferiorityTesting.SuperiorityWithMargin; }
-		}
-
-		#endregion // BinomialDeltaIsEnabled
-
-		#region MinimumBinomialDelta property
-
-		public double MinimumBinomialDelta
-		{
-			get { return -0.0101; }
-		}
-
-		#endregion // MinimumBinomialDelta
-
-		#region MaximumBinomialDelta property
-
-		public double MaximumBinomialDelta
-		{
-			get { return 0.9899; }
-		}
-
-		#endregion // MaximumBinomialDelta
 
 		#region BinomialSampleSize property
 
@@ -317,7 +295,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.BinomialFixedDesignSampleSize != value)
 				{
 					Model.BinomialFixedDesignSampleSize = value;
-					RaisePropertyChanged("BinomialSampleSize");
+					NotifyPropertyChanged("BinomialSampleSize");
 				}
 			}
 		}
@@ -341,7 +319,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.TimeToEventSpecification != value)
 				{
 					Model.TimeToEventSpecification = value;
-					RaisePropertyChanged("TimeToEventSpecification");
+					NotifyPropertyChanged("TimeToEventSpecification");
 				}
 			}
 		}
@@ -361,7 +339,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventControl - value) > double.Epsilon)
 				{
 					Model.TimeToEventControl = value;
-					RaisePropertyChanged("TimeToEventControl");
+					NotifyPropertyChanged("TimeToEventControl");
 				}
 			}
 		}
@@ -399,7 +377,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventExperimental - value) > double.Epsilon)
 				{
 					Model.TimeToEventExperimental = value;
-					RaisePropertyChanged("TimeToEventExperimental");
+					NotifyPropertyChanged("TimeToEventExperimental");
 				}
 			}
 		}
@@ -437,7 +415,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventDropout - value) > double.Epsilon)
 				{
 					Model.TimeToEventDropout = value;
-					RaisePropertyChanged("TimeToEventDropout");
+					NotifyPropertyChanged("TimeToEventDropout");
 				}
 			}
 		}
@@ -486,7 +464,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventAccrualDuration - value) > double.Epsilon)
 				{
 					Model.TimeToEventAccrualDuration = value;
-					RaisePropertyChanged("TimeToEventAccrualDuration");
+					NotifyPropertyChanged("TimeToEventAccrualDuration");
 				}
 			}
 		}
@@ -524,7 +502,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventMinimumFollowUp - value) > double.Epsilon)
 				{
 					Model.TimeToEventMinimumFollowUp = value;
-					RaisePropertyChanged("TimeToEventMinimumFollowUp");
+					NotifyPropertyChanged("TimeToEventMinimumFollowUp");
 				}
 			}
 		}
@@ -562,7 +540,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventRandomizationRatio - value) > double.Epsilon)
 				{
 					Model.TimeToEventRandomizationRatio = value;
-					RaisePropertyChanged("TimeToEventRandomizationRatio");
+					NotifyPropertyChanged("TimeToEventRandomizationRatio");
 				}
 			}
 		}
@@ -600,7 +578,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.TimeToEventHypothesis != value)
 				{
 					Model.TimeToEventHypothesis = value;
-					RaisePropertyChanged("TimeToEventHypothesis");
+					NotifyPropertyChanged("TimeToEventHypothesis");
 				}
 			}
 		}
@@ -620,7 +598,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.TimeToEventAccrual != value)
 				{
 					Model.TimeToEventAccrual = value;
-					RaisePropertyChanged("TimeToEventAccrual");
+					NotifyPropertyChanged("TimeToEventAccrual");
 				}
 			}
 		}
@@ -640,7 +618,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Math.Abs(Model.TimeToEventGamma - value) > double.Epsilon)
 				{
 					Model.TimeToEventGamma = value;
-					RaisePropertyChanged("TimeToEventGamma");
+					NotifyPropertyChanged("TimeToEventGamma");
 				}
 			}
 		}
@@ -678,7 +656,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.TimeToEventFixedDesignSampleSize != value)
 				{
 					Model.TimeToEventFixedDesignSampleSize = value;
-					RaisePropertyChanged("TimeToEventFixedDesignSampleSize");
+					NotifyPropertyChanged("TimeToEventFixedDesignSampleSize");
 				}
 			}
 		}
@@ -698,7 +676,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 				if (Model.TimeToEventFixedDesignEvents != value)
 				{
 					Model.TimeToEventFixedDesignEvents = value;
-					RaisePropertyChanged("TimeToEventFixedDesignEvents");
+					NotifyPropertyChanged("TimeToEventFixedDesignEvents");
 				}
 			}
 		}

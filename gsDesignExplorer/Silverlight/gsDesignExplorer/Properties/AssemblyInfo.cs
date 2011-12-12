@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("gsDesignExplorer")]
+[assembly: AssemblyTitle("gsDesign Explorer 2.0")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Merck")]
-[assembly: AssemblyProduct("gsDesignExplorer")]
+[assembly: AssemblyProduct("gsDesign Explorer 2.0")]
 [assembly: AssemblyCopyright("Copyright © Merck 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

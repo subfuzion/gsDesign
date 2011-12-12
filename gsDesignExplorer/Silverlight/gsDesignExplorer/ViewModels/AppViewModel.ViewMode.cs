@@ -69,7 +69,7 @@
 							break;
 					}
 
-					RaisePropertyChanged("CurrentViewMode");
+					NotifyPropertyChanged("CurrentViewMode");
 				}
 			}
 		}
@@ -82,7 +82,7 @@
 				if (_designPanelVisibility != value)
 				{
 					_designPanelVisibility = value;
-					RaisePropertyChanged("DesignPanelVisibility");
+					NotifyPropertyChanged("DesignPanelVisibility");
 				}
 			}
 		}
@@ -95,7 +95,7 @@
 				if (_analysisPanelVisibility != value)
 				{
 					_analysisPanelVisibility = value;
-					RaisePropertyChanged("AnalysisPanelVisibility");
+					NotifyPropertyChanged("AnalysisPanelVisibility");
 				}
 			}
 		}
@@ -108,7 +108,7 @@
 				if (_simulationPanelVisibility != value)
 				{
 					_simulationPanelVisibility = value;
-					RaisePropertyChanged("SimulationPanelVisibility");
+					NotifyPropertyChanged("SimulationPanelVisibility");
 				}
 			}
 		}
@@ -121,7 +121,7 @@
 				if (_testPanelVisibility != value)
 				{
 					_testPanelVisibility = value;
-					RaisePropertyChanged("TestPanelVisibility");
+					NotifyPropertyChanged("TestPanelVisibility");
 				}
 			}
 		}
@@ -134,7 +134,7 @@
 				if (_beforeRunExecutedVisibility != value)
 				{
 					_beforeRunExecutedVisibility = value;
-					RaisePropertyChanged("BeforeRunExecutedVisibility");
+					NotifyPropertyChanged("BeforeRunExecutedVisibility");
 				}
 			}
 		}
@@ -147,7 +147,7 @@
 				if (_afterRunExecutedVisibility != value)
 				{
 					_afterRunExecutedVisibility = value;
-					RaisePropertyChanged("AfterRunExecutedVisibility");
+					NotifyPropertyChanged("AfterRunExecutedVisibility");
 				}
 			}
 		}

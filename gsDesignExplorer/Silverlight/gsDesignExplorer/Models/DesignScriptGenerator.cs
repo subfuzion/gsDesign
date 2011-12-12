@@ -5,6 +5,7 @@
 	using System.Text;
 	using Design.SampleSize;
 	using Design.SpendingFunctions;
+	using Subfuzion.Helpers;
 
 	public class DesignScriptGenerator
 	{
@@ -219,7 +220,7 @@
 					break;
 
 				case SampleSizeCategory.Binomial:
-					s = string.Format("nBinomial(p1=p1, p2=p2, alpha={0}, beta={1}, delta0=delta0, ratio={2})",
+					s = string.Format("nBinomial(p1=p1, p2=p2, alpha={0}, beta={1}, delta0=delta0, ratio={2:F3})",
 						DesignParameters.ErrorPowerTimingParameters.Alpha,
 						DesignParameters.ErrorPowerTimingParameters.Beta,
 						DesignParameters.SampleSizeParameters.BinomialRandomizationRatio);
@@ -383,10 +384,10 @@
 		{
 			if (DesignParameters.SampleSizeParameters.SampleSizeCategory != SampleSizeCategory.Binomial) return;
 
-			AppendAssignment("p1", DesignParameters.SampleSizeParameters.BinomialControlEventRate);
-			AppendAssignment("p2", DesignParameters.SampleSizeParameters.BinomialExperimentalEventRate);
+			AppendAssignment("p1", DesignParameters.SampleSizeParameters.BinomialControlEventRate.ToString("F5"));
+			AppendAssignment("p2", DesignParameters.SampleSizeParameters.BinomialExperimentalEventRate.ToString("F5"));
 			// AppendAssignment("delta0", DesignParameters.SampleSizeParameters.BinomialNonInferiorityTesting == BinomialNonInferiorityTesting.Superiority ? 0 : DesignParameters.SampleSizeParameters.BinomialDelta);
-			AppendAssignment("delta0", DesignParameters.SampleSizeParameters.BinomialDelta);
+			AppendAssignment("delta0", DesignParameters.SampleSizeParameters.BinomialDelta.ToString("F4"));
 			AppendAssignment("delta1", "p1 - p2");
 		}
 

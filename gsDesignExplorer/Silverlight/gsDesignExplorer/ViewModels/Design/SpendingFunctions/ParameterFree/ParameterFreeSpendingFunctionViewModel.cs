@@ -27,7 +27,7 @@
 				if (Model.LanDeMetsApproximation != value)
 				{
 					Model.LanDeMetsApproximation = value;
-					RaisePropertyChanged("LanDeMetsApproximation");
+					NotifyPropertyChanged("LanDeMetsApproximation");
 				}
 			}
 		}

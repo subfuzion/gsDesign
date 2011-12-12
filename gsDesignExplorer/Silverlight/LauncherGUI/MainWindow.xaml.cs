@@ -3,6 +3,7 @@ using Microsoft.Win32;
 
 namespace gsDesign.LauncherGUI
 {
+	using System.IO;
 	using Services;
 
 	/// <summary>
@@ -14,6 +15,16 @@ namespace gsDesign.LauncherGUI
 		{
 			InitializeComponent();
 			ServiceManager.Instance.StartServices();
+
+			if (File.Exists("SilverlightPolicyServer.exe"))
+			{
+				App.ViewModel.PolicyServerPath = Path.GetFullPath("SilverlightPolicyServer.exe");
+			}
+
+			if (File.Exists("gsDesignExplorerTestPage.html"))
+			{
+				App.ViewModel.ExplorerPath = Path.GetFullPath("gsDesignExplorerTestPage.html");
+			}
 		}
 
 		protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

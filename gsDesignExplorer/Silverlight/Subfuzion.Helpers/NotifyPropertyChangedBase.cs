@@ -16,7 +16,7 @@ namespace Subfuzion.Helpers
 
 		#region INotifyPropertyChanged implementation
 
-		protected void RaisePropertyChanged(string property)
+		protected void NotifyPropertyChanged(string property)
 		{
 			try
 			{

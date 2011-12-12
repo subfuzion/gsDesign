@@ -15,78 +15,127 @@ namespace gsDesign.LauncherGUI
 		{
 			// string pathname = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\thirdparty\rserve\inst\Rserve.exe");
 
-			var processStartInfo = new ProcessStartInfo
-			                       	{
-			                       		FileName = pathname,
-										Arguments = "--RS-port 4502",
-										CreateNoWindow = true,
-										UseShellExecute = showConsoleOutput,
-			                       	};
+			try
+			{
+				var processStartInfo = new ProcessStartInfo
+				{
+					FileName = pathname,
+					Arguments = "--RS-port 4502",
+					CreateNoWindow = true,
+					UseShellExecute = showConsoleOutput,
+				};
 
-			rserveProcess = Process.Start(processStartInfo);
+				rserveProcess = Process.Start(processStartInfo);
 
-			Print("started rserve on port {0}", 4502.ToString());
+				Print("started rserve on port {0}", 4502.ToString());
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void StopRserve()
 		{
-			rserveProcess.Kill();
+			try
+			{
+				rserveProcess.Kill();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void StartMongoose(bool showConsoleOutput = false)
 		{
-			string pathname = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\thirdparty\mongoose\mongoose.exe");
+			try
+			{
+				string pathname = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\thirdparty\mongoose\mongoose.exe");
 
-			var processStartInfo = new ProcessStartInfo
-			                       	{
-			                       		FileName = pathname,
-										CreateNoWindow = true,
-										UseShellExecute = showConsoleOutput,
-									};
+				var processStartInfo = new ProcessStartInfo
+				{
+					FileName = pathname,
+					CreateNoWindow = true,
+					UseShellExecute = showConsoleOutput,
+				};
 
-			mongooseProcess = Process.Start(processStartInfo);
+				mongooseProcess = Process.Start(processStartInfo);
 
-			Print("started mongoose on port {0}", 8080.ToString());
+				Print("started mongoose on port {0}", 8080.ToString());
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void StopMongoose()
 		{
-			mongooseProcess.Kill();
+			try
+			{
+				mongooseProcess.Kill();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void StartSilverlightPolicyServer(string pathname = null, bool showConsoleOutput = false)
 		{
-			pathname = pathname ?? Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
+			// pathname = pathname ?? Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
 
-			var processStartInfo = new ProcessStartInfo
-			                       	{
-			                       		FileName = pathname,
-										CreateNoWindow = true,
-										UseShellExecute = showConsoleOutput,
-									};
+			try
+			{
+				var processStartInfo = new ProcessStartInfo
+				{
+					FileName = pathname,
+					CreateNoWindow = true,
+					UseShellExecute = showConsoleOutput,
+				};
 
-			policyServer = Process.Start(processStartInfo);
+				policyServer = Process.Start(processStartInfo);
 
-			Print("started Silverlight policy server on port {0}", 943.ToString());
+				Print("started Silverlight policy server on port {0}", 943);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void StopSilverlightPolicyServer()
 		{
-			policyServer.Kill();
+			try
+			{
+				policyServer.Kill();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void LaunchExplorer(string pathname)
 		{
 			// pathname = pathname ?? Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
 
-			var processStartInfo = new ProcessStartInfo
-			                       	{
-			                       		FileName = pathname,
-			                       	};
+			try
+			{
+				var processStartInfo = new ProcessStartInfo
+				{
+					FileName = pathname,
+				};
 
-			explorer = Process.Start(processStartInfo);
+				explorer = Process.Start(processStartInfo);
 
-			Print("started Silverlight policy server on port {0}", 943.ToString());
+				Print("launched gsDesign Explorer");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void StopProcesses()
@@ -95,7 +144,7 @@ namespace gsDesign.LauncherGUI
 			StopRserve();
 		}
 
-		private void Print(string s, params string[] args)
+		private void Print(string s, params object[] args)
 		{
 			Console.Out.WriteLine(string.Format(s, args));
 		}

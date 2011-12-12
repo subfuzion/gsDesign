@@ -29,7 +29,7 @@ namespace gsDesign.Explorer.ViewModels
 				if (_outputText != value)
 				{
 					_outputText = value;
-					RaisePropertyChanged("OutputText");
+					NotifyPropertyChanged("OutputText");
 				}
 			}
 		}

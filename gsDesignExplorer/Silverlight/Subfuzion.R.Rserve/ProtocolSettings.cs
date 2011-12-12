@@ -66,7 +66,7 @@ namespace Subfuzion.R.Rserve
 				if (_signature != value)
 				{
 					_signature = value;
-					RaisePropertyChanged("Signature");
+					NotifyPropertyChanged("Signature");
 				}
 			}
 		}
@@ -82,7 +82,7 @@ namespace Subfuzion.R.Rserve
 				if (_version != value)
 				{
 					_version = value;
-					RaisePropertyChanged("Version");
+					NotifyPropertyChanged("Version");
 				}
 			}
 		}
@@ -98,7 +98,7 @@ namespace Subfuzion.R.Rserve
 				if (_name != value)
 				{
 					_name = value;
-					RaisePropertyChanged("Name");
+					NotifyPropertyChanged("Name");
 				}
 			}
 		}
@@ -111,7 +111,7 @@ namespace Subfuzion.R.Rserve
 				if (_isAuthorizationRequired != value)
 				{
 					_isAuthorizationRequired = value;
-					RaisePropertyChanged("IsAuthorizationRequired");
+					NotifyPropertyChanged("IsAuthorizationRequired");
 				}
 			}
 		}
@@ -124,7 +124,7 @@ namespace Subfuzion.R.Rserve
 				if (_passwordEncryption != value)
 				{
 					_passwordEncryption = value;
-					RaisePropertyChanged("PasswordEncryption");
+					NotifyPropertyChanged("PasswordEncryption");
 				}
 			}
 		}
@@ -141,7 +141,7 @@ namespace Subfuzion.R.Rserve
 				if (_passwordEncryptionKey != value)
 				{
 					_passwordEncryptionKey = value;
-					RaisePropertyChanged("PasswordEncryptionKey");
+					NotifyPropertyChanged("PasswordEncryptionKey");
 				}
 			}
 		}
