@@ -6,7 +6,7 @@
 	using System.Text.RegularExpressions;
 	using System.Windows;
 	using Design;
-	using RService;
+	//using RService;
 	using Subfuzion.Helpers;
 	using Subfuzion.R.Rserve;
 	using Subfuzion.R.Rserve.Protocol;
@@ -122,19 +122,19 @@
 			var design = CurrentDesign;
 			var script = design.DesignScript.Output;
 
-			var rService = new RServiceClient();
-			rService.SaveScriptCompleted += new EventHandler<SaveScriptCompletedEventArgs>(rService_SaveScriptCompleted);
-			rService.SaveScriptAsync(CurrentDesign.DesignScript.Output);
+			//var rService = new RServiceClient();
+			//rService.SaveScriptCompleted += rService_SaveScriptCompleted;
+			//rService.SaveScriptAsync(CurrentDesign.DesignScript.Output);
 		}
 
-		private void rService_SaveScriptCompleted(object sender, SaveScriptCompletedEventArgs e)
-		{
-			OutputText = "Running " + CurrentDesign.Name;
-			var pathname = e.Result;
-			Action<string> success = (result) => OutputText = result;
-			var runScriptCommand = new RserveRunScriptCommand(CurrentDesign.Name, RserveClient, pathname, success);
-			runScriptCommand.Run();
-		}
+		//private void rService_SaveScriptCompleted(object sender, SaveScriptCompletedEventArgs e)
+		//{
+		//    OutputText = "Running " + CurrentDesign.Name;
+		//    var pathname = e.Result;
+		//    Action<string> success = (result) => OutputText = result;
+		//    var runScriptCommand = new RserveRunScriptCommand(CurrentDesign.Name, RserveClient, pathname, success);
+		//    runScriptCommand.Run();
+		//}
 
 		private void RunDesignCompleted(object parameter = null)
 		{

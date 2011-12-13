@@ -2,6 +2,7 @@
 {
 	using System;
 	using Models;
+	using Models.Output;
 	using Subfuzion.Helpers;
 
 	public class Design : NotifyPropertyChangedBase
@@ -169,6 +170,57 @@
 		}
 
 		#endregion // DesignScript
+
+		#region Output
+
+		#region PlotType
+
+		private PlotType _plotType;
+
+		/// <summary>
+		/// Gets or sets the PlotType property.
+		/// </summary>
+		public PlotType PlotType
+		{
+			get { return _plotType; }
+			set
+			{
+				if (_plotType != value)
+				{
+					_plotType = value;
+					NotifyPropertyChanged("PlotType");
+				}
+			}
+		}
+
+		#endregion PlotType
+
+		#region PlotRendering
+
+		private PlotRendering _plotRendering;
+
+		/// <summary>
+		/// Gets or sets the PlotRendering property.
+		/// </summary>
+		public PlotRendering PlotRendering
+		{
+			get { return _plotRendering; }
+			set
+			{
+				if (_plotRendering != value)
+				{
+					_plotRendering = value;
+					NotifyPropertyChanged("PlotRendering");
+				}
+			}
+		}
+
+		#endregion PlotRendering
+
+
+
+		#endregion
+
 
 		#region General properties
 
