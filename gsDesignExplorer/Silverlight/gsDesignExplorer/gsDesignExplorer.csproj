@@ -132,6 +132,8 @@
     <Compile Include="Models\Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\TwoParameter\TwoParameterSpendingFunction.cs" />
     <Compile Include="Models\Design\SpendingFunctions\SpendingFunctionTestingParameters.cs" />
+    <Compile Include="Models\Output\PlotRendering.cs" />
+    <Compile Include="Models\Output\PlotType.cs" />
     <Compile Include="Service References\RService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,6 +175,8 @@
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionLowerBoundTestingValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctions.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionTestTypeValueConverter.cs" />
+    <Compile Include="ViewModels\Output\PlotRenderingValueConverter.cs" />
+    <Compile Include="ViewModels\Output\PlotTypeValueConverter.cs" />
     <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
@@ -390,7 +394,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Service References\RService\item.xsd">
       <SubType>Designer</SubType>
     </None>

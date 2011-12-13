@@ -1,7 +1,9 @@
-﻿# ignore Versions directory
+﻿# ignore
 Versions/
-
 gsDesignExplorer/Silverlight/thirdparty/rserve/
+gsDesignExplorer/Silverlight/thirdparty
+RhttpServe
+
 
 # ============================
 # Other Version Control
