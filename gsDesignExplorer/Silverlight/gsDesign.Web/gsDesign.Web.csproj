@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <SilverlightApplicationList>{F76F995C-0777-446A-9B43-8939A3B4A991}|..\gsDesignExplorer\gsDesignExplorer.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{F76F995C-0777-446A-9B43-8939A3B4A991}|..\gsDesign.Explorer\gsDesign.Explorer.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,6 +101,8 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
+    <Content Include="gsDesign.ExplorerTestPage.aspx" />
+    <Content Include="gsDesign.ExplorerTestPage.html" />
     <Content Include="Index.html" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
@@ -112,6 +114,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Silverlight.js" />
     <Content Include="Start.aspx" />
     <Content Include="Start.html" />
     <Content Include="Web.config" />
