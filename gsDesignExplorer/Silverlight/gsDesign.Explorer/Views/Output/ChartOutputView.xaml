@@ -30,7 +30,7 @@
 
 		</StackPanel>
 
-		<Image Grid.Row="1" Source="/gsDesignExplorer;component/Assets/Images/Samples/Plot.png" Stretch="None"
+		<Image Grid.Row="1" Source="/gsDesign.Explorer;component/Assets/Images/Samples/Plot.png" Stretch="None"
 		       VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Path=AfterRunExecutedVisibility}" />
 	</Grid>
 </UserControl>

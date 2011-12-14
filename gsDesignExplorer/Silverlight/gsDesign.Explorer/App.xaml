@@ -9,7 +9,7 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/gsDesignExplorer;component/Assets/ControlsResourceDictionary.xaml"/>
+				<ResourceDictionary Source="/gsDesign.Explorer;component/Assets/ControlsResourceDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<viewModels:AppViewModel x:Key="AppViewModel" />
 		</ResourceDictionary>

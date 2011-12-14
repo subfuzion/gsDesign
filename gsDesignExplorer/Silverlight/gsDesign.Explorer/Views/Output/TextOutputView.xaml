@@ -13,7 +13,7 @@
 		<!--
 			Visibility="{Binding Path=BeforeRunExecutedVisibility}"
 
-		<Image Source="/gsDesignExplorer;component/Assets/Images/Samples/Text.png" Stretch="None" VerticalAlignment="Top"
+		<Image Source="/gsDesign.Explorer;component/Assets/Images/Samples/Text.png" Stretch="None" VerticalAlignment="Top"
 						   HorizontalAlignment="Left" Visibility="{Binding Path=AfterRunExecutedVisibility}" />
 		-->
 	</Grid>
