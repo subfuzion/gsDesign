@@ -30,12 +30,12 @@
 			get
 			{
 				if (!IsSystemConfigurationValid)
-					return this.SystemState.Invalid;
+					return SystemState.Invalid;
 
 				if (RserveRunState == RunState.Running)
-					return this.SystemState.Running;
+					return SystemState.Running;
 
-				return this.SystemState.Stopped;
+				return SystemState.Stopped;
 			}
 		}
 
@@ -47,7 +47,7 @@
 				if (LauncherSettings.ShowConsoleOutput != value)
 				{
 					LauncherSettings.ShowConsoleOutput = value;
-					RaisePropertyChanged("IsConsoleOutputEnabled");
+					NotifyPropertyChanged("IsConsoleOutputEnabled");
 				}
 			}
 		}
@@ -63,11 +63,11 @@
 				if (_rserveRunState != value)
 				{
 					_rserveRunState = value;
-					RaisePropertyChanged("RserveRunState");
-					RaisePropertyChanged("IsRserveButtonEnabled");
-					RaisePropertyChanged("IsRservePathButtonEnabled");
-					RaisePropertyChanged("IsExplorerButtonEnabled");
-					RaisePropertyChanged("SystemState");
+					NotifyPropertyChanged("RserveRunState");
+					NotifyPropertyChanged("IsRserveButtonEnabled");
+					NotifyPropertyChanged("IsRservePathButtonEnabled");
+					NotifyPropertyChanged("IsExplorerButtonEnabled");
+					NotifyPropertyChanged("SystemState");
 				}
 			}
 		}
@@ -81,7 +81,7 @@
 				if (LauncherSettings.RservePath != value && IsValidRservePathString(value))
 				{
 					LauncherSettings.RservePath = value;
-					RaisePropertyChanged("RservePath");
+					NotifyPropertyChanged("RservePath");
 					RserveRunState = RunState.Stopped;
 				}
 			}
@@ -165,23 +165,6 @@
 
 		#region gsDesign Explorer
 
-		public RunState ExplorerRunState
-		{
-			get { return _explorerRunState; }
-
-			set
-			{
-				if (_explorerRunState != value)
-				{
-					_explorerRunState = value;
-					RaisePropertyChanged("ExplorerRunState");
-					RaisePropertyChanged("IsExplorerButtonEnabled");
-					RaisePropertyChanged("IsExplorerPathButtonEnabled");
-					RaisePropertyChanged("SystemState");
-				}
-			}
-		}
-
 		public string ExplorerPath
 		{
 			get { return LauncherSettings.ExplorerPath; }
@@ -191,8 +174,7 @@
 				if (LauncherSettings.ExplorerPath != value && IsValidExplorerPathString(value))
 				{
 					LauncherSettings.ExplorerPath = value;
-					RaisePropertyChanged("ExplorerPath");
-					ExplorerRunState = RunState.Stopped;
+					NotifyPropertyChanged("ExplorerPath");
 				}
 			}
 		}
@@ -207,19 +189,9 @@
 			get { return IsValidExplorerPathString(ExplorerPath); }
 		}
 
-		public bool IsExplorerButtonEnabled
-		{
-			get { return CanStartExplorer; }
-		}
-
-		public bool IsExplorerPathButtonEnabled
-		{
-			get { return ExplorerRunState != RunState.Running; }
-		}
-
 		public bool CanStartExplorer
 		{
-			get { return IsValidExplorerPath && RserveRunState == RunState.Running && PolicyServerRunState == RunState.Running; }
+			get { return IsValidExplorerPath; }
 		}
 
 		public void OpenExplorer()
@@ -229,7 +201,6 @@
 				try
 				{
 					Model.Launcher.LaunchExplorer(ExplorerPath);
-					ExplorerRunState = RunState.Running;
 				}
 				catch (Exception e)
 				{

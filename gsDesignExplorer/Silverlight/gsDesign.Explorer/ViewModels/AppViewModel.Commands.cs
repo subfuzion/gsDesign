@@ -1,6 +1,8 @@
 ﻿namespace gsDesign.Explorer.ViewModels
 {
+	using System.Net.Sockets;
 	using Subfuzion.Helpers;
+	using Subfuzion.R.Rserve;
 
 	public partial class AppViewModel
 	{
@@ -35,8 +37,16 @@
 
 		private void ToggleConnect(object parameter = null)
 		{
-			RserveClient.ToggleConnect();
+			RserveClient.ToggleConnect(HandleConnectionResult);
 			NotifyPropertyChanged("RserveClient");
+		}
+
+		private void HandleConnectionResult(ConnectionState connectionState, SocketError socketError)
+		{
+			if (socketError == SocketError.ConnectionRefused)
+			{
+				
+			}
 		}
 
 		#endregion

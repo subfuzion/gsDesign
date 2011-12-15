@@ -4,6 +4,7 @@
 	using System.Globalization;
 	using System.Windows.Data;
 	using System.Windows.Media;
+	using Subfuzion.Helpers.UI;
 
 	public enum SystemState
 	{

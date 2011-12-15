@@ -47,6 +47,27 @@
 			}
 		}
 
+		public void LaunchExplorer(string pathname)
+		{
+			// pathname = pathname ?? Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\SilverlightSecurityPolicyServer\bin\Debug\SilverlightPolicyServer.exe");
+
+			try
+			{
+				//var processStartInfo = new ProcessStartInfo
+				//{
+				//    FileName = pathname,
+				//};
+
+				//explorer = Process.Start(processStartInfo);
+
+				Print("launched gsDesign Explorer");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+		}
+
 		public void StopProcesses()
 		{
 			StopRserve();

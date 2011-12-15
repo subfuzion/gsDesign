@@ -100,21 +100,21 @@ namespace Subfuzion.R.Rserve
 
 		#endregion
 
-		public void ToggleConnect()
+		public void ToggleConnect(Action<ConnectionState, SocketError> callback = null)
 		{
 			if (ConnectionState == ConnectionState.Connected)
 			{
-				Disconnect();
+				Disconnect(callback);
 			}
 			else
 			{
-				Connect();
+				Connect(callback);
 			}
 		}
 
-		public void Connect()
+		public void Connect(Action<ConnectionState, SocketError> callback = null)
 		{
-			Disconnect();
+			Disconnect(callback);
 
 			// can't run on different thread and will be null anyway when launched from file system:
 			// var endPoint = new DnsEndPoint(Application.Current.Host.Source.DnsSafeHost, 4502);
@@ -129,7 +129,8 @@ namespace Subfuzion.R.Rserve
 
 			var args = new SocketAsyncEventArgs
 			           	{
-			           		RemoteEndPoint = endPoint
+			           		RemoteEndPoint = endPoint,
+							UserToken = callback,
 			           	};
 
 			args.Completed += OnConnectAsyncCompleted;
@@ -137,7 +138,7 @@ namespace Subfuzion.R.Rserve
 			_socket.ConnectAsync(args);
 		}
 
-		public void Disconnect()
+		public void Disconnect(Action<ConnectionState, SocketError> callback = null)
 		{
 			try
 			{
@@ -154,6 +155,10 @@ namespace Subfuzion.R.Rserve
 			finally
 			{
 				ConnectionState = ConnectionState.Disconnected;
+				if (callback != null)
+				{
+					callback(ConnectionState, SocketError.NotConnected);
+				}
 			}
 		}
 
@@ -162,6 +167,12 @@ namespace Subfuzion.R.Rserve
 			ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
 			                  	? ConnectionState.Connected
 			                  	: ConnectionState.Disconnected;
+
+			var callback = socketAsyncEventArgs.UserToken as Action<ConnectionState, SocketError>;
+			if (callback != null)
+			{
+				callback(ConnectionState, socketAsyncEventArgs.SocketError);
+			}
 
 			if (ConnectionState == ConnectionState.Connected)
 			{
