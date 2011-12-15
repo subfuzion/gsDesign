@@ -60,6 +60,7 @@
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Formatters.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Win32\ShellHelper.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Symbols.cs" />
     <Compile Include="UI\FlowPanel.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="StringExtensions.cs" />
     <Compile Include="UI\HorizontalFlowPanel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
