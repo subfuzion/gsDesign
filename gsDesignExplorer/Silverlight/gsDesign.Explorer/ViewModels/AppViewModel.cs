@@ -1,5 +1,6 @@
 namespace gsDesign.Explorer.ViewModels
 {
+	using RServe;
 	using Subfuzion.R.Rserve;
 
 	public partial class AppViewModel : ViewModelBase
@@ -32,6 +33,12 @@ namespace gsDesign.Explorer.ViewModels
 					NotifyPropertyChanged("OutputText");
 				}
 			}
+		}
+
+		private Launcher _launcher;
+		public Launcher Launcher
+		{
+			get { return _launcher ?? (_launcher = new Launcher()); }
 		}
 	}
 }

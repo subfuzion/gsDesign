@@ -129,7 +129,7 @@
 	public class ShellHelper
 	{
 		[DllImport("shell32.dll")]
-		private static extern IntPtr ShellExecute(
+		public static extern IntPtr ShellExecute(
 			IntPtr hwnd,
 			string lpOperation,
 			string lpFile,

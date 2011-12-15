@@ -172,6 +172,11 @@
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionTestTypeValueConverter.cs" />
     <Compile Include="ViewModels\Output\PlotRenderingValueConverter.cs" />
     <Compile Include="ViewModels\Output\PlotTypeValueConverter.cs" />
+    <Compile Include="ViewModels\RServe\Launcher.cs" />
+    <Compile Include="ViewModels\RServe\LauncherSettings.cs" />
+    <Compile Include="ViewModels\RServe\RunState.cs" />
+    <Compile Include="ViewModels\RServe\SystemState.cs" />
+    <Compile Include="ViewModels\RServe\ViewModel.cs" />
     <Compile Include="ViewModels\Test\DiagnosticInfo.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\ViewMode.cs" />
@@ -239,6 +244,9 @@
     </Compile>
     <Compile Include="Views\Output\TextOutputView.xaml.cs">
       <DependentUpon>TextOutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RServe\ConnectionView.xaml.cs">
+      <DependentUpon>ConnectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Simulation\SimulationView.xaml.cs">
       <DependentUpon>SimulationView.xaml</DependentUpon>
@@ -352,6 +360,10 @@
     <Page Include="Views\Output\TextOutputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RServe\ConnectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Simulation\SimulationView.xaml">
       <SubType>Designer</SubType>
