@@ -34,6 +34,8 @@
     <Utf8Output>true</Utf8Output>
     <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
     <TargetFrameworkProfile />
+    <InBrowserSettingsFile>Properties\InBrowserSettings.xml</InBrowserSettingsFile>
+    <RequireInBrowserElevation>true</RequireInBrowserElevation>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -61,6 +63,15 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>EF8D086552E5B65036F9EA71261A0578117A9AE7</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>gsDesign.Explorer_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -230,6 +241,9 @@
     <Compile Include="Views\Design\SpendingFunctions\SpendingFunctionsView.xaml.cs">
       <DependentUpon>SpendingFunctionsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\ElevatedPermissionsNeededDialog.xaml.cs">
+      <DependentUpon>ElevatedPermissionsNeededDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -245,8 +259,8 @@
     <Compile Include="Views\Output\TextOutputView.xaml.cs">
       <DependentUpon>TextOutputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RServe\ConnectionView.xaml.cs">
-      <DependentUpon>ConnectionView.xaml</DependentUpon>
+    <Compile Include="Views\RServe\ConnectionViewDialog.xaml.cs">
+      <DependentUpon>ConnectionViewDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Simulation\SimulationView.xaml.cs">
       <DependentUpon>SimulationView.xaml</DependentUpon>
@@ -341,6 +355,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\ElevatedPermissionsNeededDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -361,9 +379,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RServe\ConnectionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\RServe\ConnectionViewDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Simulation\SimulationView.xaml">
       <SubType>Designer</SubType>
@@ -387,6 +405,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\InBrowserSettings.xml" />
+    <None Include="gsDesign.Explorer_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>

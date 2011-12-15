@@ -6,6 +6,8 @@ using gsDesign.Explorer.ViewModels;
 
 namespace gsDesign.Explorer
 {
+	using Views.Dialogs;
+
 	public partial class App : Application
 	{
 		public App()
@@ -25,6 +27,23 @@ namespace gsDesign.Explorer
 		private void Application_Startup(object sender, StartupEventArgs e)
 		{
 			RootVisual = new MainPage();
+			TestElevatedPermissions();
+			TestConnection();
+		}
+
+		private void TestElevatedPermissions()
+		{
+			if (Current.HasElevatedPermissions == false)
+			{
+				var dialog = new ElevatedPermissionsNeededDialog();
+				dialog.Closed += (sender2, e2) => TestElevatedPermissions();
+				dialog.Show();
+			}
+		}
+
+		private void TestConnection()
+		{
+			AppViewModel.Connect();
 		}
 
 		private void Application_Exit(object sender, EventArgs e)

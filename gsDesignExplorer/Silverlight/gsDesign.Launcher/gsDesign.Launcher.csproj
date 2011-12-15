@@ -145,12 +145,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Subfuzion.Silverlight.Tcp\Subfuzion.Silverlight.Tcp.csproj">
-      <Project>{18DB60FF-661F-4443-A294-64669839F05D}</Project>
-      <Name>Subfuzion.Silverlight.Tcp</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

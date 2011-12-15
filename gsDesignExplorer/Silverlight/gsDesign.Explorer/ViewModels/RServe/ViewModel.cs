@@ -15,14 +15,15 @@
 			_rserveRunState = IsValidRservePath ? RunState.Stopped : RunState.Invalid;
 		}
 
-		private AppViewModel Model
+		private Launcher _launcher;
+		public Launcher Launcher
 		{
-			get { return App.AppViewModel; }
+			get { return _launcher ?? (_launcher = new Launcher()); }
 		}
 
 		public bool IsSystemConfigurationValid
 		{
-			get { return IsRserveButtonEnabled && IsValidExplorerPath; }
+			get { return IsRserveButtonEnabled; }
 		}
 
 		public SystemState SystemState
@@ -123,7 +124,7 @@
 			{
 				try
 				{
-					Model.Launcher.StartRserve(RservePath, IsConsoleOutputEnabled);
+					Launcher.StartRserve(RservePath, IsConsoleOutputEnabled);
 					RserveRunState = RunState.Running;
 				}
 				catch (Exception e)
@@ -139,7 +140,7 @@
 			{
 				try
 				{
-					Model.Launcher.StopRserve();
+					Launcher.StopRserve();
 					RserveRunState = RunState.Stopped;
 				}
 				catch (Exception e)
@@ -158,54 +159,6 @@
 			else
 			{
 				StopRserve();
-			}
-		}
-
-		#endregion
-
-		#region gsDesign Explorer
-
-		public string ExplorerPath
-		{
-			get { return LauncherSettings.ExplorerPath; }
-
-			set
-			{
-				if (LauncherSettings.ExplorerPath != value && IsValidExplorerPathString(value))
-				{
-					LauncherSettings.ExplorerPath = value;
-					NotifyPropertyChanged("ExplorerPath");
-				}
-			}
-		}
-
-		public bool IsValidExplorerPathString(string path)
-		{
-			return path != null && File.Exists(path);
-		}
-
-		public bool IsValidExplorerPath
-		{
-			get { return IsValidExplorerPathString(ExplorerPath); }
-		}
-
-		public bool CanStartExplorer
-		{
-			get { return IsValidExplorerPath; }
-		}
-
-		public void OpenExplorer()
-		{
-			if (CanStartExplorer)
-			{
-				try
-				{
-					Model.Launcher.LaunchExplorer(ExplorerPath);
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-				}
 			}
 		}
 

@@ -1,8 +1,11 @@
 ﻿namespace gsDesign.Explorer.ViewModels
 {
 	using System.Net.Sockets;
+	using System.Windows;
+	using System.Windows.Controls;
 	using Subfuzion.Helpers;
 	using Subfuzion.R.Rserve;
+	using Views.RServe;
 
 	public partial class AppViewModel
 	{
@@ -23,9 +26,9 @@
 
 		public DelegateCommand ConnectCommand { get; private set; }
 
-		private void Connect(object parameter = null)
+		public void Connect(object parameter = null)
 		{
-			RserveClient.Connect();
+			RserveClient.Connect(HandleConnectionResult);
 			NotifyPropertyChanged("RserveClient");
 		}
 
@@ -35,7 +38,7 @@
 
 		public DelegateCommand ToggleConnectCommand { get; private set; }
 
-		private void ToggleConnect(object parameter = null)
+		public void ToggleConnect(object parameter = null)
 		{
 			RserveClient.ToggleConnect(HandleConnectionResult);
 			NotifyPropertyChanged("RserveClient");
@@ -43,10 +46,41 @@
 
 		private void HandleConnectionResult(ConnectionState connectionState, SocketError socketError)
 		{
-			if (socketError == SocketError.ConnectionRefused)
+			switch (socketError)
 			{
-				
+				case SocketError.AccessDenied:
+					// not running as trusted application
+					break;
+
+				case SocketError.ConnectionRefused:
+					// need to launch RServe
+					ShowConnectinDialog();
+					break;
+
+				case SocketError.NotConnected:
+					// not an error. just means disconnected.
+					break;
+
+				default:
+					// log this
+					break;
 			}
+		}
+
+		private ChildWindow _connectionDialog;
+		private void ShowConnectinDialog()
+		{
+			Deployment.Current.Dispatcher.BeginInvoke(() =>
+			{
+				_connectionDialog = new ConnectionViewDialog();
+
+				_connectionDialog.Closed += (sender, e) =>
+				{
+
+				};
+
+				_connectionDialog.Show();
+			});
 		}
 
 		#endregion

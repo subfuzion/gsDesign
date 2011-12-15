@@ -114,11 +114,15 @@ namespace Subfuzion.R.Rserve
 
 		public void Connect(Action<ConnectionState, SocketError> callback = null)
 		{
-			Disconnect(callback);
+			if (ConnectionState == ConnectionState.Connected)
+			{
+				throw new Exception("Already connected. Disconnect first");
+			}
 
 			// can't run on different thread and will be null anyway when launched from file system:
 			// var endPoint = new DnsEndPoint(Application.Current.Host.Source.DnsSafeHost, 4502);
-			var endPoint = new DnsEndPoint("localhost", 4502);
+			//var endPoint = new DnsEndPoint("localhost", 4502);
+			var endPoint = new DnsEndPoint("localhost", 6311);
 
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
 			          	{

@@ -1,0 +1,115 @@
+﻿<controls:ChildWindow x:Class="gsDesign.Explorer.Views.RServe.ConnectionViewDialog"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+                      xmlns:RServe="clr-namespace:gsDesign.Explorer.ViewModels.RServe"
+                      xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Title="RServe Configuration" mc:Ignorable="d"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="380" Width="400">
+
+	<controls:ChildWindow.Resources>
+		<!--
+		<RServe:ViewModel x:Key="ViewModel" />
+		-->
+
+		<RServe:SystemStateToBrushValueConverter x:Key="systemStateToBrushConverter" />
+		<RServe:SystemStateToTransitionActionValueConverter x:Key="systemStateToTransitionConverter" />
+		<RServe:RunStateToBrushValueConverter x:Key="runStateToBrushConverter" />
+		<RServe:RunStateToTransitionActionValueConverter x:Key="runStateToTransitionActionConverter" />
+
+		<Style x:Key="BorderStyle" TargetType="Border">
+			<Setter Property="Margin" Value="4" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="BorderBrush" Value="DarkGray" />
+		</Style>
+	</controls:ChildWindow.Resources>
+
+	<Grid x:Name="LayoutRoot" Margin="2">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<TextBlock TextWrapping="Wrap" Margin="10">
+			<Bold>gsDesign Explorer</Bold>
+			requires the Rserve package to communicate with R on your system. You can
+			continue to work in Explorer and save/export your designs, but you will not be
+			able to run them from here until you connect to Rserve.
+			<LineBreak /><LineBreak />
+			(1) Ensure that R is running.<LineBreak />
+			(2) Ensure that the Rserve package is installed and running.<LineBreak />
+			(3) Ensure that the gsDesign package is installed.<LineBreak />
+			<LineBreak />
+			Rserve can be downloaded from CRAN. In <Bold>R</Bold>, enter:<LineBreak />
+			&gt; install.packages("Rserve")
+			<LineBreak /><LineBreak />
+			To start Rserve, enter:<LineBreak />
+			&gt; library(Rserve)<LineBreak />
+			&gt; Rserve()<LineBreak />
+			<LineBreak />
+			<Italic>
+			For more information about Rserve, visit:<LineBreak />
+			http://www.rforge.net/Rserve/doc.html
+			</Italic>
+		</TextBlock>
+
+
+		<!--
+		<StackPanel Orientation="Vertical" Background="White">
+			<TextBlock TextWrapping="Wrap" Margin="10">
+				<Bold>gsDesign Explorer</Bold>
+				needs to know where the Rserve executable is located. It should be found in the following location:
+				<LineBreak />
+				&lt;R directory&gt;\library\RServe\RServe.exe
+			</TextBlock>
+
+			<Border Style="{StaticResource BorderStyle}" Background="White">
+				<StackPanel Orientation="Vertical">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="auto" />
+							<ColumnDefinition Width="auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Rectangle Grid.Column="0" Margin="10" VerticalAlignment="Center"
+						           Fill="{Binding Path=RserveRunState, Mode=OneWay, Converter={StaticResource runStateToBrushConverter}}" Height="15"
+						           Stroke="Black" Width="15" />
+
+						<sdk:Label Grid.Column="1" Content="Rserve" VerticalAlignment="Center" />
+
+						<Button Grid.Column="2" Content="Set Path" Name="SetRservePathButton" Height="23" Width="75" Margin="10"
+						        HorizontalAlignment="Right" Click="SetRservePathButton_Click"
+						        IsEnabled="{Binding Path=IsRservePathButtonEnabled, Mode=OneWay}" />
+
+					</Grid>
+
+					<TextBlock Foreground="SlateGray" Height="80" Margin="10" Text="{Binding Path=RservePath, Mode=OneWay}"
+					           TextWrapping="Wrap" />
+				</StackPanel>
+			</Border>
+
+			<Grid>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<Rectangle Height="10" Width="10" Stroke="Black" Fill="Red" Margin="8" VerticalAlignment="Center" />
+					<sdk:Label Content="Invalid" Height="24" FontSize="10" VerticalAlignment="Center" Width="60" />
+
+					<Rectangle Fill="LightGray" Height="10" Stroke="Black" Width="10" Margin="8" VerticalAlignment="Center" />
+					<sdk:Label Content="Stopped" FontSize="10" Height="24" VerticalAlignment="Center" Width="60" />
+
+					<Rectangle Fill="Green" Height="10" Stroke="Black" Width="10" Margin="8" VerticalAlignment="Center" />
+					<sdk:Label Content="Running" FontSize="10" Height="24" VerticalAlignment="Center" Width="60" />
+				</StackPanel>
+			</Grid>
+		</StackPanel>
+		-->
+
+		<Button x:Name="CancelButton" Content="Close" Click="CancelButton_Click" Width="75" Height="23"
+		        HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
+		
+		<!--
+		<Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23"
+		        HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
+		-->
+	</Grid>
+</controls:ChildWindow>

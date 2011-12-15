@@ -148,6 +148,42 @@
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.ComponentModel.DataAnnotations.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Data.DataForm.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Data.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Data.Input.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Data.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.DataVisualization.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Input.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Layout.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Theming.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Controls.Toolkit.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\System.Windows.Data.zip" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

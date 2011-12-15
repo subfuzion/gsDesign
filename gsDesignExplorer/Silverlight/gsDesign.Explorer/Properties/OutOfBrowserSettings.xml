@@ -1,5 +1,5 @@
-<OutOfBrowserSettings ShortName="gsDesignExplorer" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
-  <OutOfBrowserSettings.Blurb>Merck gsDesignExplorer</OutOfBrowserSettings.Blurb>
+<OutOfBrowserSettings ShortName="Merck gsDesign Explorer 2.0" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>A graphical user interface for the gsDesign R package for working with group sequential designs and describing their properties.</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
     <WindowSettings Title="Merck gsDesign Explorer 2.0" Height="700" Width="900" />
   </OutOfBrowserSettings.WindowSettings>
