@@ -12,11 +12,12 @@
     <RootNamespace>Subfuzion.Helpers</RootNamespace>
     <AssemblyName>Subfuzion.Helpers</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -58,6 +59,7 @@
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Formatters.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Symbols.cs" />
     <Compile Include="UI\FlowPanel.cs" />

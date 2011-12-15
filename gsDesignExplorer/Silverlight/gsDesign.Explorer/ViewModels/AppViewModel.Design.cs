@@ -122,6 +122,7 @@
 			var design = CurrentDesign;
 			var script = design.DesignScript.Output;
 
+			// FIXME
 			//var rService = new RServiceClient();
 			//rService.SaveScriptCompleted += rService_SaveScriptCompleted;
 			//rService.SaveScriptAsync(CurrentDesign.DesignScript.Output);
