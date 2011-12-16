@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subfuzion.Helpers", "Subfuz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gsDesign.Explorer", "gsDesign.Explorer\gsDesign.Explorer.csproj", "{F76F995C-0777-446A-9B43-8939A3B4A991}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gsDesign.Core", "gsDesign.Core\gsDesign.Core.csproj", "{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{F76F995C-0777-446A-9B43-8939A3B4A991}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F76F995C-0777-446A-9B43-8939A3B4A991}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F76F995C-0777-446A-9B43-8939A3B4A991}.Release|x86.ActiveCfg = Release|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

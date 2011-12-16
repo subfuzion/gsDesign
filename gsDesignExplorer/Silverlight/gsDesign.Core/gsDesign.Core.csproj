@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>gsDesign.Core</RootNamespace>
+    <AssemblyName>gsDesign.Core</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DesignParameters.cs" />
+    <Compile Include="DesignScriptGenerator.cs" />
+    <Compile Include="Design\ErrorPowerTiming\ErrorPowerTimingParameters.cs" />
+    <Compile Include="Design\ErrorPowerTiming\IntervalSpacing.cs" />
+    <Compile Include="Design\SampleSize\BinomialNonInferiorityTesting.cs" />
+    <Compile Include="Design\SampleSize\SampleSizeCategory.cs" />
+    <Compile Include="Design\SampleSize\SampleSizeParameters.cs" />
+    <Compile Include="Design\SampleSize\TimeToEventAccrual.cs" />
+    <Compile Include="Design\SampleSize\TimeToEventHypothesis.cs" />
+    <Compile Include="Design\SampleSize\TimeToEventSpecification.cs" />
+    <Compile Include="Design\SampleSize\TimeToTestHypothesis.cs" />
+    <Compile Include="Design\SpendingFunctions\OneParameter\OneParameterFamily.cs" />
+    <Compile Include="Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\ParameterFree\LanDeMetsApproximation.cs" />
+    <Compile Include="Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\PiecewiseLinear\PiecewiseLinearSpendingFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionBounds.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionLowerBoundSpending.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionLowerBoundTesting.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionParameterCategory.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionParameters.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionTestingParameters.cs" />
+    <Compile Include="Design\SpendingFunctions\SpendingFunctionTestType.cs" />
+    <Compile Include="Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\TwoParameter\SpendingShapeFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\TwoParameter\TwoParameterSpendingFunction.cs" />
+    <Compile Include="Output\PlotRendering.cs" />
+    <Compile Include="Output\PlotType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Subfuzion.Helpers\Subfuzion.Helpers.csproj">
+      <Project>{641843FD-780C-421F-A150-AA12B170829E}</Project>
+      <Name>Subfuzion.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
