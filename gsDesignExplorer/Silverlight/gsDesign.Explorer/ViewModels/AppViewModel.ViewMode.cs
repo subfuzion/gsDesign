@@ -6,20 +6,6 @@
 
 	public partial class AppViewModel
 	{
-		#region Fields
-
-		private ViewMode _currentViewMode = (ViewMode)(-1);
-
-		private Visibility _analysisPanelVisibility;
-		private Visibility _designPanelVisibility;
-		private Visibility _simulationPanelVisibility;
-		private Visibility _testPanelVisibility;
-
-		private Visibility _afterRunExecutedVisibility;
-		private Visibility _beforeRunExecutedVisibility;
-
-		#endregion
-
 		private void InitViewMode()
 		{
 			CurrentViewMode = ViewMode.Design;
@@ -32,6 +18,7 @@
 			get { return EnumHelper.GetNames<ViewMode>(); }
 		}
 
+		private ViewMode _currentViewMode = (ViewMode)(-1);
 		public ViewMode CurrentViewMode
 		{
 			get { return _currentViewMode; }
@@ -74,6 +61,7 @@
 			}
 		}
 
+		private Visibility _designPanelVisibility;
 		public Visibility DesignPanelVisibility
 		{
 			get { return _designPanelVisibility; }
@@ -87,6 +75,7 @@
 			}
 		}
 
+		private Visibility _analysisPanelVisibility;
 		public Visibility AnalysisPanelVisibility
 		{
 			get { return _analysisPanelVisibility; }
@@ -100,6 +89,7 @@
 			}
 		}
 
+		private Visibility _simulationPanelVisibility;
 		public Visibility SimulationPanelVisibility
 		{
 			get { return _simulationPanelVisibility; }
@@ -113,6 +103,7 @@
 			}
 		}
 
+		private Visibility _testPanelVisibility;
 		public Visibility TestPanelVisibility
 		{
 			get { return _testPanelVisibility; }
@@ -126,6 +117,7 @@
 			}
 		}
 
+		private Visibility _beforeRunExecutedVisibility;
 		public Visibility BeforeRunExecutedVisibility
 		{
 			get { return _beforeRunExecutedVisibility; }
@@ -139,6 +131,7 @@
 			}
 		}
 
+		private Visibility _afterRunExecutedVisibility;
 		public Visibility AfterRunExecutedVisibility
 		{
 			get { return _afterRunExecutedVisibility; }

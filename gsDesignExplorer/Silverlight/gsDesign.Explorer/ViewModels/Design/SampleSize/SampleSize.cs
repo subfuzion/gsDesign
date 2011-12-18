@@ -3,9 +3,9 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
-	using Models;
-	using Models.Design.SampleSize;
 	using Subfuzion.Helpers;
+	using gsDesign.Design;
+	using gsDesign.Design.SampleSize;
 
 	public class SampleSize : NotifyPropertyChangedBase
 	{

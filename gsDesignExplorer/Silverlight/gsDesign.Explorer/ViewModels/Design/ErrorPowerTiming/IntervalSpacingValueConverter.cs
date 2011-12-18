@@ -3,7 +3,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 	using System;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models.Design.ErrorPowerTiming;
+	using gsDesign.Design.ErrorPowerTiming;
 
 	public class IntervalSpacingValueConverter : IValueConverter
 	{

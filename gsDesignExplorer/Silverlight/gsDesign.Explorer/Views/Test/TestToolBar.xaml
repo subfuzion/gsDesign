@@ -49,7 +49,7 @@
 				<Button Name="runButton" Height="26" Width="26"
 					Style="{StaticResource ToolBarButtonStyle}"
 					Command="{Binding Path=RunCommand}"
-					IsEnabled="{Binding Path=IsRunEnabled, Mode=TwoWay}" >
+					IsEnabled="{Binding Path=RunCommand.IsEnabled, Mode=OneWay}" >
 					<Image Source="/Assets/Images/Toolbar/designExecute.png" Stretch="Uniform" />
 					<ToolTipService.ToolTip>
 						<ToolTip Content="Run" Style="{StaticResource TooltipStyle}" />

@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>gsDesign.Core</RootNamespace>
+    <RootNamespace>gsDesign</RootNamespace>
     <AssemblyName>gsDesign.Core</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
@@ -55,8 +55,8 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DesignParameters.cs" />
-    <Compile Include="DesignScriptGenerator.cs" />
+    <Compile Include="Design\DesignParameters.cs" />
+    <Compile Include="Output\DesignScriptGenerator.cs" />
     <Compile Include="Design\ErrorPowerTiming\ErrorPowerTimingParameters.cs" />
     <Compile Include="Design\ErrorPowerTiming\IntervalSpacing.cs" />
     <Compile Include="Design\SampleSize\BinomialNonInferiorityTesting.cs" />

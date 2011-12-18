@@ -1,8 +1,8 @@
-﻿namespace gsDesign.Explorer.Models
+﻿namespace gsDesign.Design
 {
-	using Design.ErrorPowerTiming;
-	using Design.SampleSize;
-	using Design.SpendingFunctions;
+	using ErrorPowerTiming;
+	using SampleSize;
+	using SpendingFunctions;
 
 	public class DesignParameters
 	{
@@ -15,33 +15,13 @@
 
 		#region Name property
 
-		private string _name;
-
-		public string Name
-		{
-			get { return _name; }
-
-			set
-			{
-				_name = value;
-			}
-		}
+		public string Name { get; set; }
 
 		#endregion // Name
 
 		#region Description property
 
-		private string _description;
-
-		public string Description
-		{
-			get { return _description; }
-
-			set
-			{
-				_description = value;
-			}
-		}
+		public string Description { get; set; }
 
 		#endregion // Description
 
@@ -53,10 +33,7 @@
 		{
 			get { return _errorPowerTimingParameters ?? (_errorPowerTimingParameters = new ErrorPowerTimingParameters()); }
 
-			set
-			{
-				_errorPowerTimingParameters = value;
-			}
+			set { _errorPowerTimingParameters = value; }
 		}
 
 		#endregion // ErrorPowerTimingParameters
@@ -69,10 +46,7 @@
 		{
 			get { return _sampleSizeParameters ?? (_sampleSizeParameters = new SampleSizeParameters()); }
 
-			set
-			{
-				_sampleSizeParameters = value;
-			}
+			set { _sampleSizeParameters = value; }
 		}
 
 		#endregion // SampleSizeParameters
@@ -85,10 +59,7 @@
 		{
 			get { return _spendingFunctionParameters ?? (_spendingFunctionParameters = new SpendingFunctionParameters()); }
 
-			set
-			{
-				_spendingFunctionParameters = value;
-			}
+			set { _spendingFunctionParameters = value; }
 		}
 
 		#endregion // SpendingFunctionParameters

@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Design.SpendingFunctions.PiecewiseLinear
+﻿namespace gsDesign.Design.SpendingFunctions.PiecewiseLinear
 {
 	public class PiecewiseLinearSpendingFunction
 	{

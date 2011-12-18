@@ -2,9 +2,9 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
 	using System.ComponentModel;
 	using System.ComponentModel.DataAnnotations;
-	using Models;
-	using Models.Design.SpendingFunctions;
 	using Subfuzion.Helpers;
+	using gsDesign.Design;
+	using gsDesign.Design.SpendingFunctions;
 
 	public class SpendingFunctions : NotifyPropertyChangedBase
 	{

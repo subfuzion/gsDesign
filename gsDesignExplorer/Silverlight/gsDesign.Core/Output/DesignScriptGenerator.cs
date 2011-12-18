@@ -1,15 +1,35 @@
-﻿namespace gsDesign.Explorer.Models
+﻿namespace gsDesign.Output
 {
 	using System;
 	using System.IO;
 	using System.Text;
+	using Design;
 	using Design.SampleSize;
 	using Design.SpendingFunctions;
-	using Subfuzion.Helpers;
 
 	public class DesignScriptGenerator
 	{
 		private StringWriter _writer;
+
+		private StringWriter Writer
+		{
+			get { return _writer; }
+		}
+
+		private DesignParameters DesignParameters { get; set; }
+
+		#region GeneratedTimestamp property
+
+		private DateTime? _generatedTimestamp;
+
+		public DateTime GeneratedTimestamp
+		{
+			get { return _generatedTimestamp.GetValueOrDefault(); }
+
+			set { _generatedTimestamp = value; }
+		}
+
+		#endregion // GeneratedTimestamp
 
 		public string GenerateScript(DesignParameters designParameters)
 		{
@@ -111,34 +131,11 @@
 			Writer.WriteLine();
 //			AppendPlot();
 
-			var script = _writer.ToString();
+			string script = _writer.ToString();
 			_writer.Close();
 			_writer = null;
 			return script;
 		}
-
-		private StringWriter Writer
-		{
-			get { return _writer; }
-		}
-
-		private DesignParameters DesignParameters { get; set; }
-
-		#region GeneratedTimestamp property
-
-		private DateTime? _generatedTimestamp;
-
-		public DateTime GeneratedTimestamp
-		{
-			get { return _generatedTimestamp.GetValueOrDefault(); }
-
-			set
-			{
-				_generatedTimestamp = value;
-			}
-		}
-
-		#endregion // GeneratedTimestamp
 
 		private void AppendComment(string comment, params string[] args)
 		{
@@ -197,7 +194,7 @@
 		{
 			AppendAssignment("test.type", DesignParameters.SpendingFunctionParameters.SpendingFunctionTestingParameters.SpendingFunctionTestTypeCode);
 		}
-	
+
 		private void AppendAlpha()
 		{
 			AppendAssignment("alpha", Math.Round(DesignParameters.ErrorPowerTimingParameters.Alpha, 6));
@@ -229,7 +226,6 @@
 				case SampleSizeCategory.TimeToEvent:
 					s = string.Format("{0}Survival$nEvents", DesignParameters.Name);
 					break;
-
 			}
 
 
@@ -374,7 +370,6 @@
 				case SampleSizeCategory.TimeToEvent:
 					s = "tte";
 					break;
-
 			}
 
 			AppendAssignment("endpoint", "\"{0}\"", s);
@@ -395,7 +390,7 @@
 		{
 			if (DesignParameters.SampleSizeParameters.SampleSizeCategory != SampleSizeCategory.TimeToEvent) return;
 
-			var s = string.Format("nSurvival(lambda1=0.11552, lambda2=0.06931, eta=0.05776, Ts=30, Tr=18, ratio=1, alpha=0.025, beta=0.1, sided=1, type=\"rr\", entry=\"unif\", gamma=1e-04)");
+			string s = string.Format("nSurvival(lambda1=0.11552, lambda2=0.06931, eta=0.05776, Ts=30, Tr=18, ratio=1, alpha=0.025, beta=0.1, sided=1, type=\"rr\", entry=\"unif\", gamma=1e-04)");
 			AppendAssignment(string.Format("{0}Survival", DesignParameters.Name), s);
 		}
 	}

@@ -5,7 +5,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models.Design.SpendingFunctions;
+	using gsDesign.Design.SpendingFunctions;
 
 	public class SpendingFunctionBoundsValueConverter : IValueConverter
 	{

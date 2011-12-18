@@ -1,6 +1,7 @@
 namespace Subfuzion.R.Rserve
 {
 	using System;
+	using System.IO;
 	using System.Net;
 	using System.Net.Sockets;
 	using System.Windows;
@@ -149,7 +150,6 @@ namespace Subfuzion.R.Rserve
 				if (_socket != null && _socket.Connected)
 				{
 					_socket.Close();
-					_socket = null;
 				}
 			}
 			catch
@@ -158,6 +158,7 @@ namespace Subfuzion.R.Rserve
 			}
 			finally
 			{
+				_socket = null;
 				ConnectionState = ConnectionState.Disconnected;
 				if (callback != null)
 				{
@@ -168,27 +169,24 @@ namespace Subfuzion.R.Rserve
 
 		private void OnConnectAsyncCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
 		{
-			ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
-			                  	? ConnectionState.Connected
-			                  	: ConnectionState.Disconnected;
-
-			var callback = socketAsyncEventArgs.UserToken as Action<ConnectionState, SocketError>;
-			if (callback != null)
+			if (socketAsyncEventArgs.SocketError != SocketError.Success)
 			{
-				callback(ConnectionState, socketAsyncEventArgs.SocketError);
+				var callback = socketAsyncEventArgs.UserToken as Action<ConnectionState, SocketError>;
+				if (callback != null)
+				{
+					callback(ConnectionState.Disconnected, socketAsyncEventArgs.SocketError);
+					return;
+				}
 			}
 
-			if (ConnectionState == ConnectionState.Connected)
-			{
-				var handshakeBuffer = new byte[32];
-				socketAsyncEventArgs.SetBuffer(handshakeBuffer, 0, handshakeBuffer.Length);
-				socketAsyncEventArgs.Completed -= OnConnectAsyncCompleted;
-				socketAsyncEventArgs.Completed += OnReceiveServerHandshake;
+			var handshakeBuffer = new byte[32];
+			socketAsyncEventArgs.SetBuffer(handshakeBuffer, 0, handshakeBuffer.Length);
+			socketAsyncEventArgs.Completed -= OnConnectAsyncCompleted;
+			socketAsyncEventArgs.Completed += OnReceiveServerHandshake;
 
-				//_socket.SendBufferSize = DefaultBufferSize;
-				//_socket.ReceiveBufferSize = DefaultBufferSize;
-				_socket.ReceiveAsync(socketAsyncEventArgs);
-			}
+			//_socket.SendBufferSize = DefaultBufferSize;
+			//_socket.ReceiveBufferSize = DefaultBufferSize;
+			_socket.ReceiveAsync(socketAsyncEventArgs);
 		}
 
 		private void OnReceiveServerHandshake(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
@@ -197,15 +195,26 @@ namespace Subfuzion.R.Rserve
 			{
 				if (socketAsyncEventArgs.BytesTransferred == 0) // || socketAsyncEventArgs.SocketError != SocketError.Success)
 				{
-					// server disconnected
-					Disconnect();
+					// server disconnected -- SHOULD NOT SEE THIS ON A HANDSHAKE
+					throw new Exception("Rseve disconnected during handshake");
+					// Disconnect();
 				}
-
+				
 				ProtocolSettings = ProtocolSettings.Parse(socketAsyncEventArgs.Buffer);
 
 				socketAsyncEventArgs.Completed -= OnReceiveServerHandshake;
 
 				IsBusy = false;
+
+				ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
+									? ConnectionState.Connected
+									: ConnectionState.Disconnected;
+
+				var callback = socketAsyncEventArgs.UserToken as Action<ConnectionState, SocketError>;
+				if (callback != null)
+				{
+					callback(ConnectionState, socketAsyncEventArgs.SocketError);
+				}
 			}
 			catch (Exception e)
 			{
@@ -378,6 +387,15 @@ namespace Subfuzion.R.Rserve
 			}
 		}
 
+		public void RunScript(string fileName, string workingDirectory)
+		{
+			
+		}
+
+		public void RunScript(string script)
+		{
+			
+		}
 	}
 
 	public class RequestContext

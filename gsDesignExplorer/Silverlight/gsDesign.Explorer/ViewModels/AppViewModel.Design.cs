@@ -11,6 +11,7 @@
 	using Subfuzion.R.Rserve;
 	using Subfuzion.R.Rserve.Protocol;
 	using Test;
+	using Utilities;
 
 	public partial class AppViewModel
 	{
@@ -126,6 +127,13 @@
 			//var rService = new RServiceClient();
 			//rService.SaveScriptCompleted += rService_SaveScriptCompleted;
 			//rService.SaveScriptAsync(CurrentDesign.DesignScript.Output);
+
+			OutputText = "Running " + CurrentDesign.Name;
+			var pathname = FileManager.CreateTempFile(script);
+			Action<string> success = result => OutputText = result;
+			var runScriptCommand = new RserveRunScriptCommand(CurrentDesign.Name, RserveClient, pathname, success);
+			runScriptCommand.Run();
+	
 		}
 
 		//private void rService_SaveScriptCompleted(object sender, SaveScriptCompletedEventArgs e)

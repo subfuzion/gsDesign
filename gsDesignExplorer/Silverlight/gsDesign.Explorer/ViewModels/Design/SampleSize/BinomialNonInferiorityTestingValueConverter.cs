@@ -5,7 +5,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models.Design.SampleSize;
+	using gsDesign.Design.SampleSize;
 
 	public class BinomialNonInferiorityTestingValueConverter : IValueConverter
 	{

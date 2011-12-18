@@ -1,4 +1,4 @@
-namespace gsDesign.Explorer.Models.Design.SampleSize
+namespace gsDesign.Design.SampleSize
 {
 	public class SampleSizeParameters
 	{

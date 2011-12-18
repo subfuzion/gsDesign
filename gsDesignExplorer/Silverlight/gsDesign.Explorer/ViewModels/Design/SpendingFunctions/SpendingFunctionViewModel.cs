@@ -1,8 +1,8 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
 	using System.ComponentModel.DataAnnotations;
-	using Models.Design.SpendingFunctions;
 	using ParameterFree;
+	using gsDesign.Design.SpendingFunctions;
 
 	public class SpendingFunctionViewModel : ViewModelBase
 	{

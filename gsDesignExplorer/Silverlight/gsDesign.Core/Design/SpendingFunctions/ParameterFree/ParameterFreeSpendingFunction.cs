@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Design.SpendingFunctions.ParameterFree
+﻿namespace gsDesign.Design.SpendingFunctions.ParameterFree
 {
 	public class ParameterFreeSpendingFunction
 	{

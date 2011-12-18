@@ -5,7 +5,7 @@
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models.Output;
+	using gsDesign.Output;
 
 	public class PlotRenderingValueConverter : IValueConverter
 	{

@@ -16,7 +16,7 @@
 			ToggleConnectCommand = new DelegateCommand { ExecuteAction = ToggleConnect, Async = true };
 
 			NewDesignCommand = new DelegateCommand { ExecuteAction = NewDesign };
-			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = false, CanExecuteFunc = CanRun, };
+			RunDesignCommand = new DelegateCommand { ExecuteAction = RunDesign, CompletedAction = RunDesignCompleted, Async = false, CanExecuteFunc = CanRunDesign, };
 			ResetDesignCommand = new DelegateCommand { ExecuteAction = ResetDesign };
 		}
 
@@ -107,6 +107,11 @@
 		private void RunDesign(object parameter = null)
 		{
 			RunDesign();
+		}
+
+		private bool CanRunDesign(object parameter = null)
+		{
+			return RserveClient.ConnectionState == ConnectionState.Connected && !RserveClient.IsBusy;
 		}
 
 		#endregion

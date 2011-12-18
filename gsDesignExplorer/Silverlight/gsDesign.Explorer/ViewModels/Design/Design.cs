@@ -1,9 +1,9 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design
 {
 	using System;
-	using Models;
-	using Models.Output;
 	using Subfuzion.Helpers;
+	using gsDesign.Design;
+	using gsDesign.Output;
 
 	public class Design : NotifyPropertyChangedBase
 	{

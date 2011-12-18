@@ -5,23 +5,30 @@ namespace gsDesign.Explorer.ViewModels
 
 	public partial class AppViewModel : ViewModelBase
 	{
-		#region Fields
-
-		private string _outputText = "Welcome to gsDesign Explorer";
-
-		#endregion
-
 		public AppViewModel()
 		{
 			RserveClient = new RserveClient();
 			CreateDesign();
 
+			InitHandlers();
 			InitViewMode();
 			InitCommands();
 		}
 
-		public RserveClient RserveClient { get; private set; }
+		private void InitHandlers()
+		{
+			RserveClient.PropertyChanged += (sender, propertyChangedEventArgs) =>
+			{
+				switch (propertyChangedEventArgs.PropertyName)
+				{
+					case "ConnectionState":
+						RunDesignCommand.Requery();
+						break;
+				}
+			};
+		}
 
+		private string _outputText = "Welcome to gsDesign Explorer";
 		public string OutputText
 		{
 			get { return _outputText; }
@@ -36,6 +43,9 @@ namespace gsDesign.Explorer.ViewModels
 		}
 
 		private Launcher _launcher;
+		/// <summary>
+		/// For launching Rserve (currently not being used)
+		/// </summary>
 		public Launcher Launcher
 		{
 			get { return _launcher ?? (_launcher = new Launcher()); }

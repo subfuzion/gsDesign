@@ -74,6 +74,7 @@
     <Compile Include="RserveClient.cs" />
     <Compile Include="RserveException.cs" />
     <Compile Include="ProtocolSettings.cs" />
+    <Compile Include="ScriptBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subfuzion.Helpers\Subfuzion.Helpers.csproj">

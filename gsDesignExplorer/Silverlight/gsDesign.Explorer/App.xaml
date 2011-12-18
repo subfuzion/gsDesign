@@ -11,7 +11,10 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/gsDesign.Explorer;component/Assets/ControlsResourceDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
+			
+			<!-- The top-level application view model -->
 			<viewModels:AppViewModel x:Key="AppViewModel" />
+			
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

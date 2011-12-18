@@ -5,7 +5,7 @@
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
-	using Models.Design.SpendingFunctions.ParameterFree;
+	using gsDesign.Design.SpendingFunctions.ParameterFree;
 
 	public class LanDeMetsApproximationValueConverter : IValueConverter
 	{

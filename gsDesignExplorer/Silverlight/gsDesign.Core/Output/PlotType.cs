@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Output
+﻿namespace gsDesign.Output
 {
 	public enum PlotType
 	{

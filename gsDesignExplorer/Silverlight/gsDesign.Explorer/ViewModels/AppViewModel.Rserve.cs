@@ -8,9 +8,9 @@
 
 	public partial class AppViewModel
 	{
-		private string _input;
-		private string _output;
+		public RserveClient RserveClient { get; private set; }
 
+		private string _input;
 		public string Input
 		{
 			get { return _input; }
@@ -25,6 +25,7 @@
 			}
 		}
 
+		private string _output;
 		public string Output
 		{
 			get { return _output; }
@@ -38,15 +39,11 @@
 			}
 		}
 
-		public bool IsRunEnabled
-		{
-			get
-			{
-				RunCommand.Requery();
-				return RunCommand.IsEnabled;
-			}
-		}
+		#region NewCommand
 
+		/// <summary>
+		/// This is only used by the Test toolbar
+		/// </summary>
 		public DelegateCommand NewCommand { get; private set; }
 
 		private void New(object parameter = null)
@@ -54,6 +51,13 @@
 			Input = string.Empty;
 		}
 
+		#endregion
+
+		#region RunCommand
+
+		/// <summary>
+		/// This is only used by the Test toolbar
+		/// </summary>
 		public DelegateCommand RunCommand { get; private set; }
 
 		private void Run(object parameter = null)
@@ -66,6 +70,17 @@
 		{
 			return !string.IsNullOrWhiteSpace(Input);
 		}
+
+		//public bool IsRunEnabled
+		//{
+		//    get
+		//    {
+		//        RunCommand.Requery();
+		//        return RunCommand.IsEnabled;
+		//    }
+		//}
+
+		#endregion
 
 		private void OnResponse(Response response, object context)
 		{

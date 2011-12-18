@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Design.SpendingFunctions.ThreeParameter
+﻿namespace gsDesign.Design.SpendingFunctions.ThreeParameter
 {
 	public class ThreeParameterSpendingFunction
 	{

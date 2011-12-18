@@ -1,4 +1,4 @@
-﻿namespace gsDesign.Explorer.Models.Design.SpendingFunctions.OneParameter
+﻿namespace gsDesign.Design.SpendingFunctions.OneParameter
 {
 	public enum OneParameterFamily
 	{

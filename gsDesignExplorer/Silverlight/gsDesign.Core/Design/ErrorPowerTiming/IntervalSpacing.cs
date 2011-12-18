@@ -1,4 +1,4 @@
-namespace gsDesign.Explorer.Models.Design.ErrorPowerTiming
+namespace gsDesign.Design.ErrorPowerTiming
 {
 	public enum IntervalSpacing
 	{

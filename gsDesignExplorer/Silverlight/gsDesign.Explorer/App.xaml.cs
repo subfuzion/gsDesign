@@ -19,6 +19,9 @@ namespace gsDesign.Explorer
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Provides application-wide access to the view model
+		/// </summary>
 		public static AppViewModel AppViewModel
 		{
 			get { return (AppViewModel) Current.Resources["AppViewModel"]; }
@@ -31,16 +34,25 @@ namespace gsDesign.Explorer
 			TestConnection();
 		}
 
+		/// <summary>
+		/// Tests for elevated permissions and prompts user to switch to out-of-browser mode, if necessary
+		/// </summary>
 		private void TestElevatedPermissions()
 		{
 			if (Current.HasElevatedPermissions == false)
 			{
 				var dialog = new ElevatedPermissionsNeededDialog();
+
+				// will not allow the user to continue while elevated permissions are not available
 				dialog.Closed += (sender2, e2) => TestElevatedPermissions();
+
 				dialog.Show();
 			}
 		}
 
+		/// <summary>
+		/// Attempts to connect to Rserve and will cause a dialog to be displayed if it's not available
+		/// </summary>
 		private void TestConnection()
 		{
 			AppViewModel.Connect();

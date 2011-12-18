@@ -6,7 +6,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SampleSize
 	using System.Globalization;
 	using System.Windows;
 	using System.Windows.Data;
-	using Models.Design.SampleSize;
+	using gsDesign.Design.SampleSize;
 
 	public class SampleSizeCategoryValueConverter : IValueConverter
 	{

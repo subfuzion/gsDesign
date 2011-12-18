@@ -4,9 +4,9 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel.DataAnnotations;
-	using Models;
-	using Models.Design.ErrorPowerTiming;
 	using Subfuzion.Helpers;
+	using gsDesign.Design;
+	using gsDesign.Design.ErrorPowerTiming;
 
 	public class ErrorPowerTiming : NotifyPropertyChangedBase
 	{

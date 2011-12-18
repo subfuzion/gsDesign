@@ -2,8 +2,8 @@
 {
 	using System.ComponentModel;
 	using System.ComponentModel.DataAnnotations;
-	using Models;
 	using Subfuzion.Helpers;
+	using gsDesign.Output;
 
 	public class DesignScript : NotifyPropertyChangedBase
 	{

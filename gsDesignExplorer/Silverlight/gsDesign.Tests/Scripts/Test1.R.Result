@@ -1,0 +1,32 @@
+Asymmetric two-sided group sequential design with
+90 % power and 2.5 % Type I Error.
+Upper bound spending computations assume
+trial continues if lower bound is crossed.
+
+           Sample
+            Size    ----Lower bounds----  ----Upper bounds-----
+  Analysis Ratio*   Z   Nominal p Spend+  Z   Nominal p Spend++
+         1  0.353 -0.69    0.2436 0.0044 3.71    0.0001  0.0001
+         2  0.706  1.00    0.8420 0.0396 2.51    0.0060  0.0059
+         3  1.059  1.99    0.9769 0.0560 1.99    0.0231  0.0190
+     Total                        0.1000                 0.0250 
++ lower bound beta spending (under H1):
+ Lan-DeMets O'brien-Fleming approximation spending function
+++ alpha spending:
+ Lan-DeMets O'brien-Fleming approximation spending function
+* Sample size ratio compared to fixed design with no interim
+
+Boundary crossing probabilities and expected sample size
+assume any cross stops the trial
+
+Upper boundary (power or Type I Error)
+          Analysis
+   Theta      1      2      3  Total   E{N}
+  0.0000 0.0001 0.0059 0.0173 0.0233 0.6734
+  3.2415 0.0372 0.5474 0.3154 0.9000 0.8228
+
+Lower boundary (futility or Type II Error)
+          Analysis
+   Theta      1      2      3  Total
+  0.0000 0.2436 0.5999 0.1332 0.9767
+  3.2415 0.0044 0.0396 0.0560 0.1000
