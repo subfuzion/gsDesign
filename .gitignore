@@ -1,8 +1,8 @@
 ﻿# ignore
 Versions/
-gsDesignExplorer/Silverlight/thirdparty/mongoose/
-gsDesignExplorer/Silverlight/thirdparty/rserve/
-gsDesignExplorer/Silverlight/thirdparty/RJSONIO/
+ThirdParty/mongoose/
+ThirdParty/rserve/
+ThirdParty/RJSONIO/
 RhttpServe
 
 
@@ -18,95 +18,3 @@ RhttpServe
 # ============================
 Thumbs.db
 
-# ============================
-# Visual Studio ignore files
-# ============================
-*.scc
-*.aps
-*.bak
-*.cache
-*.ilk
-*.lib
-*.log
-*.ncb
-*.obj
-*.pch
-*.pdb
-*.sbr
-*.suo
-*.docstates
-*.tlb
-*.tlh
-*.user
-*.vspscc
-*.xap
-*.xbap
-*_i.c
-*_p.c
-[Bb]in/
-ClientBin/
-[Dd]ebug*/
-[Oo]bj/
-[Rr]elease*/
-[Tt]est[Rr]esult*
-
-# Azure
-ServiceDefinition.build.csdef
-_bin*/
-
-# CodeSmart
-*.csproj.vs10x
-
-# Silverlight
-[Gg]enerated_[Cc]ode/
-
-# ReSharper ignore files
-_ReSharper*/
-*[Rr]esharper*
-[Tt]est[Rr]esult*
-
-# ============================
-# MonoDevelop
-# ============================
-*.userprefs
-*.pidb
-
-# ============================
-# Xcode ignore files
-# ============================
-*.DS_Store
-*~
-*.orig
-*.rej
-*.swp
-.#*
-*.obj
-*.o
-*.lo
-*.la
-*.al
-.libs
-*.so
-*.so.*
-*.a
-*.pyc
-*.pyo
-*.pbxuser
-*.mode1v3
-*.perspectivev3
-Breakpoints.xcbkptlist
-build/
-xcuserdata/
-project.xcworkspace/
-
-# ============================
-# Project Specific
-# ============================
-gsDesignExplorer.Web/
-gsDesignExplorer.Web.Tests/
-packages/EntityFramework.4.1.10331.0/
-packages/jQuery.1.5.1/
-packages/jQuery.UI.Combined.1.8.11/
-packages/jQuery.Validation.1.8.0/
-packages/jQuery.vsdoc.1.5.1/
-packages/Modernizr.1.7/
