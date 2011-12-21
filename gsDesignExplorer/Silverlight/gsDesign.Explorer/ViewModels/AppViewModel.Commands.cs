@@ -54,7 +54,7 @@
 
 				case SocketError.ConnectionRefused:
 					// need to launch RServe
-					ShowConnectinDialog();
+					ShowConnectionDialog();
 					break;
 
 				case SocketError.NotConnected:
@@ -68,7 +68,7 @@
 		}
 
 		private ChildWindow _connectionDialog;
-		private void ShowConnectinDialog()
+		private void ShowConnectionDialog()
 		{
 			Deployment.Current.Dispatcher.BeginInvoke(() =>
 			{

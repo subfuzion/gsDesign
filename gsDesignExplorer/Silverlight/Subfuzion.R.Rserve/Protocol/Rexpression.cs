@@ -126,6 +126,11 @@ namespace Subfuzion.R.Rserve.Protocol
 			return list;
 		}
 
+		public override string ToString()
+		{
+			return string.Join("\n", ToStringList());
+		}
+
 		#endregion
 
 		#region Double List

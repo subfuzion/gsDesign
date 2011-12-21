@@ -332,7 +332,7 @@ namespace Subfuzion.R.Rserve
 				if (socketAsyncEventArgs.SocketError != SocketError.Success)
 				{
 					Console.WriteLine("socket error");
-					ReturnError(context, ErrorCode.Unknown);
+					ReturnError(context, ErrorCode.Success);
 					return;
 				}
 			}

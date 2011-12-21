@@ -56,6 +56,7 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallContext.cs" />
     <Compile Include="ConnectionState.cs" />
     <Compile Include="ConnectionStateValueConverter.cs" />
     <Compile Include="PasswordEncryption.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Protocol\ResponseHeader.cs" />
     <Compile Include="Protocol\Rexpression.cs" />
     <Compile Include="RserveClient.cs" />
+    <Compile Include="RserveConnection.cs" />
     <Compile Include="RserveException.cs" />
     <Compile Include="ProtocolSettings.cs" />
     <Compile Include="ScriptBuilder.cs" />
