@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Net.Sockets;
+	using System.Text;
 	using System.Threading;
 	using Microsoft.VisualStudio.TestTools.UnitTesting;
 	using Subfuzion.R.Rserve;
@@ -10,7 +11,7 @@
 	[TestClass]
 	public class RserveTests
 	{
-		public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(5);
+		public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(1);
 		//public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(1);
 
 		private static RserveConnection NewConnection()
@@ -86,22 +87,31 @@
 
 			var conn = NewConnection();
 
-			var input = "1+1";
+			var template = "0 + {0}";
 			//var input = "capture.output(1+1)";
 
-			var request = Request.Eval(input);
-			Response response = null;
-			ErrorCode errorCode = ErrorCode.Success;
-
 			var count = 0;
-			for (var i = 0; i < 200; i++)
+			var max = 5000;
+			var sb = new StringBuilder();
+
+			for (var i = 0; i < max; i++)
 			{
+				var input = string.Format(template, i);
+				var request = Request.Eval(input);
+				Response response = null;
+				ErrorCode errorCode = ErrorCode.Success;
+
 				conn.SendRequest(
 					request,
 
 					(response_, o) =>
 					{
 						response = response_;
+						if (response == null)
+						{
+							throw new Exception("This should never happen (and this exception won't get caught either)");
+						}
+
 						waitHandle.Set();
 					},
 
@@ -114,6 +124,12 @@
 					null);
 
 				waitHandle.WaitOne(DefaultTimeOut);
+				if (response == null)
+				{
+					// timed out
+					i--;
+					continue;
+				}
 
 				//Assert.IsNotNull(response);
 				//Assert.IsTrue(errorCode == ErrorCode.Success);
@@ -127,6 +143,21 @@
 					if (response.Payload.PayloadCode == PayloadCode.Rexpression)
 					{
 						count++;
+
+						var rexp = Rexpression.FromBytes(response.Payload.Content);
+						if (rexp.IsDoubleList)
+						{
+							var list = rexp.ToDoubleList();
+
+							foreach (var d in list)
+							{
+								sb.Append(string.Format("{0}, ", d));
+							}
+						}
+					}
+					else
+					{
+					//	throw new Exception("Invalid response");
 					}
 				}
 				catch (Exception e)
@@ -140,12 +171,22 @@
 				//    Thread.Sleep(100);
 				//}
 
-				Thread.Sleep(50);
+				//Thread.Sleep(50);
 			}
 
+			var s = sb.ToString();
 
-			
-			conn.Disconnect();
+			Assert.AreEqual(count, max);
+
+			var elements = s.Split(new string[] {", "}, StringSplitOptions.None);
+
+			for (int i = 0; i < max; i++)
+			{
+				var n = double.Parse(elements[i]);
+				Assert.AreEqual(n, i);
+			}
+
+				conn.Disconnect();
 		}
 	}
 }

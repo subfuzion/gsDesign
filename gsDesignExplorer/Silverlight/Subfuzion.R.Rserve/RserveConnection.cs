@@ -350,6 +350,12 @@
 			Listen(socketAsyncEventArgs);
 		}
 
+		private byte[] _buffer = new byte[DefaultBufferSize];
+		private byte[] Buffer
+		{
+			get { return _buffer; }
+		}
+
 		private void Listen(SocketAsyncEventArgs socketAsyncEventArgs)
 		{
 			Log("Listening for response");
@@ -362,8 +368,7 @@
 
 			callContext.Operation = SocketAsyncOperation.Receive;
 
-			var buffer = new byte[DefaultBufferSize];
-			socketAsyncEventArgs.SetBuffer(buffer, 0, DefaultBufferSize);
+			socketAsyncEventArgs.SetBuffer(Buffer, 0, Buffer.Length);
 
 			if (!_socket.ReceiveAsync(socketAsyncEventArgs))
 			{
