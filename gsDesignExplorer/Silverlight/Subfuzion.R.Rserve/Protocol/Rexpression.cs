@@ -160,6 +160,33 @@ namespace Subfuzion.R.Rserve.Protocol
 
 		#endregion
 
+		#region Integer List
+
+		public bool IsIntegerList
+		{
+			get { return RexpressionType == RexpressionType.IntegerArray; }
+		}
+
+		public List<int> ToIntegerList()
+		{
+			if (!IsIntegerList)
+			{
+				throw new InvalidOperationException("expression is not an IntegerArray");
+			}
+
+			var list = new List<int>();
+			var totalIntegerCount = DataSize / sizeof(int);
+
+			for (int offset = 0; offset < DataSize; offset += sizeof(int))
+			{
+				list.Add(BitConverter.ToInt32(Data, offset));
+			}
+
+			return list;
+		}
+
+		#endregion
+
 		#endregion
 
 	}

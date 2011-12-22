@@ -16,6 +16,8 @@
 
 		public Response(Request request, byte[] responseBytes)
 		{
+			RawBytes = responseBytes;
+
 			Request = request;
 
 			Header = ProtocolHeader.CreateResponseHeader(responseBytes);
@@ -43,6 +45,8 @@
 			Array.Copy(responseBytes, _previousBuffer1, 1024);
 			_previousBuffer1str = _previousBuffer1.GetUTF8String();
 		}
+
+		public byte[] RawBytes { get; private set; }
 
 		public bool IsOk
 		{

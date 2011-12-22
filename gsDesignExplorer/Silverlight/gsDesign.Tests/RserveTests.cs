@@ -140,7 +140,8 @@
 
 				try
 				{
-					if (response.Payload.PayloadCode == PayloadCode.Rexpression)
+					var payloadCode = response.Payload.PayloadCode;
+					if (payloadCode == PayloadCode.Rexpression)
 					{
 						count++;
 
@@ -154,10 +155,24 @@
 								sb.Append(string.Format("{0}, ", d));
 							}
 						}
+						else if (rexp.IsIntegerList)
+						{
+							var list = rexp.ToIntegerList();
+
+							foreach (var n in list)
+							{
+								sb.Append(string.Format("{0}, ", n));
+							}
+						}
+					}
+					else if (payloadCode == PayloadCode.Integer)
+					{
+						var resp = new Response(response.Request, response.RawBytes);
+						throw new Exception("PayloadCode.Integer");
 					}
 					else
 					{
-					//	throw new Exception("Invalid response");
+						throw new Exception("Invalid response");
 					}
 				}
 				catch (Exception e)

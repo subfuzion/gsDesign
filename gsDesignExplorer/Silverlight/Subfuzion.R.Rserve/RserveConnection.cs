@@ -4,7 +4,6 @@
 	using System.Diagnostics;
 	using System.Net;
 	using System.Net.Sockets;
-	using System.Windows;
 	using Helpers;
 	using Protocol;
 
@@ -102,6 +101,13 @@
 
 		#endregion
 
+		private readonly byte[] _buffer = new byte[DefaultBufferSize];
+
+		private byte[] Buffer
+		{
+			get { return _buffer; }
+		}
+
 		private void OnSocketAsyncCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
 		{
 			var callContext = socketAsyncEventArgs.UserToken as CallContext;
@@ -111,10 +117,10 @@
 				throw new Exception("CallContext can't be null when handling OnSocketAsyncCompleted event");
 			}
 
-			var lastOperation = socketAsyncEventArgs.LastOperation;
+			SocketAsyncOperation lastOperation = socketAsyncEventArgs.LastOperation;
 			if (lastOperation != callContext.Operation)
 			{
-				var msg = string.Format("Operation mismatched. The reported last operation ({0}) does not match expected ({1})",
+				string msg = string.Format("Operation mismatched. The reported last operation ({0}) does not match expected ({1})",
 					lastOperation, callContext.Operation);
 				Log(msg);
 				throw new Exception(msg);
@@ -202,10 +208,11 @@
 			          };
 
 			var socketAsyncEventArgs = new SocketAsyncEventArgs
-			           {
-			           	RemoteEndPoint = endPoint,
-			           	UserToken = new CallContext { Operation = SocketAsyncOperation.Connect, ConnectionAction = callback },
-			           };
+			                           {
+			                           	RemoteEndPoint = endPoint,
+			                           	UserToken =
+			                           		new CallContext {Operation = SocketAsyncOperation.Connect, ConnectionAction = callback},
+			                           };
 
 			socketAsyncEventArgs.Completed += OnSocketAsyncCompleted;
 			if (!_socket.ConnectAsync(socketAsyncEventArgs))
@@ -270,13 +277,13 @@
 
 				ProtocolSettings = ProtocolSettings.Parse(socketAsyncEventArgs.Buffer);
 				ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
-									? ConnectionState.Connected
-									: ConnectionState.Disconnected;
+					? ConnectionState.Connected
+					: ConnectionState.Disconnected;
 
 				var callContext = socketAsyncEventArgs.UserToken as CallContext;
 				if (callContext != null)
 				{
-					var callback = callContext.ConnectionAction as Action<ConnectionState, SocketError>;
+					Action<ConnectionState, SocketError> callback = callContext.ConnectionAction;
 					if (callback != null)
 					{
 						callback(ConnectionState, socketAsyncEventArgs.SocketError);
@@ -350,12 +357,6 @@
 			Listen(socketAsyncEventArgs);
 		}
 
-		private byte[] _buffer = new byte[DefaultBufferSize];
-		private byte[] Buffer
-		{
-			get { return _buffer; }
-		}
-
 		private void Listen(SocketAsyncEventArgs socketAsyncEventArgs)
 		{
 			Log("Listening for response");
@@ -367,6 +368,11 @@
 			}
 
 			callContext.Operation = SocketAsyncOperation.Receive;
+
+			for (int i = 0; i < Buffer.Length; i++)
+			{
+				Buffer[i] = 0;
+			}
 
 			socketAsyncEventArgs.SetBuffer(Buffer, 0, Buffer.Length);
 
@@ -416,11 +422,10 @@
 
 				if (response.Payload.PayloadCode == PayloadCode.Rexpression)
 				{
-					var rexp = Rexpression.FromBytes(response.Payload.Content);
+					Rexpression rexp = Rexpression.FromBytes(response.Payload.Content);
 				}
 				else
 				{
-					
 				}
 			}
 			catch (Exception e)
@@ -455,6 +460,5 @@
 				}
 			}
 		}
-
 	}
 }
