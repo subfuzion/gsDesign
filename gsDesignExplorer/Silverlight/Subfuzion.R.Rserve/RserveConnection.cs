@@ -405,9 +405,6 @@
 						// if no more queued, then break out and end task
 						if (callContext == null) break;
 
-						callContext.ID = queueCount + 1;
-
-
 						Response response = null;
 						ErrorCode errorCode = ErrorCode.Success;
 
@@ -463,7 +460,6 @@
 			{
 				var callContext = new CallContext
 				{
-					ID = CallQueue.Count + 1,
 					CompletedAction = completed,
 					ErrorAction = error,
 					Request = request,

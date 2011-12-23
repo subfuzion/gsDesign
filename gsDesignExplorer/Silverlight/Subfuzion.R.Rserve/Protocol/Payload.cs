@@ -62,7 +62,7 @@
 
 			var length = 0;
 
-			if (transportCode != PayloadCode.Empty)
+			if (transportCode != PayloadCode.Empty && Enum.IsDefined(typeof(PayloadCode), transportCode))
 			{
 				var lengthBytes = new byte[4];
 				Array.Copy(rawBytes, offset + 1, lengthBytes, 0, 3);

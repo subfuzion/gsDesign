@@ -11,7 +11,7 @@
 	[TestClass]
 	public class RserveTests
 	{
-		public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(1);
+		public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
 		//public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(1);
 
 		private static RserveConnection NewConnection()
@@ -91,7 +91,7 @@
 			//var input = "capture.output(1+1)";
 
 			var count = 0;
-			var max = 6000;
+			var max = 1000;
 			var sb = new StringBuilder();
 
 			for (var i = 0; i < max; i++)
