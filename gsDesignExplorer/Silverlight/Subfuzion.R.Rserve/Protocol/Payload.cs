@@ -60,9 +60,14 @@
 			// (it will be either Rexpression or ByteStream)
 			var transportCode = (PayloadCode) rawBytes[offset];
 
-			var lengthBytes = new byte[4];
-			Array.Copy(rawBytes, offset + 1, lengthBytes, 0, 3);
-			var length = BitConverter.ToInt32(lengthBytes, 0);
+			var length = 0;
+
+			if (transportCode != PayloadCode.Empty)
+			{
+				var lengthBytes = new byte[4];
+				Array.Copy(rawBytes, offset + 1, lengthBytes, 0, 3);
+				length = BitConverter.ToInt32(lengthBytes, 0);
+			}
 
 			var content = new byte[length];
 			Array.Copy(rawBytes, offset + 4, content, 0, content.Length);

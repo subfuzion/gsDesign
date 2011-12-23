@@ -81,7 +81,7 @@
 		//}
 
 		[TestMethod]
-		public void TestCommand1()
+		public void TestCommand()
 		{
 			var waitHandle = new AutoResetEvent(false);
 
@@ -91,7 +91,7 @@
 			//var input = "capture.output(1+1)";
 
 			var count = 0;
-			var max = 5000;
+			var max = 6000;
 			var sb = new StringBuilder();
 
 			for (var i = 0; i < max; i++)
@@ -193,7 +193,7 @@
 
 			Assert.AreEqual(count, max);
 
-			var elements = s.Split(new string[] {", "}, StringSplitOptions.None);
+			var elements = s.Split(new string[] { ", " }, StringSplitOptions.None);
 
 			for (int i = 0; i < max; i++)
 			{
@@ -201,7 +201,7 @@
 				Assert.AreEqual(n, i);
 			}
 
-				conn.Disconnect();
+			conn.Disconnect();
 		}
 	}
 }

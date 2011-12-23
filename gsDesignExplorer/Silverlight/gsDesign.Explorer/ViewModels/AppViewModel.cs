@@ -7,7 +7,7 @@ namespace gsDesign.Explorer.ViewModels
 	{
 		public AppViewModel()
 		{
-			RserveClient = new RserveClient();
+			RserveClient = new RserveConnection();
 			CreateDesign();
 
 			InitHandlers();

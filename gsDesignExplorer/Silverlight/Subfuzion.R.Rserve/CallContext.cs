@@ -7,6 +7,12 @@
 	public class CallContext
 	{
 		/// <summary>
+		/// Used to correlating and ordering the requests and responses
+		/// (overflow is ok)
+		/// </summary>
+		public long ID { get; set; }
+
+		/// <summary>
 		/// The operation of the call context should match SocketAsyncEventArgs.LastOperation on the callback
 		/// </summary>
 		public SocketAsyncOperation Operation { get; set; }

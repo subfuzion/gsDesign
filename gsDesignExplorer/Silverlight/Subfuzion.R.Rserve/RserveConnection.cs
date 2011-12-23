@@ -1,20 +1,55 @@
 ﻿namespace Subfuzion.R.Rserve
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Net;
 	using System.Net.Sockets;
+	using System.Threading;
+	using System.Threading.Tasks;
 	using Helpers;
 	using Protocol;
+
+	/*
+		Rserve communication is done over any reliable connection-oriented
+		protocol (usually TCP/IP or local sockets). After the connection is
+		established, the server sends 32 bytes of ID-string defining the
+		capabilities of the server. Each attribute of the ID-string is 4 bytes
+		long and is meant to be user-readable (i.e. don't use special characters),
+		and it's a good idea to make "\r\n\r\n" the last attribute
+
+		the ID string must be of the form:
+
+		[0] "Rsrv" - R-server ID signature
+		[4] "0100" - version of the R server
+		[8] "QAP1" - protocol used for communication (here Quad Attributes Packets v1)
+		[12] any additional attributes follow. \r\n<space> and '-' are ignored.
+
+		optional attributes
+		(in any order; it is legitimate to put dummy attributes, like "----" or
+		"    " between attributes):
+
+		"R151" - version of R (here 1.5.1)
+		"ARpt" - authorization required (here "pt"=plain text, "uc"=unix crypt,
+				 "m5"=MD5)
+				 connection will be closed if the first packet is not CMD_login.
+				 if more AR.. methods are specified, then client is free to
+				 use the one he supports (usually the most secure)
+		"K***" - key if encoded authentification is challenged (*** is the key)
+				 for unix crypt the first two letters of the key are the salt
+				 required by the server
+	*/
 
 	public class RserveConnection : NotifyPropertyChangedBase
 	{
 		#region Fields
 
-		private static readonly int DefaultBufferSize = 1*1024*1024;
-		private readonly byte[] _messageBuffer = new byte[DefaultBufferSize];
-
-		private int _pending;
+		private const int DefaultBufferSize = 1*1024*1024;
+		private const int NumberRetries = 3;
+		private static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
+		private static long NextID;
+		private readonly Queue<CallContext> CallQueue = new Queue<CallContext>();
+		private readonly AutoResetEvent _waitHandle = new AutoResetEvent(false);
 		private Socket _socket;
 
 		#endregion
@@ -73,15 +108,7 @@
 
 		public Action<object, object[]> Logger
 		{
-			get
-			{
-				if (_logger == null)
-				{
-					_logger = (msg, args) => Console.WriteLine(msg.ToString(), args);
-				}
-
-				return _logger;
-			}
+			get { return _logger ?? (_logger = (msg, args) => Console.WriteLine(msg.ToString(), args)); }
 		}
 
 		[Conditional("DEBUG")]
@@ -99,13 +126,25 @@
 			}
 		}
 
-		#endregion
-
 		private readonly byte[] _buffer = new byte[DefaultBufferSize];
 
 		private byte[] Buffer
 		{
 			get { return _buffer; }
+		}
+
+		#endregion
+
+		public void ToggleConnect(Action<ConnectionState, SocketError> callback = null)
+		{
+			if (ConnectionState == ConnectionState.Connected)
+			{
+				Disconnect(callback);
+			}
+			else
+			{
+				Connect(callback);
+			}
 		}
 
 		private void OnSocketAsyncCompleted(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
@@ -201,18 +240,18 @@
 			var endPoint = new DnsEndPoint("localhost", port);
 
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-			          {
-			          	// disable nagle's algorithm
-			          	// http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.nodelay.aspx
-			          	NoDelay = true,
-			          };
+			{
+				// disable nagle's algorithm
+				// http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.nodelay.aspx
+				NoDelay = true,
+			};
 
 			var socketAsyncEventArgs = new SocketAsyncEventArgs
-			                           {
-			                           	RemoteEndPoint = endPoint,
-			                           	UserToken =
-			                           		new CallContext {Operation = SocketAsyncOperation.Connect, ConnectionAction = callback},
-			                           };
+			{
+				RemoteEndPoint = endPoint,
+				UserToken =
+					new CallContext {Operation = SocketAsyncOperation.Connect, ConnectionAction = callback},
+			};
 
 			socketAsyncEventArgs.Completed += OnSocketAsyncCompleted;
 			if (!_socket.ConnectAsync(socketAsyncEventArgs))
@@ -300,7 +339,143 @@
 			}
 		}
 
+		private void AddQueue(CallContext callContext)
+		{
+			lock (CallQueue)
+			{
+				callContext.ID = Interlocked.Increment(ref NextID);
+
+				int queueCount = CallQueue.Count;
+
+				CallQueue.Enqueue(callContext);
+
+				// if there was nothing in the queue, then the queue processing thread is not running
+				// so start it now; otherwise, it's already running, so don't need to do anything
+				if (queueCount == 0)
+					ProcessQueueAsync();
+			}
+		}
+
+		private CallContext PeekQueue()
+		{
+			lock (CallQueue)
+			{
+				return CallQueue.Peek();
+			}
+		}
+
+		private void RemoveQueue(CallContext callContext)
+		{
+			lock (CallQueue)
+			{
+				CallContext cc = CallQueue.Dequeue();
+				if (callContext.ID != cc.ID)
+				{
+					throw new Exception(
+						"The dequeued CallContext did not match the supplied (expected) CallContext. Responses are being handled out of the expected order.");
+				}
+			}
+		}
+
+		private void ProcessQueueAsync()
+		{
+			lock (CallQueue)
+			{
+				if (CallQueue.Count == 0 || IsBusy) return;
+			}
+
+			Task.Factory.StartNew(() =>
+			{
+				try
+				{
+					IsBusy = true;
+
+					do
+					{
+						int queueCount;
+						CallContext callContext = null;
+
+						lock (CallQueue)
+						{
+							queueCount = CallQueue.Count;
+							if (queueCount == 0) return;
+							callContext = PeekQueue();
+						}
+
+						// if no more queued, then break out and end task
+						if (callContext == null) break;
+
+						callContext.ID = queueCount + 1;
+
+
+						Response response = null;
+						ErrorCode errorCode = ErrorCode.Success;
+
+						for (int i = 0; i < NumberRetries; i++)
+						{
+							DispatchRequest(
+								callContext.Request,
+								(response_, callerContext) =>
+								{
+									response = response_;
+									_waitHandle.Set();
+								},
+								(errorCode_, callerContext) =>
+								{
+									errorCode = errorCode_;
+									_waitHandle.Set();
+								},
+								callContext
+								);
+
+							_waitHandle.WaitOne(DefaultTimeOut);
+
+							// success (otherwise, continue to loop)
+							if (response != null) break;
+						}
+
+						RemoveQueue(callContext);
+
+						if (response == null)
+						{
+							callContext.ErrorAction(errorCode, callContext.UserContext);
+						}
+						else
+						{
+							callContext.CompletedAction(response, callContext.UserContext);
+						}
+					} while (true);
+				}
+				finally
+				{
+					IsBusy = false;
+				}
+			});
+		}
+
 		public void SendRequest(
+			Request request,
+			Action<Response, object> completed,
+			Action<ErrorCode, object> error,
+			object context)
+		{
+			lock (CallQueue)
+			{
+				var callContext = new CallContext
+				{
+					ID = CallQueue.Count + 1,
+					CompletedAction = completed,
+					ErrorAction = error,
+					Request = request,
+					UserContext = context,
+					Operation = SocketAsyncOperation.Send,
+				};
+
+				AddQueue(callContext);
+			}
+		}
+
+		private void DispatchRequest(
 			Request request,
 			Action<Response, object> completed,
 			Action<ErrorCode, object> error,
@@ -314,25 +489,25 @@
 					throw new Exception("Not connected");
 				}
 
-				if (IsBusy)
-				{
-					Log("Connection is busy (still waiting for response to last request");
-					throw new Exception("Connection is busy (still waiting for reponse to last request");
-				}
+				//if (IsBusy)
+				//{
+				//    Log("Connection is busy (still waiting for response to last request");
+				//    throw new Exception("Connection is busy (still waiting for reponse to last request");
+				//}
 
-				IsBusy = true;
+				//IsBusy = true;
 
 				var socketAsyncEventArgs = new SocketAsyncEventArgs
-				                           {
-				                           	UserToken = new CallContext
-				                           	            {
-				                           	            	CompletedAction = completed,
-				                           	            	ErrorAction = error,
-				                           	            	Request = request,
-				                           	            	UserContext = context,
-				                           	            	Operation = SocketAsyncOperation.Send,
-				                           	            }
-				                           };
+				{
+					UserToken = new CallContext
+					{
+						CompletedAction = completed,
+						ErrorAction = error,
+						Request = request,
+						UserContext = context,
+						Operation = SocketAsyncOperation.Send,
+					}
+				};
 
 				socketAsyncEventArgs.Completed += OnSocketAsyncCompleted;
 
@@ -415,7 +590,7 @@
 			{
 				if (response.Payload.PayloadCode == PayloadCode.Empty)
 				{
-					IsBusy = false;
+					//IsBusy = false;
 					SendRequest(callContext.Request, callContext.CompletedAction, callContext.ErrorAction, callContext);
 					return;
 				}
@@ -433,8 +608,8 @@
 				Log(e);
 			}
 
+			//IsBusy = false;
 			ReturnResult(callContext, response);
-			IsBusy = false;
 		}
 
 		private void ReturnResult(CallContext context, Response response)

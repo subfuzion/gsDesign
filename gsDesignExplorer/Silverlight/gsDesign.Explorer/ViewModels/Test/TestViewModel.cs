@@ -32,7 +32,7 @@
 			RunCommand.Requery();
 		}
 
-		public RserveClient RserveClient
+		public RserveConnection RserveClient
 		{
 			get { return App.AppViewModel.RserveClient; }
 		}

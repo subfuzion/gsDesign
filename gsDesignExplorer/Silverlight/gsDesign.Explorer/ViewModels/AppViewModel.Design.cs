@@ -175,7 +175,7 @@
 
 	class RserveRunScriptCommand
 	{
-		public RserveRunScriptCommand(string name, RserveClient client, string pathName, Action<string> success)
+		public RserveRunScriptCommand(string name, RserveConnection client, string pathName, Action<string> success)
 		{
 			Name = name;
 			RserveClient = client;
@@ -187,7 +187,7 @@
 
 		public string Name { get; set; }
 
-		public RserveClient RserveClient { get; set; }
+		public RserveConnection RserveClient { get; set; }
 
 		public string PathName { get; set; }
 

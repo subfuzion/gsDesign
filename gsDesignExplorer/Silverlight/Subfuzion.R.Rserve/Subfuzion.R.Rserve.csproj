@@ -72,7 +72,6 @@
     <Compile Include="Protocol\Response.cs" />
     <Compile Include="Protocol\ResponseHeader.cs" />
     <Compile Include="Protocol\Rexpression.cs" />
-    <Compile Include="RserveClient.cs" />
     <Compile Include="RserveConnection.cs" />
     <Compile Include="RserveException.cs" />
     <Compile Include="ProtocolSettings.cs" />

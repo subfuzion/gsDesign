@@ -8,7 +8,7 @@
 
 	public partial class AppViewModel
 	{
-		public RserveClient RserveClient { get; private set; }
+		public RserveConnection RserveClient { get; private set; }
 
 		private string _input;
 		public string Input
