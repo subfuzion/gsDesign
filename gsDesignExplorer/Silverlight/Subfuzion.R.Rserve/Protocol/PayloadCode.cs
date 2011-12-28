@@ -3,7 +3,12 @@
 	/// <summary>
 	/// Used for the transport protocol (QAP1): indicates to rserve the type of content
 	/// contained in the request payload. Don't confuse with R expression types.
+	/// These correspond to DT_ types in Rsrv.h
 	/// </summary>
+	/// <remarks>
+	/// Only Integer, String, ByteStream, and Rexpression are used in current
+	/// version of Rserve.
+	/// </remarks>
 	public enum PayloadCode : byte
 	{
 		Empty = 0,

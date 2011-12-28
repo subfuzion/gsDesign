@@ -45,7 +45,7 @@
 		#region Fields
 
 		private const int DefaultBufferSize = 1*1024*1024;
-		private const int NumberRetries = 3;
+		private const int MaxAttempts = 1; //3;
 		private static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
 		private static long NextID;
 		private readonly Queue<CallContext> CallQueue = new Queue<CallContext>();
@@ -408,7 +408,7 @@
 						Response response = null;
 						ErrorCode errorCode = ErrorCode.Success;
 
-						for (int i = 0; i < NumberRetries; i++)
+						for (int i = 0; i < MaxAttempts; i++)
 						{
 							DispatchRequest(
 								callContext.Request,
@@ -425,10 +425,25 @@
 								callContext
 								);
 
-							_waitHandle.WaitOne(DefaultTimeOut);
+							// _waitHandle.WaitOne(DefaultTimeOut);
+							_waitHandle.WaitOne();
 
 							// success (otherwise, continue to loop)
-							if (response != null) break;
+							if (response != null && response.Payload.PayloadCode != PayloadCode.Empty)
+							{
+								break;
+							}
+
+							//Disconnect();
+
+							//var waitHandle = new AutoResetEvent(false);
+							//Connect((connectionState_, socketError_) => waitHandle.Set());
+							//waitHandle.WaitOne(DefaultTimeOut);
+
+							//if (ConnectionState != ConnectionState.Connected)
+							//{
+							//    throw new Exception("Connection failure");
+							//}
 						}
 
 						RemoveQueue(callContext);
@@ -584,12 +599,12 @@
 
 			try
 			{
-				if (response.Payload.PayloadCode == PayloadCode.Empty)
-				{
-					//IsBusy = false;
-					SendRequest(callContext.Request, callContext.CompletedAction, callContext.ErrorAction, callContext);
-					return;
-				}
+				//if (response.Payload.PayloadCode == PayloadCode.Empty)
+				//{
+				//    //IsBusy = false;
+				//    SendRequest(callContext.Request, callContext.CompletedAction, callContext.ErrorAction, callContext);
+				//    return;
+				//}
 
 				if (response.Payload.PayloadCode == PayloadCode.Rexpression)
 				{

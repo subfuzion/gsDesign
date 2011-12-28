@@ -215,7 +215,7 @@
 				string.Format(@"library(""{0}"")", "gsDesign"),
 				Escape(string.Format(@"setwd(""{0}"")", Directory)),
 				string.Format(@"source(""{0}"")", FileName),
-				string.Format(@"capture.output(print.gsDesign({0}))", Name),
+				// string.Format(@"capture.output(print.gsDesign({0}))", Name),
 			};
 
 			var command = string.Join(";", commands);

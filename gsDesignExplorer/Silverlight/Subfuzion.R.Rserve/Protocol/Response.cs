@@ -1,19 +1,9 @@
 ﻿namespace Subfuzion.R.Rserve.Protocol
 {
-	using System;
 	using Helpers;
 
 	public class Response
 	{
-		private static byte[] _previousBuffer1 = new byte[1024];
-		private static string _previousBuffer1str;
-
-		private static byte[] _previousBuffer2 = new byte[1024];
-		private static string _previousBuffer2str;
-
-		private static byte[] _previousBuffer3 = new byte[1024];
-		private static string _previousBuffer3str;
-
 		public Response(Request request, byte[] responseBytes)
 		{
 			RawBytes = responseBytes;
@@ -29,21 +19,8 @@
 			}
 			else
 			{
-				var previous3 = _previousBuffer3.GetUTF8String();
-				var previous2 = _previousBuffer2.GetUTF8String();
-				var previous1 = _previousBuffer1.GetUTF8String();
-				var current = responseBytes.GetUTF8String();
 				Payload = new Payload();
 			}
-
-			Array.Copy(_previousBuffer2, _previousBuffer3, 1024);
-			_previousBuffer3str = _previousBuffer3.GetUTF8String();
-
-			Array.Copy(_previousBuffer1, _previousBuffer2, 1024);
-			_previousBuffer2str = _previousBuffer2.GetUTF8String();
-
-			Array.Copy(responseBytes, _previousBuffer1, 1024);
-			_previousBuffer1str = _previousBuffer1.GetUTF8String();
 		}
 
 		public byte[] RawBytes { get; private set; }
@@ -85,7 +62,7 @@
 
 		public override string ToString()
 		{
-			return string.Format("(Response) ErrorCode:{0} for Command:{1} Payload:{2}", ErrorCode, Request.CommandCode, Payload);
+			return string.Format("(Response) ErrorCode:{0} for Command:{1} Payload:{2}, Raw:{3}", ErrorCode, Request.CommandCode, Payload, RawBytes.GetUTF8String());
 		}
 	}
 }

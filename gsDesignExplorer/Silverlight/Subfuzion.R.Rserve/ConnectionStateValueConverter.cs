@@ -9,6 +9,7 @@ namespace Subfuzion.R.Rserve
 	{
 		private static readonly SolidColorBrush Red = new SolidColorBrush(Colors.Red);
 		private static readonly SolidColorBrush Green = new SolidColorBrush(Colors.Green);
+		private static readonly SolidColorBrush Yellow = new SolidColorBrush(Colors.Yellow);
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
@@ -21,6 +22,9 @@ namespace Subfuzion.R.Rserve
 
 					case ConnectionState.Connected:
 						return Green;
+
+					default:
+						return Yellow;
 				}
 			}
 
@@ -33,6 +37,10 @@ namespace Subfuzion.R.Rserve
 
 					case ConnectionState.Disconnected:
 						return "Connect";
+
+					case ConnectionState.Connecting:
+					case ConnectionState.Disconnecting:
+						return Yellow;
 				}
 			}
 

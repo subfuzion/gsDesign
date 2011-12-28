@@ -26,6 +26,8 @@ namespace Subfuzion.R.Rserve.Protocol
 			get { return _rexpressionType; }
 		}
 
+		public bool HasAttributes { get; private set; }
+
 		internal byte[] Data
 		{
 			get { return _data; }
@@ -55,7 +57,16 @@ namespace Subfuzion.R.Rserve.Protocol
 
 			try
 			{
-				var type = (RexpressionType) bytes[0];
+				byte rawType = bytes[0];
+
+				if ((rawType & (byte)RexpressionType.HasAttribute) == (byte)RexpressionType.HasAttribute)
+				{
+					rawType ^= (byte) RexpressionType.HasAttribute;
+				}
+
+
+				var type = (RexpressionType) rawType;
+
 
 				var lengthBytes = new byte[4];
 				Array.Copy(bytes, 1, lengthBytes, 0, DataSizeHeaderSize);
