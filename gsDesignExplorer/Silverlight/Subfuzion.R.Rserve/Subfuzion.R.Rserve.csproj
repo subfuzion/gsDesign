@@ -51,9 +51,7 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CallContext.cs" />
@@ -64,6 +62,7 @@
     <Compile Include="Protocol\CommandCode.cs" />
     <Compile Include="Protocol\PayloadCode.cs" />
     <Compile Include="Protocol\ErrorCode.cs" />
+    <Compile Include="Protocol\ProtocolParser.cs" />
     <Compile Include="Protocol\RexpressionType.cs" />
     <Compile Include="Protocol\Payload.cs" />
     <Compile Include="Protocol\ProtocolHeader.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Protocol\Response.cs" />
     <Compile Include="Protocol\ResponseHeader.cs" />
     <Compile Include="Protocol\Rexpression.cs" />
+    <Compile Include="Protocol\Tag.cs" />
     <Compile Include="RserveConnection.cs" />
     <Compile Include="RserveException.cs" />
     <Compile Include="ProtocolSettings.cs" />

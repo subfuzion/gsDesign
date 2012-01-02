@@ -24,7 +24,7 @@
 		public override string ToString()
 		{
 			return string.Format("(Request) CommandCode:{0}, PayloadCode:{1}, PayloadSize:{2}",
-				CommandCode.ToString(),
+				CommandCode,
 				Payload != null ? Payload.PayloadCode : PayloadCode.Empty,
 				PayloadSize);
 		}

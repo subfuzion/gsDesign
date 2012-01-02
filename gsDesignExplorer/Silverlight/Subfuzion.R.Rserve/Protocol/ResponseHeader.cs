@@ -1,30 +1,19 @@
 ﻿namespace Subfuzion.R.Rserve.Protocol
 {
-	using System;
-
 	public class ResponseHeader : ProtocolHeader
 	{
-		public ResponseHeader(byte[] bytes)
-		{
-			if (bytes == null || bytes.Length < 16)
-			{
-				throw new ArgumentException("Not a valid response header");
-			}
-
-			Code = BitConverter.ToInt32(bytes, 0);
-			PayloadSize = BitConverter.ToInt32(bytes, 4);
-			PayloadOffset = BitConverter.ToInt32(bytes, 8);
-			PayloadSize2 = BitConverter.ToInt32(bytes, 12);
-		}
+		internal static readonly int ResponseHeaderSize = 16;
 
 		public bool IsOk
 		{
-			get { return (Code & 0x01FFFF) == 0x010001; }
+			//get { return ((int)CommandCode & (int)CommandCode.ResponseOk) == (int)CommandCode.ResponseOk; }
+			get { return ((int) CommandCode & 15) == 1; }
 		}
 
 		public bool IsError
 		{
-			get { return (Code & 0x01FFFF) == 0x010002; }
+			//get { return ((int)CommandCode & (int)CommandCode.ResponseError) == (int)CommandCode.ResponseError; }
+			get { return ((int) CommandCode & 15) == 2; }
 		}
 
 		public ErrorCode ErrorCode
@@ -34,13 +23,13 @@
 
 		public int ErrorValue
 		{
-			get { return ((Code >> 24) & 0x7F); }
+			get { return (((int)CommandCode >> 24) & 0x7F); }
 		}
 
 		public override string ToString()
 		{
 			return string.Format("IsOk:{0} IsError:{1} Code:{2} ErrorCode:{3} PayloadSize:{4} PayloadOffset:{5} PayloadSize2:{6}",
-				IsOk, IsError, Code, ErrorCode, PayloadSize, PayloadOffset, PayloadSize2);
+				IsOk, IsError, CommandCode, ErrorCode, PayloadSize, PayloadOffset, PayloadSize2);
 		}
 	}
 }

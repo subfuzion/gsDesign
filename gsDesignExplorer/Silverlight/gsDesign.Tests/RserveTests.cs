@@ -145,7 +145,7 @@
 					{
 						count++;
 
-						var rexp = Rexpression.FromBytes(response.Payload.Content);
+						var rexp = ProtocolParser.ParseRexpression(response.Payload.Content);
 						if (rexp.IsDoubleList)
 						{
 							var list = rexp.ToDoubleList();
@@ -167,7 +167,7 @@
 					}
 					else if (payloadCode == PayloadCode.Integer)
 					{
-						var resp = new Response(response.Request, response.RawBytes);
+						var resp = ProtocolParser.ParseResponse(response.Request, response.RawBytes);
 						throw new Exception("PayloadCode.Integer");
 					}
 					else

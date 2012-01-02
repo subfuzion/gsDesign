@@ -5,12 +5,13 @@ namespace Subfuzion.R.Rserve.Protocol
 	using System;
 	using System.Collections.Generic;
 	using System.Text;
+	using Helpers;
 
 	public class Rexpression
 	{
-		static readonly int TypeHeaderSize = 1;
-		static readonly int DataSizeHeaderSize = 3;
-		static readonly int RexpressionHeaderSize = TypeHeaderSize + DataSizeHeaderSize;
+		internal static readonly int TypeHeaderSize = 1;
+		internal static readonly int DataSizeHeaderSize = 3;
+		internal static readonly int RexpressionHeaderSize = TypeHeaderSize + DataSizeHeaderSize;
 
 		private readonly RexpressionType _rexpressionType;
 		private readonly byte[] _data;
@@ -26,7 +27,9 @@ namespace Subfuzion.R.Rserve.Protocol
 			get { return _rexpressionType; }
 		}
 
-		public bool HasAttributes { get; private set; }
+		public bool HasAttribute { get; internal set; }
+
+		public Rexpression Attribute { get; internal set; }
 
 		internal byte[] Data
 		{
@@ -48,41 +51,34 @@ namespace Subfuzion.R.Rserve.Protocol
 			return contents;
 		}
 
-		public static Rexpression FromBytes(byte[] bytes)
-		{
-			if (bytes == null || bytes.Length < RexpressionHeaderSize)
-			{
-				throw new ArgumentException();
-			}
+		//public static Rexpression FromBytes(byte[] bytes)
+		//{
+		//    if (bytes == null || bytes.Length < RexpressionHeaderSize)
+		//    {
+		//        throw new ArgumentException();
+		//    }
 
-			try
-			{
-				byte rawType = bytes[0];
+		//    try
+		//    {
+		//        var type = (RexpressionType) (bytes[0] & 0x3F);
+		//        var hasAttribute = (bytes[0] & (byte) RexpressionType.HasAttribute) == (byte) RexpressionType.HasAttribute;
 
-				if ((rawType & (byte)RexpressionType.HasAttribute) == (byte)RexpressionType.HasAttribute)
-				{
-					rawType ^= (byte) RexpressionType.HasAttribute;
-				}
+		//        // TODO: handle long data
+		//        var lengthBytes = new byte[4];
+		//        Array.Copy(bytes, 1, lengthBytes, 0, DataSizeHeaderSize);
+		//        var length = BitConverter.ToInt32(lengthBytes, 0);
 
+		//        var data = new byte[length];
+		//        Array.Copy(bytes, RexpressionHeaderSize, data, 0, length);
 
-				var type = (RexpressionType) rawType;
-
-
-				var lengthBytes = new byte[4];
-				Array.Copy(bytes, 1, lengthBytes, 0, DataSizeHeaderSize);
-				var length = BitConverter.ToInt32(lengthBytes, 0);
-
-				var data = new byte[length];
-				Array.Copy(bytes, RexpressionHeaderSize, data, 0, length);
-
-				return new Rexpression(type, data);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
+		//        return new Rexpression(type, data) {HasAttribute = hasAttribute};
+		//    }
+		//    catch (Exception e)
+		//    {
+		//        Console.WriteLine(e);
+		//        throw;
+		//    }
+		//}
 
 		public static Rexpression FromString(string s)
 		{
@@ -93,6 +89,74 @@ namespace Subfuzion.R.Rserve.Protocol
 			bytes[s.Length] = 0;
 
 			return new Rexpression(RexpressionType.StringVector, bytes);
+		}
+
+		public override string ToString()
+		{
+			// return string.Join("\n", ToStringList());
+			return ToFormattedString().Trim();
+		}
+
+		public string ToFormattedString(string separator = "\n", bool recursive = true)
+		{
+			var sb = new StringBuilder();
+
+			if (IsVector)
+			{
+				var list = ToVector();
+
+				foreach (var r in list)
+				{
+					sb.Append(r.ToFormattedString()).Append(separator);
+				}
+			}
+
+			if (IsStringList)
+			{
+				var list = ToStringList();
+
+				foreach (var s in list)
+				{
+					sb.Append(s).Append(separator);
+				}
+			}
+
+			if (IsDoubleList)
+			{
+				var list = ToDoubleList();
+
+				foreach (var d in list)
+				{
+					sb.Append(d).Append(separator);
+				}
+			}
+
+			if (IsBoolArray)
+			{
+				var list = ToBoolArray();
+
+				foreach (var b in list)
+				{
+					sb.Append(b).Append(separator);
+				}
+			}
+
+			if (IsListTags)
+			{
+				var list = ToListTags();
+
+				foreach (var tag in list)
+				{
+					sb.Append(tag.Name.ToFormattedString()).Append('=').Append(tag.Value.ToFormattedString()).Append('\n');
+				}
+			}
+
+			if (IsSymbolName)
+			{
+				sb.Append(ToSymbolName()).Append(separator);
+			}
+
+			return sb.ToString();
 		}
 
 		#region Conversions
@@ -137,9 +201,61 @@ namespace Subfuzion.R.Rserve.Protocol
 			return list;
 		}
 
-		public override string ToString()
+		#endregion
+
+		#region Vector
+
+		public bool IsVector
 		{
-			return string.Join("\n", ToStringList());
+			get { return RexpressionType == RexpressionType.Vector || RexpressionType == RexpressionType.ExpressionVector; }
+		}
+
+		public List<Rexpression> ToVector()
+		{
+			if (!IsVector)
+			{
+				throw new InvalidOperationException("expression is not a vector");
+			}
+
+			var list = new List<Rexpression>();
+
+			var offset = 0;
+			var size = DataSize;
+
+			while (offset < size)
+			{
+				var rexp = ProtocolParser.ParseRexpression(Data, ref offset);
+				list.Add(rexp);
+			}
+
+			return list;
+		}
+
+		#endregion
+
+		#region Bool Array
+
+		public bool IsBoolArray
+		{
+			get { return RexpressionType == RexpressionType.BoolArray; }
+		}
+
+		public List<bool> ToBoolArray()
+		{
+			if (!IsBoolArray)
+			{
+				throw new InvalidOperationException("expression is not a bool array");
+			}
+
+			var list = new List<bool>();
+			var count = DataSize/sizeof (byte);
+
+			for (int offset = 0; offset < DataSize; offset += sizeof(byte))
+			{
+				list.Add(BitConverter.ToBoolean(Data, offset));
+			}
+
+			return list;
 		}
 
 		#endregion
@@ -197,6 +313,58 @@ namespace Subfuzion.R.Rserve.Protocol
 		}
 
 		#endregion
+
+		#region List Tag
+
+		public bool IsListTags
+		{
+			get { return RexpressionType == RexpressionType.ListTags; }
+		}
+
+		public List<Tag> ToListTags()
+		{
+			if (!IsListTags)
+			{
+				throw new InvalidOperationException("expression is not a list of tags");
+			}
+
+			var list = new List<Tag>();
+
+			var offset = 0;
+			var size = DataSize;
+
+			while (offset < size)
+			{
+				var name = ProtocolParser.ParseRexpression(Data, ref offset);
+				var value = ProtocolParser.ParseRexpression(Data, ref offset);
+				list.Add(new Tag { Name = name, Value = value });
+			}
+
+			return list;
+			
+		}
+
+		#endregion
+
+		#region Symbol Name
+
+		public bool IsSymbolName
+		{
+			get { return RexpressionType == RexpressionType.SymbolName; }
+		}
+
+		public string ToSymbolName()
+		{
+			if (!IsSymbolName)
+			{
+				throw new InvalidOperationException("expression is not a symbol name");
+			}
+
+			return Data.GetUTF8String();
+		}
+
+		#endregion
+
 
 		#endregion
 

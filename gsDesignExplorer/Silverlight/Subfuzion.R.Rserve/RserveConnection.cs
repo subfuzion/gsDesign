@@ -44,7 +44,7 @@
 	{
 		#region Fields
 
-		private const int DefaultBufferSize = 1*1024*1024;
+		private const int DefaultBufferSize = 8 * 1024;
 		private const int MaxAttempts = 1; //3;
 		private static readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
 		private static long NextID;
@@ -280,7 +280,9 @@
 
 			Log("Connection made, listening for Rserve handshake");
 
-			var handshakeBuffer = new byte[32];
+			// WARNING! SHOULD BE 32-BYTES, but there was a total of 42 bytes getting received.
+			// Can't find any documentation on the extra bytes (does it have something to do with sessions?)
+			var handshakeBuffer = new byte[64];
 			socketAsyncEventArgs.SetBuffer(handshakeBuffer, 0, handshakeBuffer.Length);
 
 			// the handshake gets a special handler
@@ -314,7 +316,7 @@
 					throw new Exception("Rserve disconnected during handshake");
 				}
 
-				ProtocolSettings = ProtocolSettings.Parse(socketAsyncEventArgs.Buffer);
+				ProtocolSettings = ProtocolParser.ParseHandshake(socketAsyncEventArgs.Buffer);
 				ConnectionState = socketAsyncEventArgs.SocketError == SocketError.Success
 					? ConnectionState.Connected
 					: ConnectionState.Disconnected;
@@ -568,6 +570,11 @@
 			}
 		}
 
+		private int expectedByteCount;
+		private ResponseHeader responseHeader;
+		private byte[] receiveBuffer;
+		private int receiveBufferIndex;
+
 		private void HandleReceiveCompleted(SocketAsyncEventArgs socketAsyncEventArgs)
 		{
 			Log("Received response, parsing it");
@@ -579,71 +586,50 @@
 				throw new Exception("HandleReceivedCompleted: CallContext is null");
 			}
 
-			if (socketAsyncEventArgs.Buffer[0] == 0)
+			var bytesTransferred = socketAsyncEventArgs.BytesTransferred;
+
+			Response response = null;
+
+			if (responseHeader == null)
 			{
-				for (int i = 1; i < 32; i++)
-				{
-					if (socketAsyncEventArgs.Buffer[i] != 0) break;
-				}
+				responseHeader = ProtocolParser.ParseResponseHeader(socketAsyncEventArgs.Buffer);
+				expectedByteCount = ResponseHeader.ResponseHeaderSize + responseHeader.PayloadSize;
+				receiveBuffer = new byte[expectedByteCount];
+				receiveBufferIndex = 0;
+			}
 
-				if (!_socket.ReceiveAsync(socketAsyncEventArgs))
-				{
-					OnSocketAsyncCompleted(_socket, socketAsyncEventArgs);
-				}
+			Array.Copy(socketAsyncEventArgs.Buffer, 0, receiveBuffer, receiveBufferIndex, bytesTransferred);
+			receiveBufferIndex += bytesTransferred;
+			expectedByteCount -= bytesTransferred;
 
+			if (expectedByteCount > 0)
+			{
+				Listen(socketAsyncEventArgs);
 				return;
 			}
 
-
-			var response = new Response(callContext.Request, socketAsyncEventArgs.Buffer);
-
-			try
-			{
-				//if (response.Payload.PayloadCode == PayloadCode.Empty)
-				//{
-				//    //IsBusy = false;
-				//    SendRequest(callContext.Request, callContext.CompletedAction, callContext.ErrorAction, callContext);
-				//    return;
-				//}
-
-				if (response.Payload.PayloadCode == PayloadCode.Rexpression)
-				{
-					Rexpression rexp = Rexpression.FromBytes(response.Payload.Content);
-				}
-				else
-				{
-				}
-			}
-			catch (Exception e)
-			{
-				Log(e);
-			}
-
-			//IsBusy = false;
+			response = ProtocolParser.ParseResponse(callContext.Request, receiveBuffer);
+			responseHeader = null;
+			receiveBuffer = null;
+			receiveBufferIndex = 0;
 			ReturnResult(callContext, response);
 		}
 
 		private void ReturnResult(CallContext context, Response response)
 		{
-			if (context != null)
+			if (context != null && context.CompletedAction != null)
 			{
-				if (context.CompletedAction != null)
-				{
-					// Deployment.Current.Dispatcher.BeginInvoke(() => context.CompletedAction(response, context.UserContext));
-					context.CompletedAction(response, context.UserContext);
-				}
+				// Deployment.Current.Dispatcher.BeginInvoke(() => context.CompletedAction(response, context.UserContext));
+				context.CompletedAction(response, context.UserContext);
 			}
 		}
 
 		private void ReturnError(CallContext context, ErrorCode errorCode)
 		{
-			if (context != null)
+			if (context != null && context.ErrorAction != null)
 			{
-				if (context.ErrorAction != null)
-				{
-					// Deployment.Current.Dispatcher.BeginInvoke(() => context.ErrorAction(errorCode, context.UserContext));
-					context.ErrorAction(errorCode, context.UserContext);
-				}
+				// Deployment.Current.Dispatcher.BeginInvoke(() => context.ErrorAction(errorCode, context.UserContext));
+				context.ErrorAction(errorCode, context.UserContext);
 			}
 		}
 	}

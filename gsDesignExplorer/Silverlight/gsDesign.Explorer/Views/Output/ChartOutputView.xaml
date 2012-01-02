@@ -1,16 +1,16 @@
 ﻿<UserControl x:Class="gsDesign.Explorer.Views.Output.ChartOutputView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:Output="clr-namespace:gsDesign.Explorer.ViewModels.Output" mc:Ignorable="d" d:DesignHeight="300"
-             d:DesignWidth="400">
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:Output="clr-namespace:gsDesign.Explorer.ViewModels.Output" mc:Ignorable="d" d:DesignHeight="300"
+			 d:DesignWidth="400">
 
 	<UserControl.Resources>
 		<Output:PlotTypeValueConverter x:Key="plotTypeValueConverter" />
 		<Output:PlotRenderingValueConverter x:Key="plotRenderingValueConverter" />
 	</UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="#f7f6f6">
+	<Grid x:Name="LayoutRoot" Background="#f7f6f6" DataContext="{Binding Source={StaticResource AppViewModel}}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto" />
 			<RowDefinition Height="*" />
@@ -20,17 +20,27 @@
 		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4">
 			<TextBlock Text="Plot Type" Margin="16 0 4 0" VerticalAlignment="Center" />
 			<ComboBox Margin="4 0 4 0" VerticalAlignment="Center" Width="160"
-			          ItemsSource="{Binding Path=CurrentDesign.PlotType, Mode=OneWay, Converter={StaticResource plotTypeValueConverter}}"
-			          SelectedItem="{Binding Path=CurrentDesign.PlotType, Mode=TwoWay, Converter={StaticResource plotTypeValueConverter}}" />
+					  ItemsSource="{Binding Path=CurrentDesign.PlotType, Mode=OneWay, Converter={StaticResource plotTypeValueConverter}}"
+					  SelectedItem="{Binding Path=CurrentDesign.PlotType, Mode=TwoWay, Converter={StaticResource plotTypeValueConverter}}" />
 
 			<TextBlock Text="Rendering" Margin="16 0 4 0" VerticalAlignment="Center" />
 			<ComboBox Margin="4 0 4 0" VerticalAlignment="Center" Width="175"
-			          ItemsSource="{Binding Path=CurrentDesign.PlotRendering, Mode=OneWay, Converter={StaticResource plotRenderingValueConverter}}"
-			          SelectedItem="{Binding Path=CurrentDesign.PlotRendering, Mode=TwoWay, Converter={StaticResource plotRenderingValueConverter}}" />
+					  ItemsSource="{Binding Path=CurrentDesign.PlotRendering, Mode=OneWay, Converter={StaticResource plotRenderingValueConverter}}"
+					  SelectedItem="{Binding Path=CurrentDesign.PlotRendering, Mode=TwoWay, Converter={StaticResource plotRenderingValueConverter}}" />
 
 		</StackPanel>
 
-		<Image Grid.Row="1" Source="/gsDesign.Explorer;component/Assets/Images/Samples/Plot.png" Stretch="None"
-		       VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Path=AfterRunExecutedVisibility}" />
+
+		<!--ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+			<Image Source="/gsDesign.Explorer;component/Assets/Images/Samples/Plot.png" Stretch="None"
+			   VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Path=AfterRunExecutedVisibility}" /-->
+			<!--Image Source="{Binding Path=OutputPlot, Mode=OneWay}" Stretch="None"
+			   VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible" />
+		</ScrollViewer-->
+
+		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+			<Image Source="{Binding Path=OutputPlot, Mode=OneWay}" Stretch="None"
+			   VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible" />
+		</ScrollViewer>
 	</Grid>
 </UserControl>

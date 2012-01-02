@@ -54,26 +54,26 @@
 			return payload;
 		}
 
-		public static Payload FromEncodedBytes(byte[] rawBytes, int offset)
-		{
-			// get the data type (PayloadCode) of the payload content
-			// (it will be either Rexpression or ByteStream)
-			var transportCode = (PayloadCode) rawBytes[offset];
+		//public static Payload FromEncodedBytes(byte[] rawBytes, int offset)
+		//{
+		//    // get the data type (PayloadCode) of the payload content
+		//    // (it will be either Rexpression or ByteStream)
+		//    var transportCode = (PayloadCode) rawBytes[offset];
 
-			var length = 0;
+		//    var length = 0;
 
-			if (transportCode != PayloadCode.Empty && Enum.IsDefined(typeof(PayloadCode), transportCode))
-			{
-				var lengthBytes = new byte[4];
-				Array.Copy(rawBytes, offset + 1, lengthBytes, 0, 3);
-				length = BitConverter.ToInt32(lengthBytes, 0);
-			}
+		//    if (transportCode != PayloadCode.Empty && Enum.IsDefined(typeof(PayloadCode), transportCode))
+		//    {
+		//        var lengthBytes = new byte[4];
+		//        Array.Copy(rawBytes, offset + 1, lengthBytes, 0, 3);
+		//        length = BitConverter.ToInt32(lengthBytes, 0);
+		//    }
 
-			var content = new byte[length];
-			Array.Copy(rawBytes, offset + 4, content, 0, content.Length);
+		//    var content = new byte[length];
+		//    Array.Copy(rawBytes, offset + 4, content, 0, content.Length);
 
-			return new Payload(transportCode, content);
-		}
+		//    return new Payload(transportCode, content);
+		//}
 
 		public static Payload FromInteger(int value)
 		{

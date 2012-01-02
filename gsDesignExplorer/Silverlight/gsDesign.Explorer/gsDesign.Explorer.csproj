@@ -80,8 +80,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows">
       <Private>False</Private>
     </Reference>
@@ -92,22 +90,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Data.DataForm.Toolkit">
-      <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Data.DataForm.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.Input.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Data.Toolkit">
-      <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Data.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
-      <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
@@ -115,14 +100,8 @@
     <Reference Include="System.Windows.Controls.Layout.Toolkit">
       <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Theming.Toolkit">
-      <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Controls.Toolkit">
       <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit.Internals">
-      <HintPath>..\..\..\ThirdParty\Toolkit\dec11\Bin\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
@@ -134,6 +113,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Rserve\EvalCommand.cs" />
     <Compile Include="Utilities\FileManager.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\ErrorPowerTiming.cs" />
     <Compile Include="ViewModels\Design\ErrorPowerTiming\IntervalSpacingValueConverter.cs" />

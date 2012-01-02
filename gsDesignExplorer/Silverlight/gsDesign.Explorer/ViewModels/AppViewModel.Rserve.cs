@@ -71,14 +71,14 @@
 			return !string.IsNullOrWhiteSpace(Input);
 		}
 
-		//public bool IsRunEnabled
-		//{
-		//    get
-		//    {
-		//        RunCommand.Requery();
-		//        return RunCommand.IsEnabled;
-		//    }
-		//}
+		public bool IsRunEnabled
+		{
+			get
+			{
+				RunCommand.Requery();
+				return RunCommand.IsEnabled;
+			}
+		}
 
 		#endregion
 
@@ -91,7 +91,7 @@
 			{
 				if (response.Payload.PayloadCode == PayloadCode.Rexpression)
 				{
-					var rexp = Rexpression.FromBytes(response.Payload.Content);
+					var rexp = ProtocolParser.ParseRexpression(response.Payload.Content);
 
 					if (rexp.IsStringList)
 					{

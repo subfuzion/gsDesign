@@ -4,61 +4,54 @@
 
 	public class Response
 	{
-		public Response(Request request, byte[] responseBytes)
-		{
-			RawBytes = responseBytes;
+		public byte[] RawBytes { get; set; }
 
-			Request = request;
-
-			Header = ProtocolHeader.CreateResponseHeader(responseBytes);
-
-			if (Header.IsOk && Header.PayloadSize > 0)
-			{
-				var offset = ProtocolHeader.HeaderSize + Header.PayloadOffset;
-				Payload = Payload.FromEncodedBytes(responseBytes, offset);
-			}
-			else
-			{
-				Payload = new Payload();
-			}
-		}
-
-		public byte[] RawBytes { get; private set; }
-
+		/// <summary>
+		/// Gets true if the response is OK
+		/// </summary>
 		public bool IsOk
 		{
 			get { return Header.IsOk; }
 		}
 
+		/// <summary>
+		/// Gets true if the response has an error
+		/// </summary>
 		public bool IsError
 		{
 			get { return Header.IsError; }
 		}
 
+		/// <summary>
+		/// Gets the error (status) code
+		/// </summary>
 		public ErrorCode ErrorCode
 		{
 			get { return Header.ErrorCode; }
 		}
 
+		/// <summary>
+		/// Gets the raw error value
+		/// </summary>
 		public int ErrorValue
 		{
 			get { return Header.ErrorValue; }
 		}
 
 		/// <summary>
-		/// The associated request
+		/// Gets the associated request
 		/// </summary>
-		public Request Request { get; private set; }
+		public Request Request { get; internal set; }
 
 		/// <summary>
-		/// The response header
+		/// Gets the response header
 		/// </summary>
-		public ResponseHeader Header { get; private set; }
+		public ResponseHeader Header { get; internal set; }
 
 		/// <summary>
-		/// The response payload
+		/// Gets the response payload
 		/// </summary>
-		public Payload Payload { get; private set; }
+		public Payload Payload { get; internal set; }
 
 		public override string ToString()
 		{

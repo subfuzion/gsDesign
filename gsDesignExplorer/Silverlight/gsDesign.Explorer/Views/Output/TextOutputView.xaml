@@ -7,14 +7,9 @@
 	d:DesignHeight="300" d:DesignWidth="400">
 
 	<Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource AppViewModel}}">
-		<TextBlock
-			Margin="10"
-			Text="{Binding Path=OutputText, Mode=OneWay}" FontFamily="Courier New" FontSize="12" />
-		<!--
-			Visibility="{Binding Path=BeforeRunExecutedVisibility}"
-
-		<Image Source="/gsDesign.Explorer;component/Assets/Images/Samples/Text.png" Stretch="None" VerticalAlignment="Top"
-						   HorizontalAlignment="Left" Visibility="{Binding Path=AfterRunExecutedVisibility}" />
-		-->
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+			<TextBlock Margin="10" FontFamily="Courier New" FontSize="12"
+					   Text="{Binding Path=OutputText, Mode=OneWay}" />
+		</ScrollViewer>
 	</Grid>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿namespace gsDesign.Output
 {
 	using System;
+	using System.Globalization;
 	using System.IO;
 	using System.Text;
 	using Design;
@@ -129,7 +130,7 @@
 			Writer.WriteLine();
 			AppendGSDesignFunction();
 			Writer.WriteLine();
-//			AppendPlot();
+			AppendPlot();
 
 			string script = _writer.ToString();
 			_writer.Close();
@@ -150,7 +151,7 @@
 		private void AppendHeader()
 		{
 			AppendComment("This R script was created via an export of a group sequential design");
-			AppendComment("developed in gsDesign Explorer version 2.0 on {0}", GeneratedTimestamp.ToString());
+			AppendComment("developed in gsDesign Explorer version 2.0 on {0}", GeneratedTimestamp.ToString(CultureInfo.InvariantCulture));
 			Writer.WriteLine();
 			Writer.WriteLine("###");
 			AppendComment("Design      : {0}", DesignParameters.Name);

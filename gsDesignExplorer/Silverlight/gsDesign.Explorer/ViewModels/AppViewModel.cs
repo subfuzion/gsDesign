@@ -42,6 +42,20 @@ namespace gsDesign.Explorer.ViewModels
 			}
 		}
 
+		private string _outputPlot;
+		public string OutputPlot
+		{
+			get { return _outputPlot; }
+			set
+			{
+				if (_outputPlot != value)
+				{
+					_outputPlot = value;
+					NotifyPropertyChanged("OutputPlot");
+				}
+			}
+		}
+
 		private Launcher _launcher;
 		/// <summary>
 		/// For launching Rserve (currently not being used)

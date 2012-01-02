@@ -47,12 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="System.Windows" />
-    <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Design\DesignParameters.cs" />
@@ -85,12 +80,6 @@
     <Compile Include="Output\PlotRendering.cs" />
     <Compile Include="Output\PlotType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Subfuzion.Helpers\Subfuzion.Helpers.csproj">
-      <Project>{641843FD-780C-421F-A150-AA12B170829E}</Project>
-      <Name>Subfuzion.Helpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

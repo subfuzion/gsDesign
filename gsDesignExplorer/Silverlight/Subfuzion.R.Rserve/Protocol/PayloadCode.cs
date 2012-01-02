@@ -19,6 +19,6 @@
 		ByteStream = 5,		// can contain 0
 		Rexpression = 10,	// encoded R SEXP (see RexpressionType)
 		Array = 11,			// array of objects, first 4 bytes is count (0 is legitimate)
-		Large = 64,
+		Large = 64,			// Not a value, but a flag to test; if set, the payload header contains an extra 4 bytes for the size
 	}
 }

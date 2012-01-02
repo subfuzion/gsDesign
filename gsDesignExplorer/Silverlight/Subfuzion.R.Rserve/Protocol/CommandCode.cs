@@ -42,5 +42,9 @@ namespace Subfuzion.R.Rserve.Protocol
 		SerializedEval = 0xF5,			// (raw serialized data, no header)
 		SerializedAssign = 0xF6,		// (serialized list with [[1]]=name, [[2]]=value)
 		SerializedExpressionEval = 0xF7,// (like serEval with one additional evaluation round)
+
+		// Response command codes
+		ResponseOk = 0x010001,
+		ResponseError = 0x010002,
 	}
 }

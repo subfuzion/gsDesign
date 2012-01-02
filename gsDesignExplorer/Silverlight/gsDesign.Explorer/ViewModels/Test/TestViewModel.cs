@@ -1,6 +1,7 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Test
 {
 	using System;
+	using System.Windows;
 	using Subfuzion.Helpers;
 	using Subfuzion.R.Rserve;
 	using Subfuzion.R.Rserve.Protocol;
@@ -46,7 +47,7 @@
 				{
 					_input = value;
 					NotifyPropertyChanged("Input");
-					NotifyPropertyChanged("IsRunEnabled");
+					RunCommand.Requery();
 				}
 			}
 		}
@@ -61,15 +62,6 @@
 					_output = value;
 					NotifyPropertyChanged("Output");
 				}
-			}
-		}
-
-		public bool IsRunEnabled
-		{
-			get
-			{
-				RunCommand.Requery();
-				return RunCommand.IsEnabled;
 			}
 		}
 
@@ -95,40 +87,43 @@
 
 		private void OnResponse(Response response, object context)
 		{
-			AppViewModel.OutputText = string.Empty;
-			Output = new DiagnosticInfo(response).ToString();
-
-			try
+			Deployment.Current.Dispatcher.BeginInvoke(() =>
 			{
-				if (response.Payload.PayloadCode == PayloadCode.Rexpression)
+				AppViewModel.OutputText = string.Empty;
+				Output = new DiagnosticInfo(response).ToString();
+
+				try
 				{
-					var rexp = Rexpression.FromBytes(response.Payload.Content);
-
-					if (rexp.IsStringList)
+					if (response.Payload.PayloadCode == PayloadCode.Rexpression)
 					{
-						var list = rexp.ToStringList();
+						var rexp = ProtocolParser.ParseRexpression(response.Payload.Content);
 
-						foreach (var s in list)
+						if (rexp.IsStringList)
 						{
-							AppViewModel.OutputText += string.Format("{0}\n", s);
+							var list = rexp.ToStringList();
+
+							foreach (var s in list)
+							{
+								AppViewModel.OutputText += string.Format("{0}\n", s);
+							}
 						}
-					}
 
-					if (rexp.IsDoubleList)
-					{
-						var list = rexp.ToDoubleList();
-
-						foreach (var d in list)
+						if (rexp.IsDoubleList)
 						{
-							AppViewModel.OutputText += string.Format("{0}\n", d);
+							var list = rexp.ToDoubleList();
+
+							foreach (var d in list)
+							{
+								AppViewModel.OutputText += string.Format("{0}\n", d);
+							}
 						}
 					}
 				}
-			}
-			catch (Exception e)
-			{
-				Output += string.Format("\n\n(TODO) this response is currently unhandled, raising an exception: {0}\n", e);
-			}
+				catch (Exception e)
+				{
+					Output += string.Format("\n\n(TODO) this response is currently unhandled, raising an exception: {0}\n", e);
+				}
+			});
 		}
 
 		private void OnError(ErrorCode errorCode, object context)

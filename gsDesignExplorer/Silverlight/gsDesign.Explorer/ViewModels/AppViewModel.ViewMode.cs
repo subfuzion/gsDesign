@@ -9,8 +9,6 @@
 		private void InitViewMode()
 		{
 			CurrentViewMode = ViewMode.Design;
-			BeforeRunExecutedVisibility = Visibility.Visible;
-			AfterRunExecutedVisibility = Visibility.Collapsed;
 		}
 
 		public IEnumerable<string> ViewModes
@@ -113,34 +111,6 @@
 				{
 					_testPanelVisibility = value;
 					NotifyPropertyChanged("TestPanelVisibility");
-				}
-			}
-		}
-
-		private Visibility _beforeRunExecutedVisibility;
-		public Visibility BeforeRunExecutedVisibility
-		{
-			get { return _beforeRunExecutedVisibility; }
-			set
-			{
-				if (_beforeRunExecutedVisibility != value)
-				{
-					_beforeRunExecutedVisibility = value;
-					NotifyPropertyChanged("BeforeRunExecutedVisibility");
-				}
-			}
-		}
-
-		private Visibility _afterRunExecutedVisibility;
-		public Visibility AfterRunExecutedVisibility
-		{
-			get { return _afterRunExecutedVisibility; }
-			set
-			{
-				if (_afterRunExecutedVisibility != value)
-				{
-					_afterRunExecutedVisibility = value;
-					NotifyPropertyChanged("AfterRunExecutedVisibility");
 				}
 			}
 		}
