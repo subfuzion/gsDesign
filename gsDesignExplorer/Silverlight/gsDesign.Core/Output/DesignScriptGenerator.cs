@@ -308,7 +308,8 @@
 			switch (DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionParameterCategory)
 			{
 				case SpendingFunctionParameterCategory.ParameterFree:
-					s = "sfLDOF";
+					s = "sfLDOF" +
+						"";
 					break;
 
 				case SpendingFunctionParameterCategory.OneParameter:

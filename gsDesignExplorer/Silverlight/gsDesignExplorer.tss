@@ -2,56 +2,35 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\Payload.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\Rexpression.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\RserveConnection.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\Response.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\AppViewModel.Commands.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\AppViewModel.cs</string>
       <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\AppViewModel.Design.cs</string>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\AppViewModel.Rserve.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\AppViewModel.ViewMode.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\App.xaml.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Test\TestViewModel.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Tests\RserveTests.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Output\ChartOutputView.xaml</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\PayloadCode.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\ResponseHeader.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\ErrorCode.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\ProtocolParser.cs</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\ProtocolHeader.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\RequestHeader.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\CommandCode.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\ProtocolParser.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\Rexpression.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\Request.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.R.Rserve\Protocol\RexpressionType.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Test\TestToolBar.xaml</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Rserve\EvalCommand.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Core\Output\DesignScriptGenerator.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

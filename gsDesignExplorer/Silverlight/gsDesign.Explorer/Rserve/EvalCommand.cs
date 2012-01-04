@@ -139,6 +139,11 @@
 							}
 						}
 					}
+					else if (response.Payload.PayloadCode == PayloadCode.Empty)
+					{
+						SendOutput("Failed: received an empty response");
+						return;
+					}
 
 					commandContext.CommandStep = CommandStep.CaptureResult;
 

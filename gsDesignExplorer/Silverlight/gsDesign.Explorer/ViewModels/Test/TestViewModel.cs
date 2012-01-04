@@ -98,25 +98,13 @@
 					{
 						var rexp = ProtocolParser.ParseRexpression(response.Payload.Content);
 
-						if (rexp.IsStringList)
+						if (rexp.HasAttribute)
 						{
-							var list = rexp.ToStringList();
-
-							foreach (var s in list)
-							{
-								AppViewModel.OutputText += string.Format("{0}\n", s);
-							}
+							var tags = rexp.HasAttribute ? rexp.Attribute.ToListTags() : null;
+							var tagstr = rexp.Attribute.ToFormattedString();
 						}
 
-						if (rexp.IsDoubleList)
-						{
-							var list = rexp.ToDoubleList();
-
-							foreach (var d in list)
-							{
-								AppViewModel.OutputText += string.Format("{0}\n", d);
-							}
-						}
+						AppViewModel.OutputText += rexp.ToFormattedString();
 					}
 				}
 				catch (Exception e)
