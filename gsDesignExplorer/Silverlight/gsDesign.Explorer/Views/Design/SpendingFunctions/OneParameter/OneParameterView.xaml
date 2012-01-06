@@ -81,8 +81,15 @@
 
 				</Grid>
 
-				<Grid Grid.Row="1">
-					<TextBlock x:Name="output" />
+				<Grid Grid.Row="1" Margin="8">
+					<TextBlock x:Name="output" Visibility="Collapsed" />
+					
+					<StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
+						<RadioButton Content="Compute &#945;-spending" IsChecked="True" />
+						<RadioButton Content="Compute &#929;" />
+						<RadioButton Content="Compute timing" />
+					</StackPanel>
+					
 				</Grid>
 			</Grid>
 		</ScrollViewer>
