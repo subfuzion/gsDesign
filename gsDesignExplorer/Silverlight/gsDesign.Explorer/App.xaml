@@ -10,6 +10,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/gsDesign.Explorer;component/Assets/ControlsResourceDictionary.xaml"/>
+				<ResourceDictionary Source="/gsDesign.Explorer;component/Assets/ChartResourceDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			
 			<!-- The top-level application view model -->
