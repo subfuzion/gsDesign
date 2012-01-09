@@ -3,8 +3,11 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Globalization;
+	using System.Windows;
 	using System.Windows.Controls;
+	using System.Windows.Controls.DataVisualization.Charting;
 	using System.Windows.Input;
+	using System.Windows.Shapes;
 
 	public class SampleDataItem
 	{
@@ -19,14 +22,24 @@
 			InitializeComponent();
 			InitializeData();
 
-			chart.MouseEnter += (sender, args) => chart.MouseMove += ChartOnMouseMove;
-			chart.MouseLeave += (sender, args) => chart.MouseMove -= ChartOnMouseMove;
+			Loaded += OneParameterView_Loaded;
+		}
 
-			Loaded += new System.Windows.RoutedEventHandler(OneParameterView_Loaded);
+		private void InitializeHandlers()
+		{
+			//chart.MouseMove += HandleOnMouseMove;
+			var element = chart;
+			// var element = (Series) chart.Series[0];
+			//var element = lineSeries;
+			element.MouseEnter += (sender, args) => element.MouseMove += HandleOnMouseMove;
+			element.MouseLeave += (sender, args) => element.MouseMove -= HandleOnMouseMove;
+
 		}
 
 		void OneParameterView_Loaded(object sender, System.Windows.RoutedEventArgs e)
 		{
+//			InitializeHandlers();
+
 			//var points = lineSeries.Points;
 			//int i = 0;
 			//foreach (var point in points)
@@ -35,9 +48,20 @@
 			//}
 		}
 
-		private void ChartOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
+		private bool InBounds(Point p, FrameworkElement element)
 		{
-			
+			var inBounds = (p.X >= 0 && p.X < element.ActualWidth && p.Y >= 0 && p.Y < element.ActualHeight) ? true : false;
+			return inBounds;
+		}
+
+		private void HandleOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
+		{
+			//var element = (Series) chart.Series[0];
+			var element = sender as LineSeries;
+			if (InBounds(mouseEventArgs.GetPosition(element), element))
+			{
+				ShowCoordinate(mouseEventArgs.GetPosition(element));
+			}
 		}
 
 		private void InitializeData()
@@ -65,6 +89,11 @@
 		{
 			get { return output.Text; }
 			set { output.Text = value; }
+		}
+
+		private void ShowCoordinate(Point p)
+		{
+			Output = string.Format("({0}, {1})", p.X, p.Y);
 		}
 	}
 }

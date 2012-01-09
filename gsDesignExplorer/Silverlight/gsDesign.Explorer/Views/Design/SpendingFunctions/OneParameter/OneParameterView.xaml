@@ -37,16 +37,20 @@
 						<toolkit:NumericUpDown Grid.Row="1" Margin="4" Width="60"/>
 						<TextBlock Grid.Row="2" Text="&#945;-spending" Margin="4" HorizontalAlignment="Center"/>
 					</Grid>
-
+					
 					<toolkit:Chart Grid.Row="0" Grid.Column="1" x:Name="chart" Style="{StaticResource ChartStyle}" MinHeight="250" >
 						<toolkit:Chart.Series>
-							<toolkit:LineSeries x:Name="lineSeries"
+							<toolkit:LineSeries x:Name="lineSeries" MouseMove="HandleOnMouseMove"
 									ItemsSource="{Binding}"
 									IndependentValueBinding="{Binding StepName}"
 									DependentValueBinding="{Binding Value}" DataPointStyle="{StaticResource LineDataPointStyleNone}" 
 									/>
 						</toolkit:Chart.Series>
 					</toolkit:Chart>
+
+					<Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay">
+
+					</Canvas>
 
 					<Grid Grid.Row="0" Grid.Column="2" MinWidth="70">
 						<Grid.RowDefinitions>
@@ -82,14 +86,20 @@
 				</Grid>
 
 				<Grid Grid.Row="1" Margin="8">
-					<TextBlock x:Name="output" Visibility="Collapsed" />
-					
-					<StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
-						<RadioButton Content="Compute &#945;-spending" IsChecked="True" />
-						<RadioButton Content="Compute &#929;" />
-						<RadioButton Content="Compute timing" />
-					</StackPanel>
-					
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+
+						<TextBlock Grid.Column="0" x:Name="output" />
+
+						<StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
+							<RadioButton Content="Compute &#945;-spending" IsChecked="True" />
+							<RadioButton Content="Compute &#929;" />
+							<RadioButton Content="Compute timing" />
+						</StackPanel>
+					</Grid>
 				</Grid>
 			</Grid>
 		</ScrollViewer>

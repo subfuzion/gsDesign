@@ -1,2 +1,13 @@
 <?xml version="1.0"?>
-<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml.cs</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>
