@@ -145,6 +145,8 @@
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventAccrualValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventHypothesisValueConverter.cs" />
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventSpecificationValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SpendingFunctions\OneParameter\OneParameterFamilyValueConverter.cs" />
+    <Compile Include="ViewModels\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\LanDeMetsApproximationValueConverter.cs" />
@@ -442,7 +444,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\Design\SpendingFunctions\OneParameter\" />
     <Folder Include="ViewModels\Design\SpendingFunctions\PiecewiseLinear\" />
     <Folder Include="ViewModels\Design\SpendingFunctions\ThreeParameter\" />
     <Folder Include="ViewModels\Design\SpendingFunctions\TwoParameter\" />

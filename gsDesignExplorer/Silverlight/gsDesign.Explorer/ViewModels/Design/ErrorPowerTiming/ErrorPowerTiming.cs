@@ -47,13 +47,23 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 			}
 		}
 
+		public double ErrorIncrement
+		{
+			get { return 0.1; }
+		}
+
+		public int ErrorPrecision
+		{
+			get { return 4; }
+		}
+
 		#endregion // Error
 
 		#region MinimumValidError property
 
 		public double MinimumValidError
 		{
-			get { return 0.0; }
+			get { return 0.0001; }
 		}
 
 		#endregion // MinimumValidError
@@ -62,7 +72,7 @@ namespace gsDesign.Explorer.ViewModels.Design.ErrorPowerTiming
 
 		public double MaximumValidError
 		{
-			get { return 100.0; }
+			get { return 99.9999; }
 		}
 
 		#endregion // MaximumValidError

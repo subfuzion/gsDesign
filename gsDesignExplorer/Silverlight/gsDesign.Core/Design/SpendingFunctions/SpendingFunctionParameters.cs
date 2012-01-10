@@ -2,6 +2,13 @@ namespace gsDesign.Design.SpendingFunctions
 {
 	public class SpendingFunctionParameters
 	{
+		public SpendingFunctionParameters(DesignParameters designParameters)
+		{
+			DesignParameters = designParameters;
+		}
+
+		protected DesignParameters DesignParameters { get; private set; }
+
 		#region SpendingFunctionTestingParameters property
 
 		private SpendingFunctionTestingParameters _spendingFunctionTestingParameters;
@@ -29,7 +36,7 @@ namespace gsDesign.Design.SpendingFunctions
 
 		public SpendingFunction UpperSpendingFunction
 		{
-			get { return _upperSpendingFunction ?? (_upperSpendingFunction = new SpendingFunction()); }
+			get { return _upperSpendingFunction ?? (_upperSpendingFunction = new SpendingFunction(DesignParameters)); }
 
 			set { _upperSpendingFunction = value; }
 		}
@@ -42,7 +49,7 @@ namespace gsDesign.Design.SpendingFunctions
 
 		public SpendingFunction LowerSpendingFunction
 		{
-			get { return _lowerSpendingFunction ?? (_lowerSpendingFunction = new SpendingFunction()); }
+			get { return _lowerSpendingFunction ?? (_lowerSpendingFunction = new SpendingFunction(DesignParameters)); }
 
 			set { _lowerSpendingFunction = value; }
 		}

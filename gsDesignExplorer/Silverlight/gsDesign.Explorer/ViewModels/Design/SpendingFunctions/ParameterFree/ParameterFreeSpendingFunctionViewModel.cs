@@ -5,18 +5,21 @@
 
 	public class ParameterFreeSpendingFunctionViewModel : ViewModelBase
 	{
-		private ParameterFreeSpendingFunction _parameterFreeSpendingFunction;
+		private readonly ParameterFreeSpendingFunction _parameterFreeSpendingFunction;
 
 		public ParameterFreeSpendingFunctionViewModel(ParameterFreeSpendingFunction parameterFreeSpendingFunction)
 		{
 			_parameterFreeSpendingFunction = parameterFreeSpendingFunction;
 		}
 
-		ParameterFreeSpendingFunction Model { get { return _parameterFreeSpendingFunction; } }
+		private ParameterFreeSpendingFunction Model
+		{
+			get { return _parameterFreeSpendingFunction; }
+		}
 
 		#region LanDeMetsApproximation property
 
-		 [Display(Name = "Lan-DeMets Approximation",
+		[Display(Name = "Lan-DeMets Approximation",
 			Description = "Select O'Brien Fleming or Pocock design")]
 		public LanDeMetsApproximation LanDeMetsApproximation
 		{
@@ -33,6 +36,5 @@
 		}
 
 		#endregion // LanDeMetsApproximation
-
 	}
 }

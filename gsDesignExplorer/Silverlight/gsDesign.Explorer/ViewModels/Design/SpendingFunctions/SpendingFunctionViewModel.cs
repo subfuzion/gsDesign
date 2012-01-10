@@ -1,19 +1,22 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
-	using System.ComponentModel.DataAnnotations;
+	using OneParameter;
 	using ParameterFree;
 	using gsDesign.Design.SpendingFunctions;
 
 	public class SpendingFunctionViewModel : ViewModelBase
 	{
-		private SpendingFunction _spendingFunction;
+		private readonly SpendingFunction _spendingFunction;
 
 		public SpendingFunctionViewModel(SpendingFunction spendingFunction)
 		{
 			_spendingFunction = spendingFunction;
 		}
 
-		public SpendingFunction Model { get { return _spendingFunction; } }
+		public SpendingFunction Model
+		{
+			get { return _spendingFunction; }
+		}
 
 		#region Spending function parameters
 
@@ -41,8 +44,13 @@
 
 		public ParameterFreeSpendingFunctionViewModel ParameterFreeSpendingFunctionViewModel
 		{
-			get { return _parameterFreeSpendingFunctionSpendingViewModel
-				?? (ParameterFreeSpendingFunctionViewModel = new ParameterFreeSpendingFunctionViewModel(Model.ParameterFreeSpendingFunction)); }
+			get
+			{
+				return _parameterFreeSpendingFunctionSpendingViewModel
+					??
+					(ParameterFreeSpendingFunctionViewModel =
+						new ParameterFreeSpendingFunctionViewModel(Model.ParameterFreeSpendingFunction));
+			}
 
 			set
 			{
@@ -55,6 +63,32 @@
 		}
 
 		#endregion // ParameterFreeSpendingFunctionViewModel
+
+		#region OneParameterSpendingFunctionViewModel property
+
+		private OneParameterSpendingFunctionViewModel _oneParameterSpendingFunctionViewModel;
+
+		public OneParameterSpendingFunctionViewModel OneParameterSpendingFunctionViewModel
+		{
+			get
+			{
+				return _oneParameterSpendingFunctionViewModel
+					??
+					(OneParameterSpendingFunctionViewModel =
+						new OneParameterSpendingFunctionViewModel(Model.OneParameterSpendingFunction));
+			}
+
+			set
+			{
+				if (_oneParameterSpendingFunctionViewModel != value)
+				{
+					_oneParameterSpendingFunctionViewModel = value;
+					NotifyPropertyChanged("OneParameterSpendingFunctionViewModel");
+				}
+			}
+		}
+
+		#endregion // OneParameterSpendingFunctionViewModel
 
 		#endregion
 	}

@@ -26,7 +26,7 @@
 				<ParameterFree:ParameterFreeView DataContext="{Binding Path=ParameterFreeSpendingFunctionViewModel}" />
 			</toolkit:AccordionItem>
 			<toolkit:AccordionItem Header="1-Parameter" HorizontalContentAlignment="Stretch">
-				<OneParameter:OneParameterView/>
+				<OneParameter:OneParameterView DataContext="{Binding Path=OneParameterSpendingFunctionViewModel}" />
 			</toolkit:AccordionItem>
 			<toolkit:AccordionItem Header="2-Parameter" HorizontalContentAlignment="Stretch">
 				<TwoParameter:TwoParameterView />

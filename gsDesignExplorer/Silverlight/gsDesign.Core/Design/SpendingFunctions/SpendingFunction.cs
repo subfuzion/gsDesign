@@ -1,9 +1,17 @@
 ﻿namespace gsDesign.Design.SpendingFunctions
 {
+	using OneParameter;
 	using ParameterFree;
 
 	public class SpendingFunction
 	{
+		public SpendingFunction(DesignParameters designParameters)
+		{
+			DesignParameters = designParameters;
+		}
+
+		protected DesignParameters DesignParameters { get; private set; }
+
 		#region Spending function parameters
 
 		#region SpendingFunctionParameterCategory property
@@ -29,16 +37,36 @@
 			get
 			{
 				return _parameterFreeSpendingFunction
-				       ?? (_parameterFreeSpendingFunction = new ParameterFreeSpendingFunction
-				                                            {
-				                                            	LanDeMetsApproximation = LanDeMetsApproximation.OBrienFleming
-				                                            });
+					?? (_parameterFreeSpendingFunction = new ParameterFreeSpendingFunction(DesignParameters)
+					{
+						LanDeMetsApproximation = LanDeMetsApproximation.OBrienFleming
+					});
 			}
 
 			set { _parameterFreeSpendingFunction = value; }
 		}
 
 		#endregion // ParameterFreeSpendingFunction
+
+		#region OneParameterSpendingFunction property
+
+		private OneParameterSpendingFunction _oneParameterSpendingFunction;
+
+		public OneParameterSpendingFunction OneParameterSpendingFunction
+		{
+			get
+			{
+				return _oneParameterSpendingFunction
+					?? (_oneParameterSpendingFunction = new OneParameterSpendingFunction(DesignParameters)
+					{
+						OneParameterFamily = OneParameterFamily.HwangShihDeCani,
+					});
+			}
+
+			set { _oneParameterSpendingFunction = value; }
+		}
+
+		#endregion // OneParameterSpendingFunction
 
 		#endregion
 	}

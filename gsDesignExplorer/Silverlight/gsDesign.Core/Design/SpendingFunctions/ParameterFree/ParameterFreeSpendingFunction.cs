@@ -2,21 +2,13 @@
 {
 	public class ParameterFreeSpendingFunction
 	{
-		#region LanDeMetsApproximation property
-
-		private LanDeMetsApproximation _lanDeMetsApproximation;
-
-		public LanDeMetsApproximation LanDeMetsApproximation
+		public ParameterFreeSpendingFunction(DesignParameters designParameters)
 		{
-			get { return _lanDeMetsApproximation; }
-
-			set
-			{
-				_lanDeMetsApproximation = value;
-			}
+			DesignParameters = designParameters;
 		}
 
-		#endregion // LanDeMetsApproximation
+		protected DesignParameters DesignParameters { get; private set; }
 
+		public LanDeMetsApproximation LanDeMetsApproximation { get; set; }
 	}
 }

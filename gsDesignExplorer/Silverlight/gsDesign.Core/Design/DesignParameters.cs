@@ -10,7 +10,7 @@
 		{
 			ErrorPowerTimingParameters = new ErrorPowerTimingParameters();
 			SampleSizeParameters = new SampleSizeParameters();
-			SpendingFunctionParameters = new SpendingFunctionParameters();
+			SpendingFunctionParameters = new SpendingFunctionParameters(this);
 		}
 
 		#region Name property
@@ -57,7 +57,7 @@
 
 		public SpendingFunctionParameters SpendingFunctionParameters
 		{
-			get { return _spendingFunctionParameters ?? (_spendingFunctionParameters = new SpendingFunctionParameters()); }
+			get { return _spendingFunctionParameters ?? (_spendingFunctionParameters = new SpendingFunctionParameters(this)); }
 
 			set { _spendingFunctionParameters = value; }
 		}

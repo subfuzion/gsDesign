@@ -1,6 +1,5 @@
 namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
-	using System.ComponentModel;
 	using System.ComponentModel.DataAnnotations;
 	using Subfuzion.Helpers;
 	using gsDesign.Design;
@@ -10,7 +9,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 	{
 		#region Initialization
 
-		private DesignParameters _designParameters;
+		private readonly DesignParameters _designParameters;
 
 		public SpendingFunctions(DesignParameters designParameters)
 		{
@@ -29,7 +28,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		#region SpendingFunctionTestType property
 
 		[Display(Name = "Test Type",
-		   Description = "Lower spending test type")]
+			Description = "Lower spending test type")]
 		public SpendingFunctionTestType SpendingFunctionTestType
 		{
 			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestType; }
@@ -51,7 +50,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		#region SpendingFunctionLowerBoundSpending property
 
 		[Display(Name = "Lower Bound Spending",
-		   Description = "Lower bound spending for 2-sided futility test type")]
+			Description = "Lower bound spending for 2-sided futility test type")]
 		public SpendingFunctionLowerBoundSpending SpendingFunctionLowerBoundSpending
 		{
 			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundSpending; }
@@ -71,7 +70,7 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		#region SpendingFunctionLowerBoundTesting property
 
 		[Display(Name = "Lower Bound Testing",
-		   Description = "Binding or non-binding testing")]
+			Description = "Binding or non-binding testing")]
 		public SpendingFunctionLowerBoundTesting SpendingFunctionLowerBoundTesting
 		{
 			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionLowerBoundTesting; }
@@ -94,7 +93,11 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		public bool IsLowerSpendingTabEnabled
 		{
-			get { return Model.SpendingFunctionTestingParameters.SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility; }
+			get
+			{
+				return Model.SpendingFunctionTestingParameters.SpendingFunctionTestType ==
+					SpendingFunctionTestType.TwoSidedWithFutility;
+			}
 		}
 
 		#endregion // IsLowerSpendingTabEnabled
@@ -123,12 +126,15 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 
 		private SpendingFunctionViewModel _lowerSpendingFunction;
 
-		 [Display(Name = "Lower Spending",
+		[Display(Name = "Lower Spending",
 			Description = "Lower spending function")]
 		public SpendingFunctionViewModel LowerSpendingFunction
 		{
-			get { return _lowerSpendingFunction
-				?? (_lowerSpendingFunction = new SpendingFunctionViewModel(Model.LowerSpendingFunction)); }
+			get
+			{
+				return _lowerSpendingFunction
+					?? (_lowerSpendingFunction = new SpendingFunctionViewModel(Model.LowerSpendingFunction));
+			}
 
 			set
 			{
@@ -147,11 +153,13 @@ namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 		private SpendingFunctionViewModel _upperSpendingFunction;
 
 		[Display(Name = "Uppper Spending",
-		   Description = "Uppper spending function")]
+			Description = "Uppper spending function")]
 		public SpendingFunctionViewModel UpperSpendingFunction
 		{
-			get { return _upperSpendingFunction
-				?? (UpperSpendingFunction = new SpendingFunctionViewModel(Model.UpperSpendingFunction));
+			get
+			{
+				return _upperSpendingFunction
+					?? (UpperSpendingFunction = new SpendingFunctionViewModel(Model.UpperSpendingFunction));
 			}
 
 			set

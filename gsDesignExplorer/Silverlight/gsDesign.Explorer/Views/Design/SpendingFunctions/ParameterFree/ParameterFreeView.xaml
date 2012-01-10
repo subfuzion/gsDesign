@@ -12,7 +12,7 @@
 	<!--
 		NOTE: this view is used by both the Lower Spending Function and Upper Spending Function views
 		Therefore, the data context must be set by the parent view to the appropriate instance of a
-		ParameterFreeSpendingFunction
+		ParameterFreeSpendingFunctionViewModel. Currently, the parent view is AccordionView.
 	-->
 	
 	<UserControl.Resources>
