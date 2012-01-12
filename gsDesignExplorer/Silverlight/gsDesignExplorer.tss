@@ -3,11 +3,15 @@
   <ArrayOfArrayOfString>
     <ArrayOfString>
       <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunctionViewModel.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Core\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

@@ -1,7 +1,10 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions.OneParameter
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
+	using System.Globalization;
+	using Subfuzion.Helpers;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
 
 	public class OneParameterSpendingFunctionViewModel : ViewModelBase
@@ -11,6 +14,14 @@
 		public OneParameterSpendingFunctionViewModel(OneParameterSpendingFunction oneParameterSpendingFunction)
 		{
 			_oneParameterSpendingFunction = oneParameterSpendingFunction;
+
+			App.AppViewModel.CurrentDesign.ErrorPowerTiming.PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName == "Error")
+				{
+					UpdateData();
+				}
+			};
 		}
 
 		private OneParameterSpendingFunction Model
@@ -32,12 +43,19 @@
 			{
 				if (Model.OneParameterFamily != value)
 				{
+					SuppressPlotDataNotifications = true;
+
 					Model.OneParameterFamily = value;
 					NotifyPropertyChanged("OneParameterFamily");
+					NotifyPropertyChanged("SpendingFunctionValue");
 					NotifyPropertyChanged("SpendingFunctionMinimum");
 					NotifyPropertyChanged("SpendingFunctionMaximum");
 					NotifyPropertyChanged("SpendingFunctionIncrement");
 					NotifyPropertyChanged("SpendingFunctionPrecision");
+					NotifyPropertyChanged("SpendingFunctionSymbol");
+
+					SuppressPlotDataNotifications = false;
+					UpdateData();
 				}
 			}
 		}
@@ -77,6 +95,7 @@
 						{
 							Model.HwangShihDeCani = value;
 							NotifyPropertyChanged("SpendingFunctionValue");
+							UpdateData();
 						}
 						return;
 
@@ -85,6 +104,7 @@
 						{
 							Model.Power = value;
 							NotifyPropertyChanged("SpendingFunctionValue");
+							UpdateData();
 						}
 						return;
 
@@ -93,6 +113,7 @@
 						{
 							Model.Exponential = value;
 							NotifyPropertyChanged("SpendingFunctionValue");
+							UpdateData();
 						}
 						return;
 
@@ -188,11 +209,34 @@
 			}
 		}
 
+		public string SpendingFunctionSymbol
+		{
+			get
+			{
+				switch (OneParameterFamily)
+				{
+					case OneParameterFamily.HwangShihDeCani:
+						return Symbols.Gamma;
+
+					case OneParameterFamily.Power:
+						return Symbols.Rho;
+
+					case OneParameterFamily.Exponential:
+						return Symbols.Nu;
+
+					default:
+						throw new Exception(string.Format("Unsupported enum value for OneParameterFamily: {0}", OneParameterFamily));
+				}
+			}
+		}
+
 		#endregion // Spending Function
+
+		#region Public Properties
 
 		#region Timing property
 
-		 [Display(Name = "Timing",
+		[Display(Name = "Timing",
 			Description = "Timing value")]
 		public double Timing
 		{
@@ -204,6 +248,7 @@
 				{
 					Model.Timing = value;
 					NotifyPropertyChanged("Timing");
+					UpdateData();
 				}
 			}
 		}
@@ -222,12 +267,164 @@
 
 		public double TimingIncrement
 		{
-			get { return 0.1; }
+			get { return 0.01; }
 		}
 
 		public int TimingPrecision
 		{
 			get { return 3; }
 		}
+
+		#endregion
+
+		#region PlotData property
+
+		private List<PlotItem> _plotData;
+
+		public List<PlotItem> PlotData
+		{
+			get
+			{
+				if (_plotData == null)
+				{
+					InitializeData();
+				}
+
+				return _plotData;
+			}
+
+			set
+			{
+				if (_plotData != value)
+				{
+					_plotData = value;
+					NotifyPropertyChanged("PlotData");
+				}
+			}
+		}
+
+		#endregion // PlotData
+
+		#region PlotFunction property
+
+		private void InitializeData()
+		{
+			var data = new List<PlotItem>();
+
+			for (int i = 0; i < 20; i++)
+			{
+				data.Add(new PlotItem
+				{
+					X = i.ToString(CultureInfo.InvariantCulture),
+					Y = 0,
+				});
+			}
+
+			PlotData = data;
+
+			UpdateData();
+		}
+
+		private void UpdateData()
+		{
+			var func = PlotFunction;
+			var sfValue = SpendingFunctionValue;
+			var alpha = Model.AlphaSpending;
+			var timing = Timing;
+
+			var factor = (TimingMaximum - TimingMinimum)/PlotData.Count;
+
+			for (var i = 0; i < PlotData.Count; i++)
+			{
+				var t = ((double) i)/(PlotData.Count - 1);
+
+				var item = PlotData[i];
+				item.X = t.ToString(CultureInfo.InvariantCulture);
+				item.Y = PlotFunction(alpha, t, sfValue);
+			}
+
+			NotifyPlotDataChanged();
+		}
+
+		private Func<double, double, double, double> PlotFunction
+		{
+			get
+			{
+				switch (OneParameterFamily)
+				{
+					case OneParameterFamily.HwangShihDeCani:
+						return HwangShihDeCaniFunction;
+
+					case OneParameterFamily.Power:
+						return PowerFunction;
+
+					case OneParameterFamily.Exponential:
+						return ExponentialFunction;
+
+					default:
+						throw new Exception(string.Format("Unsupported enum value for OneParameterFamily: {0}", OneParameterFamily));
+				}
+			}
+		}
+
+		private double HwangShihDeCaniFunction(double alpha, double timing, double sfValue)
+		{
+			return alpha * (1 - Math.Exp(-sfValue * timing)) / (1 - Math.Exp(-sfValue));
+		}
+
+		private double PowerFunction(double alpha, double timing, double sfValue)
+		{
+			return alpha * Math.Pow(timing, sfValue);
+		}
+
+		private double ExponentialFunction(double alpha, double timing, double sfValue)
+		{
+			return Math.Pow(alpha, (Math.Pow(timing, -sfValue)));
+		}
+
+		private double GetY(int step)
+		{
+			double x = step * ((double)step / PlotData.Count);
+			return 0;
+
+		}
+
+		private bool SuppressPlotDataNotifications { get; set; }
+
+		private void NotifyPlotDataChanged()
+		{
+			if (!SuppressPlotDataNotifications)
+			{
+				NotifyPropertyChanged("PlotData");
+			}
+		}
+		#endregion // PlotFunction
+
 	}
+
+	public class PlotItem : ViewModelBase
+	{
+		private string _x;
+		public string X
+		{
+			get { return _x; }
+			set
+			{
+				_x = value;
+				NotifyPropertyChanged("X");
+			}
+		}
+
+		private double _y;
+		public double Y
+		{
+			get { return _y; }
+			set
+			{
+				_y = value;
+				NotifyPropertyChanged("Y");
+			}
+		}
+	}
+
 }

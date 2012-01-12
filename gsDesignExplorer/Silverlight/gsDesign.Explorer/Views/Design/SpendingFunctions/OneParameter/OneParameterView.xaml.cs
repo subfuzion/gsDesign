@@ -7,12 +7,7 @@
 	using System.Windows.Controls.DataVisualization.Charting;
 	using System.Windows.Input;
 	using System.Windows.Media;
-
-	public class SampleDataItem
-	{
-		public string StepName { get; set; }
-		public double Value { get; set; }
-	}
+	using ViewModels.Design.SpendingFunctions.OneParameter;
 
 	public partial class OneParameterView : UserControl
 	{
@@ -29,7 +24,6 @@
 		public OneParameterView()
 		{
 			InitializeComponent();
-			InitializeData();
 
 			Loaded += OneParameterView_Loaded;
 		}
@@ -46,6 +40,7 @@
 
 			InitializeHandlers();
 
+	
 			//var points = lineSeries.Points;
 			//int i = 0;
 			//foreach (var point in points)
@@ -61,6 +56,26 @@
 
 		private void InitializeHandlers()
 		{
+			var sfViewModel = DataContext as OneParameterSpendingFunctionViewModel;
+			if (sfViewModel != null)
+			{
+				sfViewModel.PropertyChanged += (sender, args) =>
+				{
+					if (args.PropertyName == "PlotData")
+					{
+						Output = string.Empty;
+						for (var i = 0; i < sfViewModel.PlotData.Count; i++)
+						{
+							var plotItem = sfViewModel.PlotData[i];
+
+							var text = string.Format("{0} -> ({1}, {2})", i, plotItem.X, plotItem.Y);
+							AppendOutput(text);
+						}
+					}
+				};
+			}
+
+
 			Chart element = chart;
 			// var element = (Series) chart.Series[0];
 			element.MouseEnter += (sender, args) => element.MouseMove += HandleOnMouseMove;
@@ -146,20 +161,5 @@
 			controlPoint.Stroke = DragBrushStroke;
 		}
 
-		private void InitializeData()
-		{
-			var data = new List<SampleDataItem>();
-
-			for (int i = 0; i < 8; i++)
-			{
-				data.Add(new SampleDataItem
-				{
-					StepName = i.ToString(CultureInfo.InvariantCulture),
-					Value = i*i,
-				});
-			}
-
-			DataContext = data;
-		}
 	}
 }

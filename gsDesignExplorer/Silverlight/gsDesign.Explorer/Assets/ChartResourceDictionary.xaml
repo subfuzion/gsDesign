@@ -325,4 +325,61 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+	<Style x:Key="CategoryAxisStyle" TargetType="toolkit:CategoryAxis">
+		<Setter Property="IsTabStop" Value="False"/>
+		<Setter Property="TitleStyle">
+			<Setter.Value>
+				<Style TargetType="toolkit:Title">
+					<Setter Property="FontStyle" Value="Italic"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="MajorTickMarkStyle">
+			<Setter.Value>
+				<Style TargetType="Line">
+					<Setter Property="Stroke" Value="Black"/>
+					<Setter Property="X2" Value="4"/>
+					<Setter Property="Y2" Value="4"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="GridLineStyle">
+			<Setter.Value>
+				<Style TargetType="Line">
+					<Setter Property="Stroke" Value="Gray"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="toolkit:CategoryAxis">
+					<Grid x:Name="AxisGrid" Background="{TemplateBinding Background}">
+						<toolkit:Title x:Name="AxisTitle" Style="{TemplateBinding TitleStyle}"/>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="AxisLabelStyle" TargetType="toolkit:AxisLabel">
+		<Setter Property="IsTabStop" Value="False"/>
+		<Setter Property="StringFormat" Value="{}{0}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="toolkit:AxisLabel">
+					<!--TextBlock Text="{TemplateBinding FormattedContent}"/-->
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="NumericAxisLabelStyle" TargetType="toolkit:NumericAxisLabel">
+		<Setter Property="IsTabStop" Value="False"/>
+		<Setter Property="StringFormat" Value="{}{0:0.##}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="toolkit:NumericAxisLabel">
+					<TextBlock Text="{TemplateBinding FormattedContent}"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>

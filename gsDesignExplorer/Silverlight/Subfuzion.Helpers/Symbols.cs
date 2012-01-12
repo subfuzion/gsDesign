@@ -21,6 +21,10 @@
 
 		public const string Beta = "\u03B2"; // &#946;
 
+		public const string Gamma = "\u0263"; // &#611;
+
+		public const string Nu = "\u03BD"; // &#957;
+
 		public const string Rho = "\u03A1"; // &#929;
 
 	}

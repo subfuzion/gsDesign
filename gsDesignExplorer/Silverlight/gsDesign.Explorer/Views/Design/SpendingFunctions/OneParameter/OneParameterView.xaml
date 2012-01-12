@@ -58,17 +58,22 @@
 												Increment="{Binding Path=SpendingFunctionIncrement, Mode=OneWay}"
 												DecimalPlaces="{Binding Path=SpendingFunctionPrecision, Mode=OneWay}"
 												Value="{Binding Path=SpendingFunctionValue, Mode=TwoWay}"/>
-						<TextBlock Grid.Row="2" Text="&#929;" Margin="4" HorizontalAlignment="Center"/>
+						<TextBlock Grid.Row="2" Margin="4" HorizontalAlignment="Center"
+								   Text="{Binding Path=SpendingFunctionSymbol}" />
 					</Grid>
 					
 					<toolkit:Chart Grid.Row="0" Grid.Column="1" x:Name="chart" Style="{StaticResource ChartStyle}" MinHeight="250" >
 						<toolkit:Chart.Series>
 							<toolkit:LineSeries x:Name="lineSeries" 
-									ItemsSource="{Binding}"
-									IndependentValueBinding="{Binding StepName}"
-									DependentValueBinding="{Binding Value}" DataPointStyle="{StaticResource LineDataPointStyleNone}" 
+									ItemsSource="{Binding Path=PlotData, Mode=OneWay}"
+									IndependentValueBinding="{Binding X}"
+									DependentValueBinding="{Binding Y}" DataPointStyle="{StaticResource LineDataPointStyleNone}" 
 									/>
 						</toolkit:Chart.Series>
+						<toolkit:Chart.Axes>
+							<toolkit:CategoryAxis Orientation="X" Style="{StaticResource CategoryAxisStyle}" AxisLabelStyle="{StaticResource AxisLabelStyle}" />
+							<toolkit:LinearAxis Orientation="Y" AxisLabelStyle="{StaticResource NumericAxisLabelStyle}" />
+						</toolkit:Chart.Axes>
 					</toolkit:Chart>
 
 					<Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay">
