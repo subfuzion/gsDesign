@@ -17,6 +17,8 @@
 	<UserControl.Resources>
 		<SpendingFunctions:SpendingFunctionParameterCategoryValueConverter x:Key="spendingFunctionParmameterCategoryValueConverter" />
 	</UserControl.Resources>
+	
+	<!-- The datacontext is SpendingFunctionViewModel. It's set by the parent view (SpendingView) -->
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<toolkit:Accordion HorizontalAlignment="Stretch"

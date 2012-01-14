@@ -19,7 +19,7 @@
 			{
 				if (args.PropertyName == "Error")
 				{
-					UpdateData();
+					UpdatePlotData();
 				}
 			};
 		}
@@ -55,7 +55,7 @@
 					NotifyPropertyChanged("SpendingFunctionSymbol");
 
 					SuppressPlotDataNotifications = false;
-					UpdateData();
+					UpdatePlotData();
 				}
 			}
 		}
@@ -95,7 +95,7 @@
 						{
 							Model.HwangShihDeCani = value;
 							NotifyPropertyChanged("SpendingFunctionValue");
-							UpdateData();
+							UpdatePlotData();
 						}
 						return;
 
@@ -104,7 +104,7 @@
 						{
 							Model.Power = value;
 							NotifyPropertyChanged("SpendingFunctionValue");
-							UpdateData();
+							UpdatePlotData();
 						}
 						return;
 
@@ -113,7 +113,7 @@
 						{
 							Model.Exponential = value;
 							NotifyPropertyChanged("SpendingFunctionValue");
-							UpdateData();
+							UpdatePlotData();
 						}
 						return;
 
@@ -248,7 +248,7 @@
 				{
 					Model.Timing = value;
 					NotifyPropertyChanged("Timing");
-					UpdateData();
+					UpdatePlotData();
 				}
 			}
 		}
@@ -287,7 +287,7 @@
 			{
 				if (_plotData == null)
 				{
-					InitializeData();
+					InitializePlotData();
 				}
 
 				return _plotData;
@@ -307,7 +307,7 @@
 
 		#region PlotFunction property
 
-		private void InitializeData()
+		private void InitializePlotData()
 		{
 			var data = new List<PlotItem>();
 
@@ -322,17 +322,14 @@
 
 			PlotData = data;
 
-			UpdateData();
+			UpdatePlotData();
 		}
 
-		private void UpdateData()
+		private void UpdatePlotData()
 		{
 			var func = PlotFunction;
 			var sfValue = SpendingFunctionValue;
 			var alpha = Model.AlphaSpending;
-			var timing = Timing;
-
-			var factor = (TimingMaximum - TimingMinimum)/PlotData.Count;
 
 			for (var i = 0; i < PlotData.Count; i++)
 			{
@@ -340,7 +337,7 @@
 
 				var item = PlotData[i];
 				item.X = t.ToString(CultureInfo.InvariantCulture);
-				item.Y = PlotFunction(alpha, t, sfValue);
+				item.Y = func(alpha, t, sfValue);
 			}
 
 			NotifyPlotDataChanged();

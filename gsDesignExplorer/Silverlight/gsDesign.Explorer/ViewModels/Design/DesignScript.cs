@@ -7,7 +7,7 @@
 
 	public class DesignScript : NotifyPropertyChangedBase
 	{
-		private DesignScriptGenerator _designScriptGenerator = new DesignScriptGenerator();
+		private readonly DesignScriptGenerator _designScriptGenerator = new DesignScriptGenerator();
 
 		#region Design property
 
@@ -91,8 +91,5 @@
 
 			return _designScriptGenerator.GenerateScript(Design.Model);
 		}
-
-
-
 	}
 }

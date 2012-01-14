@@ -1,5 +1,7 @@
 ﻿namespace gsDesign.Design.SpendingFunctions.OneParameter
 {
+	using System;
+
 	public class OneParameterSpendingFunction
 	{
 		public OneParameterSpendingFunction(DesignParameters designParameters)
@@ -8,6 +10,27 @@
 		}
 
 		protected DesignParameters DesignParameters { get; private set; }
+
+		public double SpendingFunctionValue
+		{
+			get
+			{
+				switch (OneParameterFamily)
+				{
+					case OneParameterFamily.HwangShihDeCani:
+						return HwangShihDeCani;
+
+					case OneParameterFamily.Power:
+						return Power;
+
+					case OneParameterFamily.Exponential:
+						return Exponential;
+
+					default:
+						throw new Exception(string.Format("Unsupported enum value for OneParameterFamily: {0}", OneParameterFamily));
+				}
+			}
+		}
 
 		public double AlphaSpending
 		{

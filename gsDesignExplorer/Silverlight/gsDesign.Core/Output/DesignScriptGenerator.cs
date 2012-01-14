@@ -7,6 +7,8 @@
 	using Design;
 	using Design.SampleSize;
 	using Design.SpendingFunctions;
+	using Design.SpendingFunctions.OneParameter;
+	using Design.SpendingFunctions.ParameterFree;
 
 	public class DesignScriptGenerator
 	{
@@ -51,10 +53,7 @@
 			AppendTTE();
 			AppendNFix();
 			AppendTiming();
-			AppendSfu();
-			AppendSfupar();
-			AppendSfl();
-			AppendSflpar();
+			AppendSpendingFunctions();
 			AppendEndpoint();
 
 			//Writer.WriteLine();
@@ -138,12 +137,12 @@
 			return script;
 		}
 
-		private void AppendComment(string comment, params string[] args)
+		private void AppendComment(string comment, params object[] args)
 		{
 			Writer.WriteLine("# {0}", string.Format(comment, args));
 		}
 
-		private void AppendAssignment(object property, object value, params string[] args)
+		private void AppendAssignment(object property, object value, params object[] args)
 		{
 			Writer.WriteLine("{0} <- {1}", property, string.Format(value.ToString(), args));
 		}
@@ -164,7 +163,15 @@
 		{
 			var sb = new StringBuilder();
 			sb.Append("gsDesign(k=k, test.type=test.type, alpha=alpha, beta=beta, n.fix=n.fix,\n")
-				.Append("  timing=timing, sfu=sfu, sfupar=sfupar, sfl=sfl, sflpar=sflpar, endpoint=endpoint)");
+				.Append("  timing=timing, sfu=sfu, sfupar=sfupar, ");
+
+			var testingParameters = DesignParameters.SpendingFunctionParameters.SpendingFunctionTestingParameters;
+			if (testingParameters.SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility)
+			{
+				sb.Append("sfl=sfl, sflpar=sflpar, ");
+			}
+			
+			sb.Append("endpoint=endpoint)");
 
 			AppendAssignment(DesignParameters.Name, sb.ToString());
 
@@ -255,11 +262,25 @@
 			switch (DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.SpendingFunctionParameterCategory)
 			{
 				case SpendingFunctionParameterCategory.ParameterFree:
-					s = "sfLDOF";
+					s = DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.ParameterFreeSpendingFunction.LanDeMetsApproximation == LanDeMetsApproximation.OBrienFleming
+						? "sfLDOF" : "sfLDPocock";
 					break;
 
 				case SpendingFunctionParameterCategory.OneParameter:
-					s = "sfHSD";
+					switch (DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.OneParameterSpendingFunction.OneParameterFamily)
+					{
+						case OneParameterFamily.HwangShihDeCani:
+							s = "sfHSD";
+							break;
+
+						case OneParameterFamily.Power:
+							s = "sfPower";
+							break;
+
+						case OneParameterFamily.Exponential:
+							s = "sfExponential";
+							break;
+					}
 					break;
 
 				case SpendingFunctionParameterCategory.TwoParameter:
@@ -286,6 +307,8 @@
 					break;
 
 				case SpendingFunctionParameterCategory.OneParameter:
+					s = string.Format("{0:F3}",
+						DesignParameters.SpendingFunctionParameters.UpperSpendingFunction.OneParameterSpendingFunction.SpendingFunctionValue);
 					break;
 
 				case SpendingFunctionParameterCategory.TwoParameter:
@@ -308,12 +331,25 @@
 			switch (DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.SpendingFunctionParameterCategory)
 			{
 				case SpendingFunctionParameterCategory.ParameterFree:
-					s = "sfLDOF" +
-						"";
+					s = DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.ParameterFreeSpendingFunction.LanDeMetsApproximation == LanDeMetsApproximation.OBrienFleming
+						? "sfLDOF" : "sfLDPocock";
 					break;
 
 				case SpendingFunctionParameterCategory.OneParameter:
-					s = "sfHSD";
+					switch (DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.OneParameterSpendingFunction.OneParameterFamily)
+					{
+						case OneParameterFamily.HwangShihDeCani:
+							s = "sfHSD";
+							break;
+
+						case OneParameterFamily.Power:
+							s = "sfPower";
+							break;
+
+						case OneParameterFamily.Exponential:
+							s = "sfExponential";
+							break;
+					}
 					break;
 
 				case SpendingFunctionParameterCategory.TwoParameter:
@@ -340,6 +376,8 @@
 					break;
 
 				case SpendingFunctionParameterCategory.OneParameter:
+					s = string.Format("{0:F3}",
+						DesignParameters.SpendingFunctionParameters.LowerSpendingFunction.OneParameterSpendingFunction.SpendingFunctionValue);
 					break;
 
 				case SpendingFunctionParameterCategory.TwoParameter:
@@ -394,6 +432,19 @@
 
 			string s = string.Format("nSurvival(lambda1=0.11552, lambda2=0.06931, eta=0.05776, Ts=30, Tr=18, ratio=1, alpha=0.025, beta=0.1, sided=1, type=\"rr\", entry=\"unif\", gamma=1e-04)");
 			AppendAssignment(string.Format("{0}Survival", DesignParameters.Name), s);
+		}
+
+		private void AppendSpendingFunctions()
+		{
+			AppendSfu();
+			AppendSfupar();
+
+			var testingParameters = DesignParameters.SpendingFunctionParameters.SpendingFunctionTestingParameters;
+			if (testingParameters.SpendingFunctionTestType == SpendingFunctionTestType.TwoSidedWithFutility)
+			{
+				AppendSfl();
+				AppendSflpar();
+			}
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿namespace gsDesign.Explorer.ViewModels.Design.SpendingFunctions
 {
+	using System;
+	using System.ComponentModel;
 	using OneParameter;
 	using ParameterFree;
 	using gsDesign.Design.SpendingFunctions;
@@ -38,8 +40,14 @@
 
 		#endregion // SpendingFunctionParameterCategory
 
+		private void PrevSpendingFunctionSpendingViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+		{
+			NotifyPropertyChanged(propertyChangedEventArgs.PropertyName);
+		}
+
 		#region ParameterFreeSpendingFunctionViewModel property
 
+		private ParameterFreeSpendingFunctionViewModel _prevParameterFreeSpendingFunctionSpendingViewModel;
 		private ParameterFreeSpendingFunctionViewModel _parameterFreeSpendingFunctionSpendingViewModel;
 
 		public ParameterFreeSpendingFunctionViewModel ParameterFreeSpendingFunctionViewModel
@@ -56,6 +64,14 @@
 			{
 				if (_parameterFreeSpendingFunctionSpendingViewModel != value)
 				{
+					if (_prevParameterFreeSpendingFunctionSpendingViewModel != null)
+					{
+						_prevParameterFreeSpendingFunctionSpendingViewModel.PropertyChanged -= PrevSpendingFunctionSpendingViewModelOnPropertyChanged;
+					}
+
+					value.PropertyChanged += PrevSpendingFunctionSpendingViewModelOnPropertyChanged;
+					_prevParameterFreeSpendingFunctionSpendingViewModel = value;
+
 					_parameterFreeSpendingFunctionSpendingViewModel = value;
 					NotifyPropertyChanged("ParameterFreeSpendingFunctionViewModel");
 				}
@@ -66,6 +82,7 @@
 
 		#region OneParameterSpendingFunctionViewModel property
 
+		private OneParameterSpendingFunctionViewModel _prevOneParameterSpendingFunctionViewModel;
 		private OneParameterSpendingFunctionViewModel _oneParameterSpendingFunctionViewModel;
 
 		public OneParameterSpendingFunctionViewModel OneParameterSpendingFunctionViewModel
@@ -82,6 +99,14 @@
 			{
 				if (_oneParameterSpendingFunctionViewModel != value)
 				{
+					if (_prevOneParameterSpendingFunctionViewModel != null)
+					{
+						_prevOneParameterSpendingFunctionViewModel.PropertyChanged -= PrevSpendingFunctionSpendingViewModelOnPropertyChanged;
+					}
+
+					value.PropertyChanged += PrevSpendingFunctionSpendingViewModelOnPropertyChanged;
+					_prevOneParameterSpendingFunctionViewModel = value;
+
 					_oneParameterSpendingFunctionViewModel = value;
 					NotifyPropertyChanged("OneParameterSpendingFunctionViewModel");
 				}
