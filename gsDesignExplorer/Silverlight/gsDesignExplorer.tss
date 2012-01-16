@@ -2,16 +2,39 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunctionViewModel.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Core\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\SpendingFunctions\SpendingFunctionViewModel.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
       <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunctionViewModel.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Core\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs</string>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Core\Output\DesignScriptGenerator.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\DesignScript.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\Design.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\SpendingFunctions\SpendingFunctions.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\AccordionView.xaml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\SpendingFunctionsView.xaml</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

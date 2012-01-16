@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.Globalization;
+	using System.Windows;
 	using Subfuzion.Helpers;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
 
@@ -393,9 +394,43 @@
 			if (!SuppressPlotDataNotifications)
 			{
 				NotifyPropertyChanged("PlotData");
+				NotifyPropertyChanged("Intercept");
 			}
 		}
 		#endregion // PlotFunction
+
+		#region Intercept property
+
+		private Point _intercept;
+
+		public Point Intercept
+		{
+			get
+			{
+				var func = PlotFunction;
+				var sfValue = SpendingFunctionValue;
+				var alpha = Model.AlphaSpending;
+
+				var x = Timing;
+				var y = func(alpha, x, sfValue);
+
+				_intercept.X = x;
+				_intercept.Y = y;
+
+				return _intercept;
+			}
+
+			set
+			{
+				if (_intercept != value)
+				{
+					_intercept = value;
+					NotifyPropertyChanged("Intercept");
+				}
+			}
+		}
+
+		#endregion // Intercept
 
 	}
 
