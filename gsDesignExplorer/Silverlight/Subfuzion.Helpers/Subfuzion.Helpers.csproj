@@ -58,6 +58,7 @@
     <Compile Include="Formatters.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Brushes.cs" />
+    <Compile Include="UI\CoordinateTransformer.cs" />
     <Compile Include="Win32\ShellHelper.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Symbols.cs" />

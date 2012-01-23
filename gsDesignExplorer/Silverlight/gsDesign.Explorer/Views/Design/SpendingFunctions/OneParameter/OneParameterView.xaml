@@ -19,7 +19,7 @@
 	-->
 
 	<Grid x:Name="LayoutRoot" Background="White">
-		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+		<ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Auto">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*" />
@@ -39,7 +39,7 @@
 						<ColumnDefinition Width="auto"/>
 					</Grid.ColumnDefinitions>
 
-					<Grid Grid.Row="0" Grid.Column="0" MinWidth="70">
+					<Grid Grid.Row="0" Grid.Column="0" MinWidth="102">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*" />
 							<RowDefinition Height="auto"/>
@@ -61,7 +61,8 @@
 						<TextBlock Grid.Row="2" Margin="4" HorizontalAlignment="Center"
 								   Text="{Binding Path=SpendingFunctionSymbol}" />
 					</Grid>
-					
+
+					<!--
 					<toolkit:Chart Grid.Row="0" Grid.Column="1" x:Name="chart" Style="{StaticResource ChartStyle}" MinHeight="250" >
 						<toolkit:Chart.Series>
 							<toolkit:LineSeries x:Name="lineSeries" 
@@ -75,12 +76,31 @@
 							<toolkit:LinearAxis Orientation="Y" AxisLabelStyle="{StaticResource NumericAxisLabelStyle}" />
 						</toolkit:Chart.Axes>
 					</toolkit:Chart>
+					-->
+					<toolkit:Chart Grid.Row="0" Grid.Column="1" x:Name="chart" Style="{StaticResource ChartStyle}" MinHeight="250" >
+						<toolkit:Chart.Series>
+							<toolkit:LineSeries x:Name="lineSeries" 
+									ItemsSource="{Binding Path=PlotData, Mode=OneWay}"
+									IndependentValueBinding="{Binding X}"
+									DependentValueBinding="{Binding Y}" 
+									/>
+						</toolkit:Chart.Series>
+						<toolkit:Chart.Axes>
+							<toolkit:CategoryAxis Orientation="X" Style="{StaticResource CategoryAxisStyle}" AxisLabelStyle="{StaticResource AxisLabelStyle}" />
+							<toolkit:LinearAxis Orientation="Y" AxisLabelStyle="{StaticResource NumericAxisLabelStyle}" />
+						</toolkit:Chart.Axes>
+					</toolkit:Chart>
 
-					<Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay">
-						<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" Canvas.Left="{Binding Path=Intercept.X, Mode=TwoWay}" Canvas.Top="{Binding Path=Intercept.Y, Mode=TwoWay}"  />
+					<!--Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay" RenderTransformOrigin="0,1" SizeChanged="overlay_SizeChanged"-->
+					<Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay" SizeChanged="overlay_SizeChanged">
+							<!--<Canvas.RenderTransform>
+							<ScaleTransform ScaleY="-1" />
+						</Canvas.RenderTransform>-->
+						<!--<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" Canvas.Left="{Binding Path=Intercept.X, Mode=TwoWay}" Canvas.Top="{Binding Path=Intercept.Y, Mode=TwoWay}"  />-->
+						<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" />
 					</Canvas>
 
-					<Grid Grid.Row="0" Grid.Column="2" MinWidth="70" DataContext="{Binding Source={StaticResource AppViewModel}}">
+					<Grid Grid.Row="0" Grid.Column="2" MinWidth="102" DataContext="{Binding Source={StaticResource AppViewModel}}">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*" />
 							<RowDefinition Height="auto"/>
@@ -100,7 +120,7 @@
 												DecimalPlaces="{Binding Path=CurrentDesign.ErrorPowerTiming.ErrorPrecision, Mode=OneWay}"
 												Value="{Binding Path=CurrentDesign.ErrorPowerTiming.Error, Mode=TwoWay}"
 						/>
-						<TextBlock Grid.Row="2" Text="&#945;-spending" Margin="4" HorizontalAlignment="Center"/>
+						<TextBlock Grid.Row="2" Text="interim spending" Margin="4" HorizontalAlignment="Center"/>
 					</Grid>
 
 					<Grid Grid.Row="1" Grid.Column="1"  MinHeight="70">
@@ -166,9 +186,8 @@
 
 						<Border Grid.Column="1" Margin="4" BorderBrush="#eee" BorderThickness="1">
 							<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="4">
-								<RadioButton Content="Compute &#945;-spending" IsChecked="True" />
-								<RadioButton Content="Compute &#929;" />
-								<RadioButton Content="Compute timing" />
+								<RadioButton Content="Move line with point" IsChecked="True" />
+								<RadioButton Content="Move point along line" />
 							</StackPanel>
 						</Border>
 					</Grid>

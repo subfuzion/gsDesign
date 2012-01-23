@@ -54,6 +54,7 @@
 					NotifyPropertyChanged("SpendingFunctionIncrement");
 					NotifyPropertyChanged("SpendingFunctionPrecision");
 					NotifyPropertyChanged("SpendingFunctionSymbol");
+					NotifyPropertyChanged("MaximumY");
 
 					SuppressPlotDataNotifications = false;
 					UpdatePlotData();
@@ -308,11 +309,13 @@
 
 		#region PlotFunction property
 
+		private static readonly int PlotIntervals = 20;
+
 		private void InitializePlotData()
 		{
 			var data = new List<PlotItem>();
 
-			for (int i = 0; i < 20; i++)
+			for (int i = 0; i < PlotIntervals; i++)
 			{
 				data.Add(new PlotItem
 				{
@@ -335,6 +338,8 @@
 			for (var i = 0; i < PlotData.Count; i++)
 			{
 				var t = ((double) i)/(PlotData.Count - 1);
+
+				t = Math.Round(t, 2);
 
 				var item = PlotData[i];
 				item.X = t.ToString(CultureInfo.InvariantCulture);
@@ -399,6 +404,26 @@
 		}
 		#endregion // PlotFunction
 
+		#region MaximumY property
+
+		public double MaximumY
+		{
+			get
+			{
+				var func = PlotFunction;
+				var sfValue = SpendingFunctionValue;
+				var alpha = Model.AlphaSpending;
+
+				var x = 1.0; // Timing;
+				var y = func(alpha, x, sfValue);
+
+				return y;
+			}
+		}
+
+		#endregion // MaximumY
+
+
 		#region Intercept property
 
 		private Point _intercept;
@@ -415,18 +440,20 @@
 				var y = func(alpha, x, sfValue);
 
 				_intercept.X = x;
-				_intercept.Y = y;
+				_intercept.Y = y/MaximumY;
+
+				//_intercept.MinX = 0.0;
+				//_intercept.MaxX = 1.0;
+				//_intercept.MinY = 0.0;
+				//_intercept.MaxY = 1.0;
 
 				return _intercept;
 			}
 
 			set
 			{
-				if (_intercept != value)
-				{
-					_intercept = value;
-					NotifyPropertyChanged("Intercept");
-				}
+				_intercept = value;
+				NotifyPropertyChanged("Intercept");
 			}
 		}
 

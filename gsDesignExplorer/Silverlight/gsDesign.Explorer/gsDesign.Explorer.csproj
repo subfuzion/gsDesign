@@ -147,6 +147,7 @@
     <Compile Include="ViewModels\Design\SampleSize\TimeToEventSpecificationValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\OneParameter\OneParameterFamilyValueConverter.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\OneParameter\OneParameterSpendingFunctionViewModel.cs" />
+    <Compile Include="ViewModels\Design\SpendingFunctions\OneParameter\PlotIntercept.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\SpendingFunctionViewModel.cs" />
     <Compile Include="ViewModels\Design\SpendingFunctions\ParameterFree\LanDeMetsApproximationValueConverter.cs" />

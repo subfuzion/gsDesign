@@ -4,9 +4,11 @@
 	using System.Globalization;
 	using System.Windows;
 	using System.Windows.Controls;
+	using System.Windows.Controls.DataVisualization;
 	using System.Windows.Controls.DataVisualization.Charting;
 	using System.Windows.Input;
 	using System.Windows.Media;
+	using Subfuzion.Helpers.UI;
 	using ViewModels.Design.SpendingFunctions.OneParameter;
 
 	public partial class OneParameterView : UserControl
@@ -71,6 +73,12 @@
 							var text = string.Format("{0} -> ({1}, {2})", i, plotItem.X, plotItem.Y);
 							AppendOutput(text);
 						}
+
+						//UpdateIntercept();
+					}
+					else if (args.PropertyName == "Intercept")
+					{
+						UpdateIntercept(sender as OneParameterSpendingFunctionViewModel);
 					}
 				};
 			}
@@ -116,19 +124,31 @@
 
 		private void HandleOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
 		{
-			var element = (Series) chart.Series[0];
-			// var element = sender as LineSeries;
-			if (InBounds(mouseEventArgs.GetPosition(element), element))
+			var series = (Series) chart.Series[0];
+
+			var xAxis = (CategoryAxis) chart.Axes[0];
+			var yAxis = (LinearAxis) chart.Axes[1];
+
+			var xval = xAxis.GetCategoryAtPosition(new UnitValue(100, Unit.Pixels));
+
+			var x = xAxis.GetPlotAreaCoordinate(0.5.ToString());
+			var y = yAxis.GetPlotAreaCoordinate(0.5);
+
+			//var lineSeries = sender as LineSeries;
+
+			if (InBounds(mouseEventArgs.GetPosition(series), series))
 			{
-				ShowCoordinate(mouseEventArgs.GetPosition(element));
+				ShowCoordinate(mouseEventArgs.GetPosition(series));
 
 				if (isDragging)
 				{
 					SetControlPointDrag();
 
-					Point p = mouseEventArgs.GetPosition(element);
+					var p = mouseEventArgs.GetPosition(series);
 					controlPoint.SetValue(Canvas.LeftProperty, p.X);
 					controlPoint.SetValue(Canvas.TopProperty, p.Y);
+
+					UpdatePlotData(p);
 				}
 			}
 		}
@@ -161,5 +181,42 @@
 			controlPoint.Stroke = DragBrushStroke;
 		}
 
+		private void overlay_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if (lineSeries != null)
+			{
+				var parent = lineSeries.Parent;
+			}
+		}
+
+		private CoordinateTransformer _coordinateTransformer;
+
+		private void UpdateIntercept(OneParameterSpendingFunctionViewModel viewModel)
+		{
+			var series = (LineSeries)chart.Series[0];
+			var width = series.ActualWidth;
+			var height = series.ActualHeight;
+
+			var x = viewModel.Intercept.X * width;
+			var y = viewModel.Intercept.Y * height;
+
+			if (_coordinateTransformer == null)
+			{
+				_coordinateTransformer = new CoordinateTransformer(chart, series);
+			}
+
+			var intercept = _coordinateTransformer.TransformToContainerCoordinates(new Point(x, y));
+
+			y = -(y - height);
+
+			controlPoint.SetValue(Canvas.LeftProperty, x);
+			controlPoint.SetValue(Canvas.TopProperty, y);
+		}
+
+		private void UpdatePlotData(Point p)
+		{
+			// ViewModels.UpdatePlotData(p.X, p.Y);
+		}
 	}
+
 }

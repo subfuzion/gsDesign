@@ -13,6 +13,12 @@
     <ArrayOfString>
       <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml.cs</string>
     </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\Subfuzion.Helpers\UI\CoordinateTransformer.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\gsDesign.Explorer\ViewModels\Design\SpendingFunctions\OneParameter\PlotIntercept.cs</string>
+    </ArrayOfString>
   </ArrayOfArrayOfString>
   <ArrayOfArrayOfString>
     <ArrayOfString>
