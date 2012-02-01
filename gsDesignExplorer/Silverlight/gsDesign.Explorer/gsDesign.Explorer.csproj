@@ -193,14 +193,11 @@
     <Compile Include="Views\Design\SampleSize\UserInputView.xaml.cs">
       <DependentUpon>UserInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Design\SpendingFunctions\AccordionView.xaml.cs">
-      <DependentUpon>AccordionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml.cs">
       <DependentUpon>OneParameterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Design\SpendingFunctions\SpendingView.xaml.cs">
-      <DependentUpon>SpendingView.xaml</DependentUpon>
+    <Compile Include="Views\Design\SpendingFunctions\SpendingFunctionParametersView.xaml.cs">
+      <DependentUpon>SpendingFunctionParametersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Design\SpendingFunctions\TwoParameter\TwoParameterView.xaml.cs">
       <DependentUpon>TwoParameterView.xaml</DependentUpon>
@@ -303,15 +300,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Design\SpendingFunctions\AccordionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Design\SpendingFunctions\OneParameter\OneParameterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Design\SpendingFunctions\SpendingView.xaml">
+    <Page Include="Views\Design\SpendingFunctions\SpendingFunctionParametersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

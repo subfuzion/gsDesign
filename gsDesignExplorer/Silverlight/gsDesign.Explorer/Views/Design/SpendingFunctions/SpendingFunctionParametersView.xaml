@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="gsDesign.Explorer.Views.Design.SpendingFunctions.SpendingFunctionParametersView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 xmlns:PiecewiseLinear="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.PiecewiseLinear"
+			 xmlns:ThreeParameter="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.ThreeParameter"
+			 xmlns:TwoParameter="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.TwoParameter"
+			 xmlns:OneParameter="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.OneParameter"
+			 xmlns:ParameterFree="clr-namespace:gsDesign.Explorer.Views.Design.SpendingFunctions.ParameterFree"
+			 xmlns:SpendingFunctions1="clr-namespace:gsDesign.Explorer.ViewModels.Design.SpendingFunctions"
+			 mc:Ignorable="d"
+			 d:DesignHeight="300" d:DesignWidth="400">
+
+	<!--
+		This view is used for both the Lower Spending and Upper Spending tabs;
+		therefore, the data context must be set by the parent view (SpendingFunctionsView)
+		to the appropriate SpendingFunctionViewModel for the lower or upper bounds
+	-->
+
+	<UserControl.Resources>
+		<SpendingFunctions1:SpendingFunctionParameterCategoryValueConverter x:Key="spendingFunctionParmameterCategoryValueConverter" />
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<toolkit:Accordion Grid.Row="1" Grid.Column="0" Margin="0 4 0 0" DataContext="{Binding}"
+						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+						   SelectedIndex="{Binding Path=SpendingFunctionParameterCategory,
+													Mode=TwoWay,
+													Converter={StaticResource spendingFunctionParmameterCategoryValueConverter}}">
+			<toolkit:AccordionItem Header="Parameter Free" HorizontalContentAlignment="Stretch">
+				<ParameterFree:ParameterFreeView DataContext="{Binding Path=ParameterFreeSpendingFunctionViewModel}" />
+			</toolkit:AccordionItem>
+			<toolkit:AccordionItem Header="1-Parameter" HorizontalContentAlignment="Stretch">
+				<OneParameter:OneParameterView DataContext="{Binding Path=OneParameterSpendingFunctionViewModel}" />
+			</toolkit:AccordionItem>
+			<toolkit:AccordionItem Header="2-Parameter" HorizontalContentAlignment="Stretch">
+				<TwoParameter:TwoParameterView />
+			</toolkit:AccordionItem>
+			<toolkit:AccordionItem Header="3-Parameter" HorizontalContentAlignment="Stretch">
+				<ThreeParameter:ThreeParameterView />
+			</toolkit:AccordionItem>
+			<toolkit:AccordionItem Header="Piecewise Linear" HorizontalContentAlignment="Stretch">
+				<PiecewiseLinear:PiecewiseLinearView />
+			</toolkit:AccordionItem>
+		</toolkit:Accordion>
+	</Grid>
+</UserControl>

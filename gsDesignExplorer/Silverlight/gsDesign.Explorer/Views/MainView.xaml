@@ -11,9 +11,9 @@
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="460" />
+			<ColumnDefinition Width="45*" />
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="55*" />
 		</Grid.ColumnDefinitions>
 
 		<!-- left pane -->

@@ -58,14 +58,16 @@ x:Key="spendingFunctionLowerBoundSpendingValueConverter" />
 									   Target="{Binding ElementName=lowerBoundSpending}" />
 							<ComboBox Grid.Row="1" Grid.Column="1" Margin="4" x:Name="lowerBoundSpending"
 									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundSpending, Mode=OneWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}"
-									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundSpending, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}" />
+									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundSpending, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundSpendingValueConverter}}"
+									  IsEnabled="{Binding Path=CurrentDesign.SpendingFunctions.IsLowerSpendingTabEnabled, Mode=OneWay}"/>
 							<sdk:DescriptionViewer Grid.Row="1" Grid.Column="2" Target="{Binding ElementName=lowerBoundSpending}" />
 
 							<sdk:Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 4 2 4"
 									   Target="{Binding ElementName=lowerBoundTesting}" />
 							<ComboBox Grid.Row="2" Grid.Column="1" Margin="4" x:Name="lowerBoundTesting"
 									  ItemsSource="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundTesting, Mode=OneWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}"
-									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundTesting, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}" />
+									  SelectedItem="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionLowerBoundTesting, Mode=TwoWay, Converter={StaticResource spendingFunctionLowerBoundTestingValueConverter}}"
+									  IsEnabled="{Binding Path=CurrentDesign.SpendingFunctions.IsLowerSpendingTabEnabled, Mode=OneWay}" />
 							<sdk:DescriptionViewer Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=lowerBoundTesting}" />
 						</Grid>
 					</Grid>
@@ -77,11 +79,11 @@ x:Key="spendingFunctionLowerBoundSpendingValueConverter" />
 						SelectedIndex="{Binding Path=CurrentDesign.SpendingFunctions.SpendingFunctionBounds, Mode=TwoWay, Converter={StaticResource spendingFunctionBoundsValueConverter}}">
 			<sdk:TabItem Header="Lower Spending"
 						 IsEnabled="{Binding Path=CurrentDesign.SpendingFunctions.IsLowerSpendingTabEnabled, Mode=OneWay}">
-				<sfViews:SpendingView
+				<sfViews:SpendingFunctionParametersView
 DataContext="{Binding Path=CurrentDesign.SpendingFunctions.LowerSpendingFunction, Mode=OneWay}" />
 			</sdk:TabItem>
 			<sdk:TabItem Header="Upper Spending">
-				<sfViews:SpendingView
+				<sfViews:SpendingFunctionParametersView
 DataContext="{Binding Path=CurrentDesign.SpendingFunctions.UpperSpendingFunction, Mode=OneWay}" />
 			</sdk:TabItem>
 		</sdk:TabControl>

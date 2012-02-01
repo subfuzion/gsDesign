@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="gsDesign.Design.SpendingFunctions.SpendingFunction">
+    <Position X="5.25" Y="4.75" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="SpendingFunctionParameterCategory" Type="gsDesign.Design.SpendingFunctions.SpendingFunctionParameterCategory" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="7.526" />
+        <Point X="7.25" Y="10.312" />
+        <Point X="8.5" Y="10.312" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.11" Y="-0.36" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="SpendingFunctionBounds" Type="gsDesign.Design.SpendingFunctions.SpendingFunctionBounds" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.25" Y="5.766" />
+        <Point X="9.375" Y="5.766" />
+        <Point X="9.375" Y="8.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.175" Y="0.157" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAACQBAYCAAAgQAAAAAACAAAAAAAAABCAAAgEAgAA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SpendingFunctionParameterCategory" />
+      <Property Name="SpendingFunctionBounds" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.SpendingFunctionParameters" Collapsed="true">
+    <Position X="2" Y="2" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="UpperSpendingFunction" Type="gsDesign.Design.SpendingFunctions.SpendingFunction" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.75" Y="2.562" />
+        <Point X="3.75" Y="4.375" />
+        <Point X="6.812" Y="4.375" />
+        <Point X="6.812" Y="4.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAEAAQAAAABAAAgAAAAAQAAAAAAAAAAAI=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionParameters.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LowerSpendingFunction" />
+      <Property Name="UpperSpendingFunction" />
+      <Property Name="SpendingFunctionTestingParameters" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.SpendingFunctionTestingParameters" Collapsed="true">
+    <Position X="8" Y="2" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="SpendingFunctionLowerBoundSpending" Type="gsDesign.Design.SpendingFunctions.SpendingFunctionLowerBoundSpending" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.938" Y="2.562" />
+        <Point X="10.938" Y="6.023" />
+        <Point X="13.75" Y="6.023" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="SpendingFunctionLowerBoundTesting" Type="gsDesign.Design.SpendingFunctions.SpendingFunctionLowerBoundTesting" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.25" Y="2.562" />
+        <Point X="10.25" Y="7.773" />
+        <Point X="13.75" Y="7.773" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="SpendingFunctionTestTypeCode" Type="System.Int32" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.5" Y="2.462" />
+        <Point X="11.875" Y="2.462" />
+        <Point X="11.875" Y="4.031" />
+        <Point X="13.75" Y="4.031" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAIABAAAAAQAAIQAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionTestingParameters.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SpendingFunctionLowerBoundSpending" />
+      <Property Name="SpendingFunctionLowerBoundTesting" />
+      <Property Name="SpendingFunctionTestType" />
+      <Property Name="SpendingFunctionTestTypeCode" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="gsDesign.Design.DesignParameters" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AgAAgAAAQAQgBAAAAAAAAAQAAAAAAAAAAAAAEAAAAAE=</HashCode>
+      <FileName>Design\DesignParameters.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SpendingFunctionParameters" />
+    </ShowAsAssociation>
+  </Class>
+  <Struct Name="System.Int32" Collapsed="true">
+    <Position X="13.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Orientation="Right" Position="0.132" />
+  </Struct>
+  <Enum Name="gsDesign.Design.SpendingFunctions.SpendingFunctionTestType">
+    <Position X="13.75" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAABAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionTestType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.SpendingFunctionBounds">
+    <Position X="8.5" Y="8.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionBounds.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.SpendingFunctionLowerBoundSpending">
+    <Position X="13.75" Y="5.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionLowerBoundSpending.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.SpendingFunctionLowerBoundTesting">
+    <Position X="13.75" Y="7.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionLowerBoundTesting.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.SpendingFunctionParameterCategory">
+    <Position X="8.5" Y="10" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAIAAAAAAAAAAAAAAAAAAAEAAAAAACQAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionParameterCategory.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

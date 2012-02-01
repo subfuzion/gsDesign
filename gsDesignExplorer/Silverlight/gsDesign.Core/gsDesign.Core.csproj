@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Design\DesignParameters.cs" />
+    <Compile Include="Design\SpendingFunctions\ParameterSpendingFunctionBase.cs" />
     <Compile Include="Output\DesignScriptGenerator.cs" />
     <Compile Include="Design\ErrorPowerTiming\ErrorPowerTimingParameters.cs" />
     <Compile Include="Design\ErrorPowerTiming\IntervalSpacing.cs" />
@@ -75,11 +76,16 @@
     <Compile Include="Design\SpendingFunctions\SpendingFunctionTestingParameters.cs" />
     <Compile Include="Design\SpendingFunctions\SpendingFunctionTestType.cs" />
     <Compile Include="Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs" />
-    <Compile Include="Design\SpendingFunctions\TwoParameter\SpendingShapeFunction.cs" />
+    <Compile Include="Design\SpendingFunctions\TwoParameter\TwoParameterFamily.cs" />
     <Compile Include="Design\SpendingFunctions\TwoParameter\TwoParameterSpendingFunction.cs" />
     <Compile Include="Output\PlotRendering.cs" />
     <Compile Include="Output\PlotType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DesignParameters.cd" />
+    <None Include="SpendingFunctionParameters.cd" />
+    <None Include="SpendingFunctions.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

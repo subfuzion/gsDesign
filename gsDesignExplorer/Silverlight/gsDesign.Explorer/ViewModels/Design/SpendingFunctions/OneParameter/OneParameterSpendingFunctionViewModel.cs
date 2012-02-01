@@ -6,6 +6,7 @@
 	using System.Globalization;
 	using System.Windows;
 	using Subfuzion.Helpers;
+	using gsDesign.Design.SpendingFunctions;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
 
 	public class OneParameterSpendingFunctionViewModel : ViewModelBase
@@ -18,8 +19,26 @@
 
 			App.AppViewModel.CurrentDesign.ErrorPowerTiming.PropertyChanged += (sender, args) =>
 			{
-				if (args.PropertyName == "Error")
+				if (args.PropertyName == "Error" || args.PropertyName == "Power")
 				{
+					NotifyPropertyChanged("InterimSpendingMinimum");
+					NotifyPropertyChanged("InterimSpendingMaximum");
+					NotifyPropertyChanged("InterimSpendingIncrement");
+					NotifyPropertyChanged("InterimSpendingPrecision");
+					NotifyPropertyChanged("InterimSpending");
+					UpdatePlotData();
+				}
+			};
+
+			App.AppViewModel.CurrentDesign.SpendingFunctions.PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName == "SpendingFunctionLowerBoundSpending")
+				{
+					NotifyPropertyChanged("InterimSpendingMinimum");
+					NotifyPropertyChanged("InterimSpendingMaximum");
+					NotifyPropertyChanged("InterimSpendingIncrement");
+					NotifyPropertyChanged("InterimSpendingPrecision");
+					NotifyPropertyChanged("InterimSpending");
 					UpdatePlotData();
 				}
 			};
@@ -309,7 +328,7 @@
 
 		#region PlotFunction property
 
-		private static readonly int PlotIntervals = 20;
+		private static readonly int PlotIntervals = 30;
 
 		private void InitializePlotData()
 		{
@@ -329,11 +348,54 @@
 			UpdatePlotData();
 		}
 
+		#region InterimSpending property
+
+		// [Display(Name = "InterimSpending",
+		//	Description = "")]
+		public double InterimSpending
+		{
+			get
+			{
+				return Model.InterimSpending;
+			}
+
+			set
+			{
+				if (Math.Abs(Model.InterimSpending - value) > double.Epsilon)
+				{
+					Model.InterimSpending = value;
+					NotifyPropertyChanged("InterimSpending");
+				}
+			}
+		}
+
+		public double InterimSpendingMinimum
+		{
+			get { return Model.InterimSpendingMinimum; }
+		}
+
+		public double InterimSpendingMaximum
+		{
+			get { return Model.InterimSpendingMaximum; }
+		}
+
+		public double InterimSpendingIncrement
+		{
+			get { return Model.InterimSpendingIncrement; }
+		}
+
+		public int InterimSpendingPrecision
+		{
+			get { return Model.InterimSpendingPrecision; }
+		}
+
+		#endregion // InterimSpending
+
 		private void UpdatePlotData()
 		{
 			var func = PlotFunction;
 			var sfValue = SpendingFunctionValue;
-			var alpha = Model.AlphaSpending;
+			var alpha = Model.Alpha;
 
 			for (var i = 0; i < PlotData.Count; i++)
 			{
@@ -410,9 +472,10 @@
 		{
 			get
 			{
+				// TODO: return alpha, beta, 1-alpha
 				var func = PlotFunction;
 				var sfValue = SpendingFunctionValue;
-				var alpha = Model.AlphaSpending;
+				var alpha = Model.Alpha;
 
 				var x = 1.0; // Timing;
 				var y = func(alpha, x, sfValue);
@@ -434,7 +497,7 @@
 			{
 				var func = PlotFunction;
 				var sfValue = SpendingFunctionValue;
-				var alpha = Model.AlphaSpending;
+				var alpha = Model.Alpha;
 
 				var x = Timing;
 				var y = func(alpha, x, sfValue);

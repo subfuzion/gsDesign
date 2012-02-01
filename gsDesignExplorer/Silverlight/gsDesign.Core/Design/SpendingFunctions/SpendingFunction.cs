@@ -2,15 +2,26 @@
 {
 	using OneParameter;
 	using ParameterFree;
+	using PiecewiseLinear;
+	using ThreeParameter;
+	using TwoParameter;
 
+	/// <summary>
+	/// Encapsulates a parameterized spending function.
+	/// One instance of this class is the LowerSpendingFunction property of the SpendingFunctionParameters
+	/// property of DesignParameters; the other is the UpperSpendingFunction property.
+	/// </summary>
 	public class SpendingFunction
 	{
-		public SpendingFunction(DesignParameters designParameters)
+		public SpendingFunction(DesignParameters designParameters, SpendingFunctionBounds bounds)
 		{
 			DesignParameters = designParameters;
+			SpendingFunctionBounds = bounds;
 		}
 
-		protected DesignParameters DesignParameters { get; private set; }
+		public DesignParameters DesignParameters { get; private set; }
+
+		public SpendingFunctionBounds SpendingFunctionBounds { get; private set; }
 
 		#region Spending function parameters
 
@@ -37,7 +48,7 @@
 			get
 			{
 				return _parameterFreeSpendingFunction
-					?? (_parameterFreeSpendingFunction = new ParameterFreeSpendingFunction(DesignParameters)
+					?? (_parameterFreeSpendingFunction = new ParameterFreeSpendingFunction(DesignParameters, SpendingFunctionBounds)
 					{
 						LanDeMetsApproximation = LanDeMetsApproximation.OBrienFleming
 					});
@@ -57,7 +68,7 @@
 			get
 			{
 				return _oneParameterSpendingFunction
-					?? (_oneParameterSpendingFunction = new OneParameterSpendingFunction(DesignParameters)
+					?? (_oneParameterSpendingFunction = new OneParameterSpendingFunction(DesignParameters, SpendingFunctionBounds)
 					{
 						OneParameterFamily = OneParameterFamily.HwangShihDeCani,
 					});
@@ -67,6 +78,66 @@
 		}
 
 		#endregion // OneParameterSpendingFunction
+
+		#region TwoParameterSpendingFunction property
+
+		private TwoParameterSpendingFunction _twoParameterSpendingFunction;
+
+		public TwoParameterSpendingFunction TwoParameterSpendingFunction
+		{
+			get
+			{
+				return _twoParameterSpendingFunction
+					?? (_twoParameterSpendingFunction = new TwoParameterSpendingFunction(DesignParameters, SpendingFunctionBounds)
+					{
+						//TwoParameterFamily = TwoParameterFamily.HwangShihDeCani,
+					});
+			}
+
+			set { _twoParameterSpendingFunction = value; }
+		}
+
+		#endregion // TwoParameterSpendingFunction
+
+		#region ThreeParameterSpendingFunction property
+
+		private ThreeParameterSpendingFunction _threeParameterSpendingFunction;
+
+		public ThreeParameterSpendingFunction ThreeParameterSpendingFunction
+		{
+			get
+			{
+				return _threeParameterSpendingFunction
+					?? (_threeParameterSpendingFunction = new ThreeParameterSpendingFunction(DesignParameters, SpendingFunctionBounds)
+					{
+						// ThreeParameterFamily = ThreeParameterFamily.HwangShihDeCani,
+					});
+			}
+
+			set { _threeParameterSpendingFunction = value; }
+		}
+
+		#endregion // ThreeParameterSpendingFunction
+
+		#region PiecewiseLinearSpendingFunction property
+
+		private PiecewiseLinearSpendingFunction _piecewiseLinearSpendingFunction;
+
+		public PiecewiseLinearSpendingFunction PiecewiseLinearSpendingFunction
+		{
+			get
+			{
+				return _piecewiseLinearSpendingFunction
+					?? (_piecewiseLinearSpendingFunction = new PiecewiseLinearSpendingFunction(DesignParameters, SpendingFunctionBounds)
+					{
+						// PiecewiseLinearFamily = PiecewiseLinearFamily.HwangShihDeCani,
+					});
+			}
+
+			set { _piecewiseLinearSpendingFunction = value; }
+		}
+
+		#endregion // PiecewiseLinearSpendingFunction
 
 		#endregion
 	}

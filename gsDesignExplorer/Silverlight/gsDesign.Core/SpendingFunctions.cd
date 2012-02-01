@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="gsDesign.Design.SpendingFunctions.ParameterSpendingFunctionBase" Collapsed="true">
+    <Position X="7.5" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\ParameterSpendingFunctionBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SpendingFunctionBounds" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.TwoParameter.TwoParameterSpendingFunction" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\TwoParameter\TwoParameterSpendingFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.ThreeParameter.ThreeParameterSpendingFunction" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\ThreeParameter\ThreeParameterSpendingFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.PiecewiseLinear.PiecewiseLinearSpendingFunction" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\PiecewiseLinear\PiecewiseLinearSpendingFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.ParameterFree.ParameterFreeSpendingFunction" Collapsed="true">
+    <Position X="1.5" Y="2.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\ParameterFree\ParameterFreeSpendingFunction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LanDeMetsApproximation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="gsDesign.Design.SpendingFunctions.OneParameter.OneParameterSpendingFunction">
+    <Position X="4.5" Y="2.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAQEAAAAAAECAACQCADABAAAAAAQAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\OneParameter\OneParameterSpendingFunction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OneParameterFamily" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="gsDesign.Design.SpendingFunctions.TwoParameter.SpendingShapeFunction">
+    <Position X="7.75" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAACAAAAAIAAQAAAAIAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\TwoParameter\SpendingShapeFunction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.ParameterFree.LanDeMetsApproximation">
+    <Position X="1.5" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Design\SpendingFunctions\ParameterFree\LanDeMetsApproximation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.OneParameter.OneParameterFamily">
+    <Position X="4.75" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAACAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\OneParameter\OneParameterFamily.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gsDesign.Design.SpendingFunctions.SpendingFunctionBounds">
+    <Position X="12" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Design\SpendingFunctions\SpendingFunctionBounds.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,8 +1,7 @@
 ﻿namespace gsDesign.Design.SpendingFunctions.TwoParameter
 {
-	public enum SpendingShapeFunction
+	public enum TwoParameterFamily
 	{
-		BetaDistribution,
 		Cauchy,
 		ExtremeValue,
 		ExtremeValue2,

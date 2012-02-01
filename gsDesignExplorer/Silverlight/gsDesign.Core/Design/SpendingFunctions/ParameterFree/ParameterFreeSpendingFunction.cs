@@ -1,13 +1,14 @@
 ﻿namespace gsDesign.Design.SpendingFunctions.ParameterFree
 {
-	public class ParameterFreeSpendingFunction
+	/// <summary>
+	/// An instance of this class is a property of SpendingFunction (which is either the
+	/// LowerSpendingFunction or UpperSpendingFunction property of SpendingFunctionParameters)
+	/// </summary>
+	public class ParameterFreeSpendingFunction : ParameterSpendingFunctionBase
 	{
-		public ParameterFreeSpendingFunction(DesignParameters designParameters)
+		public ParameterFreeSpendingFunction(DesignParameters designParameters, SpendingFunctionBounds bounds) : base(designParameters, bounds)
 		{
-			DesignParameters = designParameters;
 		}
-
-		protected DesignParameters DesignParameters { get; private set; }
 
 		public LanDeMetsApproximation LanDeMetsApproximation { get; set; }
 	}

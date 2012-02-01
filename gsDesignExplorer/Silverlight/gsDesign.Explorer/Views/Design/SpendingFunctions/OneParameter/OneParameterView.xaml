@@ -77,30 +77,33 @@
 						</toolkit:Chart.Axes>
 					</toolkit:Chart>
 					-->
-					<toolkit:Chart Grid.Row="0" Grid.Column="1" x:Name="chart" Style="{StaticResource ChartStyle}" MinHeight="250" >
-						<toolkit:Chart.Series>
-							<toolkit:LineSeries x:Name="lineSeries" 
+
+					<Grid Grid.Row="0" Grid.Column="1" Margin="0 10 0 0">
+						<toolkit:Chart x:Name="chart" Style="{StaticResource ChartStyle}" MinHeight="250" >
+							<toolkit:Chart.Series>
+								<toolkit:LineSeries x:Name="lineSeries" 
 									ItemsSource="{Binding Path=PlotData, Mode=OneWay}"
 									IndependentValueBinding="{Binding X}"
 									DependentValueBinding="{Binding Y}" 
 									/>
-						</toolkit:Chart.Series>
-						<toolkit:Chart.Axes>
-							<toolkit:CategoryAxis Orientation="X" Style="{StaticResource CategoryAxisStyle}" AxisLabelStyle="{StaticResource AxisLabelStyle}" />
-							<toolkit:LinearAxis Orientation="Y" AxisLabelStyle="{StaticResource NumericAxisLabelStyle}" />
-						</toolkit:Chart.Axes>
-					</toolkit:Chart>
+							</toolkit:Chart.Series>
+							<toolkit:Chart.Axes>
+								<toolkit:CategoryAxis Orientation="X" Style="{StaticResource CategoryAxisStyle}" AxisLabelStyle="{StaticResource AxisLabelStyle}" />
+								<toolkit:LinearAxis Orientation="Y" AxisLabelStyle="{StaticResource NumericAxisLabelStyle}" />
+							</toolkit:Chart.Axes>
+						</toolkit:Chart>
 
-					<!--Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay" RenderTransformOrigin="0,1" SizeChanged="overlay_SizeChanged"-->
-					<Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay" SizeChanged="overlay_SizeChanged">
+						<!--Canvas Grid.Row="0" Grid.Column="1" x:Name="overlay" RenderTransformOrigin="0,1" SizeChanged="overlay_SizeChanged"-->
+						<Canvas x:Name="overlay" SizeChanged="overlay_SizeChanged">
 							<!--<Canvas.RenderTransform>
 							<ScaleTransform ScaleY="-1" />
 						</Canvas.RenderTransform>-->
-						<!--<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" Canvas.Left="{Binding Path=Intercept.X, Mode=TwoWay}" Canvas.Top="{Binding Path=Intercept.Y, Mode=TwoWay}"  />-->
-						<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" />
-					</Canvas>
+							<!--<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" Canvas.Left="{Binding Path=Intercept.X, Mode=TwoWay}" Canvas.Top="{Binding Path=Intercept.Y, Mode=TwoWay}"  />-->
+							<Ellipse x:Name="controlPoint" Width="12" Height="12" Fill="Red" />
+						</Canvas>
+					</Grid>
 
-					<Grid Grid.Row="0" Grid.Column="2" MinWidth="102" DataContext="{Binding Source={StaticResource AppViewModel}}">
+					<!--<Grid Grid.Row="0" Grid.Column="2" MinWidth="102" DataContext="{Binding Source={StaticResource AppViewModel}}">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*" />
 							<RowDefinition Height="auto"/>
@@ -119,6 +122,29 @@
 												Increment="{Binding Path=CurrentDesign.ErrorPowerTiming.ErrorIncrement, Mode=OneWay}"
 												DecimalPlaces="{Binding Path=CurrentDesign.ErrorPowerTiming.ErrorPrecision, Mode=OneWay}"
 												Value="{Binding Path=CurrentDesign.ErrorPowerTiming.Error, Mode=TwoWay}"
+						/>
+						<TextBlock Grid.Row="2" Text="interim spending" Margin="4" HorizontalAlignment="Center"/>
+					</Grid>-->
+
+					<Grid Grid.Row="0" Grid.Column="2" MinWidth="102">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+
+						<Slider Grid.Row="0" Orientation="Vertical" Margin="4"
+								Maximum="{Binding Path=InterimSpendingMaximum, Mode=OneWay}"
+								Minimum="{Binding Path=InterimSpendingMinimum, Mode=OneWay}"
+								SmallChange="{Binding Path=InterimSpendingIncrement, Mode=OneWay}"
+								LargeChange="{Binding Path=InterimSpendingIncrement, Mode=OneWay}"
+								Value="{Binding ElementName=numericUpDown2, Path=Value, Mode=TwoWay}"/>
+						<toolkit:NumericUpDown x:Name="numericUpDown2" Grid.Row="1" Margin="4" Width="70"
+												Minimum="{Binding Path=InterimSpendingMinimum, Mode=OneWay}"
+												Maximum="{Binding Path=InterimSpendingMaximum, Mode=OneWay}"
+												Increment="{Binding Path=InterimSpendingIncrement, Mode=OneWay}"
+												DecimalPlaces="{Binding Path=InterimSpendingPrecision, Mode=OneWay}"
+												Value="{Binding Path=InterimSpending, Mode=TwoWay}"
 						/>
 						<TextBlock Grid.Row="2" Text="interim spending" Margin="4" HorizontalAlignment="Center"/>
 					</Grid>
