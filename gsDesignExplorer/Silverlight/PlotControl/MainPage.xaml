@@ -67,8 +67,24 @@
 							<ColumnDefinition/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<sdk:Label Content="Control point position" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<sdk:Label Content="Control point position (coordinates)" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
 						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPosition, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Control point logical X" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPlotX, StringFormat=\{0:F3\}, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Control point logical Y" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPlotY,StringFormat=\{0:F3\}, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 				</StackPanel>
 			</Grid>
