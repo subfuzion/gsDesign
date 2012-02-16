@@ -9,10 +9,8 @@
 	using System.Windows.Shapes;
 
 	[TemplatePart(Name = "PART_plotCanvas", Type = typeof (Canvas))]
-	public class InteractivePlot : Control
+	public class InteractivePlot : InteractivePlotBase
 	{
-		public static readonly string PlotCanvasPart = "PART_plotCanvas";
-
 		private readonly Shape DefaultControlPoint = new Ellipse
 		{Fill = new SolidColorBrush(Colors.Red), Width = 12, Height = 12};
 
@@ -20,140 +18,54 @@
 
 		public InteractivePlot()
 		{
-			DefaultStyleKey = typeof (InteractivePlot);
 
-			ControlPointPlotPrecision = 3;
-			MaximumLogicalCoordinate = new Point(1.0, 1.0);
+			DefaultStyleKey = typeof (InteractivePlot);
+		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			//SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
+
+			PlotCanvas = GetTemplateChild(PlotCanvasPart) as Canvas;
+			if (PlotCanvas != null)
+			{
+				PlotCanvas.SizeChanged += PlotCanvasOnSizeChanged;
+				//PlotCanvas.SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
+				ClipToBounds(ActualWidth, ActualHeight);
+
+				//PlotCanvas.MouseEnter += (sender, args) => PlotCanvas.MouseMove += HandleOnMouseMove;
+				//PlotCanvas.MouseLeave += (sender, args) => PlotCanvas.MouseMove -= HandleOnMouseMove;
+				PlotCanvas.MouseLeftButtonUp += (sender, args) =>
+				{
+					isDragging = false;
+					ControlPointState = ControlPointState.Normal;
+				};
+
+				if (ControlPoint != null) PlotCanvas.Children.Add(ControlPoint);
+				if (ControlPointHover != null) PlotCanvas.Children.Add(ControlPointHover);
+				if (ControlPointDrag != null) PlotCanvas.Children.Add(ControlPointDrag);
+
+				if (Polyline != null) PlotCanvas.Children.Add(Polyline);
+
+				UpdatePlotDisplay();
+				UpdateControlPointStateDisplay();
+
+			}
 		}
 
 		#region PlotCanvas property
-
-		public Canvas PlotCanvas
-		{
-			get { return (Canvas) GetValue(PlotCanvasProperty); }
-			set { SetValue(PlotCanvasProperty, value); }
-		}
-
-		public static DependencyProperty PlotCanvasProperty = DependencyProperty.Register(
-			"PlotCanvas",
-			typeof (Canvas),
-			typeof (InteractivePlot),
-			new PropertyMetadata(PlotCanvasChangedHandler));
-
-		private static void PlotCanvasChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnPlotCanvasChanged((Canvas) args.NewValue, (Canvas) args.OldValue);
-			}
-		}
-
-		protected virtual void OnPlotCanvasChanged(Canvas newValue, Canvas oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (oldValue != null)
-			{
-				oldValue.SizeChanged -= PlotCanvasOnSizeChanged;
-			}
-
-			OnPlotCanvasChanged(newValue);
-		}
-
-		protected virtual void OnPlotCanvasChanged(Canvas newValue)
-		{
-			// add handler code
-			PlotWidth = newValue != null ? newValue.ActualWidth : 0;
-			PlotHeight = newValue != null ? newValue.ActualHeight : 0;
-
-			PlotCanvas.SizeChanged += PlotCanvasOnSizeChanged;
-		}
-
-		private void PlotCanvasOnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
-		{
-			ClipToBounds(sizeChangedEventArgs.NewSize.Width, sizeChangedEventArgs.NewSize.Height);
-
-			PlotWidth = sizeChangedEventArgs.NewSize.Width;
-			PlotHeight = sizeChangedEventArgs.NewSize.Height;
-
-			UpdatePlotDisplay();
-		}
 
 		#endregion
 
 		#region PlotWidth property
 
-		public double PlotWidth
-		{
-			get { return (double) GetValue(PlotWidthProperty); }
-			set { SetValue(PlotWidthProperty, value); }
-		}
-
-		public static DependencyProperty PlotWidthProperty = DependencyProperty.Register(
-			"PlotWidth",
-			typeof (double),
-			typeof (InteractivePlot),
-			new PropertyMetadata(PlotWidthChangedHandler));
-
-		private static void PlotWidthChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnPlotWidthChanged((double) args.NewValue, (double) args.OldValue);
-			}
-		}
-
-		protected virtual void OnPlotWidthChanged(double newValue, double oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnPlotWidthChanged(newValue);
-		}
-
-		protected virtual void OnPlotWidthChanged(double newValue)
-		{
-			// add handler code
-		}
-
 		#endregion
 
 		#region PlotHeight property
 
-		public double PlotHeight
-		{
-			get { return (double) GetValue(PlotHeightProperty); }
-			set { SetValue(PlotHeightProperty, value); }
-		}
-
-		public static DependencyProperty PlotHeightProperty = DependencyProperty.Register(
-			"PlotHeight",
-			typeof (double),
-			typeof (InteractivePlot),
-			new PropertyMetadata(PlotHeightChangedHandler));
-
-		private static void PlotHeightChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnPlotHeightChanged((double) args.NewValue, (double) args.OldValue);
-			}
-		}
-
-		protected virtual void OnPlotHeightChanged(double newValue, double oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnPlotHeightChanged(newValue);
-		}
-
-		protected virtual void OnPlotHeightChanged(double newValue)
-		{
-			// add handler code
-		}
-
 		#endregion
-
-
 
 		#region IsControlPointVisible Property
 
@@ -193,43 +105,6 @@
 		#endregion // IsControlPointVisible Property
 
 		#region PropertyName Property
-
-		#region ControlPointPlotPrecision Property
-
-		public static DependencyProperty ControlPointPlotPrecisionProperty = DependencyProperty.Register(
-			"ControlPointPlotPrecision",
-			typeof (int),
-			typeof (InteractivePlot),
-			new PropertyMetadata(ControlPointPlotPrecisionChangedHandler));
-
-		public int ControlPointPlotPrecision
-		{
-			get { return (int) GetValue(ControlPointPlotPrecisionProperty); }
-			set { SetValue(ControlPointPlotPrecisionProperty, value); }
-		}
-
-		private static void ControlPointPlotPrecisionChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnControlPointPlotPrecisionChanged((int) args.NewValue, (int) args.OldValue);
-			}
-		}
-
-		protected virtual void OnControlPointPlotPrecisionChanged(int newValue, int oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnControlPointPlotPrecisionChanged(newValue);
-		}
-
-		protected virtual void OnControlPointPlotPrecisionChanged(int newValue)
-		{
-			// add handler code
-		}
-
-		#endregion ControlPointPlotPrecision Property
 
 		#region ControlPointPosition Property
 
@@ -658,17 +533,6 @@
 			}
 		}
 
-		private static void SetPosition(DependencyObject element, Point p)
-		{
-			SetPosition(element, p.X, p.Y);
-		}
-
-		private static void SetPosition(DependencyObject element, double x, double y)
-		{
-			element.SetValue(Canvas.LeftProperty, x);
-			element.SetValue(Canvas.TopProperty, y);
-		}
-
 
 		private void AddControlPointHandlers(Shape shape)
 		{
@@ -717,45 +581,6 @@
 
 		#endregion
 
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-
-			//SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
-
-			PlotCanvas = GetTemplateChild(PlotCanvasPart) as Canvas;
-			if (PlotCanvas != null)
-			{
-				PlotCanvas.SizeChanged += PlotCanvasOnSizeChanged;
-				//PlotCanvas.SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
-				ClipToBounds(ActualWidth, ActualHeight);
-
-				//PlotCanvas.MouseEnter += (sender, args) => PlotCanvas.MouseMove += HandleOnMouseMove;
-				//PlotCanvas.MouseLeave += (sender, args) => PlotCanvas.MouseMove -= HandleOnMouseMove;
-				PlotCanvas.MouseLeftButtonUp += (sender, args) =>
-				{
-					isDragging = false;
-					ControlPointState = ControlPointState.Normal;
-				};
-
-				if (ControlPoint != null) PlotCanvas.Children.Add(ControlPoint);
-				if (ControlPointHover != null) PlotCanvas.Children.Add(ControlPointHover);
-				if (ControlPointDrag != null) PlotCanvas.Children.Add(ControlPointDrag);
-
-				if (Polyline != null) PlotCanvas.Children.Add(Polyline);
-
-				UpdatePlotDisplay();
-				UpdateControlPointStateDisplay();
-
-			}
-		}
-
-		private bool InBounds(Point p, FrameworkElement element)
-		{
-			bool inBounds = (p.X >= 0 && p.X < element.ActualWidth && p.Y >= 0 && p.Y < element.ActualHeight) ? true : false;
-			return inBounds;
-		}
-
 		private void HandleOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
 		{
 			if (isDragging)
@@ -777,117 +602,11 @@
 		//    ClipToBounds(size.Width, size.Height);
 		//}
 
-		private void ClipToBounds(Size size)
-		{
-			ClipToBounds(size.Width, size.Height);
-		}
-
-		private void ClipToBounds(double width, double height)
-		{
-			if (PlotCanvas != null)
-			{
-				PlotCanvas.Clip = new RectangleGeometry {Rect = new Rect(0, 0, width, height)};
-			}
-		}
-
-		public Point LogicalToPhysicalCoordinates(Point p)
-		{
-			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
-			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
-
-			double x = Math.Round((p.X / logWidth) * (ActualWidth - 1), ControlPointPlotPrecision);
-			double y = Math.Round((p.Y / logHeight) * (ActualHeight - 1), ControlPointPlotPrecision);
-
-			//double x = Math.Round((p.X / logWidth) * (PlotWidth - 1), ControlPointPlotPrecision);
-			//double y = Math.Round((p.Y / logHeight) * (PlotHeight - 1), ControlPointPlotPrecision);
-
-			var physPoint = new Point(x, y);
-			return physPoint;
-		}
-
-		public Point PhysicalToLogicalCoordinates(Point p)
-		{
-			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
-			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
-
-			double logX = Math.Round((p.X/(ActualWidth - 1))*logWidth, ControlPointPlotPrecision);
-			double logY = Math.Round((p.Y/(ActualHeight - 1))*logHeight, ControlPointPlotPrecision);
-
-			var logPoint = new Point(logX, logY);
-			return logPoint;
-		}
-
 		#region MinimumLogicalCoordinate Property
-
-		public static DependencyProperty MinimumLogicalCoordinateProperty = DependencyProperty.Register(
-			"MinimumLogicalCoordinate",
-			typeof (Point),
-			typeof (InteractivePlot),
-			new PropertyMetadata(MinimumLogicalCoordinateChangedHandler));
-
-		public Point MinimumLogicalCoordinate
-		{
-			get { return (Point) GetValue(MinimumLogicalCoordinateProperty); }
-			set { SetValue(MinimumLogicalCoordinateProperty, value); }
-		}
-
-		private static void MinimumLogicalCoordinateChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnMinimumLogicalCoordinateChanged((Point) args.NewValue, (Point) args.OldValue);
-			}
-		}
-
-		protected virtual void OnMinimumLogicalCoordinateChanged(Point newValue, Point oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnMinimumLogicalCoordinateChanged(newValue);
-		}
-
-		protected virtual void OnMinimumLogicalCoordinateChanged(Point newValue)
-		{
-			// add handler code
-		}
 
 		#endregion MinimumLogicalCoordinate Property
 
 		#region MaximumLogicalCoordinate Property
-
-		public static DependencyProperty MaximumLogicalCoordinateProperty = DependencyProperty.Register(
-			"MaximumLogicalCoordinate",
-			typeof (Point),
-			typeof (InteractivePlot),
-			new PropertyMetadata(MaximumLogicalCoordinateChangedHandler));
-
-		public Point MaximumLogicalCoordinate
-		{
-			get { return (Point) GetValue(MaximumLogicalCoordinateProperty); }
-			set { SetValue(MaximumLogicalCoordinateProperty, value); }
-		}
-
-		private static void MaximumLogicalCoordinateChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnMaximumLogicalCoordinateChanged((Point) args.NewValue, (Point) args.OldValue);
-			}
-		}
-
-		protected virtual void OnMaximumLogicalCoordinateChanged(Point newValue, Point oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnMaximumLogicalCoordinateChanged(newValue);
-		}
-
-		protected virtual void OnMaximumLogicalCoordinateChanged(Point newValue)
-		{
-			// add handler code
-		}
 
 		#endregion MaximumPlotCoordinate Property
 
@@ -941,7 +660,7 @@
 
 		#endregion
 
-		public void UpdatePlotDisplay()
+		public override void UpdatePlotDisplay()
 		{
 			OnCoordinatesChanged(Coordinates);
 		}

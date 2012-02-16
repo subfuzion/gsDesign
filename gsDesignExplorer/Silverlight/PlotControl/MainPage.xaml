@@ -6,15 +6,20 @@
 	xmlns:Charting="clr-namespace:Subfuzion.Silverlight.UI.Charting"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	mc:Ignorable="d"
-	d:DesignHeight="400" d:DesignWidth="400">
+	d:DesignHeight="500" d:DesignWidth="800">
 
 	<Grid x:Name="LayoutRoot" Background="Gray">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="3*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="400"/>
+			<ColumnDefinition Width="350" />
+		</Grid.ColumnDefinitions>
 
-		<Border Margin="10" BorderBrush="Black" BorderThickness="1" Background="White">
+		<Border Grid.Row="0" Margin="10" BorderBrush="Black" BorderThickness="1" Background="White">
 			<Grid Margin="4 8 6 6">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
@@ -134,6 +139,12 @@
 					</Grid>
 				</StackPanel>
 			</Grid>
+		</Border>
+		
+		<Border Grid.RowSpan="2" Grid.Column="1" Margin="4">
+			<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="scrollView">
+				<TextBox IsReadOnly="True" x:Name="log" FontFamily="Lucida Sans Unicode" FontSize="10" />
+			</ScrollViewer>			
 		</Border>
 	</Grid>
 </UserControl>

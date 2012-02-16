@@ -11,6 +11,13 @@
 		{
 			InitializeComponent();
 
+			plot.Logger = msg =>
+			{
+				log.Text += msg + "\n";
+				scrollView.ScrollToBottom();
+				log.SelectionStart = log.Text.Length;
+			};
+
 			Loaded += OnLoaded;
 		}
 

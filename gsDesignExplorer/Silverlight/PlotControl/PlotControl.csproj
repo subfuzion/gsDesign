@@ -101,10 +101,10 @@
     <Compile Include="ControlPointState.cs" />
     <Compile Include="HwangShihDeCaniPlotFunction.cs" />
     <Compile Include="InteractivePlot.cs" />
+    <Compile Include="InteractivePlotBase.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlotDefinition.cs" />
     <Compile Include="PlotFunctionBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
