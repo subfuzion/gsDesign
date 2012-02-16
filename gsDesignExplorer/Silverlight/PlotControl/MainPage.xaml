@@ -3,44 +3,74 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:Charting="clr-namespace:Subfuzion.Silverlight.UI.Charting" mc:Ignorable="d"
-	d:DesignHeight="300" d:DesignWidth="400">
+	xmlns:Charting="clr-namespace:Subfuzion.Silverlight.UI.Charting"
+	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+	mc:Ignorable="d"
+	d:DesignHeight="400" d:DesignWidth="400">
 
-	<Grid x:Name="LayoutRoot" Background="White">
+	<Grid x:Name="LayoutRoot" Background="Gray">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
-		<Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-			<Charting:InteractivePlot x:Name="plot" Background="#FFFCF8">
-				<Charting:InteractivePlot.ControlPoint>
-					<Ellipse Fill="Orange" Stroke="Black" Width="20" Height="20">
-						<Ellipse.RenderTransform>
-							<TranslateTransform X="-10" Y="-10"/>
-						</Ellipse.RenderTransform>
-					</Ellipse>
-				</Charting:InteractivePlot.ControlPoint>
-				<Charting:InteractivePlot.ControlPointHover>
-					<Ellipse Fill="White" Stroke="Black" Width="20" Height="20">
-						<Ellipse.RenderTransform>
-							<TranslateTransform X="-10" Y="-10"/>
-						</Ellipse.RenderTransform>
-					</Ellipse>
-				</Charting:InteractivePlot.ControlPointHover>
-				<Charting:InteractivePlot.ControlPointDrag>
-					<Ellipse Fill="White" Stroke="Red" Width="20" Height="20">
-						<Ellipse.RenderTransform>
-							<TranslateTransform X="-10" Y="-10"/>
-						</Ellipse.RenderTransform>
-					</Ellipse>
-					<!--<Path Fill="White" Stroke="Red">
+		<Border Margin="10" BorderBrush="Black" BorderThickness="1" Background="White">
+			<Grid Margin="4 8 6 6">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6" >
+					<TextBox Margin="2" Height="20" Width="40" x:Name="gammaTextBox"/>
+					<Slider Orientation="Vertical" Margin="2" ValueChanged="gammaSlider_ValueChanged"  x:Name="gammaSlider" />
+				</StackPanel>
+
+				<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6" >
+					<Slider Orientation="Vertical" Margin="2" x:Name="interimSpendingSlider" ValueChanged="interimSpendingSlider_ValueChanged" />
+					<TextBox Margin="2" Height="20" Width="40" x:Name="interimSpendingTextBox"/>
+				</StackPanel>
+
+				<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6" >
+					<Slider Orientation="Horizontal" Margin="2" x:Name="timingSlider" ValueChanged="timingSlider_ValueChanged"/>
+					<TextBox Margin="2" Height="20" Width="40" x:Name="timingTextBox" />
+				</StackPanel>
+
+
+				<Charting:InteractivePlot Grid.Row="0" Grid.Column="1" x:Name="plot" BorderBrush="DarkGray" BorderThickness="1" Background="#FFFCF8">
+					<Charting:InteractivePlot.ControlPoint>
+						<Ellipse Fill="Orange" Stroke="Black" Width="20" Height="20">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-10" Y="-10"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>
+					</Charting:InteractivePlot.ControlPoint>
+					<Charting:InteractivePlot.ControlPointHover>
+						<Ellipse Fill="White" Stroke="Black" Width="20" Height="20">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-10" Y="-10"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>
+					</Charting:InteractivePlot.ControlPointHover>
+					<Charting:InteractivePlot.ControlPointDrag>
+						<Ellipse Fill="White" Stroke="Red" Width="20" Height="20">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-10" Y="-10"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>
+						<!--<Path Fill="White" Stroke="Red">
 						<Path.Data>
 							<EllipseGeometry RadiusX="10" RadiusY="10" Center="10,10" />
 						</Path.Data>
 					</Path>-->
-				</Charting:InteractivePlot.ControlPointDrag>
-			</Charting:InteractivePlot>
+					</Charting:InteractivePlot.ControlPointDrag>
+				</Charting:InteractivePlot>
+			</Grid>
 		</Border>
 
 		<Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Background="#fefefe">
@@ -52,7 +82,7 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
 						<sdk:Label Content="Plot width" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ActualWidth, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=PlotWidth, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -60,7 +90,7 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
 						<sdk:Label Content="Plot height" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ActualHeight, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=PlotHeight, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -85,6 +115,22 @@
 						</Grid.ColumnDefinitions>
 						<sdk:Label Content="Control point logical Y" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
 						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPlotY,StringFormat=\{0:F3\}, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Minimum Logical Coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MinimumLogicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Maximum Logical Coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MaximumLogicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 				</StackPanel>
 			</Grid>

@@ -12,10 +12,12 @@
 					</TransformGroup>
 				</toolkit:LayoutTransformer.LayoutTransform>
 				<toolkit:LayoutTransformer.Content>
-				<Canvas x:Name="PART_plotCanvas" Background="{TemplateBinding Background}">
-					<!--<TextBlock Canvas.Left="5" Canvas.Top="5" Text="Hello world" />-->
-				</Canvas>
-			</toolkit:LayoutTransformer.Content>
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+						<Canvas x:Name="PART_plotCanvas" Background="{TemplateBinding Background}">
+							<!--<TextBlock Canvas.Left="5" Canvas.Top="5" Text="Hello world" />-->
+						</Canvas>
+					</Border>
+				</toolkit:LayoutTransformer.Content>
 			</toolkit:LayoutTransformer>
 	</ControlTemplate>
 	

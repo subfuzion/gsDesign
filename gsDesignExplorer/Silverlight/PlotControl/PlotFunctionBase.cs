@@ -11,7 +11,14 @@
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		public abstract void Update();
+		/// <summary>
+		/// Notifies subscribers that Coordinates changed.
+		/// Must invoke base.Update() as last statement in overriding methods.
+		/// </summary>
+		public virtual void Update()
+		{
+			NotifyPropertyChanged("Coordinates");
+		}
 
 		#region Coordinates property
 
