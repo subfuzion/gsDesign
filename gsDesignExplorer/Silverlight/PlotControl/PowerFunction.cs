@@ -26,7 +26,7 @@
 
 		public PowerPlotFunction()
 		{
-			PlotConstraint = PlotConstraint.MovePointAlongLine;
+			PlotConstraint = PlotConstraint.MoveLineWithPoint;
 
 			var coordinates = new ObservableCollection<Point>();
 			for (int i = 0; i < 30; i++)
@@ -101,94 +101,6 @@
 		#endregion
 
 
-		#region InterimSpendingParameter property
-
-		private double _interimSpendingParameter;
-
-		/// <summary>
-		/// Gets or sets the InterimSpendingParameter property.
-		/// </summary>
-		public double InterimSpendingParameter
-		{
-			get { return _interimSpendingParameter; }
-
-			set
-			{
-				if (Math.Abs(_interimSpendingParameter - value) > double.Epsilon)
-				{
-					_interimSpendingParameter = value;
-					NotifyPropertyChanged("InterimSpendingParameter");
-
-					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
-					{
-						var y = InterimSpendingParameter;
-						var alpha = InterimSpendingParameterMaximum;
-
-						var x = PowerFunctionInverse(alpha, y, SpendingFunctionParameter);
-
-						Timing = x;
-					}
-					else // PlotConstraint.MoveLineWithPoint
-					{
-						// compute rho
-						var rho = PowerFunctionSpendingParameter(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
-						SpendingFunctionParameter = rho;
-
-						// update coordinates
-						Update();
-					}
-				}
-			}
-		}
-
-		#region InterimSpendingParameterMinimum property
-
-		private double _interimSpendingParameterMinimum = 0.0;
-
-		/// <summary>
-		/// Gets or sets the InterimSpendingParameterMinimum property.
-		/// </summary>
-		public double InterimSpendingParameterMinimum
-		{
-			get { return _interimSpendingParameterMinimum; }
-
-			set
-			{
-				if (Math.Abs(_interimSpendingParameterMinimum - value) > double.Epsilon)
-				{
-					_interimSpendingParameterMinimum = value;
-					NotifyPropertyChanged("InterimSpendingParameterMinimum");
-				}
-			}
-		}
-
-		#endregion
-
-		#region InterimSpendingParameterMaximum property
-
-		private double _interimSpendingParameterMaximum = 100.0;
-
-		/// <summary>
-		/// Gets or sets the AlphaParameterMaximum property.
-		/// </summary>
-		public double InterimSpendingParameterMaximum
-		{
-			get { return _interimSpendingParameterMaximum; }
-
-			set
-			{
-				if (Math.Abs(_interimSpendingParameterMaximum - value) > double.Epsilon)
-				{
-					_interimSpendingParameterMaximum = value;
-					NotifyPropertyChanged("InterimSpendingParameterMaximum");
-				}
-			}
-		}
-
-		#endregion
-
-		#endregion
-
 		#region SpendingFunctionParameter property
 
 		private double _spendingFunctionParameter;
@@ -205,7 +117,7 @@
 				if (Math.Abs(_spendingFunctionParameter - value) > double.Epsilon)
 				{
 					_spendingFunctionParameter = value;
-					NotifyPropertyChanged("SpendingFunctionValue");
+					NotifyPropertyChanged("SpendingFunctionParameter");
 
 					var x = Timing;
 					var alpha = InterimSpendingParameterMaximum;
@@ -345,6 +257,94 @@
 				{
 					_timingMaximum = value;
 					NotifyPropertyChanged("TimingMaximum");
+				}
+			}
+		}
+
+		#endregion
+
+		#endregion
+
+		#region InterimSpendingParameter property
+
+		private double _interimSpendingParameter;
+
+		/// <summary>
+		/// Gets or sets the InterimSpendingParameter property.
+		/// </summary>
+		public double InterimSpendingParameter
+		{
+			get { return _interimSpendingParameter; }
+
+			set
+			{
+				if (Math.Abs(_interimSpendingParameter - value) > double.Epsilon)
+				{
+					_interimSpendingParameter = value;
+					NotifyPropertyChanged("InterimSpendingParameter");
+
+					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
+					{
+						var y = InterimSpendingParameter;
+						var alpha = InterimSpendingParameterMaximum;
+
+						var x = PowerFunctionInverse(alpha, y, SpendingFunctionParameter);
+
+						Timing = x;
+					}
+					else // PlotConstraint.MoveLineWithPoint
+					{
+						// compute rho
+						var rho = PowerFunctionSpendingParameter(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
+						SpendingFunctionParameter = rho;
+
+						// update coordinates
+						Update();
+					}
+				}
+			}
+		}
+
+		#region InterimSpendingParameterMinimum property
+
+		private double _interimSpendingParameterMinimum = 0.0;
+
+		/// <summary>
+		/// Gets or sets the InterimSpendingParameterMinimum property.
+		/// </summary>
+		public double InterimSpendingParameterMinimum
+		{
+			get { return _interimSpendingParameterMinimum; }
+
+			set
+			{
+				if (Math.Abs(_interimSpendingParameterMinimum - value) > double.Epsilon)
+				{
+					_interimSpendingParameterMinimum = value;
+					NotifyPropertyChanged("InterimSpendingParameterMinimum");
+				}
+			}
+		}
+
+		#endregion
+
+		#region InterimSpendingParameterMaximum property
+
+		private double _interimSpendingParameterMaximum = 100.0;
+
+		/// <summary>
+		/// Gets or sets the AlphaParameterMaximum property.
+		/// </summary>
+		public double InterimSpendingParameterMaximum
+		{
+			get { return _interimSpendingParameterMaximum; }
+
+			set
+			{
+				if (Math.Abs(_interimSpendingParameterMaximum - value) > double.Epsilon)
+				{
+					_interimSpendingParameterMaximum = value;
+					NotifyPropertyChanged("InterimSpendingParameterMaximum");
 				}
 			}
 		}

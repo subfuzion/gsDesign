@@ -94,8 +94,8 @@
 				<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">
 					<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
 						<StackPanel Orientation="Vertical">
-							<RadioButton Content="Move line with point" x:Name="moveLineRadioButton" Checked="moveLineRadioButton_Checked" />
-							<RadioButton Content="Move point along line" IsChecked="True" x:Name="movePointRadioButton" Checked="movePointRadioButton_Checked" />
+							<RadioButton Content="Move line with point" x:Name="moveLineRadioButton" IsChecked="True" Checked="moveLineRadioButton_Checked" />
+							<RadioButton Content="Move point along line" x:Name="movePointRadioButton" Checked="movePointRadioButton_Checked" />
 						</StackPanel>
 					</Border>
 				</Grid>

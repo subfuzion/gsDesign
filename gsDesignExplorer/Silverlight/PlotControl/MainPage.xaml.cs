@@ -74,13 +74,13 @@
 			//timingSlider.Value = _plotFunction.Timing;
 			//timingTextBox.Text = _plotFunction.Timing.ToString(CultureInfo.InvariantCulture);
 
-			//RegisterForNotification("ControlPointPhysicalPosition", plot, (o, args) =>
-			//{
-			//    var point = plot.PhysicalToLogicalCoordinates((Point)args.NewValue);
-			//    _plotFunction.Update(point.X, point.Y);
-			//    //_plotFunction.Timing = point.X;
-			//    //_plotFunction.InterimSpendingParameter = point.Y;
-			//});
+			RegisterForNotification("ControlPointPhysicalPosition", plot, (o, args) =>
+			{
+				var point = plot.PhysicalToLogicalCoordinates((Point)args.NewValue);
+				//_plotFunction.Update(point.X, point.Y);
+				_plotFunction.Timing = point.X;
+				_plotFunction.InterimSpendingParameter = point.Y;
+			});
 		}
 
 		private double PlotFunction(double x)
