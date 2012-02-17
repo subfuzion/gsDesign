@@ -4,7 +4,7 @@
 	xmlns:Charting="clr-namespace:Subfuzion.Silverlight.UI.Charting"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
 
-	<ControlTemplate TargetType="Charting:InteractivePlot" x:Key="InteractivePlotKey">
+	<ControlTemplate TargetType="Charting:LinePlot" x:Key="InteractivePlotKey">
 			<toolkit:LayoutTransformer>
 				<toolkit:LayoutTransformer.LayoutTransform>
 					<TransformGroup>
@@ -21,7 +21,7 @@
 			</toolkit:LayoutTransformer>
 	</ControlTemplate>
 	
-	<Style TargetType="Charting:InteractivePlot">
+	<Style TargetType="Charting:LinePlot">
 		<Setter Property="Template" Value="{StaticResource InteractivePlotKey}" />
 	</Style>
 	

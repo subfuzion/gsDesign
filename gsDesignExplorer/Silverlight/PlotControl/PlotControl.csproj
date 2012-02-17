@@ -100,12 +100,15 @@
     </Compile>
     <Compile Include="ControlPointState.cs" />
     <Compile Include="HwangShihDeCaniPlotFunction.cs" />
-    <Compile Include="InteractivePlot.cs" />
-    <Compile Include="InteractivePlotBase.cs" />
+    <Compile Include="LinePlot.cs" />
+    <Compile Include="LinePlotBase.cs" />
+    <Compile Include="LinePlotRenderBase.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlotFunctionBase.cs" />
+    <Compile Include="PlotConstraint.cs" />
+    <Compile Include="PlotFunction.cs" />
+    <Compile Include="PowerFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
 	using System.ComponentModel;
 	using System.Windows;
 
-	public abstract class PlotFunctionBase : INotifyPropertyChanged, INotifyCollectionChanged
+	public abstract class PlotFunction : INotifyPropertyChanged, INotifyCollectionChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event NotifyCollectionChangedEventHandler CollectionChanged;

@@ -19,65 +19,90 @@
 			<ColumnDefinition Width="350" />
 		</Grid.ColumnDefinitions>
 
+		<!-- Plot Control -->
 		<Border Grid.Row="0" Margin="10" BorderBrush="Black" BorderThickness="1" Background="White">
 			<Grid Margin="4 8 6 6">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="*"/>
-					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
+				
+				<!-- Plot Control -->
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
 
-				<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6" >
-					<TextBox Margin="2" Height="20" Width="40" x:Name="gammaTextBox"/>
-					<Slider Orientation="Vertical" Margin="2" ValueChanged="gammaSlider_ValueChanged"  x:Name="gammaSlider" />
-				</StackPanel>
+					<!-- Spending Function value controls -->
+					<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6" x:Name="spendingFunctionParameter">
+						<TextBox Margin="2" Height="20" Width="40" x:Name="gammaTextBox" Text="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+						<Slider Orientation="Vertical" Margin="2" ValueChanged="gammaSlider_ValueChanged"  x:Name="gammaSlider" Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+					</StackPanel>
 
-				<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6" >
-					<Slider Orientation="Vertical" Margin="2" x:Name="interimSpendingSlider" ValueChanged="interimSpendingSlider_ValueChanged" />
-					<TextBox Margin="2" Height="20" Width="40" x:Name="interimSpendingTextBox"/>
-				</StackPanel>
+					<!-- Interim Spending value controls -->
+					<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6" x:Name="interimSpending" >
+						<Slider Orientation="Vertical" Margin="2" x:Name="interimSpendingSlider" ValueChanged="interimSpendingSlider_ValueChanged" Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+						<TextBox Margin="2" Height="20" Width="40" x:Name="interimSpendingTextBox" Text="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+					</StackPanel>
 
-				<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6" >
-					<Slider Orientation="Horizontal" Margin="2" x:Name="timingSlider" ValueChanged="timingSlider_ValueChanged"/>
-					<TextBox Margin="2" Height="20" Width="40" x:Name="timingTextBox" />
-				</StackPanel>
+					<!-- Timing value controls -->
+					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6" x:Name="timing">
+						<Slider Orientation="Horizontal" Margin="2" x:Name="timingSlider" ValueChanged="timingSlider_ValueChanged" Value="{Binding Path=Timing, Mode=TwoWay}" />
+						<TextBox Margin="2" Height="20" Width="40" x:Name="timingTextBox" Text="{Binding Path=Timing, Mode=TwoWay}" />
+					</StackPanel>
 
+					<!-- Plot Control -->
+					<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
+						<Charting:LinePlot x:Name="plot" Background="#FFFCF8">
+							<Charting:LinePlot.ControlPoint>
+								<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:LinePlot.ControlPoint>
+							<Charting:LinePlot.ControlPointHover>
+								<Ellipse Fill="White" Stroke="Black" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:LinePlot.ControlPointHover>
+							<Charting:LinePlot.ControlPointDrag>
+								<Ellipse Fill="White" Stroke="Red" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+								<!--<Path Fill="White" Stroke="Red">
+							<Path.Data>
+								<EllipseGeometry RadiusX="10" RadiusY="10" Center="10,10" />
+							</Path.Data>
+						</Path>-->
+							</Charting:LinePlot.ControlPointDrag>
+						</Charting:LinePlot>
+					</Border>
+				</Grid>
 
-				<Charting:InteractivePlot Grid.Row="0" Grid.Column="1" x:Name="plot" BorderBrush="DarkGray" BorderThickness="1" Background="#FFFCF8">
-					<Charting:InteractivePlot.ControlPoint>
-						<Ellipse Fill="Orange" Stroke="Black" Width="20" Height="20">
-							<Ellipse.RenderTransform>
-								<TranslateTransform X="-10" Y="-10"/>
-							</Ellipse.RenderTransform>
-						</Ellipse>
-					</Charting:InteractivePlot.ControlPoint>
-					<Charting:InteractivePlot.ControlPointHover>
-						<Ellipse Fill="White" Stroke="Black" Width="20" Height="20">
-							<Ellipse.RenderTransform>
-								<TranslateTransform X="-10" Y="-10"/>
-							</Ellipse.RenderTransform>
-						</Ellipse>
-					</Charting:InteractivePlot.ControlPointHover>
-					<Charting:InteractivePlot.ControlPointDrag>
-						<Ellipse Fill="White" Stroke="Red" Width="20" Height="20">
-							<Ellipse.RenderTransform>
-								<TranslateTransform X="-10" Y="-10"/>
-							</Ellipse.RenderTransform>
-						</Ellipse>
-						<!--<Path Fill="White" Stroke="Red">
-						<Path.Data>
-							<EllipseGeometry RadiusX="10" RadiusY="10" Center="10,10" />
-						</Path.Data>
-					</Path>-->
-					</Charting:InteractivePlot.ControlPointDrag>
-				</Charting:InteractivePlot>
+				<!-- Contstraints -->
+				<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">
+					<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
+						<StackPanel Orientation="Vertical">
+							<RadioButton Content="Move line with point" x:Name="moveLineRadioButton" Checked="moveLineRadioButton_Checked" />
+							<RadioButton Content="Move point along line" IsChecked="True" x:Name="movePointRadioButton" Checked="movePointRadioButton_Checked" />
+						</StackPanel>
+					</Border>
+				</Grid>
 			</Grid>
 		</Border>
 
+		<!-- Property Grid -->
 		<Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Background="#fefefe">
 			<Grid >
 				<StackPanel Orientation="Vertical" Margin="2">
@@ -86,16 +111,40 @@
 							<ColumnDefinition/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<sdk:Label Content="Plot width" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=PlotWidth, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<sdk:Label Content="Control physical width" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=PhysicalWidth, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<sdk:Label Content="Plot height" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=PlotHeight, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<sdk:Label Content="Control physical height" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=PhysicalHeight, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Maximum physical coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MaximumPhysicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Minimum logical coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MinimumLogicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+					</Grid>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<sdk:Label Content="Maximum logical coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MaximumLogicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -103,7 +152,7 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
 						<sdk:Label Content="Control point position (coordinates)" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPosition, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
+						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPhysicalPosition, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -121,26 +170,11 @@
 						<sdk:Label Content="Control point logical Y" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
 						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=ControlPointPlotY,StringFormat=\{0:F3\}, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
 					</Grid>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition/>
-							<ColumnDefinition/>
-						</Grid.ColumnDefinitions>
-						<sdk:Label Content="Minimum Logical Coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MinimumLogicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
-					</Grid>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition/>
-							<ColumnDefinition/>
-						</Grid.ColumnDefinitions>
-						<sdk:Label Content="Maximum Logical Coordinate" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4 0 4 0" />
-						<TextBox Grid.Column="1" IsReadOnly="False" Text="{Binding ElementName=plot, Path=MaximumLogicalCoordinate, Mode=TwoWay}" VerticalAlignment="Center" Margin="4 0 4 0" />
-					</Grid>
 				</StackPanel>
 			</Grid>
 		</Border>
 		
+		<!-- Log -->
 		<Border Grid.RowSpan="2" Grid.Column="1" Margin="4">
 			<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="scrollView">
 				<TextBox IsReadOnly="True" x:Name="log" FontFamily="Lucida Sans Unicode" FontSize="10" />

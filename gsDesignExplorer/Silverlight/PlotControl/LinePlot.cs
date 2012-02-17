@@ -9,17 +9,17 @@
 	using System.Windows.Shapes;
 
 	[TemplatePart(Name = "PART_plotCanvas", Type = typeof (Canvas))]
-	public class InteractivePlot : InteractivePlotBase
+	public class LinePlot : LinePlotRenderBase
 	{
 		private readonly Shape DefaultControlPoint = new Ellipse
 		{Fill = new SolidColorBrush(Colors.Red), Width = 12, Height = 12};
 
 		private bool isDragging;
 
-		public InteractivePlot()
+		public LinePlot()
 		{
 
-			DefaultStyleKey = typeof (InteractivePlot);
+			DefaultStyleKey = typeof (LinePlot);
 		}
 
 		public override void OnApplyTemplate()
@@ -28,26 +28,39 @@
 
 			//SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
 
-			PlotCanvas = GetTemplateChild(PlotCanvasPart) as Canvas;
-			if (PlotCanvas != null)
+			PlotSurface = GetTemplateChild(PlotCanvasPart) as Canvas;
+			if (PlotSurface != null)
 			{
-				PlotCanvas.SizeChanged += PlotCanvasOnSizeChanged;
+				PlotSurface.SizeChanged += OnPlotSurfaceSizeChanged;
 				//PlotCanvas.SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
 				ClipToBounds(ActualWidth, ActualHeight);
 
 				//PlotCanvas.MouseEnter += (sender, args) => PlotCanvas.MouseMove += HandleOnMouseMove;
 				//PlotCanvas.MouseLeave += (sender, args) => PlotCanvas.MouseMove -= HandleOnMouseMove;
-				PlotCanvas.MouseLeftButtonUp += (sender, args) =>
+				PlotSurface.MouseLeftButtonUp += (sender, args) =>
 				{
 					isDragging = false;
 					ControlPointState = ControlPointState.Normal;
 				};
 
-				if (ControlPoint != null) PlotCanvas.Children.Add(ControlPoint);
-				if (ControlPointHover != null) PlotCanvas.Children.Add(ControlPointHover);
-				if (ControlPointDrag != null) PlotCanvas.Children.Add(ControlPointDrag);
+				// add children...
 
-				if (Polyline != null) PlotCanvas.Children.Add(Polyline);
+				if (Polyline != null) PlotSurface.Children.Add(Polyline);
+
+				if (ControlPoint != null)
+				{
+					PlotSurface.Children.Add(ControlPoint);
+				}
+
+				if (ControlPointHover != null)
+				{
+					PlotSurface.Children.Add(ControlPointHover);
+				}
+
+				if (ControlPointDrag != null)
+				{
+					PlotSurface.Children.Add(ControlPointDrag);
+				}
 
 				UpdatePlotDisplay();
 				UpdateControlPointStateDisplay();
@@ -72,7 +85,7 @@
 		public static DependencyProperty IsControlPointVisibleProperty = DependencyProperty.Register(
 			"IsControlPointVisible",
 			typeof (bool),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(IsControlPointVisibleChangedHandler));
 
 		public bool IsControlPointVisible
@@ -84,7 +97,7 @@
 		private static void IsControlPointVisibleChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnIsControlPointVisibleChanged((bool) args.NewValue, (bool) args.OldValue);
@@ -104,56 +117,56 @@
 
 		#endregion // IsControlPointVisible Property
 
-		#region PropertyName Property
+		#region ControlPointPhysicalPosition Property
 
 		#region ControlPointPosition Property
 
-		public static DependencyProperty ControlPointPositionProperty = DependencyProperty.Register(
+		public static DependencyProperty ControlPointPhysicalPositionProperty = DependencyProperty.Register(
 			"ControlPointPosition",
 			typeof (Point),
-			typeof (InteractivePlot),
-			new PropertyMetadata(ControlPointPositionChangedHandler));
+			typeof (LinePlot),
+			new PropertyMetadata(ControlPointPhysicalPositionChangedHandler));
 
-		public Point ControlPointPosition
+		public Point ControlPointPhysicalPosition
 		{
-			get { return (Point) GetValue(ControlPointPositionProperty); }
-			set { SetValue(ControlPointPositionProperty, value); }
+			get { return (Point) GetValue(ControlPointPhysicalPositionProperty); }
+			set { SetValue(ControlPointPhysicalPositionProperty, value); }
 		}
 
-		private static void ControlPointPositionChangedHandler(DependencyObject dependencyObject,
+		private static void ControlPointPhysicalPositionChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.OnControlPointPositionChanged((Point) args.NewValue, (Point) args.OldValue);
+				interactivePlot.OnControlPointPhysicalPositionChanged((Point) args.NewValue, (Point) args.OldValue);
 			}
 		}
 
-		protected virtual void OnControlPointPositionChanged(Point newValue, Point oldValue)
+		protected virtual void OnControlPointPhysicalPositionChanged(Point newValue, Point oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnControlPointPositionChanged(newValue);
+			OnControlPointPhysicalPositionChanged(newValue);
 		}
 
-		protected virtual void OnControlPointPositionChanged(Point newValue)
+		protected virtual void OnControlPointPhysicalPositionChanged(Point newValue)
 		{
 			// add handler code
 			UpdateControlPointStateDisplay();
 
-			Point logPoint = PhysicalToLogicalCoordinates(newValue);
-			ControlPointPlotX = logPoint.X;
-			ControlPointPlotY = logPoint.Y;
+			//Point logPoint = PhysicalToLogicalCoordinates(newValue);
+			//ControlPointPlotX = logPoint.X;
+			//ControlPointPlotY = logPoint.Y;
 		}
 
-		#endregion // ControlPointPosition Property
+		#endregion // ControlPointPhysicalPosition Property
 
 		#region ControlPointPlotX Property
 
 		public static DependencyProperty ControlPointPlotXProperty = DependencyProperty.Register(
 			"ControlPointPlotX",
 			typeof (double),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointPlotXChangedHandler));
 
 		public double ControlPointPlotX
@@ -165,7 +178,7 @@
 		private static void ControlPointPlotXChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointPlotXChanged((double) args.NewValue, (double) args.OldValue);
@@ -182,8 +195,8 @@
 		{
 			// add handler code
 			Point physPoint = LogicalToPhysicalCoordinates(new Point(newValue, ControlPointPlotY));
-			if (Math.Abs(physPoint.X - ControlPointPosition.X) > double.Epsilon)
-				ControlPointPosition = physPoint;
+			if (Math.Abs(physPoint.X - ControlPointPhysicalPosition.X) > double.Epsilon)
+				ControlPointPhysicalPosition = physPoint;
 		}
 
 		#endregion ControlPointPlotX Property
@@ -193,7 +206,7 @@
 		public static DependencyProperty ControlPointPlotYProperty = DependencyProperty.Register(
 			"ControlPointPlotY",
 			typeof (double),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointPlotYChangedHandler));
 
 		public double ControlPointPlotY
@@ -205,7 +218,7 @@
 		private static void ControlPointPlotYChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointPlotYChanged((double) args.NewValue, (double) args.OldValue);
@@ -222,8 +235,8 @@
 		{
 			// add handler code
 			Point physPoint = LogicalToPhysicalCoordinates(new Point(ControlPointPlotX, newValue));
-			if (Math.Abs(physPoint.Y - ControlPointPosition.Y) > double.Epsilon)
-				ControlPointPosition = physPoint;
+			if (Math.Abs(physPoint.Y - ControlPointPhysicalPosition.Y) > double.Epsilon)
+				ControlPointPhysicalPosition = physPoint;
 		}
 
 		#endregion ControlPointPlotY Property
@@ -233,7 +246,7 @@
 		public static DependencyProperty ControlPointProperty = DependencyProperty.Register(
 			"ControlPoint",
 			typeof (Shape),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointChangedHandler));
 
 		public Shape ControlPoint
@@ -245,7 +258,7 @@
 		private static void ControlPointChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointChanged((Shape) args.NewValue, (Shape) args.OldValue);
@@ -255,10 +268,10 @@
 		protected virtual void OnControlPointChanged(Shape newValue, Shape oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotCanvas != null && PlotCanvas.Children.Contains(oldValue))
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
 			{
 				RemoveControlPointHandlers(oldValue);
-				PlotCanvas.Children.Remove(oldValue);
+				PlotSurface.Children.Remove(oldValue);
 			}
 
 			OnControlPointChanged(newValue);
@@ -269,7 +282,7 @@
 			// add handler code
 			AddControlPointHandlers(newValue);
 			newValue.Visibility = Visibility.Collapsed;
-			if (PlotCanvas != null) PlotCanvas.Children.Add(newValue);
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
 			UpdateControlPointStateDisplay();
 		}
 
@@ -280,7 +293,7 @@
 		public static DependencyProperty ControlPointHoverProperty = DependencyProperty.Register(
 			"ControlPointHover",
 			typeof (Shape),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointHoverChangedHandler));
 
 		public Shape ControlPointHover
@@ -292,7 +305,7 @@
 		private static void ControlPointHoverChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointHoverChanged((Shape) args.NewValue, (Shape) args.OldValue);
@@ -302,10 +315,10 @@
 		protected virtual void OnControlPointHoverChanged(Shape newValue, Shape oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotCanvas != null && PlotCanvas.Children.Contains(oldValue))
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
 			{
 				RemoveControlPointHandlers(oldValue);
-				PlotCanvas.Children.Remove(oldValue);
+				PlotSurface.Children.Remove(oldValue);
 			}
 
 			OnControlPointHoverChanged(newValue);
@@ -316,7 +329,7 @@
 			// add handler code
 			AddControlPointHandlers(newValue);
 			newValue.Visibility = Visibility.Collapsed;
-			if (PlotCanvas != null) PlotCanvas.Children.Add(newValue);
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
 			UpdateControlPointStateDisplay();
 		}
 
@@ -327,7 +340,7 @@
 		public static DependencyProperty ControlPointDragProperty = DependencyProperty.Register(
 			"ControlPointDrag",
 			typeof (Shape),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointDragChangedHandler));
 
 		public Shape ControlPointDrag
@@ -339,7 +352,7 @@
 		private static void ControlPointDragChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointDragChanged((Shape) args.NewValue, (Shape) args.OldValue);
@@ -349,10 +362,10 @@
 		protected virtual void OnControlPointDragChanged(Shape newValue, Shape oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotCanvas != null && PlotCanvas.Children.Contains(oldValue))
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
 			{
 				RemoveControlPointHandlers(oldValue);
-				PlotCanvas.Children.Remove(oldValue);
+				PlotSurface.Children.Remove(oldValue);
 			}
 
 			OnControlPointDragChanged(newValue);
@@ -363,7 +376,7 @@
 			// add handler code
 			AddControlPointHandlers(newValue);
 			newValue.Visibility = Visibility.Collapsed;
-			if (PlotCanvas != null) PlotCanvas.Children.Add(newValue);
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
 			UpdateControlPointStateDisplay();
 		}
 
@@ -374,7 +387,7 @@
 		public static DependencyProperty ControlPointVisibilityProperty = DependencyProperty.Register(
 			"ControlPointVisibility",
 			typeof (Visibility),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointVisibilityChangedHandler));
 
 		public Visibility ControlPointVisibility
@@ -386,7 +399,7 @@
 		private static void ControlPointVisibilityChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointVisibilityChanged((Visibility) args.NewValue, (Visibility) args.OldValue);
@@ -412,7 +425,7 @@
 		public static DependencyProperty ControlPointStateProperty = DependencyProperty.Register(
 			"ControlPointState",
 			typeof (ControlPointState),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(ControlPointStateChangedHandler));
 
 		public ControlPointState ControlPointState
@@ -424,7 +437,7 @@
 		private static void ControlPointStateChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnControlPointStateChanged((ControlPointState) args.NewValue, (ControlPointState) args.OldValue);
@@ -490,7 +503,7 @@
 			switch (ControlPointState)
 			{
 				case ControlPointState.Normal:
-					SetPosition(CurrentControlPoint, ControlPointPosition);
+					SetPosition(CurrentControlPoint, ControlPointPhysicalPosition);
 					CurrentControlPoint.Visibility = ControlPointVisibility;
 
 					if (ControlPointHover != null) ControlPointHover.Visibility = Visibility.Collapsed;
@@ -500,7 +513,7 @@
 				case ControlPointState.Hover:
 					if (ControlPointHover != null)
 					{
-						SetPosition(ControlPointHover, ControlPointPosition);
+						SetPosition(ControlPointHover, ControlPointPhysicalPosition);
 						ControlPointHover.Visibility = ControlPointVisibility;
 
 						if (ControlPoint != null) ControlPoint.Visibility = Visibility.Collapsed;
@@ -508,7 +521,7 @@
 					}
 					else
 					{
-						SetPosition(ControlPoint, ControlPointPosition);
+						SetPosition(ControlPoint, ControlPointPhysicalPosition);
 						ControlPoint.Visibility = ControlPointVisibility;
 						if (ControlPointDrag != null) ControlPointDrag.Visibility = Visibility.Collapsed;
 					}
@@ -517,7 +530,7 @@
 				case ControlPointState.Drag:
 					if (ControlPointDrag != null)
 					{
-						SetPosition(ControlPointDrag, ControlPointPosition);
+						SetPosition(ControlPointDrag, ControlPointPhysicalPosition);
 						ControlPointDrag.Visibility = ControlPointVisibility;
 
 						if (ControlPoint != null) ControlPoint.Visibility = Visibility.Collapsed;
@@ -525,7 +538,7 @@
 					}
 					else
 					{
-						SetPosition(ControlPoint, ControlPointPosition);
+						SetPosition(ControlPoint, ControlPointPhysicalPosition);
 						ControlPoint.Visibility = ControlPointVisibility;
 						if (ControlPointHover != null) ControlPointHover.Visibility = Visibility.Collapsed;
 					}
@@ -585,13 +598,13 @@
 		{
 			if (isDragging)
 			{
-				Point p = mouseEventArgs.GetPosition(PlotCanvas);
+				Point p = mouseEventArgs.GetPosition(PlotSurface);
 
 				if (p.X < 0) p.X = 0;
 				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
 				if (p.Y < 0) p.Y = 0;
 				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
-				ControlPointPosition = p;
+				ControlPointPhysicalPosition = p;
 			}
 		}
 
@@ -614,90 +627,9 @@
 
 		#region Coordinates property
 
-		public ObservableCollection<Point> Coordinates
-		{
-			get { return (ObservableCollection<Point>) GetValue(CoordinatesProperty); }
-			set { SetValue(CoordinatesProperty, value); }
-		}
-
-		public static DependencyProperty CoordinatesProperty = DependencyProperty.Register(
-			"Coordinates",
-			typeof (ObservableCollection<Point>),
-			typeof (InteractivePlot),
-			new PropertyMetadata(CoordinatesChangedHandler));
-
-		private static void CoordinatesChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnCoordinatesChanged((ObservableCollection<Point>) args.NewValue, (ObservableCollection<Point>) args.OldValue);
-			}
-		}
-
-		protected virtual void OnCoordinatesChanged(ObservableCollection<Point> newCoordinates, ObservableCollection<Point> oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnCoordinatesChanged(newCoordinates);
-		}
-
-		protected virtual void OnCoordinatesChanged(ObservableCollection<Point> newCoordinates)
-		{
-			// add handler code
-			if (PlotCanvas == null || newCoordinates == null || newCoordinates.Count <= 0) return;
-
-			MinimumLogicalCoordinate = newCoordinates[0];
-			MaximumLogicalCoordinate = newCoordinates[newCoordinates.Count - 1];
-
-			Polyline.Points = new PointCollection();
-			foreach (var point in newCoordinates)
-			{
-				var vertex = LogicalToPhysicalCoordinates(point);
-				Polyline.Points.Add(vertex);
-			}
-
-		}
-
 		#endregion
 
-		public override void UpdatePlotDisplay()
-		{
-			OnCoordinatesChanged(Coordinates);
-		}
-
 		#region Polyline property
-
-		public Polyline Polyline
-		{
-			get { return (Polyline) GetValue(PolylineProperty); }
-			set { SetValue(PolylineProperty, value); }
-		}
-
-		public static DependencyProperty PolylineProperty = DependencyProperty.Register(
-			"Polyline",
-			typeof (Polyline),
-			typeof (InteractivePlot),
-			new PropertyMetadata(new Polyline {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 1}, PolylineChangedHandler));
-
-		private static void PolylineChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as InteractivePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnPolylineChanged((Polyline) args.NewValue, (Polyline) args.OldValue);
-			}
-		}
-
-		protected virtual void OnPolylineChanged(Polyline newValue, Polyline oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnPolylineChanged(newValue);
-		}
-
-		protected virtual void OnPolylineChanged(Polyline newValue)
-		{
-			// add handler code
-		}
 
 		#endregion
 

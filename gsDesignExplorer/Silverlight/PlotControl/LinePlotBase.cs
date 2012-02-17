@@ -1,11 +1,12 @@
 ﻿namespace Subfuzion.Silverlight.UI.Charting
 {
 	using System;
+	using System.ComponentModel;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Media;
 
-	public class InteractivePlotBase : Control
+	public class LinePlotBase : Control, INotifyPropertyChanged
 	{
 		public static readonly string PlotCanvasPart = "PART_plotCanvas";
 
@@ -22,130 +23,144 @@
 
 		#region PlotCanvas
 
-		public static DependencyProperty PlotCanvasProperty = DependencyProperty.Register(
-			"PlotCanvas",
+		public static DependencyProperty PlotSurfaceProperty = DependencyProperty.Register(
+			"PlotSurface",
 			typeof (Canvas),
-			typeof (InteractivePlot),
-			new PropertyMetadata(PlotCanvasChangedHandler));
+			typeof (LinePlot),
+			new PropertyMetadata(PlotSurfaceChangedHandler));
 
-		public Canvas PlotCanvas
+		public Canvas PlotSurface
 		{
-			get { return (Canvas) GetValue(PlotCanvasProperty); }
-			set { SetValue(PlotCanvasProperty, value); }
+			get { return (Canvas) GetValue(PlotSurfaceProperty); }
+			set { SetValue(PlotSurfaceProperty, value); }
 		}
 
-		private static void PlotCanvasChangedHandler(DependencyObject dependencyObject,
+		private static void PlotSurfaceChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.OnPlotCanvasChanged((Canvas) args.NewValue, (Canvas) args.OldValue);
+				interactivePlot.OnPlotSurfaceChanged((Canvas) args.NewValue, (Canvas) args.OldValue);
 			}
 		}
 
-		protected virtual void OnPlotCanvasChanged(Canvas newValue, Canvas oldValue)
+		protected virtual void OnPlotSurfaceChanged(Canvas newValue, Canvas oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
 			if (oldValue != null)
 			{
-				oldValue.SizeChanged -= PlotCanvasOnSizeChanged;
+				oldValue.SizeChanged -= OnPlotSurfaceSizeChanged;
 			}
 
-			OnPlotCanvasChanged(newValue);
+			OnPlotSurfaceChanged(newValue);
 		}
 
-		protected virtual void OnPlotCanvasChanged(Canvas newValue)
+		protected virtual void OnPlotSurfaceChanged(Canvas newValue)
 		{
 			// add handler code
-			PlotWidth = newValue != null ? newValue.ActualWidth : 0;
-			PlotHeight = newValue != null ? newValue.ActualHeight : 0;
+			PhysicalWidth = newValue != null ? newValue.ActualWidth : 0;
+			PhysicalHeight = newValue != null ? newValue.ActualHeight : 0;
 
-			PlotCanvas.SizeChanged += PlotCanvasOnSizeChanged;
+			PlotSurface.SizeChanged += OnPlotSurfaceSizeChanged;
 		}
 
 		#endregion
 
-		#region PlotWidth
+		#region PhysicalWidth
 
-		public static DependencyProperty PlotWidthProperty = DependencyProperty.Register(
-			"PlotWidth",
+		public static DependencyProperty PhysicalWidthProperty = DependencyProperty.Register(
+			"PhysicalWidth",
 			typeof (double),
-			typeof (InteractivePlot),
-			new PropertyMetadata(PlotWidthChangedHandler));
+			typeof (LinePlot),
+			new PropertyMetadata(PhysicalWidthChangedHandler));
 
-		public double PlotWidth
+		public double PhysicalWidth
 		{
-			get { return (double) GetValue(PlotWidthProperty); }
-			set { SetValue(PlotWidthProperty, value); }
+			get { return (double) GetValue(PhysicalWidthProperty); }
+			set { SetValue(PhysicalWidthProperty, value); }
 		}
 
-		private static void PlotWidthChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		private static void PhysicalWidthChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.OnPlotWidthChanged((double) args.NewValue, (double) args.OldValue);
+				interactivePlot.OnPhysicalWidthChanged((double) args.NewValue, (double) args.OldValue);
 			}
 		}
 
-		protected virtual void OnPlotWidthChanged(double newValue, double oldValue)
+		protected virtual void OnPhysicalWidthChanged(double newValue, double oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnPlotWidthChanged(newValue);
+			OnPhysicalWidthChanged(newValue);
 		}
 
-		protected virtual void OnPlotWidthChanged(double newValue)
+		protected virtual void OnPhysicalWidthChanged(double newValue)
 		{
-			// add handler code
 		}
 
 		#endregion
 
-		#region PlotHeight
+		#region PhysicalHeight
 
-		public static DependencyProperty PlotHeightProperty = DependencyProperty.Register(
-			"PlotHeight",
+		public static DependencyProperty PhysicalHeightProperty = DependencyProperty.Register(
+			"PhysicalHeight",
 			typeof (double),
-			typeof (InteractivePlot),
-			new PropertyMetadata(PlotHeightChangedHandler));
+			typeof (LinePlot),
+			new PropertyMetadata(PhysicalHeightChangedHandler));
 
-		public double PlotHeight
+		public double PhysicalHeight
 		{
-			get { return (double) GetValue(PlotHeightProperty); }
-			set { SetValue(PlotHeightProperty, value); }
+			get { return (double) GetValue(PhysicalHeightProperty); }
+			set { SetValue(PhysicalHeightProperty, value); }
 		}
 
-		private static void PlotHeightChangedHandler(DependencyObject dependencyObject,
+		private static void PhysicalHeightChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.OnPlotHeightChanged((double) args.NewValue, (double) args.OldValue);
+				interactivePlot.OnPhysicalHeightChanged((double) args.NewValue, (double) args.OldValue);
 			}
 		}
 
-		protected virtual void OnPlotHeightChanged(double newValue, double oldValue)
+		protected virtual void OnPhysicalHeightChanged(double newValue, double oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnPlotHeightChanged(newValue);
+			OnPhysicalHeightChanged(newValue);
 		}
 
-		protected virtual void OnPlotHeightChanged(double newValue)
+		protected virtual void OnPhysicalHeightChanged(double newValue)
 		{
-			// add handler code
+		}
+
+		#endregion
+
+		#region MaximumPhysicalCoordinate property
+
+		private double _maximumPhysicalCoordinate;
+
+		/// <summary>
+		/// Gets the MaximumPhysicalCoordinate property.
+		/// </summary>
+		public Point MaximumPhysicalCoordinate
+		{
+			get { return LogicalToPhysicalCoordinates(MaximumLogicalCoordinate);}
 		}
 
 		#endregion
 
 		#region MinimumLogicalCoordinate
 
+		public static readonly Point DefaultMinimumLogicalCoordinate = new Point(0.0, 0.0);
+
 		public static DependencyProperty MinimumLogicalCoordinateProperty = DependencyProperty.Register(
 			"MinimumLogicalCoordinate",
 			typeof (Point),
-			typeof (InteractivePlot),
-			new PropertyMetadata(MinimumLogicalCoordinateChangedHandler));
+			typeof (LinePlot),
+			new PropertyMetadata(DefaultMinimumLogicalCoordinate, MinimumLogicalCoordinateChangedHandler));
 
 		public Point MinimumLogicalCoordinate
 		{
@@ -156,7 +171,7 @@
 		private static void MinimumLogicalCoordinateChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnMinimumLogicalCoordinateChanged((Point) args.NewValue, (Point) args.OldValue);
@@ -183,7 +198,7 @@
 		public static DependencyProperty MaximumLogicalCoordinateProperty = DependencyProperty.Register(
 			"MaximumLogicalCoordinate",
 			typeof (Point),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(DefaultMaximumLogicalCoordinate, MaximumLogicalCoordinateChangedHandler));
 
 		public Point MaximumLogicalCoordinate
@@ -195,7 +210,7 @@
 		private static void MaximumLogicalCoordinateChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnMaximumLogicalCoordinateChanged((Point) args.NewValue, (Point) args.OldValue);
@@ -217,35 +232,35 @@
 
 		public static readonly int DefaultPlotPrecision = 3;
 
-		public static DependencyProperty ControlPointPlotPrecisionProperty = DependencyProperty.Register(
-			"ControlPointPlotPrecision",
+		public static DependencyProperty PlotPrecisionProperty = DependencyProperty.Register(
+			"PlotPrecision",
 			typeof(int),
-			typeof(InteractivePlot),
-			new PropertyMetadata(DefaultPlotPrecision, ControlPointPlotPrecisionChangedHandler));
+			typeof(LinePlot),
+			new PropertyMetadata(DefaultPlotPrecision, PlotPrecisionChangedHandler));
 
-		public int ControlPointPlotPrecision
+		public int PlotPrecision
 		{
-			get { return (int)GetValue(ControlPointPlotPrecisionProperty); }
-			set { SetValue(ControlPointPlotPrecisionProperty, value); }
+			get { return (int)GetValue(PlotPrecisionProperty); }
+			set { SetValue(PlotPrecisionProperty, value); }
 		}
 
-		private static void ControlPointPlotPrecisionChangedHandler(DependencyObject dependencyObject,
+		private static void PlotPrecisionChangedHandler(DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.OnControlPointPlotPrecisionChanged((int)args.NewValue, (int)args.OldValue);
+				interactivePlot.OnPlotPrecisionChanged((int)args.NewValue, (int)args.OldValue);
 			}
 		}
 
-		protected virtual void OnControlPointPlotPrecisionChanged(int newValue, int oldValue)
+		protected virtual void OnPlotPrecisionChanged(int newValue, int oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnControlPointPlotPrecisionChanged(newValue);
+			OnPlotPrecisionChanged(newValue);
 		}
 
-		protected virtual void OnControlPointPlotPrecisionChanged(int newValue)
+		protected virtual void OnPlotPrecisionChanged(int newValue)
 		{
 			// add handler code
 		}
@@ -258,24 +273,31 @@
 
 		#region Handlers
 
-		protected void PlotCanvasOnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+		protected void OnPlotSurfaceSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
-			//OnSizeChanged(sizeChangedEventArgs.NewSize);
+			OnPlotSurfaceSizeChanged(sizeChangedEventArgs.NewSize);
 		}
 
 		#endregion
 
-		#region Overrides
+		#region Overridable methods
 
 		protected virtual void OnSizeChanged(Size newSize)
 		{
 			Log("OnSizeChanged", "physical size: ({0}, {1})", newSize.Width, newSize.Height);
+
 			ClipToBounds(newSize.Width, newSize.Height);
 
-			PlotWidth = newSize.Width;
-			PlotHeight = newSize.Height;
+			PhysicalWidth = newSize.Width;
+			PhysicalHeight = newSize.Height;
+			NotifyPropertyChanged("MaximumPhysicalCoordinate");
 
 			UpdatePlotDisplay();
+		}
+
+		protected virtual void OnPlotSurfaceSizeChanged(Size newSize)
+		{
+			Log("OnPlotSurfaceSizeChanged", "physical coordinates: ({0}, {1})", newSize.Width, newSize.Height);
 		}
 
 		public virtual void UpdatePlotDisplay()
@@ -293,6 +315,8 @@
 
 		private static void SetPosition(DependencyObject element, double x, double y)
 		{
+			if (double.IsNaN(x) || double.IsNaN(y) || double.IsInfinity(x) || double.IsInfinity(y) || double.IsNegativeInfinity(x) || double.IsNegativeInfinity(y)) return;
+
 			element.SetValue(Canvas.LeftProperty, x);
 			element.SetValue(Canvas.TopProperty, y);
 		}
@@ -313,9 +337,9 @@
 
 		protected void ClipToBounds(double width, double height)
 		{
-			if (PlotCanvas != null)
+			if (PlotSurface != null)
 			{
-				PlotCanvas.Clip = new RectangleGeometry { Rect = new Rect(0, 0, width, height) };
+				PlotSurface.Clip = new RectangleGeometry { Rect = new Rect(0, 0, width, height) };
 			}
 		}
 
@@ -328,11 +352,11 @@
 			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
 			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
 
-			double x = Math.Round((p.X/logWidth)*(ActualWidth - 1), ControlPointPlotPrecision);
-			double y = Math.Round((p.Y/logHeight)*(ActualHeight - 1), ControlPointPlotPrecision);
+			var width = PhysicalWidth; // ActualWidth;
+			var height = PhysicalHeight; // ActualHeight;
 
-			//double x = Math.Round((p.X / logWidth) * (PlotWidth - 1), ControlPointPlotPrecision);
-			//double y = Math.Round((p.Y / logHeight) * (PlotHeight - 1), ControlPointPlotPrecision);
+			double x = Math.Round((p.X / logWidth) * (width - 1), PlotPrecision);
+			double y = Math.Round((p.Y / logHeight) * (height - 1), PlotPrecision);
 
 			var physPoint = new Point(x, y);
 			return physPoint;
@@ -343,8 +367,11 @@
 			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
 			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
 
-			double logX = Math.Round((p.X/(ActualWidth - 1))*logWidth, ControlPointPlotPrecision);
-			double logY = Math.Round((p.Y/(ActualHeight - 1))*logHeight, ControlPointPlotPrecision);
+			var width = PhysicalWidth; // ActualWidth;
+			var height = PhysicalHeight; // ActualHeight;
+
+			double logX = Math.Round((p.X / (width - 1)) * logWidth, PlotPrecision);
+			double logY = Math.Round((p.Y / (height - 1)) * logHeight, PlotPrecision);
 
 			var logPoint = new Point(logX, logY);
 			return logPoint;
@@ -365,12 +392,12 @@
 		public static DependencyProperty LoggerProperty = DependencyProperty.Register(
 			"Logger",
 			typeof (Action<string>),
-			typeof (InteractivePlot),
+			typeof (LinePlot),
 			new PropertyMetadata(LoggerChangedHandler));
 
 		private static void LoggerChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			var interactivePlot = dependencyObject as InteractivePlot;
+			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
 				interactivePlot.OnLoggerChanged((Action<string>) args.NewValue, (Action<string>) args.OldValue);
@@ -402,5 +429,15 @@
 
 		#endregion
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void NotifyPropertyChanged(string propertyName)
+		{
+			var handlers = PropertyChanged;
+			if (handlers != null)
+			{
+				handlers(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
 	}
 }

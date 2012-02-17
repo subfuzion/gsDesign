@@ -1,12 +1,14 @@
 ﻿namespace PlotControl
 {
-	using System.Globalization;
 	using System.Windows;
 	using System.Windows.Controls;
+	using System.Windows.Data;
 	using Subfuzion.Silverlight.UI.Charting;
 
 	public partial class MainPage : UserControl
 	{
+		private PowerPlotFunction _plotFunction;
+
 		public MainPage()
 		{
 			InitializeComponent();
@@ -21,41 +23,64 @@
 			Loaded += OnLoaded;
 		}
 
-		private HwangShihDeCaniPlotFunction _hsdPlotFunction;
-
 		private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
-			_hsdPlotFunction = new HwangShihDeCaniPlotFunction
+			//_plotFunction = new HwangShihDeCaniPlotFunction
+			//{
+			//    InterimSpendingParameter = 0.025,
+			//    InterimSpendingParameterMaximum = 0.025,
+			//    InterimSpendingParameterMinimum = 0.0,
+			//    SpendingFunctionParameter = -8.0,
+			//    SpendingFunctionParameterMaximum = 40.0,
+			//    SpendingFunctionParameterMinimum = -40.0,
+			//    Timing = 0.5,
+			//    TimingMaximum = 1.0,
+			//    TimingMinimum = 0.0,
+			//};
+
+			_plotFunction = new PowerPlotFunction
 			{
+				SpendingFunctionParameter = 4,
+				SpendingFunctionParameterMaximum = 15.0,
+				SpendingFunctionParameterMinimum = 0.001,
 				InterimSpendingParameter = 0.025,
 				InterimSpendingParameterMaximum = 0.025,
 				InterimSpendingParameterMinimum = 0.0,
-				SpendingFunctionParameter = -8.0,
-				SpendingFunctionParameterMaximum = 40.0,
-				SpendingFunctionParameterMinimum = -40.0,
 				Timing = 0.5,
 				TimingMaximum = 1.0,
 				TimingMinimum = 0.0,
 			};
 
-			_hsdPlotFunction.Update();
+			interimSpending.DataContext = _plotFunction;
+			timing.DataContext = _plotFunction;
+			spendingFunctionParameter.DataContext = _plotFunction;
 
-			plot.Coordinates = _hsdPlotFunction.Coordinates;
+			_plotFunction.Update();
 
-			gammaSlider.Minimum = _hsdPlotFunction.SpendingFunctionParameterMinimum;
-			gammaSlider.Maximum = _hsdPlotFunction.SpendingFunctionParameterMaximum;
-			gammaSlider.Value = _hsdPlotFunction.SpendingFunctionParameter;
-			gammaTextBox.Text = _hsdPlotFunction.SpendingFunctionParameter.ToString(CultureInfo.InvariantCulture);
+			plot.Coordinates = _plotFunction.Coordinates;
 
-			interimSpendingSlider.Minimum = _hsdPlotFunction.InterimSpendingParameterMinimum;
-			interimSpendingSlider.Maximum = _hsdPlotFunction.InterimSpendingParameterMaximum;
-			interimSpendingSlider.Value = _hsdPlotFunction.InterimSpendingParameter;
-			interimSpendingTextBox.Text = _hsdPlotFunction.InterimSpendingParameter.ToString(CultureInfo.InvariantCulture);
+			gammaSlider.Minimum = _plotFunction.SpendingFunctionParameterMinimum;
+			gammaSlider.Maximum = _plotFunction.SpendingFunctionParameterMaximum;
+			//gammaSlider.Value = _plotFunction.SpendingFunctionParameter;
+			//gammaTextBox.Text = _plotFunction.SpendingFunctionParameter.ToString(CultureInfo.InvariantCulture);
 
-			timingSlider.Minimum = _hsdPlotFunction.TimingMinimum;
-			timingSlider.Maximum = _hsdPlotFunction.TimingMaximum;
-			timingSlider.Value = _hsdPlotFunction.Timing;
-			timingTextBox.Text = _hsdPlotFunction.Timing.ToString(CultureInfo.InvariantCulture);
+			interimSpendingSlider.Minimum = _plotFunction.InterimSpendingParameterMinimum;
+			interimSpendingSlider.Maximum = _plotFunction.InterimSpendingParameterMaximum;
+			// interimSpendingSlider.Value = _plotFunction.InterimSpendingParameter;
+			// interimSpendingTextBox.Text = _plotFunction.InterimSpendingParameter.ToString(CultureInfo.InvariantCulture);
+
+			timingSlider.Minimum = _plotFunction.TimingMinimum;
+			timingSlider.Maximum = _plotFunction.TimingMaximum;
+			//timingSlider.Value = _plotFunction.Timing;
+			//timingTextBox.Text = _plotFunction.Timing.ToString(CultureInfo.InvariantCulture);
+
+			//RegisterForNotification("ControlPointPhysicalPosition", plot, (o, args) =>
+			//{
+			//    var point = plot.PhysicalToLogicalCoordinates((Point)args.NewValue);
+			//    _plotFunction.Update(point.X, point.Y);
+			//    //_plotFunction.Timing = point.X;
+			//    //_plotFunction.InterimSpendingParameter = point.Y;
+			//});
 		}
 
 		private double PlotFunction(double x)
@@ -65,31 +90,68 @@
 
 		private void gammaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			_hsdPlotFunction.SpendingFunctionParameter = e.NewValue;
-			_hsdPlotFunction.Update();
+			_plotFunction.SpendingFunctionParameter = e.NewValue;
+			_plotFunction.Update();
 			plot.UpdatePlotDisplay();
 
-			gammaTextBox.Text = _hsdPlotFunction.SpendingFunctionParameter.ToString(CultureInfo.InvariantCulture);
+			//gammaTextBox.Text = _plotFunction.SpendingFunctionParameter.ToString(CultureInfo.InvariantCulture);
+
+			//plot.ControlPointPlotX = _plotFunction.Timing;
+			//plot.ControlPointPlotY = _plotFunction.InterimSpendingParameter;
 		}
 
 		private void interimSpendingSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			_hsdPlotFunction.InterimSpendingParameter = e.NewValue;
-			_hsdPlotFunction.Update();
+			_plotFunction.InterimSpendingParameter = e.NewValue;
+			_plotFunction.Update();
 			plot.UpdatePlotDisplay();
 
 			plot.ControlPointPlotY = e.NewValue;
-			interimSpendingTextBox.Text = _hsdPlotFunction.InterimSpendingParameter.ToString(CultureInfo.InvariantCulture);
+			//interimSpendingTextBox.Text = _plotFunction.InterimSpendingParameter.ToString(CultureInfo.InvariantCulture);
+			plot.ControlPointPlotX = _plotFunction.Timing;
 		}
 
 		private void timingSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			_hsdPlotFunction.Timing = e.NewValue;
-			_hsdPlotFunction.Update();
+			// move point along the line
+
+			double x = e.NewValue;
+			_plotFunction.Timing = x;
+			_plotFunction.Update();
+
+
 			plot.UpdatePlotDisplay();
 
 			plot.ControlPointPlotX = e.NewValue;
-			timingTextBox.Text = _hsdPlotFunction.Timing.ToString(CultureInfo.InvariantCulture);
+			//timingTextBox.Text = _plotFunction.Timing.ToString(CultureInfo.InvariantCulture);
+
+			plot.ControlPointPlotY = _plotFunction.InterimSpendingParameter;
+		}
+
+		private void moveLineRadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			if (_plotFunction != null)
+				_plotFunction.PlotConstraint = PlotConstraint.MoveLineWithPoint;
+		}
+
+		private void movePointRadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			if (_plotFunction != null)
+				_plotFunction.PlotConstraint = PlotConstraint.MovePointAlongLine;
+		}
+
+		/// Listen for change of the dependency property  
+		public void RegisterForNotification(string propertyName, FrameworkElement element, PropertyChangedCallback callback)
+		{
+			// bind to dependency property  
+			var b = new Binding(propertyName) {Source = element};
+			var prop = DependencyProperty.RegisterAttached(
+				"NotifyAttached" + propertyName,
+				typeof (object),
+				typeof (UserControl),
+				new PropertyMetadata(callback));
+
+			element.SetBinding(prop, b);
 		}
 	}
 }
