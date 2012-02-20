@@ -8,15 +8,51 @@
 	{
 		public static double HwangShihDeCaniFunction(double alpha, double timing, double sfValue)
 		{
+			if (Math.Abs(sfValue - 0) < double.Epsilon)
+			{
+				return alpha*timing;
+			}
+
 			return alpha*(1 - Math.Exp(-sfValue*timing))/(1 - Math.Exp(-sfValue));
 		}
 
+		// t = -log(1 - y * (1 - exp(-gamma)) / alpha) / gamma
+		public static double HwangShihDeCaniFunctionInverse(double alpha, double y, double sfValue)
+		{
+			//if (sfValue == 0)
+			//{
+			//    return 
+			//}
+
+			return -Math.Log(1 - y*(1 - Math.Exp(-sfValue)) / alpha) / sfValue;
+		}
+
+		// 
+		public static double HwangShihDeCaniFunctionSpendingParameter(double alpha, double y, double timing)
+		{
+//			return RootFinding(HwangShihDeCaniFunction(alpha), -2, 1.5);
+
+			return 0;
+		}
+
+		//double root = RootFinding(
+		//    new FunctionOfOneVariable(f), // function to find root of, cast as delegate
+		//    1.0,                          // left end of bracket
+		//    5.0,                          // right end of bracket 
+		//    1e-10,                        // tolerance 
+		//    0.2,                          // target 
+		//    out iterationsUsed,           // number of steps the algorithm used
+		//    out errorEstimate             // estimate of the error in the result
+		//);
+
 		public HwangShihDeCaniPlotFunction()
 		{
+			PlotConstraint = PlotConstraint.MoveLineWithPoint;
+
 			var coordinates = new ObservableCollection<Point>();
 			for (int i = 0; i < 30; i++)
 			{
-				coordinates.Add(new Point(0,0));
+				coordinates.Add(new Point(0, 0));
 			}
 
 			Coordinates = coordinates;
@@ -27,7 +63,7 @@
 			var incrementCount = Coordinates.Count;
 			var intervalCount = incrementCount - 1;
 
-			var alpha = InterimSpendingParameter;
+			var alpha = InterimSpendingParameterMaximum; // InterimSpendingParameter;
 			var xMin = TimingMinimum;
 			var xMax = TimingMaximum;
 
@@ -45,80 +81,46 @@
 
 				// y is a function of alpha, timing, & spending value
 				var y = HwangShihDeCaniFunction(alpha, x, SpendingFunctionParameter);
-				Coordinates[i] = new Point(x,y);
+				Coordinates[i] = new Point(x, y);
 			}
 
 			base.Update();
 		}
 
-		#region InterimSpendingParameter property
-
-		private double _interimSpendingParameter;
-
-		/// <summary>
-		/// Gets or sets the InterimSpendingParameter property.
-		/// </summary>
-		public double InterimSpendingParameter
+		public void Update(double x, double y)
 		{
-			get { return _interimSpendingParameter; }
+			_timing = x;
+			_interimSpendingParameter = y;
 
-			set
-			{
-				if (Math.Abs(_interimSpendingParameter - value) > double.Epsilon)
-				{
-					_interimSpendingParameter = value;
-					NotifyPropertyChanged("Alpha");
-				}
-			}
+			NotifyPropertyChanged("Timing");
+			NotifyPropertyChanged("InterimSpendingParameter");
+
+			//Update();
 		}
 
-		#region InterimSpendingParameterMinimum property
+		#region PlotConstraint property
 
-		private double _interimSpendingParameterMinimum = 0.0;
+		private PlotConstraint _plotConstraint;
 
 		/// <summary>
-		/// Gets or sets the InterimSpendingParameterMinimum property.
+		/// Gets or sets the PlotConstraint property.
 		/// </summary>
-		public double InterimSpendingParameterMinimum
+		public PlotConstraint PlotConstraint
 		{
-			get { return _interimSpendingParameterMinimum; }
+			get { return _plotConstraint; }
 
 			set
 			{
-				if (Math.Abs(_interimSpendingParameterMinimum - value) > double.Epsilon)
+				if (_plotConstraint != value)
 				{
-					_interimSpendingParameterMinimum = value;
-					NotifyPropertyChanged("AlphaParameterMinimum");
+					_plotConstraint = value;
+					NotifyPropertyChanged("PlotConstraint");
 				}
 			}
 		}
 
 		#endregion
 
-		#region InterimSpendingParameterMaximum property
-
-		private double _interimSpendingParameterMaximum = 100.0;
-
-		/// <summary>
-		/// Gets or sets the AlphaParameterMaximum property.
-		/// </summary>
-		public double InterimSpendingParameterMaximum
-		{
-			get { return _interimSpendingParameterMaximum; }
-
-			set
-			{
-				if (Math.Abs(_interimSpendingParameterMaximum - value) > double.Epsilon)
-				{
-					_interimSpendingParameterMaximum = value;
-					NotifyPropertyChanged("AlphaParameterMaximum");
-				}
-			}
-		}
-
-		#endregion
-
-		#endregion
 
 		#region SpendingFunctionParameter property
 
@@ -136,7 +138,14 @@
 				if (Math.Abs(_spendingFunctionParameter - value) > double.Epsilon)
 				{
 					_spendingFunctionParameter = value;
-					NotifyPropertyChanged("SpendingFunctionValue");
+					NotifyPropertyChanged("SpendingFunctionParameter");
+
+					var x = Timing;
+					var alpha = InterimSpendingParameterMaximum;
+
+					var y = HwangShihDeCaniFunction(alpha, x, SpendingFunctionParameter);
+
+					InterimSpendingParameter = y;
 				}
 			}
 		}
@@ -207,11 +216,24 @@
 					_timing = value;
 					NotifyPropertyChanged("Timing");
 
-					// move point along the line
+					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
+					{
+						var x = Timing;
+						var alpha = InterimSpendingParameterMaximum;
 
+						var y = HwangShihDeCaniFunction(alpha, x, SpendingFunctionParameter);
 
+						InterimSpendingParameter = y;
+					}
+					else // PlotConstraint.MoveLineWithPoint
+					{
+						// compute rho
+						var rho = HwangShihDeCaniFunctionSpendingParameter(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
+						SpendingFunctionParameter = rho;
 
-
+						// update coordinates
+						Update();
+					}
 				}
 			}
 		}
@@ -256,6 +278,94 @@
 				{
 					_timingMaximum = value;
 					NotifyPropertyChanged("TimingMaximum");
+				}
+			}
+		}
+
+		#endregion
+
+		#endregion
+
+		#region InterimSpendingParameter property
+
+		private double _interimSpendingParameter;
+
+		/// <summary>
+		/// Gets or sets the InterimSpendingParameter property.
+		/// </summary>
+		public double InterimSpendingParameter
+		{
+			get { return _interimSpendingParameter; }
+
+			set
+			{
+				if (Math.Abs(_interimSpendingParameter - value) > double.Epsilon)
+				{
+					_interimSpendingParameter = value;
+					NotifyPropertyChanged("InterimSpendingParameter");
+
+					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
+					{
+						var y = InterimSpendingParameter;
+						var alpha = InterimSpendingParameterMaximum;
+
+						var x = HwangShihDeCaniFunctionInverse(alpha, y, SpendingFunctionParameter);
+
+						Timing = x;
+					}
+					else // PlotConstraint.MoveLineWithPoint
+					{
+						// compute rho
+						var rho = HwangShihDeCaniFunctionSpendingParameter(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
+						SpendingFunctionParameter = rho;
+
+						// update coordinates
+						Update();
+					}
+				}
+			}
+		}
+
+		#region InterimSpendingParameterMinimum property
+
+		private double _interimSpendingParameterMinimum = 0.0;
+
+		/// <summary>
+		/// Gets or sets the InterimSpendingParameterMinimum property.
+		/// </summary>
+		public double InterimSpendingParameterMinimum
+		{
+			get { return _interimSpendingParameterMinimum; }
+
+			set
+			{
+				if (Math.Abs(_interimSpendingParameterMinimum - value) > double.Epsilon)
+				{
+					_interimSpendingParameterMinimum = value;
+					NotifyPropertyChanged("InterimSpendingParameterMinimum");
+				}
+			}
+		}
+
+		#endregion
+
+		#region InterimSpendingParameterMaximum property
+
+		private double _interimSpendingParameterMaximum = 100.0;
+
+		/// <summary>
+		/// Gets or sets the AlphaParameterMaximum property.
+		/// </summary>
+		public double InterimSpendingParameterMaximum
+		{
+			get { return _interimSpendingParameterMaximum; }
+
+			set
+			{
+				if (Math.Abs(_interimSpendingParameterMaximum - value) > double.Epsilon)
+				{
+					_interimSpendingParameterMaximum = value;
+					NotifyPropertyChanged("InterimSpendingParameterMaximum");
 				}
 			}
 		}

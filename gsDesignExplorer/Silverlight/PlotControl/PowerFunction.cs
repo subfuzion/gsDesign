@@ -9,19 +9,51 @@
 		// y = alpha * (t^rho)
 		public static double PowerFunction(double alpha, double timing, double sfValue)
 		{
-			return alpha * Math.Pow(timing, sfValue);
+			try
+			{
+				return alpha * Math.Pow(timing, sfValue);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
 		}
 
 		// Inverse: t = exp( (ln(y) - ln(alpha)) / rho)
-		public static double PowerFunctionInverse(double alpha, double y, double sfValue)
+		public double PowerFunctionInverse(double alpha, double y, double sfValue)
 		{
-			return Math.Exp((Math.Log(y) - Math.Log(alpha)) / sfValue);
+			try
+			{
+				if (sfValue < SpendingFunctionParameterMinimum)
+				{
+					sfValue = SpendingFunctionParameterMinimum;
+				}
+
+				return Math.Exp((Math.Log(y) - Math.Log(alpha)) / sfValue);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
 		}
 
 		// rho = (ln(y)-ln(alpha))/ln(t)
 		public static double PowerFunctionSpendingParameter(double alpha, double y, double timing)
 		{
-			return (Math.Log(y) - Math.Log(alpha)) / Math.Log(timing);
+			try
+			{
+				return (Math.Log(y) - Math.Log(alpha)) / Math.Log(timing);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
 		}
 
 		public PowerPlotFunction()
@@ -114,24 +146,34 @@
 
 			set
 			{
+				if (value < SpendingFunctionParameterMinimum) value = SpendingFunctionParameterMinimum;
+				if (value > SpendingFunctionParameterMaximum) value = SpendingFunctionParameterMaximum;
+
 				if (Math.Abs(_spendingFunctionParameter - value) > double.Epsilon)
 				{
-					_spendingFunctionParameter = value;
-					NotifyPropertyChanged("SpendingFunctionParameter");
+					try
+					{
+						_spendingFunctionParameter = value;
 
-					var x = Timing;
-					var alpha = InterimSpendingParameterMaximum;
+						var x = Timing;
+						var alpha = InterimSpendingParameterMaximum;
+						var y = PowerFunction(alpha, x, _spendingFunctionParameter);
 
-					var y = PowerFunction(alpha, x, SpendingFunctionParameter);
+						InterimSpendingParameter = y;
 
-					InterimSpendingParameter = y;
+						NotifyPropertyChanged("SpendingFunctionParameter");
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+					}
 				}
 			}
 		}
 
 		#region SpendingFunctionParameterMinimum property
 
-		private double _spendingFunctionParameterMinimum = -40.0;
+		private double _spendingFunctionParameterMinimum = 0.001;
 
 		/// <summary>
 		/// Gets or sets the SpendingFunctionParameterMinimum property.
@@ -154,7 +196,7 @@
 
 		#region SpendingFunctionParameterMaximum property
 
-		private double _spendingFunctionParameterMaximum = 40.0;
+		private double _spendingFunctionParameterMaximum = 10.0;
 
 		/// <summary>
 		/// Gets or sets the SpendingFunctionParameterMaximum property.
@@ -190,6 +232,9 @@
 
 			set
 			{
+				if (value < TimingMinimum) value = TimingMinimum;
+				if (value > TimingMaximum) value = TimingMaximum;
+
 				if (Math.Abs(_timing - value) > double.Epsilon)
 				{
 					_timing = value;
@@ -278,6 +323,9 @@
 
 			set
 			{
+				if (value < InterimSpendingParameterMinimum) value = InterimSpendingParameterMinimum;
+				if (value > InterimSpendingParameterMaximum) value = InterimSpendingParameterMaximum;
+
 				if (Math.Abs(_interimSpendingParameter - value) > double.Epsilon)
 				{
 					_interimSpendingParameter = value;
@@ -307,7 +355,7 @@
 
 		#region InterimSpendingParameterMinimum property
 
-		private double _interimSpendingParameterMinimum = 0.0;
+		private double _interimSpendingParameterMinimum = 0.1;
 
 		/// <summary>
 		/// Gets or sets the InterimSpendingParameterMinimum property.
@@ -330,7 +378,7 @@
 
 		#region InterimSpendingParameterMaximum property
 
-		private double _interimSpendingParameterMaximum = 100.0;
+		private double _interimSpendingParameterMaximum = 0.025;
 
 		/// <summary>
 		/// Gets or sets the AlphaParameterMaximum property.

@@ -1,5 +1,6 @@
 ﻿namespace PlotControl
 {
+	using System;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Data;
@@ -90,14 +91,16 @@
 
 		private void gammaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			_plotFunction.SpendingFunctionParameter = e.NewValue;
-			_plotFunction.Update();
-			plot.UpdatePlotDisplay();
-
-			//gammaTextBox.Text = _plotFunction.SpendingFunctionParameter.ToString(CultureInfo.InvariantCulture);
-
-			//plot.ControlPointPlotX = _plotFunction.Timing;
-			//plot.ControlPointPlotY = _plotFunction.InterimSpendingParameter;
+			try
+			{
+				_plotFunction.SpendingFunctionParameter = e.NewValue;
+				_plotFunction.Update();
+				plot.UpdatePlotDisplay();
+			}
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception);
+			}
 		}
 
 		private void interimSpendingSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -96,7 +96,14 @@
 			var handlers = PropertyChanged;
 			if (handlers != null)
 			{
-				handlers(this, new PropertyChangedEventArgs(property));
+				try
+				{
+					handlers(this, new PropertyChangedEventArgs(property));
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+				}
 			}
 		}
 	}
