@@ -7,8 +7,14 @@
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 	mc:Ignorable="d"
 	d:DesignHeight="500" d:DesignWidth="800">
+	
+	<UserControl.Resources>
+		<Charting:SpendingFunctionViewModel x:Key="spendingFunctionViewModel" />
+		<Charting:OneParameterFamilyValueConverter x:Key="oneParameterFamilyValueConverter" />
+		<Charting:PlotConstraintValueConverter x:Key="plotConstraintValueConverter" />
+	</UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="Gray">
+	<Grid x:Name="LayoutRoot" Background="Gray" DataContext="{Binding Source={StaticResource spendingFunctionViewModel}}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="3*"/>
 			<RowDefinition Height="Auto"/>
@@ -41,20 +47,23 @@
 
 					<!-- Spending Function value controls -->
 					<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6" x:Name="spendingFunctionParameter">
-						<TextBox Margin="2" Height="20" Width="40" x:Name="gammaTextBox" Text="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+						<toolkit:NumericUpDown Margin="2" Height="20" Width="70" x:Name="gammaTextBox"
+											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
 						<Slider Orientation="Vertical" Margin="2" ValueChanged="gammaSlider_ValueChanged"  x:Name="gammaSlider" Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
 					</StackPanel>
 
 					<!-- Interim Spending value controls -->
 					<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6" x:Name="interimSpending" >
 						<Slider Orientation="Vertical" Margin="2" x:Name="interimSpendingSlider" ValueChanged="interimSpendingSlider_ValueChanged" Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
-						<TextBox Margin="2" Height="20" Width="40" x:Name="interimSpendingTextBox" Text="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+						<toolkit:NumericUpDown Margin="2" Height="20" Width="70" x:Name="interimSpendingTextBox"
+											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
 					</StackPanel>
 
 					<!-- Timing value controls -->
 					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6" x:Name="timing">
 						<Slider Orientation="Horizontal" Margin="2" x:Name="timingSlider" ValueChanged="timingSlider_ValueChanged" Value="{Binding Path=Timing, Mode=TwoWay}" />
-						<TextBox Margin="2" Height="20" Width="40" x:Name="timingTextBox" Text="{Binding Path=Timing, Mode=TwoWay}" />
+						<toolkit:NumericUpDown Margin="2" Height="20" Width="70" x:Name="timingTextBox"
+											   Value="{Binding Path=Timing, Mode=TwoWay}" />
 					</StackPanel>
 
 					<!-- Plot Control -->
@@ -94,8 +103,34 @@
 				<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">
 					<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
 						<StackPanel Orientation="Vertical">
-							<RadioButton Content="Move line with point" x:Name="moveLineRadioButton" IsChecked="True" Checked="moveLineRadioButton_Checked" />
-							<RadioButton Content="Move point along line" x:Name="movePointRadioButton" Checked="movePointRadioButton_Checked" />
+							<ComboBox SelectedIndex="0" Margin="2"
+								          ItemsSource="{Binding Path=CurrentSpendingFunction, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}"
+								          SelectedItem="{Binding Path=CurrentSpendingFunction, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}" />
+							<Grid Margin="2">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="70"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
+								<toolkit:NumericUpDown  Margin="2"
+										Maximum="{Binding Path=AlphaMaximum, Mode=OneTime}"
+										Minimum="{Binding Path=AlphaMinimum, Mode=OneTime}"
+										DecimalPlaces="5"
+										Value="{Binding Path=Alpha, Mode=TwoWay}"/>
+								<Slider Grid.Column="1" Orientation="Horizontal" Margin="2"
+										Maximum="{Binding Path=AlphaMaximum, Mode=OneTime}"
+										Minimum="{Binding Path=AlphaMinimum, Mode=OneTime}"
+										Value="{Binding Path=Alpha, Mode=TwoWay}"/>
+							</Grid>
+							<RadioButton x:Name="moveLineRadioButton"
+										 GroupName="plotConstraint"
+										 Content="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MoveLineWithPoint}"
+										 IsChecked="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MoveLineWithPoint}"
+										 Checked="moveLineRadioButton_Checked" />
+							<RadioButton x:Name="movePointRadioButton"
+										 GroupName="plotConstraint"
+										 Content="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MovePointAlongLine}"
+										 IsChecked="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MovePointAlongLine}"
+										 Checked="movePointRadioButton_Checked" />
 						</StackPanel>
 					</Border>
 				</Grid>

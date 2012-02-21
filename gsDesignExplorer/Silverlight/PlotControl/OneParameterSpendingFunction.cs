@@ -4,64 +4,22 @@
 	using System.Collections.ObjectModel;
 	using System.Windows;
 
-	public class HwangShihDeCaniPlotFunction : PlotFunction
+	public delegate double SpendingFunction(double alpha, double timing, double sfValue);
+
+	public delegate double InverseSpendingFunction(double alpha, double y, double sfValue);
+
+	public delegate double ParameterSpendingFunction(double alpha, double y, double sfValue);
+
+	public class OneParameterSpendingFunction : PlotFunction
 	{
-		public static double HwangShihDeCaniFunction(double alpha, double timing, double sfValue)
-		{
-			if (Math.Abs(sfValue - 0) < double.Epsilon)
-			{
-				return alpha*timing;
-			}
-
-			return alpha*(1 - Math.Exp(-sfValue*timing))/(1 - Math.Exp(-sfValue));
-		}
-
-		// t = -log(1 - y * (1 - exp(-gamma)) / alpha) / gamma
-		public static double HwangShihDeCaniFunctionInverse(double alpha, double y, double sfValue)
-		{
-			//if (sfValue == 0)
-			//{
-			//    return 
-			//}
-
-			return -Math.Log(1 - y*(1 - Math.Exp(-sfValue)) / alpha) / sfValue;
-		}
-
-		// 
-		public static double HwangShihDeCaniFunctionSpendingParameter(double alpha, double y, double timing)
-		{
-			if (Math.Abs(timing - 0) < double.Epsilon) timing = 0.5;
-			if (Math.Abs(y - 0) < double.Epsilon) y = 0.001;
-			if (Math.Abs(y - 0.025) < double.Epsilon) y = 0.001;
-
-
-
-			var par = new[] { alpha, timing };
-
-			const double tolerance = 1e-7;
-
-			var target = y;
-
-			return RootFinding.Brent(RootFindingHSD, -40, 40, tolerance, target, par);
-		}
-
-		private static double RootFindingHSD(double x, double[] y)
-		{
-			double alpha = y[0];
-			double timing = y[1];
-			double sfValue = x;
-
-			return HwangShihDeCaniFunction(alpha, timing, sfValue);
-		}
-
-		public HwangShihDeCaniPlotFunction()
+		public OneParameterSpendingFunction()
 		{
 			PlotConstraint = PlotConstraint.MoveLineWithPoint;
 
 			var coordinates = new ObservableCollection<Point>();
 			for (int i = 0; i < 30; i++)
 			{
-				coordinates.Add(new Point(0,0));
+				coordinates.Add(new Point(0, 0));
 			}
 
 			Coordinates = coordinates;
@@ -76,8 +34,8 @@
 			var xMin = TimingMinimum;
 			var xMax = TimingMaximum;
 
-			Coordinates[0] = new Point(xMin, HwangShihDeCaniFunction(alpha, xMin, SpendingFunctionParameter));
-			Coordinates[Coordinates.Count - 1] = new Point(xMax, HwangShihDeCaniFunction(alpha, xMax, SpendingFunctionParameter));
+			Coordinates[0] = new Point(xMin, SpendingFunction(alpha, xMin, SpendingFunctionParameter));
+			Coordinates[Coordinates.Count - 1] = new Point(xMax, SpendingFunction(alpha, xMax, SpendingFunctionParameter));
 
 			// compute x-axis interval
 			var increment = (xMax - xMin) / intervalCount;
@@ -89,7 +47,7 @@
 				var x = Coordinates[i - 1].X + increment;
 
 				// y is a function of alpha, timing, & spending value
-				var y = HwangShihDeCaniFunction(alpha, x, SpendingFunctionParameter);
+				var y = SpendingFunction(alpha, x, SpendingFunctionParameter);
 				Coordinates[i] = new Point(x, y);
 			}
 
@@ -106,6 +64,12 @@
 
 			//Update();
 		}
+
+		public SpendingFunction SpendingFunction { get; set; }
+
+		public InverseSpendingFunction InverseSpendingFunction { get; set; }
+
+		public ParameterSpendingFunction ParameterSpendingFunction { get; set; }
 
 		#region PlotConstraint property
 
@@ -133,7 +97,7 @@
 
 		#region SpendingFunctionParameter property
 
-		private double _spendingFunctionParameter = -8.0;
+		private double _spendingFunctionParameter;
 
 		/// <summary>
 		/// Gets or sets the SpendingFunctionValue property.
@@ -155,7 +119,7 @@
 
 						var x = Timing;
 						var alpha = InterimSpendingParameterMaximum;
-						var y = HwangShihDeCaniFunction(alpha, x, _spendingFunctionParameter);
+						var y = SpendingFunction(alpha, x, _spendingFunctionParameter);
 
 						InterimSpendingParameter = y;
 
@@ -219,7 +183,7 @@
 
 		#region Timing property
 
-		private double _timing = 0.5;
+		private double _timing;
 
 		/// <summary>
 		/// Gets or sets the Timing property.
@@ -243,14 +207,14 @@
 						var x = Timing;
 						var alpha = InterimSpendingParameterMaximum;
 
-						var y = HwangShihDeCaniFunction(alpha, x, SpendingFunctionParameter);
+						var y = SpendingFunction(alpha, x, SpendingFunctionParameter);
 
 						InterimSpendingParameter = y;
 					}
 					else // PlotConstraint.MoveLineWithPoint
 					{
 						// compute rho
-						var rho = HwangShihDeCaniFunctionSpendingParameter(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
+						var rho = ParameterSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
 						SpendingFunctionParameter = rho;
 
 						// update coordinates
@@ -310,7 +274,7 @@
 
 		#region InterimSpendingParameter property
 
-		private double _interimSpendingParameter = 0.024;
+		private double _interimSpendingParameter;
 
 		/// <summary>
 		/// Gets or sets the InterimSpendingParameter property.
@@ -334,14 +298,14 @@
 						var y = InterimSpendingParameter;
 						var alpha = InterimSpendingParameterMaximum;
 
-						var x = HwangShihDeCaniFunctionInverse(alpha, y, SpendingFunctionParameter);
+						var x = InverseSpendingFunction(alpha, y, SpendingFunctionParameter);
 
 						Timing = x;
 					}
 					else // PlotConstraint.MoveLineWithPoint
 					{
 						// compute rho
-						var rho = HwangShihDeCaniFunctionSpendingParameter(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
+						var rho = ParameterSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
 						SpendingFunctionParameter = rho;
 
 						// update coordinates
