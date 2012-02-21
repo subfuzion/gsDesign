@@ -5,6 +5,7 @@
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
 	using System.Windows;
+	using gsDesign.Design.SpendingFunctions.OneParameter;
 
 	public class SpendingFunctionViewModel : INotifyPropertyChanged
 	{
@@ -23,84 +24,51 @@
 
 		#endregion
 
-		private Dictionary<OneParameterFamily, OneParameterSpendingFunction> _spendingFunctions = new Dictionary<OneParameterFamily, OneParameterSpendingFunction>(); 
+		private readonly Dictionary<OneParameterFamily, OneParameterSpendingFunction> _spendingFunctions = new Dictionary<OneParameterFamily, OneParameterSpendingFunction>(); 
 
 		public SpendingFunctionViewModel()
 		{
-			var sf = new OneParameterSpendingFunction
-			{
-				SpendingFunction = OneParameterSpendingFunctions.HwangShihDeCaniFunction,
-				InverseSpendingFunction = OneParameterSpendingFunctions.HwangShihDeCaniFunctionInverse,
-				ParameterSpendingFunction = OneParameterSpendingFunctions.HwangShihDeCaniFunctionSpendingParameter,
-				InterimSpendingParameter = 0.025,
-				InterimSpendingParameterMaximum = 0.025,
-				InterimSpendingParameterMinimum = 0.0,
-				SpendingFunctionParameter = -8.0,
-				SpendingFunctionParameterMaximum = 40.0,
-				SpendingFunctionParameterMinimum = -40.0,
-				Timing = 0.5,
-				TimingMaximum = 1.0,
-				TimingMinimum = 0.0,
-			};
+			var hsdsf = new HwangShiDeCaniSpendingFunctionModel();
+			_spendingFunctions.Add(OneParameterFamily.HwangShihDeCani, hsdsf);
 
-			_spendingFunctions.Add(OneParameterFamily.HwangShihDeCani, sf);
+			var psf = new PowerSpendingFunctionModel();
+			_spendingFunctions.Add(OneParameterFamily.Power, psf);
 
-			sf = new OneParameterSpendingFunction
-			{
-				SpendingFunction = OneParameterSpendingFunctions.PowerFunction,
-				InverseSpendingFunction = OneParameterSpendingFunctions.PowerFunctionInverse,
-				ParameterSpendingFunction = OneParameterSpendingFunctions.PowerFunctionSpendingParameter,
-				SpendingFunctionParameter = 4,
-				SpendingFunctionParameterMaximum = 15.0,
-				SpendingFunctionParameterMinimum = 0.001,
-				InterimSpendingParameter = 0.025,
-				InterimSpendingParameterMaximum = 0.025,
-				InterimSpendingParameterMinimum = 0.0,
-				Timing = 0.5,
-				TimingMaximum = 1.0,
-				TimingMinimum = 0.0,
-			};
-
-			_spendingFunctions.Add(OneParameterFamily.Power, sf);
-
-			sf = new OneParameterSpendingFunction
-			{
-				SpendingFunction = OneParameterSpendingFunctions.PowerFunction,
-				InverseSpendingFunction = OneParameterSpendingFunctions.PowerFunctionInverse,
-				ParameterSpendingFunction = OneParameterSpendingFunctions.PowerFunctionSpendingParameter,
-				SpendingFunctionParameter = 4,
-				SpendingFunctionParameterMaximum = 15.0,
-				SpendingFunctionParameterMinimum = 0.001,
-				InterimSpendingParameter = 0.025,
-				InterimSpendingParameterMaximum = 0.025,
-				InterimSpendingParameterMinimum = 0.0,
-				Timing = 0.5,
-				TimingMaximum = 1.0,
-				TimingMinimum = 0.0,
-			};
-
-			_spendingFunctions.Add(OneParameterFamily.Exponential, sf);
+			var esf = new ExponentialSpendingFunctionModel();
+			_spendingFunctions.Add(OneParameterFamily.Exponential, esf);
 		}
 
 		#region CurrentSpendingFunction property
 
-		private OneParameterFamily _currentSpendingFunction;
+		private OneParameterFamily _currentSpendingFunctionFamily = OneParameterFamily.HwangShihDeCani;
 
 		/// <summary>
-		/// Gets or sets the CurrentSpendingFunction property.
+		/// Gets or sets the CurrentSpendingFunctionFamily property.
 		/// </summary>
-		public OneParameterFamily CurrentSpendingFunction
+		public OneParameterFamily CurrentSpendingFunctionFamily
 		{
-			get { return _currentSpendingFunction; }
+			get { return _currentSpendingFunctionFamily; }
 
 			set
 			{
-				if (_currentSpendingFunction != value)
+				if (_currentSpendingFunctionFamily != value)
 				{
-					_currentSpendingFunction = value;
-					NotifyPropertyChanged("CurrentSpendingFunction");
+					_currentSpendingFunctionFamily = value;
+					NotifyPropertyChanged("CurrentSpendingFunctionFamily");
 					NotifyPropertyChanged("CurrentPlotFunction");
 					NotifyPropertyChanged("Coordinates");
+
+					NotifyPropertyChanged("SpendingFunctionParameterMaximum");
+					NotifyPropertyChanged("SpendingFunctionParameterMinimum");
+					NotifyPropertyChanged("SpendingFunctionParameter");
+
+					NotifyPropertyChanged("InterimSpendingParameterMaximum");
+					NotifyPropertyChanged("InterimSpendingParameterMinimum");
+					NotifyPropertyChanged("InterimSpendingParameter");
+
+					NotifyPropertyChanged("TimingMaximum");
+					NotifyPropertyChanged("TimingMinimum");
+					NotifyPropertyChanged("Timing");
 				}
 			}
 		}
@@ -124,6 +92,11 @@
 				{
 					_plotConstraint = value;
 					NotifyPropertyChanged("PlotConstraint");
+
+					foreach (var oneParameterSpendingFunction in _spendingFunctions.Values)
+					{
+						oneParameterSpendingFunction.PlotConstraint = value;
+					}
 				}
 			}
 		}
@@ -179,7 +152,7 @@
 		/// </summary>
 		public OneParameterSpendingFunction CurrentPlotFunction
 		{
-			get { return _spendingFunctions[CurrentSpendingFunction]; }
+			get { return _spendingFunctions[CurrentSpendingFunctionFamily]; }
 		}
 
 		#endregion

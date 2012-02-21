@@ -1,4 +1,4 @@
-﻿namespace Subfuzion.Silverlight.UI.Charting
+﻿namespace gsDesign.Design.SpendingFunctions.OneParameter
 {
 	public enum OneParameterFamily
 	{

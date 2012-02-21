@@ -104,6 +104,56 @@ namespace Subfuzion.Silverlight.UI.Charting
 
 		#region Exponential
 
+		// y=alpha^(t^(-nu)) 
+		public static double ExponentialFunction(double alpha, double timing, double sfValue)
+		{
+			try
+			{
+				return Math.Pow(alpha, Math.Pow(timing, -sfValue));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
+		}
+
+		// Inverse: t=exp((-ln(-ln y) - ln(-ln(alpha))) / nu) 
+		public static double ExponentialFunctionInverse(double alpha, double y, double sfValue)
+		{
+			try
+			{
+				//if (sfValue < SpendingFunctionParameterMinimum)
+				//{
+				//    sfValue = SpendingFunctionParameterMinimum;
+				//}
+
+				return Math.Exp((-Math.Log(-Math.Log(y)) - Math.Log(-Math.Log(alpha))) / sfValue);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
+		}
+
+		// nu = (ln(-ln(alpha))-ln(-ln(y)))/ln(t)
+		public static double ExponentialFunctionSpendingParameter(double alpha, double y, double timing)
+		{
+			try
+			{
+				return (Math.Log(-Math.Log(alpha)) - Math.Log(-Math.Log(y))) / Math.Log(timing);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
+		}
+
 		#endregion
 	}
 

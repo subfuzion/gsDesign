@@ -39,6 +39,10 @@
 		protected virtual void OnPlotFunctionChanged(PlotFunction newValue)
 		{
 			// add handler code
+			if (newValue != null)
+			{
+				Coordinates = newValue.Coordinates;
+			}
 		}
 
 		#endregion

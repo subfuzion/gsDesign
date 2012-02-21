@@ -5,6 +5,7 @@
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Windows.Data;
+	using gsDesign.Design.SpendingFunctions.OneParameter;
 
 	public class OneParameterFamilyValueConverter : IValueConverter
 	{

@@ -47,9 +47,24 @@
 
 					<!-- Spending Function value controls -->
 					<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6" x:Name="spendingFunctionParameter">
-						<toolkit:NumericUpDown Margin="2" Height="20" Width="70" x:Name="gammaTextBox"
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBlock Text="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+							<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70" x:Name="gammaTextBox"
+											   DecimalPlaces="3"
+											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
 											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
-						<Slider Orientation="Vertical" Margin="2" ValueChanged="gammaSlider_ValueChanged"  x:Name="gammaSlider" Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+							<TextBlock Grid.Row="2" Text="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+						</Grid>
+						<Slider Grid.Row="1" Orientation="Vertical" Margin="2" x:Name="gammaSlider"
+											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
 					</StackPanel>
 
 					<!-- Interim Spending value controls -->
@@ -68,7 +83,7 @@
 
 					<!-- Plot Control -->
 					<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
-						<Charting:LinePlot x:Name="plot" Background="#FFFCF8">
+						<Charting:LinePlot x:Name="plot" Background="#FFFCF8" PlotFunction="{Binding Path=CurrentPlotFunction, Mode=OneWay}">
 							<Charting:LinePlot.ControlPoint>
 								<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
 									<Ellipse.RenderTransform>
@@ -104,8 +119,8 @@
 					<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
 						<StackPanel Orientation="Vertical">
 							<ComboBox SelectedIndex="0" Margin="2"
-								          ItemsSource="{Binding Path=CurrentSpendingFunction, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}"
-								          SelectedItem="{Binding Path=CurrentSpendingFunction, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}" />
+								          ItemsSource="{Binding Path=CurrentSpendingFunctionFamily, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}"
+								          SelectedItem="{Binding Path=CurrentSpendingFunctionFamily, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}" />
 							<Grid Margin="2">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="70"/>
