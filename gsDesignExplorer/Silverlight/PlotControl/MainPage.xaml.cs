@@ -8,7 +8,7 @@
 
 	public partial class MainPage : UserControl
 	{
-		private PowerPlotFunction _plotFunction;
+		private HwangShihDeCaniPlotFunction _plotFunction;
 
 		public MainPage()
 		{
@@ -34,31 +34,31 @@
 
 		private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
-			//_plotFunction = new HwangShihDeCaniPlotFunction
-			//{
-			//    InterimSpendingParameter = 0.025,
-			//    InterimSpendingParameterMaximum = 0.025,
-			//    InterimSpendingParameterMinimum = 0.0,
-			//    SpendingFunctionParameter = -8.0,
-			//    SpendingFunctionParameterMaximum = 40.0,
-			//    SpendingFunctionParameterMinimum = -40.0,
-			//    Timing = 0.5,
-			//    TimingMaximum = 1.0,
-			//    TimingMinimum = 0.0,
-			//};
-
-			_plotFunction = new PowerPlotFunction
+			_plotFunction = new HwangShihDeCaniPlotFunction
 			{
-				SpendingFunctionParameter = 4,
-				SpendingFunctionParameterMaximum = 15.0,
-				SpendingFunctionParameterMinimum = 0.001,
 				InterimSpendingParameter = 0.025,
 				InterimSpendingParameterMaximum = 0.025,
 				InterimSpendingParameterMinimum = 0.0,
+				SpendingFunctionParameter = -8.0,
+				SpendingFunctionParameterMaximum = 40.0,
+				SpendingFunctionParameterMinimum = -40.0,
 				Timing = 0.5,
 				TimingMaximum = 1.0,
 				TimingMinimum = 0.0,
 			};
+
+			//_plotFunction = new PowerPlotFunction
+			//{
+			//    SpendingFunctionParameter = 4,
+			//    SpendingFunctionParameterMaximum = 15.0,
+			//    SpendingFunctionParameterMinimum = 0.001,
+			//    InterimSpendingParameter = 0.025,
+			//    InterimSpendingParameterMaximum = 0.025,
+			//    InterimSpendingParameterMinimum = 0.0,
+			//    Timing = 0.5,
+			//    TimingMaximum = 1.0,
+			//    TimingMinimum = 0.0,
+			//};
 
 			interimSpending.DataContext = _plotFunction;
 			timing.DataContext = _plotFunction;

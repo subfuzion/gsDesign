@@ -46,15 +46,65 @@ namespace Subfuzion.Silverlight.UI.Charting
 		//    out errorEstimate             // estimate of the error in the result
 		//);
 
+		#endregion
+
+		#region Power
+
+		// y = alpha * (t^rho)
+		public static double PowerFunction(double alpha, double timing, double sfValue)
+		{
+			try
+			{
+				return alpha * Math.Pow(timing, sfValue);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
+		}
+
+		// Inverse: t = exp( (ln(y) - ln(alpha)) / rho)
+		public static double PowerFunctionInverse(double alpha, double y, double sfValue)
+		{
+			try
+			{
+				//if (sfValue < SpendingFunctionParameterMinimum)
+				//{
+				//    sfValue = SpendingFunctionParameterMinimum;
+				//}
+
+				return Math.Exp((Math.Log(y) - Math.Log(alpha)) / sfValue);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
+		}
+
+		// rho = (ln(y)-ln(alpha))/ln(t)
+		public static double PowerFunctionSpendingParameter(double alpha, double y, double timing)
+		{
+			try
+			{
+				return (Math.Log(y) - Math.Log(alpha)) / Math.Log(timing);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
+		}
+
+		#endregion
+
+		#region Exponential
+
+		#endregion
 	}
 
-	#endregion
-
-	#region Power
-
-	#endregion
-
-	#region Exponential
-
-	#endregion
 }

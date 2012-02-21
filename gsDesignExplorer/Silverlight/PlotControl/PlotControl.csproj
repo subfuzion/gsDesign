@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="OneParameterFamily.cs" />
     <Compile Include="OneParameterFamilyValueConverter.cs" />
+    <Compile Include="OneParameterSpendingFunction.cs" />
     <Compile Include="OneParameterSpendingFunctions.cs" />
     <Compile Include="PlotConstraint.cs" />
     <Compile Include="PlotConstraintValueConverter.cs" />
