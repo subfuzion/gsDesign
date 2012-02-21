@@ -73,7 +73,7 @@
 
 		#region PlotConstraint property
 
-		private PlotConstraint _plotConstraint;
+		private PlotConstraint _plotConstraint = PlotConstraint.MovePointAlongLine;
 
 		/// <summary>
 		/// Gets or sets the PlotConstraint property.

@@ -8,7 +8,7 @@
 
 	public partial class MainPage : UserControl
 	{
-		private HwangShihDeCaniPlotFunction _plotFunction;
+		private OneParameterSpendingFunction _plotFunction;
 
 		public MainPage()
 		{
@@ -34,8 +34,24 @@
 
 		private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
-			_plotFunction = new HwangShihDeCaniPlotFunction
+			//_plotFunction = new HwangShihDeCaniPlotFunction
+			//{
+			//    InterimSpendingParameter = 0.025,
+			//    InterimSpendingParameterMaximum = 0.025,
+			//    InterimSpendingParameterMinimum = 0.0,
+			//    SpendingFunctionParameter = -8.0,
+			//    SpendingFunctionParameterMaximum = 40.0,
+			//    SpendingFunctionParameterMinimum = -40.0,
+			//    Timing = 0.5,
+			//    TimingMaximum = 1.0,
+			//    TimingMinimum = 0.0,
+			//};
+
+			_plotFunction = new OneParameterSpendingFunction
 			{
+				SpendingFunction = OneParameterSpendingFunctions.HwangShihDeCaniFunction,
+				InverseSpendingFunction = OneParameterSpendingFunctions.HwangShihDeCaniFunctionInverse,
+				ParameterSpendingFunction = OneParameterSpendingFunctions.HwangShihDeCaniFunctionSpendingParameter,
 				InterimSpendingParameter = 0.025,
 				InterimSpendingParameterMaximum = 0.025,
 				InterimSpendingParameterMinimum = 0.0,
