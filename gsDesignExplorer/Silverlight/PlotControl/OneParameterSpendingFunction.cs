@@ -108,8 +108,8 @@
 
 			set
 			{
-				if (value < SpendingFunctionParameterMinimum) value = SpendingFunctionParameterMinimum;
-				if (value > SpendingFunctionParameterMaximum) value = SpendingFunctionParameterMaximum;
+				//if (value < SpendingFunctionParameterMinimum) value = SpendingFunctionParameterMinimum;
+				//if (value > SpendingFunctionParameterMaximum) value = SpendingFunctionParameterMaximum;
 
 				if (Math.Abs(_spendingFunctionParameter - value) > double.Epsilon)
 				{
@@ -135,7 +135,7 @@
 
 		#region SpendingFunctionParameterMinimum property
 
-		private double _spendingFunctionParameterMinimum = 0.001;
+		private double _spendingFunctionParameterMinimum;
 
 		/// <summary>
 		/// Gets or sets the SpendingFunctionParameterMinimum property.
@@ -158,7 +158,7 @@
 
 		#region SpendingFunctionParameterMaximum property
 
-		private double _spendingFunctionParameterMaximum = 10.0;
+		private double _spendingFunctionParameterMaximum;
 
 		/// <summary>
 		/// Gets or sets the SpendingFunctionParameterMaximum property.
@@ -173,97 +173,6 @@
 				{
 					_spendingFunctionParameterMaximum = value;
 					NotifyPropertyChanged("SpendingFunctionParameterMaximum");
-				}
-			}
-		}
-
-		#endregion
-
-		#endregion
-
-		#region Timing property
-
-		private double _timing;
-
-		/// <summary>
-		/// Gets or sets the Timing property.
-		/// </summary>
-		public double Timing
-		{
-			get { return _timing; }
-
-			set
-			{
-				if (value < TimingMinimum) value = TimingMinimum;
-				if (value > TimingMaximum) value = TimingMaximum;
-
-				if (Math.Abs(_timing - value) > double.Epsilon)
-				{
-					_timing = value;
-					NotifyPropertyChanged("Timing");
-
-					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
-					{
-						var x = Timing;
-						var alpha = InterimSpendingParameterMaximum;
-
-						var y = SpendingFunction(alpha, x, SpendingFunctionParameter);
-
-						InterimSpendingParameter = y;
-					}
-					else // PlotConstraint.MoveLineWithPoint
-					{
-						// compute rho
-						var rho = ParameterSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
-						SpendingFunctionParameter = rho;
-
-						// update coordinates
-						Update();
-					}
-				}
-			}
-		}
-
-		#region TimingMinimum property
-
-		private double _timingMinimum = 0.0;
-
-		/// <summary>
-		/// Gets or sets the TimingMinimum property.
-		/// </summary>
-		public double TimingMinimum
-		{
-			get { return _timingMinimum; }
-
-			set
-			{
-				if (Math.Abs(_timingMinimum - value) > double.Epsilon)
-				{
-					_timingMinimum = value;
-					NotifyPropertyChanged("TimingMinimum");
-				}
-			}
-		}
-
-		#endregion
-
-		#region TimingMaximum property
-
-		private double _timingMaximum = 1.0;
-
-		/// <summary>
-		/// Gets or sets the TimingMaximum property.
-		/// </summary>
-		public double TimingMaximum
-		{
-			get { return _timingMaximum; }
-
-			set
-			{
-				if (Math.Abs(_timingMaximum - value) > double.Epsilon)
-				{
-					_timingMaximum = value;
-					NotifyPropertyChanged("TimingMaximum");
 				}
 			}
 		}
@@ -317,7 +226,7 @@
 
 		#region InterimSpendingParameterMinimum property
 
-		private double _interimSpendingParameterMinimum = 0.1;
+		private double _interimSpendingParameterMinimum;
 
 		/// <summary>
 		/// Gets or sets the InterimSpendingParameterMinimum property.
@@ -340,7 +249,7 @@
 
 		#region InterimSpendingParameterMaximum property
 
-		private double _interimSpendingParameterMaximum = 0.025;
+		private double _interimSpendingParameterMaximum;
 
 		/// <summary>
 		/// Gets or sets the AlphaParameterMaximum property.
@@ -355,6 +264,97 @@
 				{
 					_interimSpendingParameterMaximum = value;
 					NotifyPropertyChanged("InterimSpendingParameterMaximum");
+				}
+			}
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Timing property
+
+		private double _timing;
+
+		/// <summary>
+		/// Gets or sets the Timing property.
+		/// </summary>
+		public double Timing
+		{
+			get { return _timing; }
+
+			set
+			{
+				if (value < TimingMinimum) value = TimingMinimum;
+				if (value > TimingMaximum) value = TimingMaximum;
+
+				if (Math.Abs(_timing - value) > double.Epsilon)
+				{
+					_timing = value;
+					NotifyPropertyChanged("Timing");
+
+					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
+					{
+						var x = Timing;
+						var alpha = InterimSpendingParameterMaximum;
+
+						var y = SpendingFunction(alpha, x, SpendingFunctionParameter);
+
+						InterimSpendingParameter = y;
+					}
+					else // PlotConstraint.MoveLineWithPoint
+					{
+						// compute rho
+						var rho = ParameterSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, Timing);
+						SpendingFunctionParameter = rho;
+
+						// update coordinates
+						Update();
+					}
+				}
+			}
+		}
+
+		#region TimingMinimum property
+
+		private double _timingMinimum;
+
+		/// <summary>
+		/// Gets or sets the TimingMinimum property.
+		/// </summary>
+		public double TimingMinimum
+		{
+			get { return _timingMinimum; }
+
+			set
+			{
+				if (Math.Abs(_timingMinimum - value) > double.Epsilon)
+				{
+					_timingMinimum = value;
+					NotifyPropertyChanged("TimingMinimum");
+				}
+			}
+		}
+
+		#endregion
+
+		#region TimingMaximum property
+
+		private double _timingMaximum;
+
+		/// <summary>
+		/// Gets or sets the TimingMaximum property.
+		/// </summary>
+		public double TimingMaximum
+		{
+			get { return _timingMaximum; }
+
+			set
+			{
+				if (Math.Abs(_timingMaximum - value) > double.Epsilon)
+				{
+					_timingMaximum = value;
+					NotifyPropertyChanged("TimingMaximum");
 				}
 			}
 		}
