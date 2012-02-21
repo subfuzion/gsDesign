@@ -24,6 +24,14 @@
 			Loaded += OnLoaded;
 		}
 
+		/// <summary>
+		/// Provides application-wide access to the view model
+		/// </summary>
+		public SpendingFunctionViewModel ViewModel
+		{
+			get { return (SpendingFunctionViewModel)Resources["spendingFunctionViewModel"]; }
+		}
+
 		private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
 			//_plotFunction = new HwangShihDeCaniPlotFunction
