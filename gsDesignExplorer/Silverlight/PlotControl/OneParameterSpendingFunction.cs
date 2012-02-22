@@ -116,14 +116,15 @@
 					try
 					{
 						_spendingFunctionParameter = value;
+						NotifyPropertyChanged("SpendingFunctionParameter");
 
 						var x = Timing;
 						var alpha = InterimSpendingParameterMaximum;
 						var y = SpendingFunction(alpha, x, _spendingFunctionParameter);
 
-						InterimSpendingParameter = y;
-
-						NotifyPropertyChanged("SpendingFunctionParameter");
+						// InterimSpendingParameter = y;
+						_interimSpendingParameter = y;
+						NotifyPropertyChanged("InterimSpendingParameter");
 					}
 					catch (Exception e)
 					{
@@ -194,8 +195,8 @@
 
 			set
 			{
-				if (value < InterimSpendingParameterMinimum) value = InterimSpendingParameterMinimum;
-				if (value > InterimSpendingParameterMaximum) value = InterimSpendingParameterMaximum;
+				//if (value < InterimSpendingParameterMinimum) value = InterimSpendingParameterMinimum;
+				//if (value > InterimSpendingParameterMaximum) value = InterimSpendingParameterMaximum;
 
 				if (Math.Abs(_interimSpendingParameter - value) > double.Epsilon)
 				{
@@ -285,8 +286,8 @@
 
 			set
 			{
-				if (value < TimingMinimum) value = TimingMinimum;
-				if (value > TimingMaximum) value = TimingMaximum;
+				//if (value < TimingMinimum) value = TimingMinimum;
+				//if (value > TimingMaximum) value = TimingMaximum;
 
 				if (Math.Abs(_timing - value) > double.Epsilon)
 				{

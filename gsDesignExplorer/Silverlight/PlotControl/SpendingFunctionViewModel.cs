@@ -38,6 +38,23 @@
 			_spendingFunctions.Add(OneParameterFamily.Exponential, esf);
 		}
 
+		private void NotifyParameterUpdates()
+		{
+			NotifyPropertyChanged("SpendingFunctionParameterMaximum");
+			NotifyPropertyChanged("SpendingFunctionParameterMinimum");
+			NotifyPropertyChanged("SpendingFunctionParameter");
+
+			NotifyPropertyChanged("InterimSpendingParameterMaximum");
+			NotifyPropertyChanged("InterimSpendingParameterMinimum");
+			NotifyPropertyChanged("InterimSpendingParameter");
+
+			NotifyPropertyChanged("TimingMaximum");
+			NotifyPropertyChanged("TimingMinimum");
+			NotifyPropertyChanged("Timing");
+
+			NotifyPropertyChanged("Coordinates");
+		}
+
 		#region CurrentSpendingFunction property
 
 		private OneParameterFamily _currentSpendingFunctionFamily = OneParameterFamily.HwangShihDeCani;
@@ -54,21 +71,18 @@
 				if (_currentSpendingFunctionFamily != value)
 				{
 					_currentSpendingFunctionFamily = value;
+
+					foreach (var oneParameterSpendingFunction in _spendingFunctions.Values)
+					{
+						oneParameterSpendingFunction.Timing = TimingParameter;
+						oneParameterSpendingFunction.InterimSpendingParameter = InterimSpendingParameter;
+					}
+
+					CurrentPlotFunction.Update();
+
 					NotifyPropertyChanged("CurrentSpendingFunctionFamily");
 					NotifyPropertyChanged("CurrentPlotFunction");
-					NotifyPropertyChanged("Coordinates");
-
-					NotifyPropertyChanged("SpendingFunctionParameterMaximum");
-					NotifyPropertyChanged("SpendingFunctionParameterMinimum");
-					NotifyPropertyChanged("SpendingFunctionParameter");
-
-					NotifyPropertyChanged("InterimSpendingParameterMaximum");
-					NotifyPropertyChanged("InterimSpendingParameterMinimum");
-					NotifyPropertyChanged("InterimSpendingParameter");
-
-					NotifyPropertyChanged("TimingMaximum");
-					NotifyPropertyChanged("TimingMinimum");
-					NotifyPropertyChanged("Timing");
+					NotifyParameterUpdates();
 				}
 			}
 		}
@@ -183,7 +197,8 @@
 				if (Math.Abs(CurrentPlotFunction.SpendingFunctionParameter - value) > double.Epsilon)
 				{
 					CurrentPlotFunction.SpendingFunctionParameter = value;
-					NotifyPropertyChanged("SpendingFunctionParameter");
+					NotifyParameterUpdates();
+					CurrentPlotFunction.Update();
 				}
 			}
 		}
@@ -214,7 +229,8 @@
 				if (Math.Abs(CurrentPlotFunction.InterimSpendingParameter - value) > double.Epsilon)
 				{
 					CurrentPlotFunction.InterimSpendingParameter = value;
-					NotifyPropertyChanged("InterimSpendingParameter");
+					NotifyParameterUpdates();
+					CurrentPlotFunction.Update();
 				}
 			}
 		}
@@ -245,7 +261,8 @@
 				if (Math.Abs(CurrentPlotFunction.Timing - value) > double.Epsilon)
 				{
 					CurrentPlotFunction.Timing = value;
-					NotifyPropertyChanged("TimingParameter");
+					NotifyParameterUpdates();
+					CurrentPlotFunction.Update();
 				}
 			}
 		}

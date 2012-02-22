@@ -100,6 +100,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlPointState.cs" />
+    <Compile Include="PowerSpendingFunctionView.xaml.cs">
+      <DependentUpon>PowerSpendingFunctionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExponentialSpendingFunctionModel.cs" />
     <Compile Include="HwangShiDeCaniSpendingFunctionModel.cs" />
     <Compile Include="HwangShihDeCaniPlotFunction.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="RootFinding.cs" />
     <Compile Include="SpendingFunctionBounds.cs" />
     <Compile Include="SpendingFunctionLowerBoundSpending.cs" />
+    <Compile Include="SpendingFunctionParameters.cs" />
     <Compile Include="SpendingFunctionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="PowerSpendingFunctionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

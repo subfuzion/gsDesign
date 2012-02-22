@@ -9,42 +9,81 @@ namespace Subfuzion.Silverlight.UI.Charting
 
 		public static double HwangShihDeCaniFunction(double alpha, double timing, double sfValue)
 		{
-			if (Math.Abs(sfValue - 0) < double.Epsilon)
+			try
 			{
-				return alpha*timing;
+				if (Math.Abs(sfValue - 0) < double.Epsilon)
+				{
+					return alpha*timing;
+				}
+
+				return alpha*(1 - Math.Exp(-sfValue*timing))/(1 - Math.Exp(-sfValue));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
 			}
 
-			return alpha*(1 - Math.Exp(-sfValue*timing))/(1 - Math.Exp(-sfValue));
+			return 0.0;
 		}
 
 		// t = -log(1 - y * (1 - exp(-gamma)) / alpha) / gamma
 		public static double HwangShihDeCaniFunctionInverse(double alpha, double y, double sfValue)
 		{
-			//if (sfValue == 0)
-			//{
-			//    return 
-			//}
+			try
+			{
+				//if (sfValue == 0)
+				//{
+				//    return 
+				//}
 
-			return -Math.Log(1 - y*(1 - Math.Exp(-sfValue))/alpha)/sfValue;
+				return -Math.Log(1 - y*(1 - Math.Exp(-sfValue))/alpha)/sfValue;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
 		}
 
 		// 
 		public static double HwangShihDeCaniFunctionSpendingParameter(double alpha, double y, double timing)
 		{
-			//			return RootFinding(HwangShihDeCaniFunction(alpha), -2, 1.5);
+			try
+			{
+				//if (Math.Abs(timing - 0) < double.Epsilon) timing = 0.5;
+				//if (Math.Abs(y - 0) < double.Epsilon) y = 0.001;
+				//if (Math.Abs(y - 0.025) < double.Epsilon) y = 0.001;
 
-			return 0;
+
+				if (timing < 0.001) timing = 0.001;
+				if (y < 0.00001) y = 0.00001;
+
+
+				var par = new[] { alpha, timing };
+
+				const double tolerance = 1e-7;
+
+				var target = y;
+
+				return RootFinding.Brent(RootFindingHSD, -40, 40, tolerance, target, par);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			return 0.0;
 		}
 
-		//double root = RootFinding(
-		//    new FunctionOfOneVariable(f), // function to find root of, cast as delegate
-		//    1.0,                          // left end of bracket
-		//    5.0,                          // right end of bracket 
-		//    1e-10,                        // tolerance 
-		//    0.2,                          // target 
-		//    out iterationsUsed,           // number of steps the algorithm used
-		//    out errorEstimate             // estimate of the error in the result
-		//);
+		private static double RootFindingHSD(double x, double[] y)
+		{
+			double alpha = y[0];
+			double timing = y[1];
+			double sfValue = x;
+
+			return HwangShihDeCaniFunction(alpha, timing, sfValue);
+		}
 
 		#endregion
 
