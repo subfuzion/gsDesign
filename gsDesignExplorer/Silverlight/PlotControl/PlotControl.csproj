@@ -100,6 +100,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlPointState.cs" />
+    <Compile Include="PowerPlotFunction.cs" />
     <Compile Include="PowerSpendingFunctionView.xaml.cs">
       <DependentUpon>PowerSpendingFunctionView.xaml</DependentUpon>
     </Compile>
@@ -119,7 +120,6 @@
     <Compile Include="PlotConstraint.cs" />
     <Compile Include="PlotConstraintValueConverter.cs" />
     <Compile Include="PlotFunction.cs" />
-    <Compile Include="PowerFunction.cs" />
     <Compile Include="PowerSpendingFunctionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootFinding.cs" />
