@@ -12,5 +12,10 @@
       <path>PlotControl\MainPage.xaml.cs</path>
       <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\MainPage.xaml.cs</absolutePath>
     </Favorite>
+    <Favorite>
+      <name>OneParameterPlotControl.xaml</name>
+      <path>PlotControl\OneParameter\OneParameterPlotControl.xaml</path>
+      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\OneParameter\OneParameterPlotControl.xaml</absolutePath>
+    </Favorite>
   </favorites>
 </Favorites>
