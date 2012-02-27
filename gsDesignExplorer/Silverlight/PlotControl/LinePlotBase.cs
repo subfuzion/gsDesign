@@ -419,13 +419,50 @@
 
 		protected void Log(string function, string message = "", params object[] args)
 		{
+			LogOutput = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
 			if (Logger != null)
 			{
-				// var log = string.Format("[{0}] {1}", GetType().Name, string.Format(message, args));
-				var log = string.Format("[{0}] {1}", function, string.Format(message, args));
-				Logger(log);
+				Logger(LogOutput);
 			}
 		}
+
+		#region LogOutput property
+
+		public string LogOutput
+		{
+			get { return (string) GetValue(LogOutputProperty); }
+			set { SetValue(LogOutputProperty, value); }
+		}
+
+		public static DependencyProperty LogOutputProperty = DependencyProperty.Register(
+			"LogOutput",
+			typeof (string),
+			typeof (LinePlot),
+			new PropertyMetadata(LogOutputChangedHandler));
+
+		private static void LogOutputChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnLogOutputChanged((string) args.NewValue, (string) args.OldValue);
+			}
+		}
+
+		protected virtual void OnLogOutputChanged(string newValue, string oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnLogOutputChanged(newValue);
+		}
+
+		protected virtual void OnLogOutputChanged(string newValue)
+		{
+			// add handler code
+		}
+
+		#endregion
+
+
 
 		#endregion
 

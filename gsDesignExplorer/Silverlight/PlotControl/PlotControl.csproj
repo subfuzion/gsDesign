@@ -100,6 +100,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlPointState.cs" />
+    <Compile Include="OneParameter\OneParameterPlotControl.xaml.cs">
+      <DependentUpon>OneParameterPlotControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PowerPlotFunction.cs" />
     <Compile Include="PowerSpendingFunctionView.xaml.cs">
       <DependentUpon>PowerSpendingFunctionView.xaml</DependentUpon>
@@ -133,6 +136,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="OneParameter\OneParameterPlotControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PowerSpendingFunctionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

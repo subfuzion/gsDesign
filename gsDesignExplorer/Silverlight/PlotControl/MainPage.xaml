@@ -22,7 +22,7 @@
 		
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" MinWidth="400"/>
-			<ColumnDefinition Width="350" />
+			<ColumnDefinition Width="400" />
 		</Grid.ColumnDefinitions>
 
 		<!-- Plot Control -->
@@ -113,7 +113,7 @@
 
 					<!-- Plot Control -->
 					<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
-						<Charting:LinePlot x:Name="plot" Background="#FFFCF8" PlotFunction="{Binding Path=CurrentPlotFunction, Mode=OneWay}">
+						<Charting:LinePlot x:Name="plot" Background="#FFFCF8" PlotFunction="{Binding Path=CurrentPlotFunction, Mode=OneWay}" LogOutput="{Binding Path=LogOutput, Mode=TwoWay}">
 							<Charting:LinePlot.ControlPoint>
 								<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
 									<Ellipse.RenderTransform>

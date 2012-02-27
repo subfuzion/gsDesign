@@ -278,5 +278,39 @@
 		}
 
 		#endregion
+
+		#region Logging
+
+		#region LogOutput property
+
+		private string _logOutput;
+
+		/// <summary>
+		/// Gets or sets the LogOutput property.
+		/// </summary>
+		public string LogOutput
+		{
+			get { return _logOutput ?? (_logOutput = string.Empty); }
+
+			set
+			{
+				if (_logOutput != value)
+				{
+					_logOutput = value;
+					NotifyPropertyChanged("LogOutput");
+				}
+			}
+		}
+
+		protected void Log(string function, string message = "", params object[] args)
+		{
+			var log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
+			LogOutput = LogOutput + "\n" + log;
+		}
+
+		#endregion
+
+		#endregion
+
 	}
 }
