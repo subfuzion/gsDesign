@@ -17,5 +17,10 @@
       <path>PlotControl\OneParameter\OneParameterPlotControl.xaml</path>
       <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\OneParameter\OneParameterPlotControl.xaml</absolutePath>
     </Favorite>
+    <Favorite>
+      <name>SpendingFunctionViewModel.cs</name>
+      <path>PlotControl\SpendingFunctionViewModel.cs</path>
+      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\SpendingFunctionViewModel.cs</absolutePath>
+    </Favorite>
   </favorites>
 </Favorites>

@@ -1,10 +1,10 @@
-﻿namespace PlotControl
+namespace Subfuzion.Silverlight.UI.Charting.Views
 {
 	using System;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Data;
-	using Subfuzion.Silverlight.UI.Charting;
+	using ViewModels;
 
 	public partial class HwangShiDeCaniSpendingFunctionView : UserControl
 	{
@@ -153,13 +153,13 @@
 		private void moveLineRadioButton_Checked(object sender, RoutedEventArgs e)
 		{
 			if (_plotFunction != null)
-			    _plotFunction.PlotConstraint = PlotConstraint.MoveLineWithPoint;
+			    _plotFunction.PlotUpdateMode = PlotUpdateMode.MoveLineWithPoint;
 		}
 
 		private void movePointRadioButton_Checked(object sender, RoutedEventArgs e)
 		{
 			if (_plotFunction != null)
-			    _plotFunction.PlotConstraint = PlotConstraint.MovePointAlongLine;
+			    _plotFunction.PlotUpdateMode = PlotUpdateMode.MovePointAlongLine;
 		}
 
 		// Listen for change of the dependency property  

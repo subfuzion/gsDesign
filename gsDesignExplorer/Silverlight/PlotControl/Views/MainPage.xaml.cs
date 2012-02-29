@@ -1,10 +1,8 @@
-﻿namespace PlotControl
+namespace Subfuzion.Silverlight.UI.Charting.Views
 {
-	using System;
 	using System.Windows;
 	using System.Windows.Controls;
-	using System.Windows.Data;
-	using Subfuzion.Silverlight.UI.Charting;
+	using ViewModels;
 
 	public partial class MainPage : UserControl
 	{
@@ -14,9 +12,15 @@
 		{
 			InitializeComponent();
 
-			plot.Logger = msg =>
+			//plot.Logger = msg =>
+			//{
+			//    log.Text += msg + "\n";
+			//    scrollView.ScrollToBottom();
+			//    log.SelectionStart = log.Text.Length;
+			//};
+
+			log.TextChanged += (sender, args) =>
 			{
-				log.Text += msg + "\n";
 				scrollView.ScrollToBottom();
 				log.SelectionStart = log.Text.Length;
 			};

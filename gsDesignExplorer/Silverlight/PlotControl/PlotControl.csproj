@@ -100,36 +100,33 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlPointState.cs" />
+    <Compile Include="Models\ExponentialSpendingFunctionModel.cs" />
+    <Compile Include="Models\HwangShiDeCaniSpendingFunctionModel.cs" />
+    <Compile Include="Models\PowerSpendingFunctionModel.cs" />
     <Compile Include="OneParameter\OneParameterPlotControl.xaml.cs">
       <DependentUpon>OneParameterPlotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PowerPlotFunction.cs" />
-    <Compile Include="PowerSpendingFunctionView.xaml.cs">
-      <DependentUpon>PowerSpendingFunctionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ExponentialSpendingFunctionModel.cs" />
-    <Compile Include="HwangShiDeCaniSpendingFunctionModel.cs" />
     <Compile Include="HwangShihDeCaniPlotFunction.cs" />
     <Compile Include="LinePlot.cs" />
     <Compile Include="LinePlotBase.cs" />
     <Compile Include="LinePlotRenderBase.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="OneParameterFamily.cs" />
-    <Compile Include="OneParameterFamilyValueConverter.cs" />
     <Compile Include="OneParameterSpendingFunction.cs" />
     <Compile Include="OneParameterSpendingFunctions.cs" />
-    <Compile Include="PlotConstraint.cs" />
-    <Compile Include="PlotConstraintValueConverter.cs" />
+    <Compile Include="PlotUpdateMode.cs" />
     <Compile Include="PlotFunction.cs" />
-    <Compile Include="PowerSpendingFunctionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootFinding.cs" />
-    <Compile Include="SpendingFunctionBounds.cs" />
-    <Compile Include="SpendingFunctionLowerBoundSpending.cs" />
     <Compile Include="SpendingFunctionParameters.cs" />
-    <Compile Include="SpendingFunctionViewModel.cs" />
+    <Compile Include="ValueConverters\OneParameterFamilyValueConverter.cs" />
+    <Compile Include="ValueConverters\PlotUpdateModeRadioButtonValueConverter.cs" />
+    <Compile Include="ViewModels\SpendingFunctionViewModel.cs" />
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PowerSpendingFunctionView.xaml.cs">
+      <DependentUpon>PowerSpendingFunctionView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -140,17 +137,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PowerSpendingFunctionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Themes\generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PowerSpendingFunctionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +156,13 @@
   <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\gsDesign.Core\gsDesign.Core.csproj">
+      <Project>{B47A4C50-AE66-4D56-9A8F-CC6E86AF6C11}</Project>
+      <Name>gsDesign.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

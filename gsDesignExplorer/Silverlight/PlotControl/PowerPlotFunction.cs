@@ -58,7 +58,7 @@
 
 		public PowerPlotFunction()
 		{
-			PlotConstraint = PlotConstraint.MoveLineWithPoint;
+			PlotUpdateMode = PlotUpdateMode.MoveLineWithPoint;
 
 			var coordinates = new ObservableCollection<Point>();
 			for (int i = 0; i < 30; i++)
@@ -111,20 +111,20 @@
 
 		#region PlotConstraint property
 
-		private PlotConstraint _plotConstraint;
+		private PlotUpdateMode _plotUpdateMode;
 
 		/// <summary>
 		/// Gets or sets the PlotConstraint property.
 		/// </summary>
-		public PlotConstraint PlotConstraint
+		public PlotUpdateMode PlotUpdateMode
 		{
-			get { return _plotConstraint; }
+			get { return _plotUpdateMode; }
 
 			set
 			{
-				if (_plotConstraint != value)
+				if (_plotUpdateMode != value)
 				{
-					_plotConstraint = value;
+					_plotUpdateMode = value;
 					NotifyPropertyChanged("PlotConstraint");
 				}
 			}
@@ -240,7 +240,7 @@
 					_timing = value;
 					NotifyPropertyChanged("Timing");
 
-					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
+					if (PlotUpdateMode == PlotUpdateMode.MovePointAlongLine)
 					{
 						var x = Timing;
 						var alpha = InterimSpendingParameterMaximum;
@@ -331,7 +331,7 @@
 					_interimSpendingParameter = value;
 					NotifyPropertyChanged("InterimSpendingParameter");
 
-					if (PlotConstraint == PlotConstraint.MovePointAlongLine)
+					if (PlotUpdateMode == PlotUpdateMode.MovePointAlongLine)
 					{
 						var y = InterimSpendingParameter;
 						var alpha = InterimSpendingParameterMaximum;

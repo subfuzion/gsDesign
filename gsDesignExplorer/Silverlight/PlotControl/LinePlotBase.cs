@@ -419,50 +419,48 @@
 
 		protected void Log(string function, string message = "", params object[] args)
 		{
-			LogOutput = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
+			LogMessage = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
 			if (Logger != null)
 			{
-				Logger(LogOutput);
+				Logger(LogMessage);
 			}
 		}
 
-		#region LogOutput property
+		#region LogMessage property
 
-		public string LogOutput
+		public string LogMessage
 		{
-			get { return (string) GetValue(LogOutputProperty); }
-			set { SetValue(LogOutputProperty, value); }
+			get { return (string) GetValue(LogMessageProperty); }
+			set { SetValue(LogMessageProperty, value); }
 		}
 
-		public static DependencyProperty LogOutputProperty = DependencyProperty.Register(
-			"LogOutput",
+		public static DependencyProperty LogMessageProperty = DependencyProperty.Register(
+			"LogMessage",
 			typeof (string),
 			typeof (LinePlot),
-			new PropertyMetadata(LogOutputChangedHandler));
+			new PropertyMetadata(LogMessageChangedHandler));
 
-		private static void LogOutputChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		private static void LogMessageChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
 			var linePlot = dependencyObject as LinePlot;
 			if (linePlot != null)
 			{
-				linePlot.OnLogOutputChanged((string) args.NewValue, (string) args.OldValue);
+				linePlot.OnLogMessageChanged((string) args.NewValue, (string) args.OldValue);
 			}
 		}
 
-		protected virtual void OnLogOutputChanged(string newValue, string oldValue)
+		protected virtual void OnLogMessageChanged(string newValue, string oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnLogOutputChanged(newValue);
+			OnLogMessageChanged(newValue);
 		}
 
-		protected virtual void OnLogOutputChanged(string newValue)
+		protected virtual void OnLogMessageChanged(string newValue)
 		{
 			// add handler code
 		}
 
 		#endregion
-
-
 
 		#endregion
 

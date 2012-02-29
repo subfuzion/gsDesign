@@ -1,11 +1,13 @@
-﻿namespace Subfuzion.Silverlight.UI.Charting
+namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
 	using System.Windows;
+	using Models;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
+	using OneParameterSpendingFunction = Charting.OneParameterSpendingFunction;
 
 	public class SpendingFunctionViewModel : INotifyPropertyChanged
 	{
@@ -26,6 +28,9 @@
 
 		private readonly Dictionary<OneParameterFamily, OneParameterSpendingFunction> _spendingFunctions = new Dictionary<OneParameterFamily, OneParameterSpendingFunction>(); 
 
+		/// <summary>
+		/// Initialize the supported spending functions
+		/// </summary>
 		public SpendingFunctionViewModel()
 		{
 			var hsdsf = new HwangShiDeCaniSpendingFunctionModel();
@@ -38,8 +43,11 @@
 			_spendingFunctions.Add(OneParameterFamily.Exponential, esf);
 		}
 
+
 		private void NotifyParameterUpdates()
 		{
+			Log("NotifyParameterUpdates");
+
 			NotifyPropertyChanged("SpendingFunctionParameterMaximum");
 			NotifyPropertyChanged("SpendingFunctionParameterMinimum");
 			NotifyPropertyChanged("SpendingFunctionParameter");
@@ -70,10 +78,13 @@
 			{
 				if (_currentSpendingFunctionFamily != value)
 				{
+					Log("CurrentSpendingFunctionFamily", "{0}", value.ToString());
+
 					_currentSpendingFunctionFamily = value;
 
 					foreach (var oneParameterSpendingFunction in _spendingFunctions.Values)
 					{
+						oneParameterSpendingFunction.PlotUpdateMode = PlotUpdateMode;
 						oneParameterSpendingFunction.Timing = TimingParameter;
 						oneParameterSpendingFunction.InterimSpendingParameter = InterimSpendingParameter;
 					}
@@ -89,27 +100,29 @@
 
 		#endregion
 
-		#region PlotConstraint property
+		#region PlotUpdateMode property
 
-		private PlotConstraint _plotConstraint = PlotConstraint.MoveLineWithPoint;
+		private PlotUpdateMode _plotUpdateMode = PlotUpdateMode.MoveLineWithPoint;
 
 		/// <summary>
 		/// Gets or sets the PlotConstraint property.
 		/// </summary>
-		public PlotConstraint PlotConstraint
+		public PlotUpdateMode PlotUpdateMode
 		{
-			get { return _plotConstraint; }
+			get { return _plotUpdateMode; }
 
 			set
 			{
-				if (_plotConstraint != value)
+				if (_plotUpdateMode != value)
 				{
-					_plotConstraint = value;
-					NotifyPropertyChanged("PlotConstraint");
+					Log("PlotUpdateMode", "{0}", value.ToString());
+
+					_plotUpdateMode = value;
+					NotifyPropertyChanged("PlotUpdateMode");
 
 					foreach (var oneParameterSpendingFunction in _spendingFunctions.Values)
 					{
-						oneParameterSpendingFunction.PlotConstraint = value;
+						oneParameterSpendingFunction.PlotUpdateMode = value;
 					}
 				}
 			}
@@ -281,34 +294,69 @@
 
 		#region Logging
 
-		#region LogOutput property
+		protected void Log(string function, string message = "", params object[] args)
+		{
+			if (string.IsNullOrWhiteSpace(message) && string.IsNullOrWhiteSpace(function)) return;
 
-		private string _logOutput;
+			var log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
+			LogHistory = string.IsNullOrWhiteSpace(LogHistory) ? log : LogHistory + "\n" + log;
+		}
+
+		#region LogMessage property
+
+		private string _logMessage;
 
 		/// <summary>
-		/// Gets or sets the LogOutput property.
+		/// Gets or sets the LogMessage property.
 		/// </summary>
-		public string LogOutput
+		public string LogMessage
 		{
-			get { return _logOutput ?? (_logOutput = string.Empty); }
+			get { return _logMessage; }
 
 			set
 			{
-				if (_logOutput != value)
+				if (_logMessage != value)
 				{
-					_logOutput = value;
-					NotifyPropertyChanged("LogOutput");
+					_logMessage = value;
+					NotifyPropertyChanged("LogMessage");
+					Log(_logMessage);
 				}
 			}
 		}
 
-		protected void Log(string function, string message = "", params object[] args)
+		#endregion
+
+		#region LogHistory property
+
+		private string _logHistory;
+
+		/// <summary>
+		/// Gets or sets the LogHistory property.
+		/// </summary>
+		// [Display(Name = "LogHistory",
+		//	Description = "")]
+		public string LogHistory
 		{
-			var log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
-			LogOutput = LogOutput + "\n" + log;
+			get { return _logHistory; }
+
+			set
+			{
+				// use for float comparison:
+				// if (Math.Abs(_logHistory - value) > float.Epsilon)
+
+				// use for double comparison:
+				// if (Math.Abs(_logHistory - value) > double.Epsilon)
+
+				if (_logHistory != value)
+				{
+					_logHistory = value;
+					NotifyPropertyChanged("LogHistory");
+				}
+			}
 		}
 
 		#endregion
+
 
 		#endregion
 

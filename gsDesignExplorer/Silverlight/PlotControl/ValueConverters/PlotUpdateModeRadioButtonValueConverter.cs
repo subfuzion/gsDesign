@@ -1,11 +1,11 @@
-﻿namespace Subfuzion.Silverlight.UI.Charting
+namespace Subfuzion.Silverlight.UI.Charting.ValueConverters
 {
 	using System;
 	using System.Globalization;
 	using System.Windows.Data;
 
 	// http://www.codeproject.com/Articles/81960/Binding-RadioButtons-to-an-Enum-in-Silverlight
-	public class PlotConstraintValueConverter : IValueConverter
+	public class PlotUpdateModeRadioButtonValueConverter : IValueConverter
 	{
 		private const string MoveLineWithPoint = "Move line with point";
 		private const string MovePointAlongLine = "Move point along line";
@@ -16,18 +16,18 @@
 		{
 			if (value == null) return null;
 
-			if (value.GetType() != typeof (PlotConstraint)) throw new ArgumentException();
+			if (value.GetType() != typeof (PlotUpdateMode)) throw new ArgumentException();
 
 			if (targetType == typeof (object) || targetType == typeof (string))
 			{
-				var plotConstraint = (PlotConstraint) Enum.Parse(typeof (PlotConstraint), parameter.ToString(), true);
+				var plotConstraint = (PlotUpdateMode) Enum.Parse(typeof (PlotUpdateMode), parameter.ToString(), true);
 
 				switch (plotConstraint)
 				{
-					case PlotConstraint.MoveLineWithPoint:
+					case PlotUpdateMode.MoveLineWithPoint:
 						return MoveLineWithPoint;
 
-					case PlotConstraint.MovePointAlongLine:
+					case PlotUpdateMode.MovePointAlongLine:
 						return MovePointAlongLine;
 
 					default:
@@ -47,7 +47,7 @@
 		{
 			if (value == null) return null;
 
-			if (targetType != typeof (PlotConstraint)) throw new ArgumentException();
+			if (targetType != typeof (PlotUpdateMode)) throw new ArgumentException();
 
 			Type valueType = value.GetType();
 

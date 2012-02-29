@@ -1,7 +1,7 @@
 <OutOfBrowserSettings ShortName="PlotControl Application" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
   <OutOfBrowserSettings.Blurb>PlotControl Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="PlotControl Application" Height="500" Width="800" />
+    <WindowSettings Title="PlotControl Application" Height="600" Width="1000" />
   </OutOfBrowserSettings.WindowSettings>
   <OutOfBrowserSettings.Icons />
 </OutOfBrowserSettings>

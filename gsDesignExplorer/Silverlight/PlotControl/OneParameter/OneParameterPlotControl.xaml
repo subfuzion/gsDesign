@@ -3,157 +3,150 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-			 xmlns:Charting="clr-namespace:Subfuzion.Silverlight.UI.Charting" mc:Ignorable="d"
+	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+	xmlns:Charting="clr-namespace:Subfuzion.Silverlight.UI.Charting"
+	xmlns:ValueConverters="clr-namespace:Subfuzion.Silverlight.UI.Charting.ValueConverters"
+	mc:Ignorable="d"
 	d:DesignHeight="300" d:DesignWidth="400">
 
 	<UserControl.Resources>
-		<Charting:OneParameterFamilyValueConverter x:Key="oneParameterFamilyValueConverter" />
-		<Charting:PlotConstraintValueConverter x:Key="plotConstraintValueConverter" />
+		<ValueConverters:OneParameterFamilyValueConverter x:Key="oneParameterFamilyValueConverter" />
+		<ValueConverters:PlotUpdateModeRadioButtonValueConverter x:Key="plotUpdateModeRadioButtonValueConverter" />
 	</UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="White">
-		<!-- Plot Control -->
-		<Border Grid.Row="0" Margin="10" BorderBrush="Black" BorderThickness="1" Background="White">
-			<Grid Margin="4 8 6 6">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
+	<Grid x:Name="LayoutRoot" Background="White" Margin="0 4 0 0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
-				<!-- Plot Control -->
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Spending Function value controls -->
+			<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6">
 				<Grid>
 					<Grid.RowDefinitions>
-						<RowDefinition Height="*"/>
-						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
+					<TextBlock Text="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70"
+											   DecimalPlaces="3"
+											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+					<TextBlock Grid.Row="2" Text="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+				</Grid>
+				<Slider Grid.Row="1" Orientation="Vertical" Margin="2"
+											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+			</StackPanel>
+
+			<!-- Interim Spending value controls -->
+			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6">
+				<Slider Orientation="Vertical" Margin="2"
+											   Maximum="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<TextBlock Text="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" />
+					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70"
+											   DecimalPlaces="3"
+											   Maximum="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+					<TextBlock Grid.Row="2" Text="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" />
+				</Grid>
+			</StackPanel>
+
+			<!-- Timing value controls -->
+			<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6">
+				<Slider Orientation="Horizontal" Margin="2"
+											   Maximum="{Binding Path=TimingParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=TimingParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
+				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
-
-					<!-- Spending Function value controls -->
-					<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6" x:Name="spendingFunctionParameter">
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="*" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-							<TextBlock Text="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
-							<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70" x:Name="gammaTextBox"
-											   DecimalPlaces="3"
-											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
-							<TextBlock Grid.Row="2" Text="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
-						</Grid>
-						<Slider Grid.Row="1" Orientation="Vertical" Margin="2" x:Name="gammaSlider"
-											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
-					</StackPanel>
-
-					<!-- Interim Spending value controls -->
-					<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6" x:Name="interimSpending" >
-						<Slider Orientation="Vertical" Margin="2" x:Name="interimSpendingSlider"
-											   Maximum="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="*" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-							<TextBlock Text="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" />
-							<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70" x:Name="interimSpendingTextBox"
-											   DecimalPlaces="3"
-											   Maximum="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
-							<TextBlock Grid.Row="2" Text="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" />
-						</Grid>
-					</StackPanel>
-
-					<!-- Timing value controls -->
-					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6" x:Name="timing">
-						<Slider Orientation="Horizontal" Margin="2" x:Name="timingSlider"
-											   Maximum="{Binding Path=TimingParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=TimingParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<TextBlock Text="{Binding Path=TimingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" VerticalAlignment="Center"/>
-							<toolkit:NumericUpDown Grid.Column="1" Margin="2" Height="20" Width="70" x:Name="timingTextBox"
+					<TextBlock Text="{Binding Path=TimingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" VerticalAlignment="Center"/>
+					<toolkit:NumericUpDown Grid.Column="1" Margin="2" Height="20" Width="70"
 											   DecimalPlaces="3"
 											   Maximum="{Binding Path=TimingParameterMaximum, Mode=OneWay}"
 											   Minimum="{Binding Path=TimingParameterMinimum, Mode=OneWay}"
 											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
-							<TextBlock Grid.Column="2" Text="{Binding Path=TimingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" VerticalAlignment="Center" />
-						</Grid>
-					</StackPanel>
+					<TextBlock Grid.Column="2" Text="{Binding Path=TimingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" VerticalAlignment="Center" />
+				</Grid>
+			</StackPanel>
 
-					<!-- Plot Control -->
-					<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
-						<Charting:LinePlot x:Name="plot" Background="#FFFCF8" PlotFunction="{Binding Path=CurrentPlotFunction, Mode=OneWay}" LogOutput="{Binding Path=LogOutput, Mode=TwoWay}">
-							<Charting:LinePlot.ControlPoint>
-								<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
-									<Ellipse.RenderTransform>
-										<TranslateTransform X="-8" Y="-8"/>
-									</Ellipse.RenderTransform>
-								</Ellipse>
-							</Charting:LinePlot.ControlPoint>
-							<Charting:LinePlot.ControlPointHover>
-								<Ellipse Fill="White" Stroke="Black" Width="16" Height="16">
-									<Ellipse.RenderTransform>
-										<TranslateTransform X="-8" Y="-8"/>
-									</Ellipse.RenderTransform>
-								</Ellipse>
-							</Charting:LinePlot.ControlPointHover>
-							<Charting:LinePlot.ControlPointDrag>
-								<Ellipse Fill="White" Stroke="Red" Width="16" Height="16">
-									<Ellipse.RenderTransform>
-										<TranslateTransform X="-8" Y="-8"/>
-									</Ellipse.RenderTransform>
-								</Ellipse>
-								<!--<Path Fill="White" Stroke="Red">
+			<!-- Plot Control -->
+			<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
+				<Charting:LinePlot Background="#FFFCF8" PlotFunction="{Binding Path=CurrentPlotFunction, Mode=OneWay}" LogMessage="{Binding Path=LogMessage, Mode=TwoWay}">
+					<Charting:LinePlot.ControlPoint>
+						<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-8" Y="-8"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>
+					</Charting:LinePlot.ControlPoint>
+					<Charting:LinePlot.ControlPointHover>
+						<Ellipse Fill="White" Stroke="Black" Width="16" Height="16">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-8" Y="-8"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>
+					</Charting:LinePlot.ControlPointHover>
+					<Charting:LinePlot.ControlPointDrag>
+						<Ellipse Fill="White" Stroke="Red" Width="16" Height="16">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-8" Y="-8"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>
+						<!--<Path Fill="White" Stroke="Red">
 							<Path.Data>
 								<EllipseGeometry RadiusX="10" RadiusY="10" Center="10,10" />
 							</Path.Data>
 						</Path>-->
-							</Charting:LinePlot.ControlPointDrag>
-						</Charting:LinePlot>
-					</Border>
-				</Grid>
+					</Charting:LinePlot.ControlPointDrag>
+				</Charting:LinePlot>
+			</Border>
+		</Grid>
 
-				<!-- Contstraints -->
-				<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">
-					<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
-						<StackPanel Orientation="Vertical">
-							<ComboBox SelectedIndex="0" Margin="2"
-								          ItemsSource="{Binding Path=CurrentSpendingFunctionFamily, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}"
-								          SelectedItem="{Binding Path=CurrentSpendingFunctionFamily, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}" />
-							<RadioButton x:Name="moveLineRadioButton"
-										 GroupName="plotConstraint"
-										 Content="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MoveLineWithPoint}"
-										 IsChecked="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MoveLineWithPoint}"
+		<!-- Contstraints -->
+		<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">
+			<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
+				<StackPanel Orientation="Vertical">
+					<ComboBox SelectedIndex="0" Margin="2"
+										  ItemsSource="{Binding Path=CurrentSpendingFunctionFamily, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}"
+										  SelectedItem="{Binding Path=CurrentSpendingFunctionFamily, Mode=TwoWay, Converter={StaticResource oneParameterFamilyValueConverter}}" />
+					<RadioButton GroupName="plotConstraint"
+										 Content="{Binding Path=PlotUpdateMode, Mode=TwoWay, Converter={StaticResource plotUpdateModeRadioButtonValueConverter}, ConverterParameter=MoveLineWithPoint}"
+										 IsChecked="{Binding Path=PlotUpdateMode, Mode=TwoWay, Converter={StaticResource plotUpdateModeRadioButtonValueConverter}, ConverterParameter=MoveLineWithPoint}"
 										 />
-							<RadioButton x:Name="movePointRadioButton"
-										 GroupName="plotConstraint"
-										 Content="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MovePointAlongLine}"
-										 IsChecked="{Binding Path=PlotConstraint, Mode=TwoWay, Converter={StaticResource plotConstraintValueConverter}, ConverterParameter=MovePointAlongLine}"
+					<RadioButton GroupName="plotConstraint"
+										 Content="{Binding Path=PlotUpdateMode, Mode=TwoWay, Converter={StaticResource plotUpdateModeRadioButtonValueConverter}, ConverterParameter=MovePointAlongLine}"
+										 IsChecked="{Binding Path=PlotUpdateMode, Mode=TwoWay, Converter={StaticResource plotUpdateModeRadioButtonValueConverter}, ConverterParameter=MovePointAlongLine}"
 										 />
-						</StackPanel>
-					</Border>
-				</Grid>
-			</Grid>
-		</Border>
-
+				</StackPanel>
+			</Border>
+		</Grid>
 	</Grid>
 </UserControl>
