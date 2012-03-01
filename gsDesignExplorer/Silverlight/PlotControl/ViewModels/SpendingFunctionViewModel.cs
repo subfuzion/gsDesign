@@ -476,6 +476,9 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 			set
 			{
+				if (value < SpendingParameterControlMinimum) value = SpendingParameterControlMinimum;
+				if (value > SpendingParameterControlMaximum) value = SpendingParameterControlMaximum;
+
 				switch (CurrentSpendingFunctionFamily)
 				{
 					case OneParameterFamily.HwangShihDeCani:
@@ -650,6 +653,8 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 		#region TimingParameter property
 
+		private double _timingParameter;
+
 		/// <summary>
 		/// Gets or sets the timing (x) parameter.
 		/// 
@@ -668,16 +673,27 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		/// </summary>
 		public double TimingParameter
 		{
-			get { return CurrentPlotFunction.Timing; }
+			get { return _timingParameter; }
 
 			set
 			{
-				if (Math.Abs(CurrentPlotFunction.Timing - value) > double.Epsilon)
+				_timingParameter = value;
+
+				if (PlotUpdateMode == PlotUpdateMode.MoveLineWithPoint)
 				{
-					CurrentPlotFunction.Timing = value;
-					NotifyParameterUpdates();
-					CurrentPlotFunction.Update();
+					SpendingParameter = ComputeSpendingParameter();
 				}
+				else
+				{
+					InterimSpendingParameter = ComputeInterimSpendingParameter();
+				}
+
+				//if (Math.Abs(_timingParameter - value) > double.Epsilon)
+				//{
+				//    CurrentPlotFunction.Timing = value;
+				//    NotifyParameterUpdates();
+				//    CurrentPlotFunction.Update();
+				//}
 			}
 		}
 
@@ -758,8 +774,8 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 			set
 			{
-				if (value < InterimSpendingParameterMinimum) value = InterimSpendingParameterMinimum;
-				if (value > InterimSpendingParameterMaximum) value = InterimSpendingParameterMaximum;
+				if (value < InterimSpendingParameterControlMinimum) value = InterimSpendingParameterControlMinimum;
+				if (value > InterimSpendingParameterControlMaximum) value = InterimSpendingParameterControlMaximum;
 
 				if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
 				{
@@ -774,12 +790,21 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 					_interimSpendingLowerH0 = value;
 				}
 
-				if (Math.Abs(CurrentPlotFunction.InterimSpendingParameter - value) > double.Epsilon)
+				if (PlotUpdateMode == PlotUpdateMode.MoveLineWithPoint)
 				{
-					CurrentPlotFunction.InterimSpendingParameter = value;
-					NotifyParameterUpdates();
-					CurrentPlotFunction.Update();
+					SpendingParameter = ComputeSpendingParameter();
 				}
+				else
+				{
+					TimingParameter = ComputeTimingParameter();
+				}
+
+				//if (Math.Abs(CurrentPlotFunction.InterimSpendingParameter - value) > double.Epsilon)
+				//{
+				//    CurrentPlotFunction.InterimSpendingParameter = value;
+				//    NotifyParameterUpdates();
+				//    CurrentPlotFunction.Update();
+				//}
 			}
 		}
 
@@ -878,7 +903,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		/// <summary>
 		/// Solve for spending parameter
 		/// </summary>
-		public FittingSpendingFunction ParameterSpendingFunction
+		public FittingSpendingFunction FittingSpendingFunction
 		{
 			get
 			{
@@ -894,6 +919,21 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 				throw new Exception("Unsupported");
 			}
+		}
+
+		public double ComputeSpendingParameter()
+		{
+			return SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameter);
+		}
+
+		public double ComputeTimingParameter()
+		{
+			return InverseSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, SpendingParameter);
+		}
+
+		public double ComputeInterimSpendingParameter()
+		{
+			return FittingSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, TimingParameter);
 		}
 
 		public void UpdateLine()
@@ -923,7 +963,33 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			}
 
 			NotifyPropertyChanged("Coordinates");
+
+			if (LinePlotControl != null)
+			{
+				LinePlotControl.UpdatePlotDisplay();
+			}
 		}
+
+		#region LinePlotControl property
+
+		private LinePlot _linePlotControl;
+
+		public LinePlot LinePlotControl
+		{
+			get { return _linePlotControl; }
+
+			set
+			{
+				if (_linePlotControl != value)
+				{
+					_linePlotControl = value;
+					NotifyPropertyChanged("LinePlotControl");
+				}
+			}
+		}
+
+		#endregion
+
 
 		#endregion
 

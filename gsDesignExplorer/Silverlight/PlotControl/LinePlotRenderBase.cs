@@ -77,6 +77,10 @@
 			ObservableCollection<Point> oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (newCoordinates != oldValue)
+			{
+				newCoordinates.CollectionChanged += (sender, args) => OnCoordinatesChanged(newCoordinates);
+			}
 			OnCoordinatesChanged(newCoordinates);
 		}
 
