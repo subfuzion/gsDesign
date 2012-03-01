@@ -102,6 +102,7 @@
     <Compile Include="ControlPointState.cs" />
     <Compile Include="Models\ExponentialSpendingFunctionModel.cs" />
     <Compile Include="Models\HwangShiDeCaniSpendingFunctionModel.cs" />
+    <Compile Include="Models\OneParameterSpendingFunctionModel.cs" />
     <Compile Include="Models\PowerSpendingFunctionModel.cs" />
     <Compile Include="OneParameter\OneParameterPlotControl.xaml.cs">
       <DependentUpon>OneParameterPlotControl.xaml</DependentUpon>

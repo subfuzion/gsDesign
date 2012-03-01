@@ -116,15 +116,15 @@
 					try
 					{
 						_spendingFunctionParameter = value;
-						NotifyPropertyChanged("SpendingFunctionParameter");
+						//NotifyPropertyChanged("SpendingFunctionParameter");
 
-						var x = Timing;
-						var alpha = InterimSpendingParameterMaximum;
-						var y = SpendingFunction(alpha, x, _spendingFunctionParameter);
+						//var x = Timing;
+						//var alpha = InterimSpendingParameterMaximum;
+						//var y = SpendingFunction(alpha, x, _spendingFunctionParameter);
 
-						// InterimSpendingParameter = y;
-						_interimSpendingParameter = y;
-						NotifyPropertyChanged("InterimSpendingParameter");
+						//// InterimSpendingParameter = y;
+						//_interimSpendingParameter = y;
+						//NotifyPropertyChanged("InterimSpendingParameter");
 					}
 					catch (Exception e)
 					{
