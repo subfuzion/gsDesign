@@ -12,6 +12,24 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 	public class SpendingFunctionViewModel : INotifyPropertyChanged
 	{
+		private readonly Dictionary<OneParameterFamily, OneParameterSpendingFunction> _spendingFunctions =
+			new Dictionary<OneParameterFamily, OneParameterSpendingFunction>();
+
+		/// <summary>
+		/// Initialize the supported spending functions
+		/// </summary>
+		public SpendingFunctionViewModel()
+		{
+			var hsdsf = new HwangShiDeCaniSpendingFunctionModel();
+			_spendingFunctions.Add(OneParameterFamily.HwangShihDeCani, hsdsf);
+
+			var psf = new PowerSpendingFunctionModel();
+			_spendingFunctions.Add(OneParameterFamily.Power, psf);
+
+			var esf = new ExponentialSpendingFunctionModel();
+			_spendingFunctions.Add(OneParameterFamily.Exponential, esf);
+		}
+
 		#region Notification Support
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -56,23 +74,64 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 		#endregion
 
-		private readonly Dictionary<OneParameterFamily, OneParameterSpendingFunction> _spendingFunctions =
-			new Dictionary<OneParameterFamily, OneParameterSpendingFunction>();
+		#region Logging
+
+		protected void Log(string function, string message = "", params object[] args)
+		{
+			if (string.IsNullOrWhiteSpace(message) && string.IsNullOrWhiteSpace(function)) return;
+
+			string log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
+			LogHistory = string.IsNullOrWhiteSpace(LogHistory) ? log : LogHistory + "\n" + log;
+		}
+
+		private string _logMessage;
 
 		/// <summary>
-		/// Initialize the supported spending functions
+		/// Gets or sets the LogMessage property.
 		/// </summary>
-		public SpendingFunctionViewModel()
+		public string LogMessage
 		{
-			var hsdsf = new HwangShiDeCaniSpendingFunctionModel();
-			_spendingFunctions.Add(OneParameterFamily.HwangShihDeCani, hsdsf);
+			get { return _logMessage; }
 
-			var psf = new PowerSpendingFunctionModel();
-			_spendingFunctions.Add(OneParameterFamily.Power, psf);
-
-			var esf = new ExponentialSpendingFunctionModel();
-			_spendingFunctions.Add(OneParameterFamily.Exponential, esf);
+			set
+			{
+				if (_logMessage != value)
+				{
+					_logMessage = value;
+					NotifyPropertyChanged("LogMessage");
+					Log(_logMessage);
+				}
+			}
 		}
+
+		private string _logHistory;
+
+		/// <summary>
+		/// Gets or sets the LogHistory property.
+		/// </summary>
+		// [Display(Name = "LogHistory",
+		//	Description = "")]
+		public string LogHistory
+		{
+			get { return _logHistory; }
+
+			set
+			{
+				// use for float comparison:
+				// if (Math.Abs(_logHistory - value) > float.Epsilon)
+
+				// use for double comparison:
+				// if (Math.Abs(_logHistory - value) > double.Epsilon)
+
+				if (_logHistory != value)
+				{
+					_logHistory = value;
+					NotifyPropertyChanged("LogHistory");
+				}
+			}
+		}
+
+		#endregion
 
 		#region Plotting Support
 
@@ -525,73 +584,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		public double TimingParameterMaximum
 		{
 			get { return 1.0; }
-		}
-
-		#endregion
-
-		#endregion
-
-		#region Logging
-
-		protected void Log(string function, string message = "", params object[] args)
-		{
-			if (string.IsNullOrWhiteSpace(message) && string.IsNullOrWhiteSpace(function)) return;
-
-			string log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
-			LogHistory = string.IsNullOrWhiteSpace(LogHistory) ? log : LogHistory + "\n" + log;
-		}
-
-		#region LogMessage property
-
-		private string _logMessage;
-
-		/// <summary>
-		/// Gets or sets the LogMessage property.
-		/// </summary>
-		public string LogMessage
-		{
-			get { return _logMessage; }
-
-			set
-			{
-				if (_logMessage != value)
-				{
-					_logMessage = value;
-					NotifyPropertyChanged("LogMessage");
-					Log(_logMessage);
-				}
-			}
-		}
-
-		#endregion
-
-		#region LogHistory property
-
-		private string _logHistory;
-
-		/// <summary>
-		/// Gets or sets the LogHistory property.
-		/// </summary>
-		// [Display(Name = "LogHistory",
-		//	Description = "")]
-		public string LogHistory
-		{
-			get { return _logHistory; }
-
-			set
-			{
-				// use for float comparison:
-				// if (Math.Abs(_logHistory - value) > float.Epsilon)
-
-				// use for double comparison:
-				// if (Math.Abs(_logHistory - value) > double.Epsilon)
-
-				if (_logHistory != value)
-				{
-					_logHistory = value;
-					NotifyPropertyChanged("LogHistory");
-				}
-			}
 		}
 
 		#endregion
