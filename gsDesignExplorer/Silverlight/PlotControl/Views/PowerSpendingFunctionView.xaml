@@ -58,9 +58,9 @@
 							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<TextBlock Text="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+						<TextBlock Text="{Binding Path=SpendingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
 						<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70" x:Name="gammaTextBox" DecimalPlaces="3" />
-						<TextBlock Grid.Row="2" Text="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+						<TextBlock Grid.Row="2" Text="{Binding Path=SpendingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
 						<Slider Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical" Margin="2" x:Name="gammaSlider"
 											   ValueChanged="gammaSlider_ValueChanged" />
 					</Grid>

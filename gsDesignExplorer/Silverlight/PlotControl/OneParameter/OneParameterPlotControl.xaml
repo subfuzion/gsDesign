@@ -39,18 +39,18 @@
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<TextBlock Text="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+					<TextBlock Text="{Binding Path=SpendingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
 					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70"
 											   DecimalPlaces="3"
-											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
-					<TextBlock Grid.Row="2" Text="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
+											   Maximum="{Binding Path=SpendingParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=SpendingParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=SpendingParameter, Mode=TwoWay}" />
+					<TextBlock Grid.Row="2" Text="{Binding Path=SpendingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" />
 				</Grid>
 				<Slider Grid.Row="1" Orientation="Vertical" Margin="2"
-											   Maximum="{Binding Path=SpendingFunctionParameterMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=SpendingFunctionParameterMinimum, Mode=OneWay}"
-											   Value="{Binding Path=SpendingFunctionParameter, Mode=TwoWay}" />
+											   Maximum="{Binding Path=SpendingParameterMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=SpendingParameterMinimum, Mode=OneWay}"
+											   Value="{Binding Path=SpendingParameter, Mode=TwoWay}" />
 			</StackPanel>
 
 			<!-- Interim Spending value controls -->

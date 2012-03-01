@@ -120,6 +120,8 @@
     <Compile Include="SpendingFunctionParameters.cs" />
     <Compile Include="ValueConverters\OneParameterFamilyValueConverter.cs" />
     <Compile Include="ValueConverters\PlotUpdateModeRadioButtonValueConverter.cs" />
+    <Compile Include="ValueConverters\SpendingFunctionBoundsRadioButtonValueConverter.cs" />
+    <Compile Include="ValueConverters\SpendingFunctionLowerBoundSpendingRadioButtonValueConverter.cs" />
     <Compile Include="ViewModels\SpendingFunctionViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
