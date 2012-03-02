@@ -71,6 +71,7 @@ namespace Subfuzion.Silverlight.UI.Charting
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
+				return y;
 			}
 
 			return 0.0;

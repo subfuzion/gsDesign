@@ -1,6 +1,7 @@
 ﻿namespace Subfuzion.Silverlight.UI.Charting
 {
 	using System;
+	using System.Collections.ObjectModel;
 	using System.Diagnostics.CodeAnalysis;
 	using System.Windows;
 	using System.Windows.Controls;
@@ -275,6 +276,14 @@
 		}
 
 		#endregion ControlPointPlotY Property
+
+		protected virtual void OnCoordinatesChanged(ObservableCollection<Point> newCoordinates)
+		{
+			base.OnCoordinatesChanged(newCoordinates);
+			UpdateControlPointStateDisplay();
+		}
+
+
 
 		#region ControlPoint Property
 

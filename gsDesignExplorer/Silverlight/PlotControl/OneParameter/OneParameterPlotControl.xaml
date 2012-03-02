@@ -108,7 +108,11 @@
 
 			<!-- Plot Control -->
 			<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
-				<Charting:LinePlot x:Name="plot" Background="#FFFCF8" Coordinates="{Binding Path=Coordinates, Mode=OneWay}" LogMessage="{Binding Path=LogMessage, Mode=TwoWay}">
+				<Charting:LinePlot x:Name="plot" Background="#FFFCF8"
+								   Coordinates="{Binding Path=Coordinates, Mode=OneWay}"
+								   ControlPointPlotX="{Binding Path=TimingParameter, Mode=TwoWay}"
+								   ControlPointPlotY="{Binding Path=InterimSpendingParameter, Mode=TwoWay}"
+								   LogMessage="{Binding Path=LogMessage, Mode=TwoWay}">
 					<Charting:LinePlot.ControlPoint>
 						<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
 							<Ellipse.RenderTransform>

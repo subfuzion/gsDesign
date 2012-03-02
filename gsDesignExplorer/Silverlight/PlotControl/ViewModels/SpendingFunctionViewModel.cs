@@ -1,14 +1,11 @@
 namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
 	using System.Windows;
-	using Models;
 	using gsDesign.Design.SpendingFunctions;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
-	using OneParameterSpendingFunction = Charting.OneParameterSpendingFunction;
 
 	/// <summary>
 	/// Solve for y
@@ -39,27 +36,13 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 	public class SpendingFunctionViewModel : INotifyPropertyChanged
 	{
-		private readonly Dictionary<OneParameterFamily, OneParameterSpendingFunction> _spendingFunctions =
-			new Dictionary<OneParameterFamily, OneParameterSpendingFunction>();
-
 		/// <summary>
 		/// Initialize the supported spending functions
 		/// </summary>
 		public SpendingFunctionViewModel()
 		{
-			var hsdsf = new HwangShiDeCaniSpendingFunctionModel();
-			_spendingFunctions.Add(OneParameterFamily.HwangShihDeCani, hsdsf);
-
-			var psf = new PowerSpendingFunctionModel();
-			_spendingFunctions.Add(OneParameterFamily.Power, psf);
-
-			var esf = new ExponentialSpendingFunctionModel();
-			_spendingFunctions.Add(OneParameterFamily.Exponential, esf);
-
-			//===============
-
 			var coordinates = new ObservableCollection<Point>();
-			for (var i = 0; i < 30; i++)
+			for (int i = 0; i < 30; i++)
 			{
 				coordinates.Add(new Point(0, 0));
 			}
@@ -114,6 +97,8 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 		private void NotifyCoordinatesUpdate()
 		{
+			NotifyPropertyChanged("TimingParameter");
+			NotifyPropertyChanged("InterimSpendingParameter");
 			NotifyPropertyChanged("Coordinates");
 		}
 
@@ -121,14 +106,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 		#region Logging
 
-		protected void Log(string function, string message = "", params object[] args)
-		{
-			if (string.IsNullOrWhiteSpace(message) && string.IsNullOrWhiteSpace(function)) return;
-
-			string log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
-			LogHistory = string.IsNullOrWhiteSpace(LogHistory) ? log : LogHistory + "\n" + log;
-		}
-
+		private string _logHistory;
 		private string _logMessage;
 
 		/// <summary>
@@ -148,8 +126,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 				}
 			}
 		}
-
-		private string _logHistory;
 
 		/// <summary>
 		/// Gets or sets the LogHistory property.
@@ -176,21 +152,17 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			}
 		}
 
-		#endregion
-
-		#region Plotting Support
-
-		#region CurrentPlotFunction property
-
-		/// <summary>
-		/// Gets or sets the CurrentPlotFunction property.
-		/// </summary>
-		public OneParameterSpendingFunction CurrentPlotFunction
+		protected void Log(string function, string message = "", params object[] args)
 		{
-			get { return _spendingFunctions[CurrentSpendingFunctionFamily]; }
+			if (string.IsNullOrWhiteSpace(message) && string.IsNullOrWhiteSpace(function)) return;
+
+			string log = string.Format("[{0}.{1}] {2}", GetType().Name, function, string.Format(message, args));
+			LogHistory = string.IsNullOrWhiteSpace(LogHistory) ? log : LogHistory + "\n" + log;
 		}
 
 		#endregion
+
+		#region Plotting Support
 
 		#region Coordinates property
 
@@ -208,7 +180,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 				if (_coordinates != value)
 				{
 					_coordinates = value;
-					NotifyPropertyChanged("Coordinates");
+					NotifyCoordinatesUpdate();
 				}
 			}
 		}
@@ -237,20 +209,8 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 					Log("CurrentSpendingFunctionFamily", "{0}", value.ToString());
 
 					_currentSpendingFunctionFamily = value;
-
 					UpdateLine();
-
-					//foreach (OneParameterSpendingFunction oneParameterSpendingFunction in _spendingFunctions.Values)
-					//{
-					//    oneParameterSpendingFunction.PlotUpdateMode = PlotUpdateMode;
-					//    oneParameterSpendingFunction.Timing = TimingParameter;
-					//    oneParameterSpendingFunction.InterimSpendingParameter = InterimSpendingParameter;
-					//}
-
-					//CurrentPlotFunction.Update();
-
 					NotifyPropertyChanged("CurrentSpendingFunctionFamily");
-					NotifyPropertyChanged("CurrentPlotFunction");
 					NotifyParameterUpdates();
 				}
 			}
@@ -274,14 +234,8 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 				if (_plotUpdateMode != value)
 				{
 					Log("PlotUpdateMode", "{0}", value.ToString());
-
 					_plotUpdateMode = value;
 					NotifyPropertyChanged("PlotUpdateMode");
-
-					foreach (OneParameterSpendingFunction oneParameterSpendingFunction in _spendingFunctions.Values)
-					{
-						oneParameterSpendingFunction.PlotUpdateMode = value;
-					}
 				}
 			}
 		}
@@ -341,8 +295,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			}
 		}
 
-		private bool _lowerBoundsSpendingIsEnabled;
-
 		public bool LowerBoundsSpendingIsEnabled
 		{
 			get { return SpendingFunctionBounds == SpendingFunctionBounds.LowerSpending; }
@@ -363,7 +315,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		/// </summary>
 		public double Alpha
 		{
-			get { return _alpha * 100; }
+			get { return _alpha*100; }
 
 			set
 			{
@@ -401,12 +353,12 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		/// </summary>
 		public double Beta
 		{
-			get { return 100 - (100 * _beta); }
+			get { return 100 - (100*_beta); }
 
 			set
 			{
 				if (value <= Alpha) value = Alpha + 0.1;
-				value = (100 - value) / 100;
+				value = (100 - value)/100;
 				_beta = value;
 				NotifyPropertyChanged("Beta");
 				NotifyPropertyChanged("InterimSpendingParameterMaximum");
@@ -432,12 +384,12 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 		#region SpendingParameter property
 
-		private double _gammaUpper = -8.0;
 		private double _gammaLower = -1.0;
-		private double _rhoUpper = 4.0;
-		private double _rhoLower = 2.0;
-		private double _nuUpper = 0.75;
+		private double _gammaUpper = -8.0;
 		private double _nuLower = 0.3;
+		private double _nuUpper = 0.75;
+		private double _rhoLower = 2.0;
+		private double _rhoUpper = 4.0;
 
 		/// <summary>
 		/// Gets or sets the spending parameter.
@@ -476,42 +428,11 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 			set
 			{
-				if (value < SpendingParameterControlMinimum) value = SpendingParameterControlMinimum;
-				if (value > SpendingParameterControlMaximum) value = SpendingParameterControlMaximum;
-
-				switch (CurrentSpendingFunctionFamily)
-				{
-					case OneParameterFamily.HwangShihDeCani:
-						if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
-							_gammaUpper = value;
-						else
-							_gammaLower = value;
-						break;
-
-					case OneParameterFamily.Power:
-						if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
-							_rhoUpper = value;
-						else
-							_rhoLower = value;
-						break;
-
-					case OneParameterFamily.Exponential:
-						if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
-							_nuUpper = value;
-						else
-							_nuLower = value;
-						break;
-				}
-
+				SetSpendingParameter(value);
+				double y = ComputeInterimSpendingParameter();
+				SetInterimSpendingParameter(y);
 				UpdateLine();
 				NotifyParameterUpdates();
-
-				//if (Math.Abs(CurrentPlotFunction.SpendingFunctionParameter - value) > double.Epsilon)
-				//{
-				//    CurrentPlotFunction.SpendingFunctionParameter = value;
-				//    NotifyParameterUpdates();
-				//    CurrentPlotFunction.Update();
-				//}
 			}
 		}
 
@@ -529,7 +450,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 					case OneParameterFamily.Exponential:
 						return 0.0;
-
 				}
 
 				return 0.0;
@@ -575,7 +495,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 					case OneParameterFamily.Exponential:
 						return 1.5;
-
 				}
 
 				return 1.0;
@@ -621,7 +540,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 					case OneParameterFamily.Exponential:
 						return 0.001;
-
 				}
 
 				return 0.001;
@@ -642,10 +560,39 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 					case OneParameterFamily.Exponential:
 						return 3;
-
 				}
 
 				return 3;
+			}
+		}
+
+		public void SetSpendingParameter(double value)
+		{
+			if (value < SpendingParameterControlMinimum) value = SpendingParameterControlMinimum;
+			if (value > SpendingParameterControlMaximum) value = SpendingParameterControlMaximum;
+
+			switch (CurrentSpendingFunctionFamily)
+			{
+				case OneParameterFamily.HwangShihDeCani:
+					if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
+						_gammaUpper = value;
+					else
+						_gammaLower = value;
+					break;
+
+				case OneParameterFamily.Power:
+					if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
+						_rhoUpper = value;
+					else
+						_rhoLower = value;
+					break;
+
+				case OneParameterFamily.Exponential:
+					if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
+						_nuUpper = value;
+					else
+						_nuLower = value;
+					break;
 			}
 		}
 
@@ -677,23 +624,34 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 			set
 			{
-				_timingParameter = value;
+				SetTimingParameter(value);
 
 				if (PlotUpdateMode == PlotUpdateMode.MoveLineWithPoint)
 				{
+					// will trigger update notifications
 					SpendingParameter = ComputeSpendingParameter();
 				}
 				else
 				{
-					InterimSpendingParameter = ComputeInterimSpendingParameter();
+					double y = ComputeInterimSpendingParameter();
+					SetInterimSpendingParameter(y);
+					NotifyParameterUpdates();
 				}
+			}
+		}
 
-				//if (Math.Abs(_timingParameter - value) > double.Epsilon)
-				//{
-				//    CurrentPlotFunction.Timing = value;
-				//    NotifyParameterUpdates();
-				//    CurrentPlotFunction.Update();
-				//}
+		public void UpdateCoordinate(double timing, double interimSpending)
+		{
+			if (PlotUpdateMode == PlotUpdateMode.MoveLineWithPoint)
+			{
+				SetTimingParameter(timing);
+				SetInterimSpendingParameter(interimSpending);
+				// will trigger update notifications
+				SpendingParameter = ComputeSpendingParameter();
+			}
+			else
+			{
+				TimingParameter = timing;
 			}
 		}
 
@@ -727,13 +685,18 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			get { return 3; }
 		}
 
+		public void SetTimingParameter(double value)
+		{
+			_timingParameter = value;
+		}
+
 		#endregion
 
 		#region InterimSpendingParameter property
 
-		private double? _interimSpendingUpper;
 		private double? _interimSpendingLowerBeta;
 		private double? _interimSpendingLowerH0;
+		private double? _interimSpendingUpper;
 
 		/// <summary>
 		/// Gets or sets the interim spending (y) parameter.
@@ -774,37 +737,19 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 			set
 			{
-				if (value < InterimSpendingParameterControlMinimum) value = InterimSpendingParameterControlMinimum;
-				if (value > InterimSpendingParameterControlMaximum) value = InterimSpendingParameterControlMaximum;
-
-				if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
-				{
-					_interimSpendingUpper = value;
-				}
-				else if (LowerBoundsSpending == SpendingFunctionLowerBoundSpending.BetaSpending)
-				{
-					_interimSpendingLowerBeta = value;
-				}
-				else
-				{
-					_interimSpendingLowerH0 = value;
-				}
+				SetInterimSpendingParameter(value);
 
 				if (PlotUpdateMode == PlotUpdateMode.MoveLineWithPoint)
 				{
+					// will trigger update notifications
 					SpendingParameter = ComputeSpendingParameter();
 				}
 				else
 				{
-					TimingParameter = ComputeTimingParameter();
+					double x = ComputeTimingParameter();
+					SetTimingParameter(x);
+					NotifyParameterUpdates();
 				}
-
-				//if (Math.Abs(CurrentPlotFunction.InterimSpendingParameter - value) > double.Epsilon)
-				//{
-				//    CurrentPlotFunction.InterimSpendingParameter = value;
-				//    NotifyParameterUpdates();
-				//    CurrentPlotFunction.Update();
-				//}
 			}
 		}
 
@@ -850,6 +795,25 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		public double InterimSpendingParameterControlMaximum
 		{
 			get { return InterimSpendingParameterMaximum - 0.00001; }
+		}
+
+		public void SetInterimSpendingParameter(double value)
+		{
+			if (value < InterimSpendingParameterControlMinimum) value = InterimSpendingParameterControlMinimum;
+			if (value > InterimSpendingParameterControlMaximum) value = InterimSpendingParameterControlMaximum;
+
+			if (SpendingFunctionBounds == SpendingFunctionBounds.UpperSpending)
+			{
+				_interimSpendingUpper = value;
+			}
+			else if (LowerBoundsSpending == SpendingFunctionLowerBoundSpending.BetaSpending)
+			{
+				_interimSpendingLowerBeta = value;
+			}
+			else
+			{
+				_interimSpendingLowerH0 = value;
+			}
 		}
 
 		#endregion
@@ -921,48 +885,78 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			}
 		}
 
-		public double ComputeSpendingParameter()
-		{
-			return SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameter);
-		}
-
-		public double ComputeTimingParameter()
-		{
-			return InverseSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, SpendingParameter);
-		}
-
+		/// <summary>
+		/// Solve for y (interim spending)
+		/// </summary>
 		public double ComputeInterimSpendingParameter()
 		{
-			return FittingSpendingFunction(InterimSpendingParameterMaximum, InterimSpendingParameter, TimingParameter);
+			double alpha = InterimSpendingParameterControlMaximum;
+			double x = TimingParameter;
+			double spendingParameter = SpendingParameter;
+
+			double y = SpendingFunction(alpha, x, spendingParameter);
+			return y;
+		}
+
+		/// <summary>
+		/// Solve for x (timing)
+		/// </summary>
+		public double ComputeTimingParameter()
+		{
+			double alpha = InterimSpendingParameterControlMaximum;
+			double y = InterimSpendingParameter;
+			double spendingParameter = SpendingParameter;
+
+			double x = InverseSpendingFunction(alpha, y, spendingParameter);
+			return x;
+		}
+
+		/// <summary>
+		/// Solve for spending parameter
+		/// </summary>
+		public double ComputeSpendingParameter()
+		{
+			double alpha = InterimSpendingParameterControlMaximum;
+			double y = InterimSpendingParameter;
+			double x = TimingParameter;
+
+			double spendingParameter = FittingSpendingFunction(alpha, y, x);
+			return spendingParameter;
+		}
+
+		public void UpdateAll()
+		{
+			NotifyParameterUpdates();
+			UpdateLine();
 		}
 
 		public void UpdateLine()
 		{
-			var incrementCount = Coordinates.Count;
-			var intervalCount = incrementCount - 1;
+			int incrementCount = Coordinates.Count;
+			int intervalCount = incrementCount - 1;
 
-			var alpha = InterimSpendingParameterMaximum;
-			var xMin = TimingParameterMinimum;
-			var xMax = TimingParameterMaximum;
+			double alpha = InterimSpendingParameterMaximum;
+			double xMin = TimingParameterMinimum;
+			double xMax = TimingParameterMaximum;
 
 			Coordinates[0] = new Point(xMin, SpendingFunction(alpha, xMin, SpendingParameter));
 			Coordinates[Coordinates.Count - 1] = new Point(xMax, SpendingFunction(alpha, xMax, SpendingParameter));
 
 			// compute x-axis interval
-			var increment = (xMax - xMin) / intervalCount;
+			double increment = (xMax - xMin)/intervalCount;
 
 			// compute y values for x values between min and max
-			for (var i = 1; i < Coordinates.Count - 1; i++)
+			for (int i = 1; i < Coordinates.Count - 1; i++)
 			{
 				// timing = x
-				var x = Coordinates[i - 1].X + increment;
+				double x = Coordinates[i - 1].X + increment;
 
 				// y is a function of alpha, timing, & spending value
-				var y = SpendingFunction(alpha, x, SpendingParameter);
+				double y = SpendingFunction(alpha, x, SpendingParameter);
 				Coordinates[i] = new Point(x, y);
 			}
 
-			NotifyPropertyChanged("Coordinates");
+			NotifyCoordinatesUpdate();
 
 			if (LinePlotControl != null)
 			{
@@ -990,8 +984,6 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 		#endregion
 
-
 		#endregion
-
 	}
 }
