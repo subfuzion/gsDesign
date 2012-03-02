@@ -1,4 +1,4 @@
-﻿namespace Subfuzion.Silverlight.UI.Charting
+namespace Subfuzion.Silverlight.UI.Charting.Models
 {
 	using System;
 

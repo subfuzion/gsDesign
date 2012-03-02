@@ -4,6 +4,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
 	using System.Windows;
+	using Models;
 	using gsDesign.Design.SpendingFunctions;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
 

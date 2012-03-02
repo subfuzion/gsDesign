@@ -7,47 +7,6 @@
 
 	public class LinePlotRenderBase : LinePlotBase
 	{
-		#region PlotFunction property
-
-		public PlotFunction PlotFunction
-		{
-			get { return (PlotFunction) GetValue(PlotFunctionProperty); }
-			set { SetValue(PlotFunctionProperty, value); }
-		}
-
-		public static DependencyProperty PlotFunctionProperty = DependencyProperty.Register(
-			"PlotFunction",
-			typeof (PlotFunction),
-			typeof (LinePlot),
-			new PropertyMetadata(PlotFunctionChangedHandler));
-
-		private static void PlotFunctionChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var linePlot = dependencyObject as LinePlot;
-			if (linePlot != null)
-			{
-				linePlot.OnPlotFunctionChanged((PlotFunction) args.NewValue, (PlotFunction) args.OldValue);
-			}
-		}
-
-		protected virtual void OnPlotFunctionChanged(PlotFunction newValue, PlotFunction oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnPlotFunctionChanged(newValue);
-		}
-
-		protected virtual void OnPlotFunctionChanged(PlotFunction newValue)
-		{
-			// add handler code
-			if (newValue != null)
-			{
-				Coordinates = newValue.Coordinates;
-			}
-		}
-
-		#endregion
-
-
 		#region Coordinates
 
 		public static DependencyProperty CoordinatesProperty = DependencyProperty.Register(
