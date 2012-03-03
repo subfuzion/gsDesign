@@ -7,6 +7,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 	{
 		#region Hwang-Shih-DeCani
 
+		// y = alpha * (1-exp(-gamma * t)) / (1 - exp(-gamma)) 
 		public static double HwangShihDeCaniFunction(double alpha, double timing, double sfValue)
 		{
 			try
@@ -27,7 +28,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 		}
 
 		// t = -log(1 - y * (1 - exp(-gamma)) / alpha) / gamma
-		public static double HwangShihDeCaniFunctionInverse(double alpha, double y, double sfValue)
+		public static double HwangShihDeCaniInverseFunction(double alpha, double y, double sfValue)
 		{
 			try
 			{
@@ -46,19 +47,18 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 			return 0.0;
 		}
 
-		// 
-		public static double HwangShihDeCaniFunctionSpendingParameter(double alpha, double y, double timing)
+		// uses a variation of John Cook's root finding function
+		public static double HwangShihDeCaniFittingFunction(double alpha, double y, double timing, double defaultSpendingParameter)
 		{
 			try
 			{
-				//if (Math.Abs(timing - 0) < double.Epsilon) timing = 0.5;
-				//if (Math.Abs(y - 0) < double.Epsilon) y = 0.001;
-				//if (Math.Abs(y - 0.025) < double.Epsilon) y = 0.001;
-
-
-				if (timing < 0.001) timing = 0.001;
-				if (y < 0.00001) y = 0.00001;
-
+				// Passing valid values is now the responsibility of the caller
+				// (want only one place to specify valid values (in case we update them)
+				// and the caller currently has exhaustive validation checks. If we update
+				// (or suppress) these validation checks, don't want to have to update range
+				// values in multiple locations)
+				// if (timing < 0.001) timing = 0.001;
+				// if (y < 0.00001) y = 0.00001;
 
 				var par = new[] { alpha, timing };
 
@@ -71,10 +71,8 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
-				return y;
+				return defaultSpendingParameter;
 			}
-
-			return 0.0;
 		}
 
 		private static double RootFindingHSD(double x, double[] y)
@@ -106,7 +104,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 		}
 
 		// Inverse: t = exp( (ln(y) - ln(alpha)) / rho)
-		public static double PowerFunctionInverse(double alpha, double y, double sfValue)
+		public static double PowerInverseFunction(double alpha, double y, double sfValue)
 		{
 			try
 			{
@@ -126,7 +124,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 		}
 
 		// rho = (ln(y)-ln(alpha))/ln(t)
-		public static double PowerFunctionSpendingParameter(double alpha, double y, double timing)
+		public static double PowerFittingFunction(double alpha, double y, double timing, double defaultSpendingParameter)
 		{
 			try
 			{
@@ -135,9 +133,8 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
+				return defaultSpendingParameter;
 			}
-
-			return 0.0;
 		}
 
 		#endregion
@@ -160,7 +157,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 		}
 
 		// Inverse: t=exp((-ln(-ln y) - ln(-ln(alpha))) / nu) 
-		public static double ExponentialFunctionInverse(double alpha, double y, double sfValue)
+		public static double ExponentialInverseFunction(double alpha, double y, double sfValue)
 		{
 			try
 			{
@@ -180,7 +177,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 		}
 
 		// nu = (ln(-ln(alpha))-ln(-ln(y)))/ln(t)
-		public static double ExponentialFunctionSpendingParameter(double alpha, double y, double timing)
+		public static double ExponentialFittingFunction(double alpha, double y, double timing, double defaultSpendingParameter)
 		{
 			try
 			{
@@ -189,9 +186,8 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
+				return defaultSpendingParameter;
 			}
-
-			return 0.0;
 		}
 
 		#endregion

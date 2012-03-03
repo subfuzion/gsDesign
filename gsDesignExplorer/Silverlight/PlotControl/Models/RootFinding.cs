@@ -12,12 +12,12 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 
 		public static double Brent
 			(
-			FunctionOfTwoVariables f,
-			double left,
-			double right,
-			double tolerance = 1e-6,
-			double target = 0.0,
-			double[] y = null
+				FunctionOfTwoVariables f,
+				double left,
+				double right,
+				double tolerance = 1e-6,
+				double target = 0.0,
+				double[] y = null
 			)
 		{
 			// extra info that callers may not always want
@@ -28,12 +28,20 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 		}
 
 		public static double Brent
-			(FunctionOfTwoVariables g, double left, double right, double tolerance, double target, out int iterationsUsed,
-				out double errorEstimate, double[] y)
+			(
+				FunctionOfTwoVariables g,
+				double left,
+				double right,
+				double tolerance,
+				double target,
+				out int iterationsUsed,
+				out double errorEstimate,
+				double[] y
+			)
 		{
 			if (tolerance <= 0.0)
 			{
-				string msg = string.Format("Tolerance must be positive. Recieved {0}.", tolerance);
+				string msg = string.Format("Tolerance must be positive. Received {0}.", tolerance);
 				throw new ArgumentOutOfRangeException(msg);
 			}
 
@@ -41,7 +49,7 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 
 			// Standardize the problem.  To solve g(x) = target,
 			// solve f(x) = 0 where f(x) = g(x) - target.
-			FunctionOfTwoVariables f = delegate(double x, double[] y2) { return g(x, y2) - target; };
+			FunctionOfTwoVariables f = (x, y2) => g(x, y2) - target;
 
 			// Implementation and notation based on Chapter 4 in
 			// "Algorithms for Minimization without Derivatives"
@@ -58,12 +66,15 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 			fa = f(a, y);
 			fb = f(b, y);
 
+			// *************************************************
+			// This is the where the exception is being raised 
 			if (fa * fb > 0.0)
 			{
 				string str = "Invalid starting bracket. Function must be above target on one end and below target on other end.";
 				string msg = string.Format("{0} Target: {1}. f(left) = {2}. f(right) = {3}", str, target, fa + target, fb + target);
 				throw new ArgumentException(msg);
 			}
+			// *************************************************
 
 		label_int:
 			c = a;
