@@ -21,7 +21,7 @@
 
 		#region Dependency Properties
 
-		#region PlotCanvas
+		#region PlotSurface
 
 		public static DependencyProperty PlotSurfaceProperty = DependencyProperty.Register(
 			"PlotSurface",
@@ -271,11 +271,36 @@
 
 		#endregion
 
-		#region Handlers
+		#region Public Methods
 
-		protected void OnPlotSurfaceSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+		public Point LogicalToPhysicalCoordinates(Point p)
 		{
-			OnPlotSurfaceSizeChanged(sizeChangedEventArgs.NewSize);
+			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
+			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
+
+			var width = PhysicalWidth; // ActualWidth;
+			var height = PhysicalHeight; // ActualHeight;
+
+			double x = Math.Round((p.X / logWidth) * (width - 1), PlotPrecision);
+			double y = Math.Round((p.Y / logHeight) * (height - 1), PlotPrecision);
+
+			var physPoint = new Point(x, y);
+			return physPoint;
+		}
+
+		public Point PhysicalToLogicalCoordinates(Point p)
+		{
+			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
+			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
+
+			var width = PhysicalWidth; // ActualWidth;
+			var height = PhysicalHeight; // ActualHeight;
+
+			double logX = Math.Round((p.X / (width - 1)) * logWidth, PlotPrecision);
+			double logY = Math.Round((p.Y / (height - 1)) * logHeight, PlotPrecision);
+
+			var logPoint = new Point(logX, logY);
+			return logPoint;
 		}
 
 		#endregion
@@ -330,7 +355,16 @@
 
 		#region Implementation
 
-		private void ClipToBounds(Size size)
+		#region Handlers
+
+		private void OnPlotSurfaceSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+		{
+			OnPlotSurfaceSizeChanged(sizeChangedEventArgs.NewSize);
+		}
+
+		#endregion
+
+		protected void ClipToBounds(Size size)
 		{
 			ClipToBounds(size.Width, size.Height);
 		}
@@ -341,40 +375,6 @@
 			{
 				PlotSurface.Clip = new RectangleGeometry { Rect = new Rect(0, 0, width, height) };
 			}
-		}
-
-		#endregion
-
-		#region Public Methods
-
-		public Point LogicalToPhysicalCoordinates(Point p)
-		{
-			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
-			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
-
-			var width = PhysicalWidth; // ActualWidth;
-			var height = PhysicalHeight; // ActualHeight;
-
-			double x = Math.Round((p.X / logWidth) * (width - 1), PlotPrecision);
-			double y = Math.Round((p.Y / logHeight) * (height - 1), PlotPrecision);
-
-			var physPoint = new Point(x, y);
-			return physPoint;
-		}
-
-		public Point PhysicalToLogicalCoordinates(Point p)
-		{
-			double logWidth = MaximumLogicalCoordinate.X - MinimumLogicalCoordinate.X;
-			double logHeight = MaximumLogicalCoordinate.Y - MinimumLogicalCoordinate.Y;
-
-			var width = PhysicalWidth; // ActualWidth;
-			var height = PhysicalHeight; // ActualHeight;
-
-			double logX = Math.Round((p.X / (width - 1)) * logWidth, PlotPrecision);
-			double logY = Math.Round((p.Y / (height - 1)) * logHeight, PlotPrecision);
-
-			var logPoint = new Point(logX, logY);
-			return logPoint;
 		}
 
 		#endregion

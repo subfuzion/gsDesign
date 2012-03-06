@@ -45,8 +45,7 @@
 	[TemplatePart(Name = "PART_plotCanvas", Type = typeof (Canvas))]
 	public class LinePlot : LinePlotRenderBase
 	{
-		private readonly Shape DefaultControlPoint = new Ellipse
-		{Fill = new SolidColorBrush(Colors.Red), Width = 12, Height = 12};
+		private readonly Shape DefaultControlPoint = new Ellipse {Fill = new SolidColorBrush(Colors.Red), Width = 12, Height = 12};
 
 		private bool isDragging;
 
@@ -67,12 +66,12 @@
 			PlotSurface = GetTemplateChild(PlotCanvasPart) as Canvas;
 			if (PlotSurface != null)
 			{
-				PlotSurface.SizeChanged += OnPlotSurfaceSizeChanged;
-				//PlotCanvas.SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
-				ClipToBounds(ActualWidth, ActualHeight);
+				// redundant (but verify before removing completely)
+				// ClipToBounds(ActualWidth, ActualHeight);
 
 				//PlotCanvas.MouseEnter += (sender, args) => PlotCanvas.MouseMove += HandleOnMouseMove;
 				//PlotCanvas.MouseLeave += (sender, args) => PlotCanvas.MouseMove -= HandleOnMouseMove;
+
 				PlotSurface.MouseLeftButtonUp += (sender, args) =>
 				{
 					isDragging = false;
@@ -100,21 +99,10 @@
 
 				UpdatePlotDisplay();
 				UpdateControlPointStateDisplay();
-
 			}
 		}
 
-		#region PlotCanvas property
-
-		#endregion
-
-		#region PlotWidth property
-
-		#endregion
-
-		#region PlotHeight property
-
-		#endregion
+		#region Dependency Properties
 
 		#region IsControlPointVisible Property
 
@@ -612,7 +600,7 @@
 		private void ControlPointOnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
 		{
 			//if (ControlPointState != ControlPointState.Drag)
-			if(!isDragging)
+			if (!isDragging)
 				ControlPointState = ControlPointState.Hover;
 		}
 
@@ -638,27 +626,6 @@
 
 		#endregion
 
-		private void HandleOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
-		{
-			if (isDragging)
-			{
-				Point p = mouseEventArgs.GetPosition(PlotSurface);
-
-				if (p.X < 0) p.X = 0;
-				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
-				if (p.Y < 0) p.Y = 0;
-				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
-				ControlPointPhysicalPosition = p;
-			}
-		}
-
-		//private void OnSizeChanged(Size size)
-		//{
-		//    //Width = size.Width;
-		//    //Height = size.Height;
-		//    ClipToBounds(size.Width, size.Height);
-		//}
-
 		#region MinimumLogicalCoordinate Property
 
 		#endregion MinimumLogicalCoordinate Property
@@ -680,5 +647,36 @@
 
 		#endregion
 
+		#endregion
+
+		#region Implementation
+
+		#region Handlers
+
+		private void HandleOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
+		{
+			if (isDragging)
+			{
+				Point p = mouseEventArgs.GetPosition(PlotSurface);
+
+				if (p.X < 0) p.X = 0;
+				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
+				if (p.Y < 0) p.Y = 0;
+				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
+				ControlPointPhysicalPosition = p;
+			}
+		}
+
+		//private void OnSizeChanged(Size size)
+		//{
+		//    //Width = size.Width;
+		//    //Height = size.Height;
+		//    ClipToBounds(size.Width, size.Height);
+		//}
+
+		#endregion
+
+		#endregion
 	}
+
 }
