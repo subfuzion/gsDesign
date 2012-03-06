@@ -4,14 +4,16 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-	xmlns:OneParameter="clr-namespace:Subfuzion.Silverlight.UI.Charting.OneParameter"
 	xmlns:ViewModels="clr-namespace:Subfuzion.Silverlight.UI.Charting.ViewModels"
 	xmlns:ValueConverters="clr-namespace:Subfuzion.Silverlight.UI.Charting.ValueConverters"
+	xmlns:OneParameter="clr-namespace:Subfuzion.Silverlight.UI.Charting.Views.OneParameter"
+	xmlns:TwoParameter="clr-namespace:Subfuzion.Silverlight.UI.Charting.Views.TwoParameter"
 	mc:Ignorable="d"
 	d:DesignHeight="600" d:DesignWidth="1000">
 	
 	<UserControl.Resources>
-		<ViewModels:SpendingFunctionViewModel x:Key="spendingFunctionViewModel" />
+		<!--<ViewModels:OneParameterSpendingFunctionViewModel x:Key="spendingFunctionViewModel" />-->
+		<ViewModels:TwoParameterSpendingFunctionViewModel x:Key="spendingFunctionViewModel" />
 		<ValueConverters:SpendingFunctionBoundsRadioButtonValueConverter x:Key="spendingFunctionBoundsRadioButtonValueConverter" />
 		<ValueConverters:SpendingFunctionLowerBoundSpendingRadioButtonValueConverter x:Key="spendingFunctionLowerBoundSpendingRadioButtonValueConverter" />
 	</UserControl.Resources>
@@ -35,7 +37,8 @@
 				</Grid.RowDefinitions>
 				
 				<!-- Plot Control -->
-				<OneParameter:OneParameterPlotControl Margin="4"/>
+				<!--<OneParameter:OneParameterPlotControl Margin="4"/>-->
+				<TwoParameter:TwoParameterPlotControl Margin="4"/>
 
 				<!-- External variables  -->
 				<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">

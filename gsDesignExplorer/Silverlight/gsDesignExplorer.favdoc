@@ -13,14 +13,19 @@
       <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\MainPage.xaml.cs</absolutePath>
     </Favorite>
     <Favorite>
-      <name>OneParameterPlotControl.xaml</name>
-      <path>PlotControl\OneParameter\OneParameterPlotControl.xaml</path>
-      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\OneParameter\OneParameterPlotControl.xaml</absolutePath>
+      <name>TwoParameterPlotControl.xaml</name>
+      <path>PlotControl\Views\TwoParameter\TwoParameterPlotControl.xaml</path>
+      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\Views\TwoParameter\TwoParameterPlotControl.xaml</absolutePath>
     </Favorite>
     <Favorite>
-      <name>SpendingFunctionViewModel.cs</name>
-      <path>PlotControl\SpendingFunctionViewModel.cs</path>
-      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\SpendingFunctionViewModel.cs</absolutePath>
+      <name>TwoParameterPlotControl.xaml.cs</name>
+      <path>PlotControl\Views\TwoParameter\TwoParameterPlotControl.xaml.cs</path>
+      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\Views\TwoParameter\TwoParameterPlotControl.xaml.cs</absolutePath>
+    </Favorite>
+    <Favorite>
+      <name>TwoParameterSpendingFunctionViewModel.cs</name>
+      <path>PlotControl\ViewModels\TwoParameterSpendingFunctionViewModel.cs</path>
+      <absolutePath>C:\Code\Projects\gsDesign\gsDesignExplorer\Silverlight\PlotControl\ViewModels\TwoParameterSpendingFunctionViewModel.cs</absolutePath>
     </Favorite>
   </favorites>
 </Favorites>

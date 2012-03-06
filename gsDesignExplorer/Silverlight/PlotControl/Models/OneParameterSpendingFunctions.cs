@@ -3,6 +3,34 @@ namespace Subfuzion.Silverlight.UI.Charting.Models
 {
 	using System;
 
+	/// <summary>
+	/// Solve for y
+	/// </summary>
+	/// <param name="yMax"></param>
+	/// <param name="x">timing</param>
+	/// <param name="spendingParameter"></param>
+	/// <returns></returns>
+	public delegate double NormalSpendingFunction(double yMax, double x, double spendingParameter);
+
+	/// <summary>
+	/// Solve for x
+	/// </summary>
+	/// <param name="yMax"></param>
+	/// <param name="y">interim spending</param>
+	/// <param name="spendingParameter"></param>
+	/// <returns></returns>
+	public delegate double InverseSpendingFunction(double yMax, double y, double spendingParameter);
+
+	/// <summary>
+	/// Solve for spending parameter
+	/// </summary>
+	/// <param name="yMax"></param>
+	/// <param name="y">interim spending</param>
+	/// <param name="x">timing</param>
+	/// <param name="defaultSpendingParameter">Expected value to return if an error occurs</param>
+	/// <returns></returns>
+	public delegate double FittingSpendingFunction(double yMax, double y, double x, double defaultSpendingParameter);
+
 	public static class OneParameterSpendingFunctions
 	{
 		#region Hwang-Shih-DeCani

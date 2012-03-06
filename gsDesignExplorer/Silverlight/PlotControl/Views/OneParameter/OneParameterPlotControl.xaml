@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Subfuzion.Silverlight.UI.Charting.OneParameter.OneParameterPlotControl"
+﻿<UserControl x:Class="Subfuzion.Silverlight.UI.Charting.Views.OneParameter.OneParameterPlotControl"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,7 +22,9 @@
 
 		<Grid>
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
@@ -30,9 +32,10 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
-
+			
 			<!-- Spending Function value controls -->
-			<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="6">
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="Spending Parameter" Foreground="Blue" FontSize="10" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
+			<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="6 0">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -48,7 +51,7 @@
 											   Value="{Binding Path=SpendingParameter, Mode=TwoWay}" />
 					<TextBlock Grid.Row="2" Text="{Binding Path=SpendingParameterMinimumString, Mode=OneWay}" TextAlignment="Right" />
 				</Grid>
-				<Slider Grid.Row="1" Orientation="Vertical" Margin="2"
+				<Slider Grid.Row="1" Orientation="Vertical" Margin="2 0"
 											   SmallChange="{Binding Path=SpendingParameterIncrement, Mode=OneWay}"
 											   LargeChange="{Binding Path=SpendingParameterIncrement, Mode=OneWay}"
 											   Maximum="{Binding Path=SpendingParameterControlMaximum, Mode=OneWay}"
@@ -56,58 +59,8 @@
 											   Value="{Binding Path=SpendingParameter, Mode=TwoWay}" />
 			</StackPanel>
 
-			<!-- Interim Spending value controls -->
-			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="6">
-				<Slider Orientation="Vertical" Margin="2"
-											   SmallChange="{Binding Path=InterimSpendingParameterIncrement, Mode=OneWay}"
-											   LargeChange="{Binding Path=InterimSpendingParameterIncrement, Mode=OneWay}"
-											   Maximum="{Binding Path=InterimSpendingParameterControlMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=InterimSpendingParameterControlMinimum, Mode=OneWay}"
-											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<TextBlock Text="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay, StringFormat=\{0:F5\}}" TextAlignment="Left" />
-					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70"
-											   Increment="{Binding Path=InterimSpendingParameterIncrement, Mode=OneWay}"
-											   DecimalPlaces="{Binding Path=InterimSpendingParameterPrecision, Mode=OneWay}"
-											   Maximum="{Binding Path=InterimSpendingParameterControlMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=InterimSpendingParameterControlMinimum, Mode=OneWay}"
-											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
-					<TextBlock Grid.Row="2" Text="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay, StringFormat=\{0:F5\}}" TextAlignment="Left" />
-				</Grid>
-			</StackPanel>
-
-			<!-- Timing value controls -->
-			<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="6">
-				<Slider Orientation="Horizontal" Margin="2"
-											   SmallChange="{Binding Path=TimingParameterIncrement, Mode=OneWay}"
-											   LargeChange="{Binding Path=TimingParameterIncrement, Mode=OneWay}"
-											   Maximum="{Binding Path=TimingParameterControlMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=TimingParameterControlMinimum, Mode=OneWay}"
-											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<TextBlock Text="{Binding Path=TimingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" VerticalAlignment="Center"/>
-					<toolkit:NumericUpDown Grid.Column="1" Margin="2" Height="20" Width="70"
-											   Increment="{Binding Path=TimingParameterIncrement, Mode=OneWay}"
-											   DecimalPlaces="{Binding Path=TimingParameterPrecision, Mode=OneWay}"
-											   Maximum="{Binding Path=TimingParameterControlMaximum, Mode=OneWay}"
-											   Minimum="{Binding Path=TimingParameterControlMinimum, Mode=OneWay}"
-											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
-					<TextBlock Grid.Column="2" Text="{Binding Path=TimingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" VerticalAlignment="Center" />
-				</Grid>
-			</StackPanel>
-
 			<!-- Plot Control -->
-			<Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
+			<Border Grid.Row="1" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
 				<Charting:LinePlot x:Name="plot" Background="#FFFCF8"
 								   Coordinates="{Binding Path=Coordinates, Mode=OneWay}"
 								   ControlPointPlotX="{Binding Path=TimingParameter, Mode=TwoWay}"
@@ -141,6 +94,59 @@
 					</Charting:LinePlot.ControlPointDrag>
 				</Charting:LinePlot>
 			</Border>
+			
+			<!-- Interim Spending value controls -->
+			<TextBlock Grid.Row="2" Grid.Column="2" Text="Interim Spending" Foreground="Blue" FontSize="10" Margin="2" TextAlignment="Center" VerticalAlignment="Top"/>
+			<StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Margin="6 0">
+				<Slider Orientation="Vertical" Margin="2 0"
+											   SmallChange="{Binding Path=InterimSpendingParameterIncrement, Mode=OneWay}"
+											   LargeChange="{Binding Path=InterimSpendingParameterIncrement, Mode=OneWay}"
+											   Maximum="{Binding Path=InterimSpendingParameterControlMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=InterimSpendingParameterControlMinimum, Mode=OneWay}"
+											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<TextBlock Text="{Binding Path=InterimSpendingParameterMaximum, Mode=OneWay, StringFormat=\{0:F5\}}" TextAlignment="Left" />
+					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70"
+											   Increment="{Binding Path=InterimSpendingParameterIncrement, Mode=OneWay}"
+											   DecimalPlaces="{Binding Path=InterimSpendingParameterPrecision, Mode=OneWay}"
+											   Maximum="{Binding Path=InterimSpendingParameterControlMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=InterimSpendingParameterControlMinimum, Mode=OneWay}"
+											   Value="{Binding Path=InterimSpendingParameter, Mode=TwoWay}" />
+					<TextBlock Grid.Row="2" Text="{Binding Path=InterimSpendingParameterMinimum, Mode=OneWay, StringFormat=\{0:F5\}}" TextAlignment="Left" />
+				</Grid>
+			</StackPanel>
+
+			<!-- Timing value controls -->
+			<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" Margin="0 6">
+				<Slider Orientation="Horizontal" Margin="0 2"
+											   SmallChange="{Binding Path=TimingParameterIncrement, Mode=OneWay}"
+											   LargeChange="{Binding Path=TimingParameterIncrement, Mode=OneWay}"
+											   Maximum="{Binding Path=TimingParameterControlMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=TimingParameterControlMinimum, Mode=OneWay}"
+											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="{Binding Path=TimingParameterMinimum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Left" VerticalAlignment="Center"/>
+					<toolkit:NumericUpDown Grid.Column="1" Margin="2" Height="20" Width="70"
+											   Increment="{Binding Path=TimingParameterIncrement, Mode=OneWay}"
+											   DecimalPlaces="{Binding Path=TimingParameterPrecision, Mode=OneWay}"
+											   Maximum="{Binding Path=TimingParameterControlMaximum, Mode=OneWay}"
+											   Minimum="{Binding Path=TimingParameterControlMinimum, Mode=OneWay}"
+											   Value="{Binding Path=TimingParameter, Mode=TwoWay}" />
+					<TextBlock Grid.Column="2" Text="{Binding Path=TimingParameterMaximum, Mode=OneWay, StringFormat=\{0:F3\}}" TextAlignment="Right" VerticalAlignment="Center" />
+				</Grid>
+			</StackPanel>
+			<TextBlock Grid.Row="3" Grid.Column="1" Text="Timing" Foreground="Blue" FontSize="10" Margin="2" TextAlignment="Center" VerticalAlignment="Top" />
+
 		</Grid>
 
 		<!-- Contstraints -->

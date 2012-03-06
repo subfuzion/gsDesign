@@ -1,7 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace Subfuzion.Silverlight.UI.Charting.OneParameter
+﻿namespace Subfuzion.Silverlight.UI.Charting.Views.OneParameter
 {
+	using System.Windows.Controls;
 	using System.Windows;
 	using System.Windows.Data;
 	using ViewModels;
@@ -13,7 +12,7 @@ namespace Subfuzion.Silverlight.UI.Charting.OneParameter
 			InitializeComponent();
 			Loaded += (sender, args) =>
 			{
-				var viewModel = DataContext as SpendingFunctionViewModel;
+				var viewModel = DataContext as OneParameterSpendingFunctionViewModel;
 				if (viewModel != null)
 				{
 					viewModel.UpdateAll();

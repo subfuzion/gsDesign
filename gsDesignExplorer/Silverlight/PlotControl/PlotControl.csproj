@@ -103,7 +103,8 @@
     <Compile Include="Models\OneParameterSpendingFunctionModel.cs" />
     <Compile Include="Models\OneParameterSpendingFunctions.cs" />
     <Compile Include="Models\RootFinding.cs" />
-    <Compile Include="OneParameter\OneParameterPlotControl.xaml.cs">
+    <Compile Include="ViewModels\TwoParameterSpendingFunctionViewModel.cs" />
+    <Compile Include="Views\OneParameter\OneParameterPlotControl.xaml.cs">
       <DependentUpon>OneParameterPlotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="LinePlot.cs" />
@@ -115,9 +116,12 @@
     <Compile Include="ValueConverters\PlotUpdateModeRadioButtonValueConverter.cs" />
     <Compile Include="ValueConverters\SpendingFunctionBoundsRadioButtonValueConverter.cs" />
     <Compile Include="ValueConverters\SpendingFunctionLowerBoundSpendingRadioButtonValueConverter.cs" />
-    <Compile Include="ViewModels\SpendingFunctionViewModel.cs" />
+    <Compile Include="ViewModels\OneParameterSpendingFunctionViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TwoParameter\TwoParameterPlotControl.xaml.cs">
+      <DependentUpon>TwoParameterPlotControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +129,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="OneParameter\OneParameterPlotControl.xaml">
+    <Page Include="Views\OneParameter\OneParameterPlotControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TwoParameter\TwoParameterPlotControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

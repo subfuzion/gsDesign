@@ -8,39 +8,12 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 	using gsDesign.Design.SpendingFunctions;
 	using gsDesign.Design.SpendingFunctions.OneParameter;
 
-	/// <summary>
-	/// Solve for y
-	/// </summary>
-	/// <param name="yMax"></param>
-	/// <param name="x">timing</param>
-	/// <param name="spendingParameter"></param>
-	/// <returns></returns>
-	public delegate double SpendingFunction(double yMax, double x, double spendingParameter);
-
-	/// <summary>
-	/// Solve for x
-	/// </summary>
-	/// <param name="yMax"></param>
-	/// <param name="y">interim spending</param>
-	/// <param name="spendingParameter"></param>
-	/// <returns></returns>
-	public delegate double InverseSpendingFunction(double yMax, double y, double spendingParameter);
-
-	/// <summary>
-	/// Solve for spending parameter
-	/// </summary>
-	/// <param name="yMax"></param>
-	/// <param name="y">interim spending</param>
-	/// <param name="x">timing</param>
-	/// <returns></returns>
-	public delegate double FittingSpendingFunction(double yMax, double y, double x, double defaultSpendingParameter);
-
-	public class SpendingFunctionViewModel : INotifyPropertyChanged
+	public class OneParameterSpendingFunctionViewModel : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Initialize the supported spending functions
 		/// </summary>
-		public SpendingFunctionViewModel()
+		public OneParameterSpendingFunctionViewModel()
 		{
 			var coordinates = new ObservableCollection<Point>();
 			for (int i = 0; i < 30; i++)
@@ -515,10 +488,10 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 				switch (CurrentSpendingFunctionFamily)
 				{
 					case OneParameterFamily.HwangShihDeCani:
-						return SpendingParameterMinimum; // + 0.01;
+						return SpendingParameterMinimum + 0.01;
 
 					case OneParameterFamily.Power:
-						return SpendingParameterMinimum + 0.05;
+						return SpendingParameterMinimum + 0.050;
 
 					case OneParameterFamily.Exponential:
 						return SpendingParameterMinimum + 0.001;
@@ -563,7 +536,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 						return SpendingParameterMaximum - 0.01;
 
 					case OneParameterFamily.Power:
-						return SpendingParameterMaximum - 0.001;
+						return SpendingParameterMaximum - 0.050;
 
 					case OneParameterFamily.Exponential:
 						return SpendingParameterMaximum - 0.001;
@@ -801,13 +774,13 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 
 			if (CurrentSpendingFunctionFamily == OneParameterFamily.HwangShihDeCani)
 			{
-				var y = SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMaximum);
+				var y = NormalSpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMaximum);
 				if (y < value)
 				{
 					value = y;
 				}
 
-				y = SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMinimum);
+				y = NormalSpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMinimum);
 				if (y > value)
 				{
 					value = y;
@@ -815,13 +788,13 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			}
 			else
 			{
-				var y = SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMaximum);
+				var y = NormalSpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMaximum);
 				if (y > value)
 				{
 					value = y;
 				}
 
-				y = SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMinimum);
+				y = NormalSpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMinimum);
 				if (y < value)
 				{
 					value = y;
@@ -865,7 +838,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			{
 				if (CurrentSpendingFunctionFamily == OneParameterFamily.HwangShihDeCani)
 				{
-					return SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMinimum);
+					return NormalSpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMinimum);
 				}
 				else
 				{
@@ -899,7 +872,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			{
 				if (CurrentSpendingFunctionFamily == OneParameterFamily.HwangShihDeCani)
 				{
-					return SpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMaximum);
+					return NormalSpendingFunction(InterimSpendingParameterMaximum, TimingParameter, SpendingParameterMaximum);
 				}
 				else
 				{
@@ -917,7 +890,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		/// <summary>
 		/// Solve for y (interim spending)
 		/// </summary>
-		public SpendingFunction SpendingFunction
+		public NormalSpendingFunction NormalSpendingFunction
 		{
 			get
 			{
@@ -986,7 +959,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			double x = TimingParameter;
 			double spendingParameter = SpendingParameter;
 
-			double y = SpendingFunction(alpha, x, spendingParameter);
+			double y = NormalSpendingFunction(alpha, x, spendingParameter);
 			return y;
 		}
 
@@ -1031,8 +1004,8 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			double xMin = TimingParameterMinimum;
 			double xMax = TimingParameterMaximum;
 
-			Coordinates[0] = new Point(xMin, SpendingFunction(alpha, xMin, SpendingParameter));
-			Coordinates[Coordinates.Count - 1] = new Point(xMax, SpendingFunction(alpha, xMax, SpendingParameter));
+			Coordinates[0] = new Point(xMin, NormalSpendingFunction(alpha, xMin, SpendingParameter));
+			Coordinates[Coordinates.Count - 1] = new Point(xMax, NormalSpendingFunction(alpha, xMax, SpendingParameter));
 
 			// compute x-axis interval
 			double increment = (xMax - xMin)/intervalCount;
@@ -1044,7 +1017,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 				double x = Coordinates[i - 1].X + increment;
 
 				// y is a function of alpha, timing, & spending value
-				double y = SpendingFunction(alpha, x, SpendingParameter);
+				double y = NormalSpendingFunction(alpha, x, SpendingParameter);
 				Coordinates[i] = new Point(x, y);
 			}
 
