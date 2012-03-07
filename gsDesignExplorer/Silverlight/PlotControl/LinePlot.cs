@@ -2,45 +2,11 @@
 {
 	using System;
 	using System.Collections.ObjectModel;
-	using System.Diagnostics.CodeAnalysis;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using System.Windows.Shapes;
-
-	// http://blogs.msdn.com/b/delay/archive/2009/02/26/designerproperties-getisindesignmode-forrealz-how-to-reliably-detect-silverlight-design-mode-in-blend-and-visual-studio.aspx
-	/// <summary>
-	/// Provides a custom implementation of DesignerProperties.GetIsInDesignMode
-	/// to work around an issue.
-	/// </summary>
-	internal static class DesignerProperties
-	{
-		/// <summary>
-		/// Returns whether the control is in design mode (running under Blend
-		/// or Visual Studio).
-		/// </summary>
-		/// <param name="element">The element from which the property value is
-		/// read.</param>
-		/// <returns>True if in design mode.</returns>
-		[SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "element", Justification =
-			"Matching declaration of System.ComponentModel.DesignerProperties.GetIsInDesignMode (which has a bug and is not reliable).")]
-		public static bool GetIsInDesignMode(DependencyObject element)
-		{
-			if (!_isInDesignMode.HasValue)
-			{
-				_isInDesignMode =
-					(null == Application.Current) ||
-					Application.Current.GetType() == typeof(Application);
-			}
-			return _isInDesignMode.Value;
-		}
-
-		/// <summary>
-		/// Stores the computed InDesignMode value.
-		/// </summary>
-		private static bool? _isInDesignMode;
-	}
 
 	[TemplatePart(Name = "PART_plotCanvas", Type = typeof (Canvas))]
 	public class LinePlot : LinePlotRenderBase
@@ -472,6 +438,7 @@
 			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
+				interactivePlot.Log("ControlPointStateChangedHandler", "new value: {0} (old value: {1})", (ControlPointState)args.NewValue, (ControlPointState)args.OldValue);
 				interactivePlot.OnControlPointStateChanged((ControlPointState) args.NewValue, (ControlPointState) args.OldValue);
 			}
 		}
@@ -532,11 +499,14 @@
 
 		private void UpdateControlPointStateDisplay()
 		{
-			switch (ControlPointState)
+			var controlPointState = ControlPointState;
+			var currentControlPoint = CurrentControlPoint;
+
+			switch (controlPointState)
 			{
 				case ControlPointState.Normal:
-					SetPosition(CurrentControlPoint, ControlPointPhysicalPosition);
-					CurrentControlPoint.Visibility = ControlPointVisibility;
+					SetPosition(currentControlPoint, ControlPointPhysicalPosition);
+					currentControlPoint.Visibility = ControlPointVisibility;
 
 					if (ControlPointHover != null) ControlPointHover.Visibility = Visibility.Collapsed;
 					if (ControlPointDrag != null) ControlPointDrag.Visibility = Visibility.Collapsed;
@@ -665,18 +635,22 @@
 				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
 				ControlPointPhysicalPosition = p;
 			}
+			//else if (ControlPointState != ControlPointState.Normal && )
 		}
 
-		//private void OnSizeChanged(Size size)
-		//{
-		//    //Width = size.Width;
-		//    //Height = size.Height;
-		//    ClipToBounds(size.Width, size.Height);
-		//}
-
 		#endregion
 
 		#endregion
+
+		public override void UpdatePlotDisplay()
+		{
+			base.UpdatePlotDisplay();
+
+			// HACK: ensure control point is remapped to new physical location
+			OnControlPointPlotXChanged(ControlPointPlotX);
+			OnControlPointPlotYChanged(ControlPointPlotY);
+		}
+
 	}
 
 }

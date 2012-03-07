@@ -100,6 +100,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlPointState.cs" />
+    <Compile Include="DesignerProperties.cs" />
     <Compile Include="Models\OneParameterSpendingFunctionModel.cs" />
     <Compile Include="Models\OneParameterSpendingFunctions.cs" />
     <Compile Include="Models\RootFinding.cs" />
