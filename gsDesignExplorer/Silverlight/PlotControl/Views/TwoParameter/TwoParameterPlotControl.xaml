@@ -119,6 +119,26 @@
 							</Path.Data>
 						</Path>-->
 					</Charting:LinePlot.ControlPointDrag>
+					<Charting:LinePlot.DragHandleA>
+						<Charting:DragHandle Canvas.Left="50" Canvas.Top="50">
+							
+						</Charting:DragHandle>
+						<!--<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-8" Y="-8"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>-->
+					</Charting:LinePlot.DragHandleA>
+					<Charting:LinePlot.DragHandleB>
+						<Charting:DragHandle Canvas.Left="100" Canvas.Top="100">
+
+						</Charting:DragHandle>
+						<!--<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
+							<Ellipse.RenderTransform>
+								<TranslateTransform X="-8" Y="-8"/>
+							</Ellipse.RenderTransform>
+						</Ellipse>-->
+					</Charting:LinePlot.DragHandleB>
 				</Charting:LinePlot>
 			</Border>
 

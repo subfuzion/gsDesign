@@ -47,24 +47,32 @@
 
 				if (Polyline != null) PlotSurface.Children.Add(Polyline);
 
-				if (ControlPoint != null)
+				if (ControlPoint != null && !PlotSurface.Children.Contains(ControlPoint))
 				{
 					PlotSurface.Children.Add(ControlPoint);
 				}
 
-				if (ControlPointHover != null)
+				if (ControlPointHover != null && !PlotSurface.Children.Contains(ControlPointHover))
 				{
 					PlotSurface.Children.Add(ControlPointHover);
 				}
 
-				if (ControlPointDrag != null)
+				if (ControlPointDrag != null && !PlotSurface.Children.Contains(ControlPointDrag))
 				{
 					PlotSurface.Children.Add(ControlPointDrag);
 				}
 
-				var dragHandleA = new DragHandle();
-				SetPosition(dragHandleA, 100, 100);
-				PlotSurface.Children.Add(dragHandleA);
+				if (DragHandleA != null && !PlotSurface.Children.Contains(DragHandleA))
+				{
+					DragHandleA.Logger = Log;
+					PlotSurface.Children.Add(DragHandleA);
+				}
+
+				if (DragHandleB != null && !PlotSurface.Children.Contains(DragHandleB))
+				{
+					DragHandleB.Logger = Log;
+					PlotSurface.Children.Add(DragHandleB);
+				}
 
 				UpdatePlotDisplay();
 				UpdateControlPointStateDisplay();
@@ -239,6 +247,103 @@
 			base.OnCoordinatesChanged(newCoordinates);
 			UpdateControlPointStateDisplay();
 		}
+
+		#region DragHandleA property
+
+		public DragHandle DragHandleA
+		{
+			get { return (DragHandle) GetValue(DragHandleAProperty); }
+			set { SetValue(DragHandleAProperty, value); }
+		}
+
+		public static DependencyProperty DragHandleAProperty = DependencyProperty.Register(
+			"DragHandleA",
+			typeof (DragHandle),
+			typeof (LinePlot),
+			new PropertyMetadata(DragHandleAChangedHandler));
+
+		private static void DragHandleAChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnDragHandleAChanged((DragHandle) args.NewValue, (DragHandle) args.OldValue);
+			}
+		}
+
+		protected virtual void OnDragHandleAChanged(DragHandle newValue, DragHandle oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			{
+				oldValue.Logger = null;
+				//RemoveControlPointHandlers(oldValue);
+				//PlotSurface.Children.Remove(oldValue);
+			}
+
+			OnDragHandleAChanged(newValue);
+		}
+
+		protected virtual void OnDragHandleAChanged(DragHandle newValue)
+		{
+			// add handler code
+			newValue.Logger = Log;
+			//AddControlPointHandlers(newValue);
+			//newValue.Visibility = Visibility.Collapsed;
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+			//UpdateControlPointStateDisplay();
+		}
+
+		#endregion
+
+		#region DragHandleB property
+
+		public DragHandle DragHandleB
+		{
+			get { return (DragHandle) GetValue(DragHandleBProperty); }
+			set { SetValue(DragHandleBProperty, value); }
+		}
+
+		public static DependencyProperty DragHandleBProperty = DependencyProperty.Register(
+			"DragHandleB",
+			typeof (DragHandle),
+			typeof (LinePlot),
+			new PropertyMetadata(DragHandleBChangedHandler));
+
+		private static void DragHandleBChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnDragHandleBChanged((DragHandle) args.NewValue, (DragHandle) args.OldValue);
+			}
+		}
+
+		protected virtual void OnDragHandleBChanged(DragHandle newValue, DragHandle oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			{
+				oldValue.Logger = null;
+				//RemoveControlPointHandlers(oldValue);
+				//PlotSurface.Children.Remove(oldValue);
+			}
+
+			OnDragHandleBChanged(newValue);
+		}
+
+		protected virtual void OnDragHandleBChanged(DragHandle newValue)
+		{
+			// add handler code
+			newValue.Logger = Log;
+			//AddControlPointHandlers(newValue);
+			//newValue.Visibility = Visibility.Collapsed;
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+			//UpdateControlPointStateDisplay();
+		}
+
+		#endregion
+
 
 
 
