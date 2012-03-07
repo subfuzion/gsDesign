@@ -17,7 +17,6 @@
 
 		public LinePlot()
 		{
-
 			DefaultStyleKey = typeof (LinePlot);
 		}
 
@@ -62,6 +61,10 @@
 				{
 					PlotSurface.Children.Add(ControlPointDrag);
 				}
+
+				var dragHandleA = new DragHandle();
+				SetPosition(dragHandleA, 100, 100);
+				PlotSurface.Children.Add(dragHandleA);
 
 				UpdatePlotDisplay();
 				UpdateControlPointStateDisplay();
@@ -476,15 +479,7 @@
 
 		private Shape CurrentControlPoint
 		{
-			get
-			{
-				if (ControlPoint == null)
-				{
-					ControlPoint = DefaultControlPoint;
-				}
-
-				return ControlPoint;
-			}
+			get { return ControlPoint ?? (ControlPoint = DefaultControlPoint); }
 		}
 
 		private Shape CurrentControlPointHover

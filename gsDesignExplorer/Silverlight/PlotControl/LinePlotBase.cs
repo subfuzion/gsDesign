@@ -338,7 +338,7 @@
 			SetPosition(element, p.X, p.Y);
 		}
 
-		private static void SetPosition(DependencyObject element, double x, double y)
+		protected static void SetPosition(DependencyObject element, double x, double y)
 		{
 			if (double.IsNaN(x) || double.IsNaN(y) || double.IsInfinity(x) || double.IsInfinity(y) || double.IsNegativeInfinity(x) || double.IsNegativeInfinity(y)) return;
 

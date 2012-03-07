@@ -24,5 +24,19 @@
 	<Style TargetType="Charting:LinePlot">
 		<Setter Property="Template" Value="{StaticResource InteractivePlotKey}" />
 	</Style>
-	
+
+	<ControlTemplate TargetType="Charting:DragHandle" x:Key="DragHandleKey">
+		<Canvas x:Name="PART_DragHandle" Background="{TemplateBinding Background}">
+			<Ellipse Fill="Orange" Stroke="Black" Width="30" Height="30">
+				<Ellipse.RenderTransform>
+					<TranslateTransform X="-15" Y="-15"/>
+				</Ellipse.RenderTransform>
+			</Ellipse>
+		</Canvas>
+	</ControlTemplate>
+
+	<Style TargetType="Charting:DragHandle">
+		<Setter Property="Template" Value="{StaticResource DragHandleKey}" />
+	</Style>
+
 </ResourceDictionary>

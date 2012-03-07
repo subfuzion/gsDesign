@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DragHandle.cs" />
     <Compile Include="ControlPointState.cs" />
     <Compile Include="DesignerProperties.cs" />
     <Compile Include="Models\OneParameterSpendingFunctionModel.cs" />
