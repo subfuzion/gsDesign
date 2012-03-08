@@ -40,7 +40,7 @@
 				PlotSurface.MouseLeftButtonUp += (sender, args) =>
 				{
 					isDragging = false;
-					ControlPointState = ControlPointState.Normal;
+					ControlPointState = ControlState.Normal;
 				};
 
 				// add children...
@@ -530,13 +530,13 @@
 
 		public static DependencyProperty ControlPointStateProperty = DependencyProperty.Register(
 			"ControlPointState",
-			typeof (ControlPointState),
+			typeof (ControlState),
 			typeof (LinePlot),
 			new PropertyMetadata(ControlPointStateChangedHandler));
 
-		public ControlPointState ControlPointState
+		public ControlState ControlPointState
 		{
-			get { return (ControlPointState) GetValue(ControlPointStateProperty); }
+			get { return (ControlState) GetValue(ControlPointStateProperty); }
 			set { SetValue(ControlPointStateProperty, value); }
 		}
 
@@ -546,18 +546,18 @@
 			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.Log("ControlPointStateChangedHandler", "new value: {0} (old value: {1})", (ControlPointState)args.NewValue, (ControlPointState)args.OldValue);
-				interactivePlot.OnControlPointStateChanged((ControlPointState) args.NewValue, (ControlPointState) args.OldValue);
+				interactivePlot.Log("ControlPointStateChangedHandler", "new value: {0} (old value: {1})", (ControlState)args.NewValue, (ControlState)args.OldValue);
+				interactivePlot.OnControlPointStateChanged((ControlState) args.NewValue, (ControlState) args.OldValue);
 			}
 		}
 
-		protected virtual void OnControlPointStateChanged(ControlPointState newValue, ControlPointState oldValue)
+		protected virtual void OnControlPointStateChanged(ControlState newValue, ControlState oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
 			OnControlPointStateChanged(newValue);
 		}
 
-		protected virtual void OnControlPointStateChanged(ControlPointState newValue)
+		protected virtual void OnControlPointStateChanged(ControlState newValue)
 		{
 			// add handler code
 			UpdateControlPointStateDisplay();
@@ -571,10 +571,10 @@
 			{
 				switch (ControlPointState)
 				{
-					case ControlPointState.Hover:
+					case ControlState.Hover:
 						return CurrentControlPointHover;
 
-					case ControlPointState.Drag:
+					case ControlState.Drag:
 						return CurrentControlPointDrag;
 				}
 
@@ -604,7 +604,7 @@
 
 			switch (controlPointState)
 			{
-				case ControlPointState.Normal:
+				case ControlState.Normal:
 					SetPosition(currentControlPoint, ControlPointPhysicalPosition);
 					currentControlPoint.Visibility = ControlPointVisibility;
 
@@ -612,7 +612,7 @@
 					if (ControlPointDrag != null) ControlPointDrag.Visibility = Visibility.Collapsed;
 					break;
 
-				case ControlPointState.Hover:
+				case ControlState.Hover:
 					if (ControlPointHover != null)
 					{
 						SetPosition(ControlPointHover, ControlPointPhysicalPosition);
@@ -629,7 +629,7 @@
 					}
 					break;
 
-				case ControlPointState.Drag:
+				case ControlState.Drag:
 					if (ControlPointDrag != null)
 					{
 						SetPosition(ControlPointDrag, ControlPointPhysicalPosition);
@@ -671,27 +671,27 @@
 		{
 			//if (ControlPointState != ControlPointState.Drag)
 			if (!isDragging)
-				ControlPointState = ControlPointState.Hover;
+				ControlPointState = ControlState.Hover;
 		}
 
 		private void ControlPointOnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
 		{
 			//if (ControlPointState != ControlPointState.Drag)
 			if (!isDragging)
-				ControlPointState = ControlPointState.Normal;
+				ControlPointState = ControlState.Normal;
 		}
 
 		private void ControlPointOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
 			isDragging = true;
-			ControlPointState = ControlPointState.Drag;
+			ControlPointState = ControlState.Drag;
 			ActiveControlPoint.CaptureMouse();
 		}
 
 		private void ControlPointOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
 			isDragging = false;
-			ControlPointState = ControlPointState.Hover;
+			ControlPointState = ControlState.Hover;
 		}
 
 		#endregion

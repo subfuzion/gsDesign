@@ -37,8 +37,14 @@
 			</Grid.ColumnDefinitions>
 
 			<!-- Spending Function value controls -->
-			<TextBlock Grid.Row="2" Grid.Column="0" Text="a" Foreground="Blue" FontSize="10" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
-			<TextBlock Grid.Row="2" Grid.Column="1" Text="b" Foreground="Blue" FontSize="10" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
+			<!--<StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+				<TextBlock Text="a" Foreground="Blue" FontSize="11" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
+				<Ellipse Fill="Blue" Stroke="Blue" Width="11" Height="11" VerticalAlignment="Top" Margin="3" />
+			</StackPanel>-->
+			<!--<StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+				<TextBlock Text="b" Foreground="Green" FontSize="11" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
+				<Ellipse Fill="Green" Stroke="Green" Width="11" Height="11" VerticalAlignment="Top" Margin="3" />
+			</StackPanel>-->
 			<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="6 0">
 				<Grid>
 					<Grid.RowDefinitions>
@@ -47,12 +53,18 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<TextBlock Text="{Binding Path=SpendingParameterAMaximumString, Mode=OneWay}" TextAlignment="Center" />
-					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70" IsEditable="False"
+					<StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center">
+						<toolkit:NumericUpDown Margin="2" Height="20" Width="70" IsEditable="False"
 											   Increment="{Binding Path=SpendingParameterAIncrement, Mode=OneWay}"
 											   DecimalPlaces="{Binding Path=SpendingParameterAPrecision, Mode=OneWay}"
 											   Maximum="{Binding Path=SpendingParameterAControlMaximum, Mode=OneWay}"
 											   Minimum="{Binding Path=SpendingParameterAControlMinimum, Mode=OneWay}"
 											   Value="{Binding Path=SpendingParameterA, Mode=TwoWay}" />
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+							<TextBlock Text="a" Foreground="Black" FontSize="11" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
+							<Ellipse Fill="Cyan" Stroke="Gray" Width="11" Height="11" VerticalAlignment="Top" Margin="3" />
+						</StackPanel>
+					</StackPanel>
 					<TextBlock Grid.Row="2" Text="{Binding Path=SpendingParameterAMinimumString, Mode=OneWay}" TextAlignment="Center" />
 				</Grid>
 				<!--<Slider Grid.Row="1" Orientation="Vertical" Margin="2 0"
@@ -70,12 +82,18 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<TextBlock Text="{Binding Path=SpendingParameterBMaximumString, Mode=OneWay}" TextAlignment="Right" />
-					<toolkit:NumericUpDown Grid.Row="1" Margin="2" Height="20" Width="70" IsEditable="False"
+					<StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center">
+						<toolkit:NumericUpDown Margin="2" Height="20" Width="70" IsEditable="False"
 											   Increment="{Binding Path=SpendingParameterBIncrement, Mode=OneWay}"
 											   DecimalPlaces="{Binding Path=SpendingParameterBPrecision, Mode=OneWay}"
 											   Maximum="{Binding Path=SpendingParameterBControlMaximum, Mode=OneWay}"
 											   Minimum="{Binding Path=SpendingParameterBControlMinimum, Mode=OneWay}"
 											   Value="{Binding Path=SpendingParameterB, Mode=TwoWay}" />
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+							<TextBlock Text="b" Foreground="Black" FontSize="11" TextAlignment="Center" VerticalAlignment="Top" Margin="2 0" />
+							<Ellipse Fill="LightGreen" Stroke="Gray" Width="11" Height="11" VerticalAlignment="Top" Margin="3" />
+						</StackPanel>
+					</StackPanel>
 					<TextBlock Grid.Row="2" Text="{Binding Path=SpendingParameterBMinimumString, Mode=OneWay}" TextAlignment="Right" />
 				</Grid>
 				<!--<Slider Grid.Row="1" Orientation="Vertical" Margin="2 0"
@@ -121,23 +139,53 @@
 					</Charting:LinePlot.ControlPointDrag>
 					<Charting:LinePlot.DragHandleA>
 						<Charting:DragHandle Canvas.Left="50" Canvas.Top="50">
-							
+							<Charting:DragHandle.EnabledShape>
+								<Ellipse Fill="Cyan" Stroke="Gray" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.EnabledShape>
+							<Charting:DragHandle.HoverShape>
+								<Ellipse Fill="Cyan" Stroke="Gray" Width="20" Height="20">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-10" Y="-10"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.HoverShape>
+							<Charting:DragHandle.DragShape>
+								<Ellipse Fill="Cyan" Stroke="Orange" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.DragShape>
 						</Charting:DragHandle>
-						<!--<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
-							<Ellipse.RenderTransform>
-								<TranslateTransform X="-8" Y="-8"/>
-							</Ellipse.RenderTransform>
-						</Ellipse>-->
 					</Charting:LinePlot.DragHandleA>
 					<Charting:LinePlot.DragHandleB>
 						<Charting:DragHandle Canvas.Left="100" Canvas.Top="100">
-
+							<Charting:DragHandle.EnabledShape>
+								<Ellipse Fill="LightGreen" Stroke="Gray" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.EnabledShape>
+							<Charting:DragHandle.HoverShape>
+								<Ellipse Fill="LightGreen" Stroke="Gray" Width="20" Height="20">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-10" Y="-10"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.HoverShape>
+							<Charting:DragHandle.DragShape>
+								<Ellipse Fill="LightGreen" Stroke="Orange" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.DragShape>
 						</Charting:DragHandle>
-						<!--<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
-							<Ellipse.RenderTransform>
-								<TranslateTransform X="-8" Y="-8"/>
-							</Ellipse.RenderTransform>
-						</Ellipse>-->
 					</Charting:LinePlot.DragHandleB>
 				</Charting:LinePlot>
 			</Border>

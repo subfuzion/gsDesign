@@ -1,6 +1,6 @@
 ﻿namespace Subfuzion.Silverlight.UI.Charting
 {
-	public enum ControlPointState
+	public enum ControlState
 	{
 		Normal,
 		Hover,

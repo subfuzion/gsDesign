@@ -4,10 +4,13 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
+	using System.Windows.Shapes;
 
-	[TemplatePart(Name = "PART_DragHandle", Type = typeof(Canvas))]
+	[TemplatePart(Name = "PART_Canvas", Type = typeof(Canvas))]
 	public class DragHandle : Control
 	{
+		public static readonly string CanvasPart = "PART_Canvas";
+
 		public DragHandle()
 		{
 			DefaultStyleKey = typeof(DragHandle);
@@ -108,26 +111,276 @@
 			MouseLeave += OnMouseLeave;
 			MouseLeftButtonDown += OnMouseLeftButtonDown;
 			MouseLeftButtonUp += OnMouseLeftButtonUp;
+
+			Canvas = GetTemplateChild(CanvasPart) as Canvas;
+			if (Canvas == null) return;
+
+			if (EnabledShape != null && !Canvas.Children.Contains(EnabledShape))
+			{
+				Canvas.Children.Clear();
+				Canvas.Children.Add(EnabledShape);
+			}
+			else
+			{
+				// the control template provides a default shape
+				EnabledShape = Canvas.Children[0] as Shape;
+			}
+
+			if (HoverShape != null && !Canvas.Children.Contains(HoverShape))
+			{
+				Canvas.Children.Add(HoverShape);
+			}
+
+			if (DragShape != null && !Canvas.Children.Contains(DragShape))
+			{
+				Canvas.Children.Add(DragShape);
+			}
+
+			ShowControlState(ControlState.Normal);
 		}
+
+		private Canvas Canvas { get; set; }
 
 		private void OnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
 		{
 			Log("OnMouseEnter");
+			ControlState = ControlState.Hover;
 		}
 
 		private void OnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
 		{
 			Log("OnMouseLeave");
+			ControlState = ControlState.Normal;
 		}
 
 		private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
 			Log("OnMouseLeftButtonDown");
+			ControlState = ControlState.Drag;
 		}
 
 		private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
 			Log("OnMouseLeftButtonUp");
+			ControlState = ControlState.Hover;
+		}
+
+		#region Dependency Properties
+
+		#region EnabledShape property
+
+		public Shape EnabledShape
+		{
+			get { return (Shape) GetValue(EnabledShapeProperty); }
+			set { SetValue(EnabledShapeProperty, value); }
+		}
+
+		public static DependencyProperty EnabledShapeProperty = DependencyProperty.Register(
+			"EnabledShape",
+			typeof (Shape),
+			typeof (DragHandle),
+			new PropertyMetadata(EnabledShapeChangedHandler));
+
+		private static void EnabledShapeChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var dragHandle = dependencyObject as DragHandle;
+			if (dragHandle != null)
+			{
+				dragHandle.OnEnabledShapeChanged((Shape) args.NewValue, (Shape) args.OldValue);
+			}
+		}
+
+		protected virtual void OnEnabledShapeChanged(Shape newValue, Shape oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (oldValue != null) Canvas.Children.Remove(oldValue);
+			OnEnabledShapeChanged(newValue);
+		}
+
+		protected virtual void OnEnabledShapeChanged(Shape newValue)
+		{
+			// add handler code
+			if (Canvas != null && newValue != null && !Canvas.Children.Contains(newValue))
+			{
+				Canvas.Children.Add(newValue);
+			}
+		}
+
+		#endregion
+
+		#region HoverShape property
+
+		public Shape HoverShape
+		{
+			get { return (Shape) GetValue(HoverShapeProperty); }
+			set { SetValue(HoverShapeProperty, value); }
+		}
+
+		public static DependencyProperty HoverShapeProperty = DependencyProperty.Register(
+			"HoverShape",
+			typeof (Shape),
+			typeof (DragHandle),
+			new PropertyMetadata(HoverShapeChangedHandler));
+
+		private static void HoverShapeChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var dragHandle = dependencyObject as DragHandle;
+			if (dragHandle != null)
+			{
+				dragHandle.OnHoverShapeChanged((Shape) args.NewValue, (Shape) args.OldValue);
+			}
+		}
+
+		protected virtual void OnHoverShapeChanged(Shape newValue, Shape oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (oldValue != null) Canvas.Children.Remove(oldValue);
+			OnHoverShapeChanged(newValue);
+		}
+
+		protected virtual void OnHoverShapeChanged(Shape newValue)
+		{
+			// add handler code
+			if (Canvas != null && newValue != null && !Canvas.Children.Contains(newValue))
+			{
+				Canvas.Children.Add(newValue);
+			}
+		}
+
+		#endregion
+
+		#region DragShape property
+
+		public Shape DragShape
+		{
+			get { return (Shape) GetValue(DragShapeProperty); }
+			set { SetValue(DragShapeProperty, value); }
+		}
+
+		public static DependencyProperty DragShapeProperty = DependencyProperty.Register(
+			"DragShape",
+			typeof (Shape),
+			typeof (DragHandle),
+			new PropertyMetadata(DragShapeChangedHandler));
+
+		private static void DragShapeChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var dragHandle = dependencyObject as DragHandle;
+			if (dragHandle != null)
+			{
+				dragHandle.OnDragShapeChanged((Shape) args.NewValue, (Shape) args.OldValue);
+			}
+		}
+
+		protected virtual void OnDragShapeChanged(Shape newValue, Shape oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (oldValue != null) Canvas.Children.Remove(oldValue);
+			OnDragShapeChanged(newValue);
+		}
+
+		protected virtual void OnDragShapeChanged(Shape newValue)
+		{
+			// add handler code
+			if (Canvas != null && newValue != null && !Canvas.Children.Contains(newValue))
+			{
+				Canvas.Children.Add(newValue);
+			}
+		}
+
+		#endregion
+
+		#region ControlState property
+
+		public ControlState ControlState
+		{
+			get { return (ControlState) GetValue(ControlStateProperty); }
+			set { SetValue(ControlStateProperty, value); }
+		}
+
+		public static DependencyProperty ControlStateProperty = DependencyProperty.Register(
+			"ControlState",
+			typeof (ControlState),
+			typeof (DragHandle),
+			new PropertyMetadata(ControlState.Normal, ControlStateChangedHandler));
+
+		private static void ControlStateChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var dragHandle = dependencyObject as DragHandle;
+			if (dragHandle != null)
+			{
+				dragHandle.OnControlStateChanged((ControlState) args.NewValue, (ControlState) args.OldValue);
+			}
+		}
+
+		protected virtual void OnControlStateChanged(ControlState newValue, ControlState oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnControlStateChanged(newValue);
+		}
+
+		protected virtual void OnControlStateChanged(ControlState newValue)
+		{
+			// add handler code
+			ShowControlState(newValue);
+		}
+
+		#endregion
+
+		#endregion
+
+		private void ShowControlState(ControlState controlState)
+		{
+			switch (controlState)
+			{
+				case ControlState.Normal:
+					Show(EnabledShape);
+					Hide(HoverShape);
+					Hide(DragShape);
+					break;
+
+				case ControlState.Hover:
+					if (HoverShape != null)
+					{
+						Show(HoverShape);
+						Hide(EnabledShape);
+						Hide(DragShape);
+					}
+					else
+					{
+						ShowControlState(ControlState.Normal);
+					}
+					break;
+
+				case ControlState.Drag:
+					if (DragShape != null)
+					{
+						Show(DragShape);
+						Hide(EnabledShape);
+						Hide(HoverShape);
+					}
+					else
+					{
+						ShowControlState(ControlState.Hover);
+					}
+					break;
+			}
+		}
+
+		private void Show(UIElement element)
+		{
+			if (element != null)
+			{
+				element.Visibility = Visibility.Visible;
+			}
+		}
+
+		private void Hide(UIElement element)
+		{
+			if (element != null)
+			{
+				element.Visibility = Visibility.Collapsed;
+			}
 		}
 	}
 }
