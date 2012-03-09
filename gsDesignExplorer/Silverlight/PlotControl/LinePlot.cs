@@ -9,13 +9,11 @@
 	using System.Windows.Shapes;
 
 	[TemplatePart(Name = "PART_plotCanvas", Type = typeof (Canvas))]
-	public class LinePlot : LinePlotRenderBase
+	public class LinePlot : LinePlotBase
 	{
 		private readonly Shape DefaultControlPoint = new Ellipse {Fill = new SolidColorBrush(Colors.Red), Width = 12, Height = 12};
 
 		private bool isDragging;
-		private bool isDraggingA;
-		private bool isDraggingB;
 
 		public LinePlot()
 		{
@@ -28,27 +26,9 @@
 
 			if (DesignerProperties.GetIsInDesignMode(this)) return;
 
-			//SizeChanged += (sender, args) => OnSizeChanged(args.NewSize);
-
-			PlotSurface = GetTemplateChild(PlotCanvasPart) as Canvas;
+			//PlotSurface = GetTemplateChild(PlotCanvasPart) as Canvas;
 			if (PlotSurface != null)
 			{
-				// redundant (but verify before removing completely)
-				// ClipToBounds(ActualWidth, ActualHeight);
-
-				//PlotCanvas.MouseEnter += (sender, args) => PlotCanvas.MouseMove += HandleOnMouseMove;
-				//PlotCanvas.MouseLeave += (sender, args) => PlotCanvas.MouseMove -= HandleOnMouseMove;
-
-				PlotSurface.MouseLeftButtonUp += (sender, args) =>
-				{
-					isDragging = false;
-					ControlPointState = ControlState.Normal;
-				};
-
-				// add children...
-
-				if (Polyline != null) PlotSurface.Children.Add(Polyline);
-
 				if (ControlPoint != null && !PlotSurface.Children.Contains(ControlPoint))
 				{
 					PlotSurface.Children.Add(ControlPoint);
@@ -64,49 +44,9 @@
 					PlotSurface.Children.Add(ControlPointDrag);
 				}
 
-				if (DragHandleA != null && !PlotSurface.Children.Contains(DragHandleA))
-				{
-					DragHandleA.Logger = Log;
-					PlotSurface.Children.Add(DragHandleA);
-					DragHandleA.MouseLeftButtonDown += DragHandleAOnMouseLeftButtonDown;
-					DragHandleA.MouseLeftButtonUp += DragHandleAOnMouseLeftButtonUp;
-				}
-
-				if (DragHandleB != null && !PlotSurface.Children.Contains(DragHandleB))
-				{
-					DragHandleB.Logger = Log;
-					PlotSurface.Children.Add(DragHandleB);
-					DragHandleB.MouseLeftButtonDown += DragHandleBOnMouseLeftButtonDown;
-					DragHandleB.MouseLeftButtonUp += DragHandleBOnMouseLeftButtonUp;
-				}
-
 				UpdatePlotDisplay();
 				UpdateControlPointStateDisplay();
 			}
-		}
-
-		private void DragHandleAOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			DragHandleA.CaptureMouse();
-			isDraggingA = true;
-		}
-
-		private void DragHandleAOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			DragHandleA.ReleaseMouseCapture();
-			isDraggingA = false;
-		}
-
-		private void DragHandleBOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			DragHandleB.CaptureMouse();
-			isDraggingB = true;
-		}
-
-		private void DragHandleBOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			DragHandleB.ReleaseMouseCapture();
-			isDraggingB = false;
 		}
 
 		#region Dependency Properties
@@ -277,131 +217,6 @@
 			base.OnCoordinatesChanged(newCoordinates);
 			UpdateControlPointStateDisplay();
 		}
-
-		#region DragHandleA property
-
-		public DragHandle DragHandleA
-		{
-			get { return (DragHandle) GetValue(DragHandleAProperty); }
-			set { SetValue(DragHandleAProperty, value); }
-		}
-
-		public static DependencyProperty DragHandleAProperty = DependencyProperty.Register(
-			"DragHandleA",
-			typeof (DragHandle),
-			typeof (LinePlot),
-			new PropertyMetadata(DragHandleAChangedHandler));
-
-		private static void DragHandleAChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var linePlot = dependencyObject as LinePlot;
-			if (linePlot != null)
-			{
-				linePlot.OnDragHandleAChanged((DragHandle) args.NewValue, (DragHandle) args.OldValue);
-			}
-		}
-
-		protected virtual void OnDragHandleAChanged(DragHandle newValue, DragHandle oldValue)
-		{
-			if (oldValue != null)
-			{
-				oldValue.Logger = null;
-
-				oldValue.MouseLeftButtonDown -= DragHandleAOnMouseLeftButtonDown;
-				oldValue.MouseLeftButtonUp -= DragHandleAOnMouseLeftButtonUp;
-				oldValue.MouseMove -= HandleDraggingDragHandleA;
-
-				if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
-				{
-					//RemoveControlPointHandlers(oldValue);
-					PlotSurface.Children.Remove(oldValue);
-				}
-			}
-
-			OnDragHandleAChanged(newValue);
-		}
-
-		protected virtual void OnDragHandleAChanged(DragHandle newValue)
-		{
-			if (newValue != null)
-			{
-				newValue.Logger = Log;
-
-				newValue.MouseLeftButtonDown += DragHandleAOnMouseLeftButtonDown;
-				newValue.MouseLeftButtonUp += DragHandleAOnMouseLeftButtonUp;
-				newValue.MouseMove += HandleDraggingDragHandleA;
-
-				//AddControlPointHandlers(newValue);
-				//newValue.Visibility = Visibility.Collapsed;
-				if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-				//UpdateControlPointStateDisplay();
-			}
-		}
-
-		#endregion
-
-		#region DragHandleB property
-
-		public DragHandle DragHandleB
-		{
-			get { return (DragHandle) GetValue(DragHandleBProperty); }
-			set { SetValue(DragHandleBProperty, value); }
-		}
-
-		public static DependencyProperty DragHandleBProperty = DependencyProperty.Register(
-			"DragHandleB",
-			typeof (DragHandle),
-			typeof (LinePlot),
-			new PropertyMetadata(DragHandleBChangedHandler));
-
-		private static void DragHandleBChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var linePlot = dependencyObject as LinePlot;
-			if (linePlot != null)
-			{
-				linePlot.OnDragHandleBChanged((DragHandle) args.NewValue, (DragHandle) args.OldValue);
-			}
-		}
-
-		protected virtual void OnDragHandleBChanged(DragHandle newValue, DragHandle oldValue)
-		{
-			if (oldValue != null)
-			{
-				oldValue.Logger = null;
-
-				oldValue.MouseLeftButtonDown -= DragHandleBOnMouseLeftButtonDown;
-				oldValue.MouseLeftButtonUp -= DragHandleBOnMouseLeftButtonUp;
-				oldValue.MouseMove -= HandleDraggingDragHandleB;
-
-				if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
-				{
-					//RemoveControlPointHandlers(oldValue);
-					PlotSurface.Children.Remove(oldValue);
-				}
-			}
-
-			OnDragHandleBChanged(newValue);
-		}
-
-		protected virtual void OnDragHandleBChanged(DragHandle newValue)
-		{
-			if (newValue != null)
-			{
-				newValue.Logger = Log;
-
-				newValue.MouseLeftButtonDown += DragHandleBOnMouseLeftButtonDown;
-				newValue.MouseLeftButtonUp += DragHandleBOnMouseLeftButtonUp;
-				newValue.MouseMove += HandleDraggingDragHandleB;
-
-				//AddControlPointHandlers(newValue);
-				//newValue.Visibility = Visibility.Collapsed;
-				if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-				//UpdateControlPointStateDisplay();
-			}
-		}
-
-		#endregion
-
 
 
 
@@ -794,44 +609,6 @@
 				ControlPointPhysicalPosition = p;
 			}
 			//else if (ControlPointState != ControlPointState.Normal && )
-		}
-
-		private void HandleDraggingDragHandleA(object sender, MouseEventArgs mouseEventArgs)
-		{
-			if (isDraggingA)
-			{
-				Point p = mouseEventArgs.GetPosition(PlotSurface);
-
-				if (p.X < 0) p.X = 0;
-				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
-				if (p.Y < 0) p.Y = 0;
-				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
-
-				//ControlPointPhysicalPosition = p;
-				if (p.X < (double)DragHandleB.GetValue(Canvas.LeftProperty) && p.Y < (double)DragHandleB.GetValue(Canvas.TopProperty))
-				{
-					SetPosition(DragHandleA, p);
-				}
-			}
-		}
-
-		private void HandleDraggingDragHandleB(object sender, MouseEventArgs mouseEventArgs)
-		{
-			if (isDraggingB)
-			{
-				Point p = mouseEventArgs.GetPosition(PlotSurface);
-
-				if (p.X < 0) p.X = 0;
-				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
-				if (p.Y < 0) p.Y = 0;
-				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
-
-				// ControlPointPhysicalPosition = p;
-				if (p.X > (double)DragHandleA.GetValue(Canvas.LeftProperty) && p.Y > (double)DragHandleA.GetValue(Canvas.TopProperty))
-				{
-					SetPosition(DragHandleB, p);
-				}
-			}
 		}
 
 		#endregion

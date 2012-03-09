@@ -111,7 +111,6 @@
     </Compile>
     <Compile Include="LinePlot.cs" />
     <Compile Include="LinePlotBase.cs" />
-    <Compile Include="LinePlotRenderBase.cs" />
     <Compile Include="PlotUpdateMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueConverters\OneParameterFamilyValueConverter.cs" />
