@@ -290,7 +290,7 @@
 
 		</Grid>
 
-		<!-- Contstraints -->
+		<!-- Constraints -->
 		<Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="2">
 			<Border BorderBrush="DarkGray" BorderThickness="1" Margin="4">
 				<StackPanel Orientation="Vertical">

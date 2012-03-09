@@ -14,6 +14,8 @@
 		private readonly Shape DefaultControlPoint = new Ellipse {Fill = new SolidColorBrush(Colors.Red), Width = 12, Height = 12};
 
 		private bool isDragging;
+		private bool isDraggingA;
+		private bool isDraggingB;
 
 		public LinePlot()
 		{
@@ -66,17 +68,45 @@
 				{
 					DragHandleA.Logger = Log;
 					PlotSurface.Children.Add(DragHandleA);
+					DragHandleA.MouseLeftButtonDown += DragHandleAOnMouseLeftButtonDown;
+					DragHandleA.MouseLeftButtonUp += DragHandleAOnMouseLeftButtonUp;
 				}
 
 				if (DragHandleB != null && !PlotSurface.Children.Contains(DragHandleB))
 				{
 					DragHandleB.Logger = Log;
 					PlotSurface.Children.Add(DragHandleB);
+					DragHandleB.MouseLeftButtonDown += DragHandleBOnMouseLeftButtonDown;
+					DragHandleB.MouseLeftButtonUp += DragHandleBOnMouseLeftButtonUp;
 				}
 
 				UpdatePlotDisplay();
 				UpdateControlPointStateDisplay();
 			}
+		}
+
+		private void DragHandleAOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		{
+			DragHandleA.CaptureMouse();
+			isDraggingA = true;
+		}
+
+		private void DragHandleAOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		{
+			DragHandleA.ReleaseMouseCapture();
+			isDraggingA = false;
+		}
+
+		private void DragHandleBOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		{
+			DragHandleB.CaptureMouse();
+			isDraggingB = true;
+		}
+
+		private void DragHandleBOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		{
+			DragHandleB.ReleaseMouseCapture();
+			isDraggingB = false;
 		}
 
 		#region Dependency Properties
@@ -273,12 +303,19 @@
 
 		protected virtual void OnDragHandleAChanged(DragHandle newValue, DragHandle oldValue)
 		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			if (oldValue != null)
 			{
 				oldValue.Logger = null;
-				//RemoveControlPointHandlers(oldValue);
-				//PlotSurface.Children.Remove(oldValue);
+
+				oldValue.MouseLeftButtonDown -= DragHandleAOnMouseLeftButtonDown;
+				oldValue.MouseLeftButtonUp -= DragHandleAOnMouseLeftButtonUp;
+				oldValue.MouseMove -= HandleDraggingDragHandleA;
+
+				if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+				{
+					//RemoveControlPointHandlers(oldValue);
+					PlotSurface.Children.Remove(oldValue);
+				}
 			}
 
 			OnDragHandleAChanged(newValue);
@@ -286,12 +323,19 @@
 
 		protected virtual void OnDragHandleAChanged(DragHandle newValue)
 		{
-			// add handler code
-			newValue.Logger = Log;
-			//AddControlPointHandlers(newValue);
-			//newValue.Visibility = Visibility.Collapsed;
-			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-			//UpdateControlPointStateDisplay();
+			if (newValue != null)
+			{
+				newValue.Logger = Log;
+
+				newValue.MouseLeftButtonDown += DragHandleAOnMouseLeftButtonDown;
+				newValue.MouseLeftButtonUp += DragHandleAOnMouseLeftButtonUp;
+				newValue.MouseMove += HandleDraggingDragHandleA;
+
+				//AddControlPointHandlers(newValue);
+				//newValue.Visibility = Visibility.Collapsed;
+				if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+				//UpdateControlPointStateDisplay();
+			}
 		}
 
 		#endregion
@@ -321,12 +365,19 @@
 
 		protected virtual void OnDragHandleBChanged(DragHandle newValue, DragHandle oldValue)
 		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			if (oldValue != null)
 			{
 				oldValue.Logger = null;
-				//RemoveControlPointHandlers(oldValue);
-				//PlotSurface.Children.Remove(oldValue);
+
+				oldValue.MouseLeftButtonDown -= DragHandleBOnMouseLeftButtonDown;
+				oldValue.MouseLeftButtonUp -= DragHandleBOnMouseLeftButtonUp;
+				oldValue.MouseMove -= HandleDraggingDragHandleB;
+
+				if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+				{
+					//RemoveControlPointHandlers(oldValue);
+					PlotSurface.Children.Remove(oldValue);
+				}
 			}
 
 			OnDragHandleBChanged(newValue);
@@ -334,12 +385,19 @@
 
 		protected virtual void OnDragHandleBChanged(DragHandle newValue)
 		{
-			// add handler code
-			newValue.Logger = Log;
-			//AddControlPointHandlers(newValue);
-			//newValue.Visibility = Visibility.Collapsed;
-			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-			//UpdateControlPointStateDisplay();
+			if (newValue != null)
+			{
+				newValue.Logger = Log;
+
+				newValue.MouseLeftButtonDown += DragHandleBOnMouseLeftButtonDown;
+				newValue.MouseLeftButtonUp += DragHandleBOnMouseLeftButtonUp;
+				newValue.MouseMove += HandleDraggingDragHandleB;
+
+				//AddControlPointHandlers(newValue);
+				//newValue.Visibility = Visibility.Collapsed;
+				if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+				//UpdateControlPointStateDisplay();
+			}
 		}
 
 		#endregion
@@ -736,6 +794,44 @@
 				ControlPointPhysicalPosition = p;
 			}
 			//else if (ControlPointState != ControlPointState.Normal && )
+		}
+
+		private void HandleDraggingDragHandleA(object sender, MouseEventArgs mouseEventArgs)
+		{
+			if (isDraggingA)
+			{
+				Point p = mouseEventArgs.GetPosition(PlotSurface);
+
+				if (p.X < 0) p.X = 0;
+				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
+				if (p.Y < 0) p.Y = 0;
+				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
+
+				//ControlPointPhysicalPosition = p;
+				if (p.X < (double)DragHandleB.GetValue(Canvas.LeftProperty) && p.Y < (double)DragHandleB.GetValue(Canvas.TopProperty))
+				{
+					SetPosition(DragHandleA, p);
+				}
+			}
+		}
+
+		private void HandleDraggingDragHandleB(object sender, MouseEventArgs mouseEventArgs)
+		{
+			if (isDraggingB)
+			{
+				Point p = mouseEventArgs.GetPosition(PlotSurface);
+
+				if (p.X < 0) p.X = 0;
+				if (p.X > ActualWidth - 1) p.X = ActualWidth - 1;
+				if (p.Y < 0) p.Y = 0;
+				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
+
+				// ControlPointPhysicalPosition = p;
+				if (p.X > (double)DragHandleA.GetValue(Canvas.LeftProperty) && p.Y > (double)DragHandleA.GetValue(Canvas.TopProperty))
+				{
+					SetPosition(DragHandleB, p);
+				}
+			}
 		}
 
 		#endregion

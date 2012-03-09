@@ -11,6 +11,8 @@
 	{
 		public static readonly string CanvasPart = "PART_Canvas";
 
+		private bool isDragging;
+
 		public DragHandle()
 		{
 			DefaultStyleKey = typeof(DragHandle);
@@ -107,11 +109,6 @@
 
 			if (DesignerProperties.GetIsInDesignMode(this)) return;
 
-			MouseEnter += OnMouseEnter;
-			MouseLeave += OnMouseLeave;
-			MouseLeftButtonDown += OnMouseLeftButtonDown;
-			MouseLeftButtonUp += OnMouseLeftButtonUp;
-
 			Canvas = GetTemplateChild(CanvasPart) as Canvas;
 			if (Canvas == null) return;
 
@@ -139,29 +136,34 @@
 			ShowControlState(ControlState.Normal);
 		}
 
+
 		private Canvas Canvas { get; set; }
 
-		private void OnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
+		protected override void OnMouseEnter(MouseEventArgs e)
 		{
-			Log("OnMouseEnter");
+			//Log("OnMouseEnter");
+			base.OnMouseEnter(e);
 			ControlState = ControlState.Hover;
 		}
 
-		private void OnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
+		protected override void OnMouseLeave(MouseEventArgs e)
 		{
-			Log("OnMouseLeave");
+			//Log("OnMouseLeave");
+			base.OnMouseLeave(e);
 			ControlState = ControlState.Normal;
 		}
 
-		private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
 		{
-			Log("OnMouseLeftButtonDown");
+			//Log("OnMouseLeftButtonDown");
+			base.OnMouseLeftButtonDown(e);
 			ControlState = ControlState.Drag;
 		}
 
-		private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
 		{
-			Log("OnMouseLeftButtonUp");
+			//Log("OnMouseLeftButtonUp");
+			base.OnMouseLeftButtonUp(e);
 			ControlState = ControlState.Hover;
 		}
 
