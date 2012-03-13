@@ -478,7 +478,7 @@
 			switch (controlPointState)
 			{
 				case ControlState.Normal:
-					SetPosition(currentControlPoint, ControlPointPhysicalPosition);
+					SetPhysicalPosition(currentControlPoint, ControlPointPhysicalPosition);
 					currentControlPoint.Visibility = ControlPointVisibility;
 
 					if (ControlPointHover != null) ControlPointHover.Visibility = Visibility.Collapsed;
@@ -488,7 +488,7 @@
 				case ControlState.Hover:
 					if (ControlPointHover != null)
 					{
-						SetPosition(ControlPointHover, ControlPointPhysicalPosition);
+						SetPhysicalPosition(ControlPointHover, ControlPointPhysicalPosition);
 						ControlPointHover.Visibility = ControlPointVisibility;
 
 						if (ControlPoint != null) ControlPoint.Visibility = Visibility.Collapsed;
@@ -496,7 +496,7 @@
 					}
 					else
 					{
-						SetPosition(ControlPoint, ControlPointPhysicalPosition);
+						SetPhysicalPosition(ControlPoint, ControlPointPhysicalPosition);
 						ControlPoint.Visibility = ControlPointVisibility;
 						if (ControlPointDrag != null) ControlPointDrag.Visibility = Visibility.Collapsed;
 					}
@@ -505,7 +505,7 @@
 				case ControlState.Drag:
 					if (ControlPointDrag != null)
 					{
-						SetPosition(ControlPointDrag, ControlPointPhysicalPosition);
+						SetPhysicalPosition(ControlPointDrag, ControlPointPhysicalPosition);
 						ControlPointDrag.Visibility = ControlPointVisibility;
 
 						if (ControlPoint != null) ControlPoint.Visibility = Visibility.Collapsed;
@@ -513,7 +513,7 @@
 					}
 					else
 					{
-						SetPosition(ControlPoint, ControlPointPhysicalPosition);
+						SetPhysicalPosition(ControlPoint, ControlPointPhysicalPosition);
 						ControlPoint.Visibility = ControlPointVisibility;
 						if (ControlPointHover != null) ControlPointHover.Visibility = Visibility.Collapsed;
 					}
@@ -622,6 +622,10 @@
 			// HACK: ensure control point is remapped to new physical location
 			OnControlPointPlotXChanged(ControlPointPlotX);
 			OnControlPointPlotYChanged(ControlPointPlotY);
+
+			var point = LogicalToPhysicalCoordinates(new Point(ControlPointPlotX, ControlPointPlotY));
+
+			OnDragHandleAPostionChanged(point);
 		}
 
 	}

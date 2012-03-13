@@ -92,6 +92,31 @@
 							</Path.Data>
 						</Path>-->
 					</Charting:LinePlot.ControlPointDrag>
+					<Charting:LinePlot.DragHandleA>
+						<Charting:DragHandle Canvas.Left="50" Canvas.Top="50">
+							<Charting:DragHandle.EnabledShape>
+								<Ellipse Fill="Cyan" Stroke="Black" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.EnabledShape>
+							<Charting:DragHandle.HoverShape>
+								<Ellipse Fill="Cyan" Stroke="Black" Width="20" Height="20">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-10" Y="-10"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.HoverShape>
+							<Charting:DragHandle.DragShape>
+								<Ellipse Fill="Cyan" Stroke="Red" Width="16" Height="16">
+									<Ellipse.RenderTransform>
+										<TranslateTransform X="-8" Y="-8"/>
+									</Ellipse.RenderTransform>
+								</Ellipse>
+							</Charting:DragHandle.DragShape>
+						</Charting:DragHandle>
+					</Charting:LinePlot.DragHandleA>
 				</Charting:LinePlot>
 			</Border>
 			

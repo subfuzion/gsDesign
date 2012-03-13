@@ -110,7 +110,10 @@
 								   Coordinates="{Binding Path=Coordinates, Mode=OneWay}"
 								   ControlPointPlotX="{Binding Path=TimingParameterA, Mode=TwoWay}"
 								   ControlPointPlotY="{Binding Path=InterimSpendingParameterA, Mode=TwoWay}"
-								   LogMessage="{Binding Path=LogMessage, Mode=TwoWay}">
+								   LogMessage="{Binding Path=LogMessage, Mode=TwoWay}"
+								   CanDragHandleA="{Binding Path=CanDragHandleA, Mode=OneWay}"
+								   CanDragHandleB="{Binding Path=CanDragHandleB, Mode=OneWay}"
+								   >
 					<Charting:LinePlot.ControlPoint>
 						<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
 							<Ellipse.RenderTransform>
@@ -140,21 +143,21 @@
 					<Charting:LinePlot.DragHandleA>
 						<Charting:DragHandle Canvas.Left="50" Canvas.Top="50">
 							<Charting:DragHandle.EnabledShape>
-								<Ellipse Fill="Cyan" Stroke="Gray" Width="16" Height="16">
+								<Ellipse Fill="Cyan" Stroke="Black" Width="16" Height="16">
 									<Ellipse.RenderTransform>
 										<TranslateTransform X="-8" Y="-8"/>
 									</Ellipse.RenderTransform>
 								</Ellipse>
 							</Charting:DragHandle.EnabledShape>
 							<Charting:DragHandle.HoverShape>
-								<Ellipse Fill="Cyan" Stroke="Gray" Width="20" Height="20">
+								<Ellipse Fill="Cyan" Stroke="Black" Width="20" Height="20">
 									<Ellipse.RenderTransform>
 										<TranslateTransform X="-10" Y="-10"/>
 									</Ellipse.RenderTransform>
 								</Ellipse>
 							</Charting:DragHandle.HoverShape>
 							<Charting:DragHandle.DragShape>
-								<Ellipse Fill="Cyan" Stroke="Orange" Width="16" Height="16">
+								<Ellipse Fill="Cyan" Stroke="Red" Width="16" Height="16">
 									<Ellipse.RenderTransform>
 										<TranslateTransform X="-8" Y="-8"/>
 									</Ellipse.RenderTransform>
@@ -165,21 +168,21 @@
 					<Charting:LinePlot.DragHandleB>
 						<Charting:DragHandle Canvas.Left="100" Canvas.Top="100">
 							<Charting:DragHandle.EnabledShape>
-								<Ellipse Fill="LightGreen" Stroke="Gray" Width="16" Height="16">
+								<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
 									<Ellipse.RenderTransform>
 										<TranslateTransform X="-8" Y="-8"/>
 									</Ellipse.RenderTransform>
 								</Ellipse>
 							</Charting:DragHandle.EnabledShape>
 							<Charting:DragHandle.HoverShape>
-								<Ellipse Fill="LightGreen" Stroke="Gray" Width="20" Height="20">
+								<Ellipse Fill="Orange" Stroke="Black" Width="20" Height="20">
 									<Ellipse.RenderTransform>
 										<TranslateTransform X="-10" Y="-10"/>
 									</Ellipse.RenderTransform>
 								</Ellipse>
 							</Charting:DragHandle.HoverShape>
 							<Charting:DragHandle.DragShape>
-								<Ellipse Fill="LightGreen" Stroke="Orange" Width="16" Height="16">
+								<Ellipse Fill="Orange" Stroke="Red" Width="16" Height="16">
 									<Ellipse.RenderTransform>
 										<TranslateTransform X="-8" Y="-8"/>
 									</Ellipse.RenderTransform>

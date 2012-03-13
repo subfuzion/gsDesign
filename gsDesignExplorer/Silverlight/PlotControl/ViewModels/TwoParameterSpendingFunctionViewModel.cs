@@ -1633,32 +1633,7 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 			}
 
 			NotifyCoordinatesUpdate();
-
-			if (LinePlotControl != null)
-			{
-				LinePlotControl.UpdatePlotDisplay();
-			}
 		}
-
-		#region LinePlotControl property
-
-		private LinePlot _linePlotControl;
-
-		public LinePlot LinePlotControl
-		{
-			get { return _linePlotControl; }
-
-			set
-			{
-				if (_linePlotControl != value)
-				{
-					_linePlotControl = value;
-					NotifyPropertyChanged("LinePlotControl");
-				}
-			}
-		}
-
-		#endregion
 
 		public void UpdateCoordinate(double timing, double interimSpending)
 		{
@@ -1683,5 +1658,37 @@ namespace Subfuzion.Silverlight.UI.Charting.ViewModels
 		}
 
 		#endregion
+
+		#region CanDragHandleA property
+
+		public CanDragTo CanDragHandleA
+		{
+			get
+			{
+				return (LinePlotBase linePlot, ref Point p) =>
+				{
+					return true;
+				};
+			}
+		}
+
+		#endregion
+
+		#region CanDragHandleB property
+
+		public CanDragTo CanDragHandleB
+		{
+			get
+			{
+				return (LinePlotBase linePlot, ref Point p) =>
+				{
+					return true;
+				};
+			}
+		}
+
+		#endregion
+
+
 	}
 }

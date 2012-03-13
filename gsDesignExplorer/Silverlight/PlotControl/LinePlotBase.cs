@@ -9,6 +9,8 @@
 	using System.Windows.Media;
 	using System.Windows.Shapes;
 
+	public delegate bool CanDragTo(LinePlotBase linePlot, ref Point p);
+
 	public class LinePlotBase : Control, INotifyPropertyChanged
 	{
 		public static readonly string PlotCanvasPart = "PART_plotCanvas";
@@ -460,12 +462,12 @@
 
 		#region Helpers
 
-		protected static void SetPosition(DependencyObject element, Point p)
+		protected static void SetPhysicalPosition(DependencyObject element, Point p)
 		{
-			SetPosition(element, p.X, p.Y);
+			SetPhysicalPosition(element, p.X, p.Y);
 		}
 
-		protected static void SetPosition(DependencyObject element, double x, double y)
+		protected static void SetPhysicalPosition(DependencyObject element, double x, double y)
 		{
 			if (double.IsNaN(x) || double.IsNaN(y) || double.IsInfinity(x) || double.IsInfinity(y) || double.IsNegativeInfinity(x) || double.IsNegativeInfinity(y)) return;
 
@@ -719,8 +721,9 @@
 
 		private void DragHandleAOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
-			DragHandleA.CaptureMouse();
 			isDraggingA = true;
+			MoveToTop(DragHandleA);
+			DragHandleA.CaptureMouse();
 		}
 
 		private void DragHandleAOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -731,8 +734,9 @@
 
 		private void DragHandleBOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
-			DragHandleB.CaptureMouse();
 			isDraggingB = true;
+			MoveToTop(DragHandleB);
+			DragHandleB.CaptureMouse();
 		}
 
 		private void DragHandleBOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -752,11 +756,22 @@
 				if (p.Y < 0) p.Y = 0;
 				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
 
-				//ControlPointPhysicalPosition = p;
-				if (p.X < (double)DragHandleB.GetValue(Canvas.LeftProperty) && p.Y < (double)DragHandleB.GetValue(Canvas.TopProperty))
+				if (DragHandleB != null)
 				{
-					SetPosition(DragHandleA, p);
+					var xlimit = (double) DragHandleB.GetValue(Canvas.LeftProperty);
+					if (p.X > xlimit) p.X = xlimit;
+
+					var ylimit = (double) DragHandleB.GetValue(Canvas.TopProperty);
+					if (p.Y > ylimit) p.Y = ylimit;
 				}
+
+				//ControlPointPhysicalPosition = p;
+				if (CanDragHandleA != null && !CanDragHandleA(this, ref p))
+				{
+					return;
+				}
+
+				SetPhysicalPosition(DragHandleA, p);
 			}
 		}
 
@@ -771,15 +786,183 @@
 				if (p.Y < 0) p.Y = 0;
 				if (p.Y > ActualHeight - 1) p.Y = ActualHeight - 1;
 
-				// ControlPointPhysicalPosition = p;
-				if (p.X > (double)DragHandleA.GetValue(Canvas.LeftProperty) && p.Y > (double)DragHandleA.GetValue(Canvas.TopProperty))
+				if (DragHandleA != null)
 				{
-					SetPosition(DragHandleB, p);
+					var xlimit = (double)DragHandleA.GetValue(Canvas.LeftProperty);
+					if (p.X < xlimit) p.X = xlimit;
+
+					var ylimit = (double)DragHandleA.GetValue(Canvas.TopProperty);
+					if (p.Y < ylimit) p.Y = ylimit;
 				}
+
+				//ControlPointPhysicalPosition = p;
+				if (CanDragHandleB != null && !CanDragHandleB(this, ref p))
+				{
+					return;
+				}
+
+				SetPhysicalPosition(DragHandleB, p);
 			}
 		}
 
+		#region CanDragHandleA property
+
+		public CanDragTo CanDragHandleA
+		{
+			get { return (CanDragTo) GetValue(CanDragHandleAProperty); }
+			set { SetValue(CanDragHandleAProperty, value); }
+		}
+
+		public static DependencyProperty CanDragHandleAProperty = DependencyProperty.Register(
+			"CanDragHandleA",
+			typeof (CanDragTo),
+			typeof (LinePlot),
+			new PropertyMetadata(CanDragHandleAChangedHandler));
+
+		private static void CanDragHandleAChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnCanDragHandleAChanged((CanDragTo) args.NewValue, (CanDragTo) args.OldValue);
+			}
+		}
+
+		protected virtual void OnCanDragHandleAChanged(CanDragTo newValue, CanDragTo oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnCanDragHandleAChanged(newValue);
+		}
+
+		protected virtual void OnCanDragHandleAChanged(CanDragTo newValue)
+		{
+			// add handler code
+		}
+
 		#endregion
+
+		#region CanDragHandleB property
+
+		public CanDragTo CanDragHandleB
+		{
+			get { return (CanDragTo) GetValue(CanDragHandleBProperty); }
+			set { SetValue(CanDragHandleBProperty, value); }
+		}
+
+		public static DependencyProperty CanDragHandleBProperty = DependencyProperty.Register(
+			"CanDragHandleB",
+			typeof (CanDragTo),
+			typeof (LinePlot),
+			new PropertyMetadata(CanDragHandleBChangedHandler));
+
+		private static void CanDragHandleBChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnCanDragHandleBChanged((CanDragTo) args.NewValue, (CanDragTo) args.OldValue);
+			}
+		}
+
+		protected virtual void OnCanDragHandleBChanged(CanDragTo newValue, CanDragTo oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnCanDragHandleBChanged(newValue);
+		}
+
+		protected virtual void OnCanDragHandleBChanged(CanDragTo newValue)
+		{
+			// add handler code
+		}
+
+		#endregion
+
+		#region DragHandleAPostion property
+
+		public Point DragHandleAPostion
+		{
+			get { return (Point) GetValue(DragHandleAPostionProperty); }
+			set { SetValue(DragHandleAPostionProperty, value); }
+		}
+
+		public static DependencyProperty DragHandleAPostionProperty = DependencyProperty.Register(
+			"DragHandleAPostion",
+			typeof (Point),
+			typeof (LinePlot),
+			new PropertyMetadata(DragHandleAPostionChangedHandler));
+
+		private static void DragHandleAPostionChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnDragHandleAPostionChanged((Point) args.NewValue, (Point) args.OldValue);
+			}
+		}
+
+		protected virtual void OnDragHandleAPostionChanged(Point newValue, Point oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnDragHandleAPostionChanged(newValue);
+		}
+
+		protected virtual void OnDragHandleAPostionChanged(Point newValue)
+		{
+			DragHandleA.SetValue(Canvas.LeftProperty, newValue.X);
+			DragHandleA.SetValue(Canvas.TopProperty, newValue.Y);
+		}
+
+		#endregion
+
+		#region DragHandleBPostion property
+
+		public Point DragHandleBPostion
+		{
+			get { return (Point) GetValue(DragHandleBPostionProperty); }
+			set { SetValue(DragHandleBPostionProperty, value); }
+		}
+
+		public static DependencyProperty DragHandleBPostionProperty = DependencyProperty.Register(
+			"DragHandleBPostion",
+			typeof (Point),
+			typeof (LinePlot),
+			new PropertyMetadata(DragHandleBPostionChangedHandler));
+
+		private static void DragHandleBPostionChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		{
+			var linePlot = dependencyObject as LinePlot;
+			if (linePlot != null)
+			{
+				linePlot.OnDragHandleBPostionChanged((Point) args.NewValue, (Point) args.OldValue);
+			}
+		}
+
+		protected virtual void OnDragHandleBPostionChanged(Point newValue, Point oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnDragHandleBPostionChanged(newValue);
+		}
+
+		protected virtual void OnDragHandleBPostionChanged(Point newValue)
+		{
+			DragHandleB.SetValue(Canvas.LeftProperty, newValue.X);
+			DragHandleB.SetValue(Canvas.TopProperty, newValue.Y);
+		}
+
+		#endregion
+
+
+
+		#endregion
+
+		private void MoveToTop(UIElement element)
+		{
+			if (element != null && PlotSurface != null && PlotSurface.Children.Contains(element))
+			{
+				PlotSurface.Children.Remove(element);
+				PlotSurface.Children.Add(element);
+			}
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
