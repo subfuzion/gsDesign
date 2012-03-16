@@ -51,6 +51,191 @@
 
 		#region Dependency Properties
 
+		#region Control Point
+
+		#region Control Point Shapes
+
+		#region ControlPoint Property
+
+		public static DependencyProperty ControlPointProperty = DependencyProperty.Register(
+			"ControlPoint",
+			typeof(Shape),
+			typeof(LinePlot),
+			new PropertyMetadata(ControlPointChangedHandler));
+
+		public Shape ControlPoint
+		{
+			get { return (Shape)GetValue(ControlPointProperty); }
+			set { SetValue(ControlPointProperty, value); }
+		}
+
+		private static void ControlPointChangedHandler(DependencyObject dependencyObject,
+			DependencyPropertyChangedEventArgs args)
+		{
+			var interactivePlot = dependencyObject as LinePlot;
+			if (interactivePlot != null)
+			{
+				interactivePlot.OnControlPointChanged((Shape)args.NewValue, (Shape)args.OldValue);
+			}
+		}
+
+		protected virtual void OnControlPointChanged(Shape newValue, Shape oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			{
+				RemoveControlPointHandlers(oldValue);
+				PlotSurface.Children.Remove(oldValue);
+			}
+
+			OnControlPointChanged(newValue);
+		}
+
+		protected virtual void OnControlPointChanged(Shape newValue)
+		{
+			// add handler code
+			AddControlPointHandlers(newValue);
+			newValue.Visibility = Visibility.Collapsed;
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+			UpdateControlPointStateDisplay();
+		}
+
+		#endregion // ControlPoint Property
+
+		#region ControlPointHover Property
+
+		public static DependencyProperty ControlPointHoverProperty = DependencyProperty.Register(
+			"ControlPointHover",
+			typeof(Shape),
+			typeof(LinePlot),
+			new PropertyMetadata(ControlPointHoverChangedHandler));
+
+		public Shape ControlPointHover
+		{
+			get { return (Shape)GetValue(ControlPointHoverProperty); }
+			set { SetValue(ControlPointHoverProperty, value); }
+		}
+
+		private static void ControlPointHoverChangedHandler(DependencyObject dependencyObject,
+			DependencyPropertyChangedEventArgs args)
+		{
+			var interactivePlot = dependencyObject as LinePlot;
+			if (interactivePlot != null)
+			{
+				interactivePlot.OnControlPointHoverChanged((Shape)args.NewValue, (Shape)args.OldValue);
+			}
+		}
+
+		protected virtual void OnControlPointHoverChanged(Shape newValue, Shape oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			{
+				RemoveControlPointHandlers(oldValue);
+				PlotSurface.Children.Remove(oldValue);
+			}
+
+			OnControlPointHoverChanged(newValue);
+		}
+
+		protected virtual void OnControlPointHoverChanged(Shape newValue)
+		{
+			// add handler code
+			AddControlPointHandlers(newValue);
+			newValue.Visibility = Visibility.Collapsed;
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+			UpdateControlPointStateDisplay();
+		}
+
+		#endregion ControlPointHover Property
+
+		#region ControlPointDrag Property
+
+		public static DependencyProperty ControlPointDragProperty = DependencyProperty.Register(
+			"ControlPointDrag",
+			typeof(Shape),
+			typeof(LinePlot),
+			new PropertyMetadata(ControlPointDragChangedHandler));
+
+		public Shape ControlPointDrag
+		{
+			get { return (Shape)GetValue(ControlPointDragProperty); }
+			set { SetValue(ControlPointDragProperty, value); }
+		}
+
+		private static void ControlPointDragChangedHandler(DependencyObject dependencyObject,
+			DependencyPropertyChangedEventArgs args)
+		{
+			var interactivePlot = dependencyObject as LinePlot;
+			if (interactivePlot != null)
+			{
+				interactivePlot.OnControlPointDragChanged((Shape)args.NewValue, (Shape)args.OldValue);
+			}
+		}
+
+		protected virtual void OnControlPointDragChanged(Shape newValue, Shape oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
+			{
+				RemoveControlPointHandlers(oldValue);
+				PlotSurface.Children.Remove(oldValue);
+			}
+
+			OnControlPointDragChanged(newValue);
+		}
+
+		protected virtual void OnControlPointDragChanged(Shape newValue)
+		{
+			// add handler code
+			AddControlPointHandlers(newValue);
+			newValue.Visibility = Visibility.Collapsed;
+			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
+			UpdateControlPointStateDisplay();
+		}
+
+		#endregion ControlPointDrag Property
+
+		#endregion
+
+		#region ControlPointVisibility Property
+
+		public static DependencyProperty ControlPointVisibilityProperty = DependencyProperty.Register(
+			"ControlPointVisibility",
+			typeof (Visibility),
+			typeof (LinePlot),
+			new PropertyMetadata(ControlPointVisibilityChangedHandler));
+
+		public Visibility ControlPointVisibility
+		{
+			get { return (Visibility) GetValue(ControlPointVisibilityProperty); }
+			set { SetValue(ControlPointVisibilityProperty, value); }
+		}
+
+		private static void ControlPointVisibilityChangedHandler(DependencyObject dependencyObject,
+			DependencyPropertyChangedEventArgs args)
+		{
+			var interactivePlot = dependencyObject as LinePlot;
+			if (interactivePlot != null)
+			{
+				interactivePlot.OnControlPointVisibilityChanged((Visibility) args.NewValue, (Visibility) args.OldValue);
+			}
+		}
+
+		protected virtual void OnControlPointVisibilityChanged(Visibility newValue, Visibility oldValue)
+		{
+			// handle property changed here if the old value is important; otherwise, just pass on new value
+			OnControlPointVisibilityChanged(newValue);
+		}
+
+		protected virtual void OnControlPointVisibilityChanged(Visibility newValue)
+		{
+			// add handler code
+			UpdateControlPointStateDisplay();
+		}
+
+		#endregion ControlPointVisibility Property
+
 		#region IsControlPointVisible Property
 
 		public static DependencyProperty IsControlPointVisibleProperty = DependencyProperty.Register(
@@ -87,8 +272,6 @@
 		}
 
 		#endregion // IsControlPointVisible Property
-
-		#region ControlPointPhysicalPosition Property
 
 		#region ControlPointPosition Property
 
@@ -212,192 +395,7 @@
 
 		#endregion ControlPointPlotY Property
 
-		protected virtual void OnCoordinatesChanged(ObservableCollection<Point> newCoordinates)
-		{
-			base.OnCoordinatesChanged(newCoordinates);
-			UpdateControlPointStateDisplay();
-		}
-
-
-
-		#region ControlPoint Property
-
-		public static DependencyProperty ControlPointProperty = DependencyProperty.Register(
-			"ControlPoint",
-			typeof (Shape),
-			typeof (LinePlot),
-			new PropertyMetadata(ControlPointChangedHandler));
-
-		public Shape ControlPoint
-		{
-			get { return (Shape) GetValue(ControlPointProperty); }
-			set { SetValue(ControlPointProperty, value); }
-		}
-
-		private static void ControlPointChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as LinePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnControlPointChanged((Shape) args.NewValue, (Shape) args.OldValue);
-			}
-		}
-
-		protected virtual void OnControlPointChanged(Shape newValue, Shape oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
-			{
-				RemoveControlPointHandlers(oldValue);
-				PlotSurface.Children.Remove(oldValue);
-			}
-
-			OnControlPointChanged(newValue);
-		}
-
-		protected virtual void OnControlPointChanged(Shape newValue)
-		{
-			// add handler code
-			AddControlPointHandlers(newValue);
-			newValue.Visibility = Visibility.Collapsed;
-			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-			UpdateControlPointStateDisplay();
-		}
-
-		#endregion // ControlPoint Property
-
-		#region ControlPointHover Property
-
-		public static DependencyProperty ControlPointHoverProperty = DependencyProperty.Register(
-			"ControlPointHover",
-			typeof (Shape),
-			typeof (LinePlot),
-			new PropertyMetadata(ControlPointHoverChangedHandler));
-
-		public Shape ControlPointHover
-		{
-			get { return (Shape) GetValue(ControlPointHoverProperty); }
-			set { SetValue(ControlPointHoverProperty, value); }
-		}
-
-		private static void ControlPointHoverChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as LinePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnControlPointHoverChanged((Shape) args.NewValue, (Shape) args.OldValue);
-			}
-		}
-
-		protected virtual void OnControlPointHoverChanged(Shape newValue, Shape oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
-			{
-				RemoveControlPointHandlers(oldValue);
-				PlotSurface.Children.Remove(oldValue);
-			}
-
-			OnControlPointHoverChanged(newValue);
-		}
-
-		protected virtual void OnControlPointHoverChanged(Shape newValue)
-		{
-			// add handler code
-			AddControlPointHandlers(newValue);
-			newValue.Visibility = Visibility.Collapsed;
-			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-			UpdateControlPointStateDisplay();
-		}
-
-		#endregion ControlPointHover Property
-
-		#region ControlPointDrag Property
-
-		public static DependencyProperty ControlPointDragProperty = DependencyProperty.Register(
-			"ControlPointDrag",
-			typeof (Shape),
-			typeof (LinePlot),
-			new PropertyMetadata(ControlPointDragChangedHandler));
-
-		public Shape ControlPointDrag
-		{
-			get { return (Shape) GetValue(ControlPointDragProperty); }
-			set { SetValue(ControlPointDragProperty, value); }
-		}
-
-		private static void ControlPointDragChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as LinePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnControlPointDragChanged((Shape) args.NewValue, (Shape) args.OldValue);
-			}
-		}
-
-		protected virtual void OnControlPointDragChanged(Shape newValue, Shape oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (PlotSurface != null && PlotSurface.Children.Contains(oldValue))
-			{
-				RemoveControlPointHandlers(oldValue);
-				PlotSurface.Children.Remove(oldValue);
-			}
-
-			OnControlPointDragChanged(newValue);
-		}
-
-		protected virtual void OnControlPointDragChanged(Shape newValue)
-		{
-			// add handler code
-			AddControlPointHandlers(newValue);
-			newValue.Visibility = Visibility.Collapsed;
-			if (PlotSurface != null) PlotSurface.Children.Add(newValue);
-			UpdateControlPointStateDisplay();
-		}
-
-		#endregion ControlPointDrag Property
-
-		#region ControlPointVisibility Property
-
-		public static DependencyProperty ControlPointVisibilityProperty = DependencyProperty.Register(
-			"ControlPointVisibility",
-			typeof (Visibility),
-			typeof (LinePlot),
-			new PropertyMetadata(ControlPointVisibilityChangedHandler));
-
-		public Visibility ControlPointVisibility
-		{
-			get { return (Visibility) GetValue(ControlPointVisibilityProperty); }
-			set { SetValue(ControlPointVisibilityProperty, value); }
-		}
-
-		private static void ControlPointVisibilityChangedHandler(DependencyObject dependencyObject,
-			DependencyPropertyChangedEventArgs args)
-		{
-			var interactivePlot = dependencyObject as LinePlot;
-			if (interactivePlot != null)
-			{
-				interactivePlot.OnControlPointVisibilityChanged((Visibility) args.NewValue, (Visibility) args.OldValue);
-			}
-		}
-
-		protected virtual void OnControlPointVisibilityChanged(Visibility newValue, Visibility oldValue)
-		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnControlPointVisibilityChanged(newValue);
-		}
-
-		protected virtual void OnControlPointVisibilityChanged(Visibility newValue)
-		{
-			// add handler code
-			UpdateControlPointStateDisplay();
-		}
-
-		#endregion ControlPointVisibility Property
+		#region Control point state management and display
 
 		#region ControlPointState Property
 
@@ -419,7 +417,8 @@
 			var interactivePlot = dependencyObject as LinePlot;
 			if (interactivePlot != null)
 			{
-				interactivePlot.Log("ControlPointStateChangedHandler", "new value: {0} (old value: {1})", (ControlState)args.NewValue, (ControlState)args.OldValue);
+				interactivePlot.Log("ControlPointStateChangedHandler", "new value: {0} (old value: {1})",
+					(ControlState) args.NewValue, (ControlState) args.OldValue);
 				interactivePlot.OnControlPointStateChanged((ControlState) args.NewValue, (ControlState) args.OldValue);
 			}
 		}
@@ -521,6 +520,9 @@
 			}
 		}
 
+		#endregion
+
+		#region Control point handlers
 
 		private void AddControlPointHandlers(Shape shape)
 		{
@@ -569,25 +571,6 @@
 
 		#endregion
 
-		#region MinimumLogicalCoordinate Property
-
-		#endregion MinimumLogicalCoordinate Property
-
-		#region MaximumLogicalCoordinate Property
-
-		#endregion MaximumPlotCoordinate Property
-
-		#region Line Plot
-
-		#region Coordinates property
-
-		#endregion
-
-		#region Polyline property
-
-		#endregion
-
-
 		#endregion
 
 		#endregion
@@ -613,7 +596,11 @@
 
 		#endregion
 
-		#endregion
+		protected virtual void OnCoordinatesChanged(ObservableCollection<Point> newCoordinates)
+		{
+			base.OnCoordinatesChanged(newCoordinates);
+			UpdateControlPointStateDisplay();
+		}
 
 		public override void UpdatePlotDisplay()
 		{
@@ -625,9 +612,11 @@
 
 			var point = LogicalToPhysicalCoordinates(new Point(ControlPointPlotX, ControlPointPlotY));
 
-			OnDragHandleAPostionChanged(point);
+			DragHandleALogicalX = ControlPointPlotX;
+			DragHandleALogicalY = ControlPointPlotY;
 		}
 
+		#endregion
 	}
 
 }

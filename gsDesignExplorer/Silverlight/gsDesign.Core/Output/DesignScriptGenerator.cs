@@ -49,12 +49,18 @@
 			AppendTestType();
 			AppendAlpha();
 			AppendBeta();
+
+			// sample size
 			AppendBinomial();
 			AppendTTE();
+			// AppendATTE();
+
 			AppendNFix();
 			AppendTiming();
 			AppendSpendingFunctions();
 			AppendEndpoint();
+
+			#region comments
 
 			//Writer.WriteLine();
 			//Writer.WriteLine("##################################################");
@@ -126,6 +132,8 @@
 
 			//Writer.WriteLine("##################################################");
 
+			#endregion
+
 			Writer.WriteLine();
 			AppendGSDesignFunction();
 			Writer.WriteLine();
@@ -161,6 +169,11 @@
 
 		private void AppendGSDesignFunction()
 		{
+			// Advanced TTE
+			// append gsSurv....
+			// else
+
+
 			var sb = new StringBuilder();
 			sb.Append("gsDesign(k=k, test.type=test.type, alpha=alpha, beta=beta, n.fix=n.fix,\n")
 				.Append("  timing=timing, sfu=sfu, sfupar=sfupar, ");

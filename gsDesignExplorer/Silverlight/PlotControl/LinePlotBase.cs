@@ -85,21 +85,12 @@
 		protected virtual void OnPlotSurfaceChanged(Canvas newValue, Canvas oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			if (oldValue != null)
-			{
-				oldValue.SizeChanged -= OnPlotSurfaceSizeChanged;
-			}
-
 			OnPlotSurfaceChanged(newValue);
 		}
 
 		protected virtual void OnPlotSurfaceChanged(Canvas newValue)
 		{
 			// add handler code
-			PhysicalWidth = newValue != null ? newValue.ActualWidth : 0;
-			PhysicalHeight = newValue != null ? newValue.ActualHeight : 0;
-
-			PlotSurface.SizeChanged += OnPlotSurfaceSizeChanged;
 		}
 
 		#endregion
@@ -433,33 +424,6 @@
 
 		#endregion
 
-		#region Overridable methods
-
-		protected virtual void OnSizeChanged(Size newSize)
-		{
-			Log("OnSizeChanged", "physical size: ({0}, {1})", newSize.Width, newSize.Height);
-
-			ClipToBounds(newSize.Width, newSize.Height);
-
-			PhysicalWidth = newSize.Width;
-			PhysicalHeight = newSize.Height;
-			NotifyPropertyChanged("MaximumPhysicalCoordinate");
-
-			UpdatePlotDisplay();
-		}
-
-		protected virtual void OnPlotSurfaceSizeChanged(Size newSize)
-		{
-			Log("OnPlotSurfaceSizeChanged", "physical coordinates: ({0}, {1})", newSize.Width, newSize.Height);
-		}
-
-		public virtual void UpdatePlotDisplay()
-		{
-			OnCoordinatesChanged(Coordinates);
-		}
-
-		#endregion
-
 		#region Helpers
 
 		protected static void SetPhysicalPosition(DependencyObject element, Point p)
@@ -484,14 +448,37 @@
 
 		#region Implementation
 
-		#region Handlers
+		#region Overridable methods
 
-		private void OnPlotSurfaceSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+		protected virtual void OnSizeChanged(Size newSize)
 		{
-			OnPlotSurfaceSizeChanged(sizeChangedEventArgs.NewSize);
+			Log("OnSizeChanged", "physical size: ({0}, {1})", newSize.Width, newSize.Height);
+
+			PhysicalWidth = newSize.Width;
+			PhysicalHeight = newSize.Height;
+
+			ClipToBounds(newSize.Width, newSize.Height);
+
+			// remap
+			NotifyPropertyChanged("MaximumPhysicalCoordinate");
+			UpdatePlotDisplay();
+		}
+
+		public virtual void UpdatePlotDisplay()
+		{
+			OnCoordinatesChanged(Coordinates);
 		}
 
 		#endregion
+
+		protected void MoveToTop(UIElement element)
+		{
+			if (element != null && PlotSurface != null && PlotSurface.Children.Contains(element))
+			{
+				PlotSurface.Children.Remove(element);
+				PlotSurface.Children.Add(element);
+			}
+		}
 
 		protected void ClipToBounds(Size size)
 		{
@@ -877,92 +864,189 @@
 
 		#endregion
 
-		#region DragHandleAPostion property
+		#region DragHandleA Position
 
-		public Point DragHandleAPostion
+		public double DragHandleALogicalX
 		{
-			get { return (Point) GetValue(DragHandleAPostionProperty); }
-			set { SetValue(DragHandleAPostionProperty, value); }
+			get
+			{
+				var logPoint = PhysicalToLogicalCoordinates(new Point(DragHandleAPhysicalX, DragHandleAPhysicalY));
+				return logPoint.X;
+			}
+
+			set
+			{
+				if (Math.Abs(DragHandleALogicalX - value) > double.Epsilon)
+				{
+					var physPoint = LogicalToPhysicalCoordinates(new Point(value, DragHandleALogicalY));
+					DragHandleAPhysicalX = physPoint.X;
+					NotifyPropertyChanged("DragHandleALogicalX");
+				}
+			}
 		}
 
-		public static DependencyProperty DragHandleAPostionProperty = DependencyProperty.Register(
-			"DragHandleAPostion",
-			typeof (Point),
-			typeof (LinePlot),
-			new PropertyMetadata(DragHandleAPostionChangedHandler));
+		//public double DragHandleAPhysicalX
+		//{
+		//    get
+		//    {
+		//        return DragHandleA != null ? (double)DragHandleA.GetValue(Canvas.LeftProperty) : 0.0;
+		//    }
 
-		private static void DragHandleAPostionChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+		//    set
+		//    {
+		//        if (Math.Abs(DragHandleAPhysicalX - value) > double.Epsilon)
+		//        {
+		//            DragHandleA.SetValue(Canvas.LeftProperty, value);
+		//            NotifyPropertyChanged("DragHandleAPhysicalX");
+		//        }
+		//    }
+		//}
+
+		#region DragHandleAPhysicalX property
+
+		public double DragHandleAPhysicalX
+		{
+			get { return (double) GetValue(DragHandleAPhysicalXProperty); }
+			set { SetValue(DragHandleAPhysicalXProperty, value); }
+		}
+
+		public static DependencyProperty DragHandleAPhysicalXProperty = DependencyProperty.Register(
+			"DragHandleAPhysicalX",
+			typeof (double),
+			typeof (LinePlot),
+			new PropertyMetadata(DragHandleAPhysicalXChangedHandler));
+
+		private static void DragHandleAPhysicalXChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
 			var linePlot = dependencyObject as LinePlot;
 			if (linePlot != null)
 			{
-				linePlot.OnDragHandleAPostionChanged((Point) args.NewValue, (Point) args.OldValue);
+				linePlot.OnDragHandleAPhysicalXChanged((double) args.NewValue, (double) args.OldValue);
 			}
 		}
 
-		protected virtual void OnDragHandleAPostionChanged(Point newValue, Point oldValue)
+		protected virtual void OnDragHandleAPhysicalXChanged(double newValue, double oldValue)
 		{
 			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnDragHandleAPostionChanged(newValue);
+			OnDragHandleAPhysicalXChanged(newValue);
 		}
 
-		protected virtual void OnDragHandleAPostionChanged(Point newValue)
+		protected virtual void OnDragHandleAPhysicalXChanged(double newValue)
 		{
-			DragHandleA.SetValue(Canvas.LeftProperty, newValue.X);
-			DragHandleA.SetValue(Canvas.TopProperty, newValue.Y);
+			// add handler code
+			DragHandleA.SetValue(Canvas.LeftProperty, newValue);
 		}
 
 		#endregion
 
-		#region DragHandleBPostion property
 
-		public Point DragHandleBPostion
+
+		public double DragHandleALogicalY
 		{
-			get { return (Point) GetValue(DragHandleBPostionProperty); }
-			set { SetValue(DragHandleBPostionProperty, value); }
-		}
-
-		public static DependencyProperty DragHandleBPostionProperty = DependencyProperty.Register(
-			"DragHandleBPostion",
-			typeof (Point),
-			typeof (LinePlot),
-			new PropertyMetadata(DragHandleBPostionChangedHandler));
-
-		private static void DragHandleBPostionChangedHandler(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-		{
-			var linePlot = dependencyObject as LinePlot;
-			if (linePlot != null)
+			get
 			{
-				linePlot.OnDragHandleBPostionChanged((Point) args.NewValue, (Point) args.OldValue);
+				var logPoint = PhysicalToLogicalCoordinates(new Point(DragHandleAPhysicalX, DragHandleAPhysicalY));
+				return logPoint.Y;
+			}
+
+			set
+			{
+				if (Math.Abs(DragHandleALogicalY - value) > double.Epsilon)
+				{
+					var physPoint = LogicalToPhysicalCoordinates(new Point(DragHandleALogicalX, value));
+					DragHandleAPhysicalY = physPoint.Y;
+					NotifyPropertyChanged("DragHandleALogicalY");
+				}
 			}
 		}
 
-		protected virtual void OnDragHandleBPostionChanged(Point newValue, Point oldValue)
+		public double DragHandleAPhysicalY
 		{
-			// handle property changed here if the old value is important; otherwise, just pass on new value
-			OnDragHandleBPostionChanged(newValue);
-		}
+			get { return (double)DragHandleA.GetValue(Canvas.TopProperty); }
 
-		protected virtual void OnDragHandleBPostionChanged(Point newValue)
-		{
-			DragHandleB.SetValue(Canvas.LeftProperty, newValue.X);
-			DragHandleB.SetValue(Canvas.TopProperty, newValue.Y);
-		}
-
-		#endregion
-
-
-
-		#endregion
-
-		private void MoveToTop(UIElement element)
-		{
-			if (element != null && PlotSurface != null && PlotSurface.Children.Contains(element))
+			set
 			{
-				PlotSurface.Children.Remove(element);
-				PlotSurface.Children.Add(element);
+				if (Math.Abs(DragHandleAPhysicalY - value) > double.Epsilon)
+				{
+					DragHandleA.SetValue(Canvas.TopProperty, value);
+					NotifyPropertyChanged("DragHandleAPhysicalY");
+				}
 			}
 		}
+
+		#endregion
+
+		#region DragHandleB Position
+
+		public double DragHandleBLogicalX
+		{
+			get
+			{
+				var logPoint = PhysicalToLogicalCoordinates(new Point(DragHandleBPhysicalX, DragHandleBPhysicalY));
+				return logPoint.X;
+			}
+
+			set
+			{
+				if (Math.Abs(DragHandleBLogicalX - value) > double.Epsilon)
+				{
+					var physPoint = LogicalToPhysicalCoordinates(new Point(value, DragHandleBLogicalY));
+					DragHandleBPhysicalX = physPoint.X;
+					NotifyPropertyChanged("DragHandleBLogicalX");
+				}
+			}
+		}
+
+		public double DragHandleBPhysicalX
+		{
+			get { return (double)DragHandleB.GetValue(Canvas.LeftProperty); }
+
+			set
+			{
+				if (Math.Abs(DragHandleBPhysicalX - value) > double.Epsilon)
+				{
+					DragHandleB.SetValue(Canvas.LeftProperty, value);
+					NotifyPropertyChanged("DragHandleBPhysicalX");
+				}
+			}
+		}
+
+		public double DragHandleBLogicalY
+		{
+			get
+			{
+				var logPoint = PhysicalToLogicalCoordinates(new Point(DragHandleBPhysicalX, DragHandleBPhysicalY));
+				return logPoint.Y;
+			}
+
+			set
+			{
+				if (Math.Abs(DragHandleBLogicalY - value) > double.Epsilon)
+				{
+					var physPoint = LogicalToPhysicalCoordinates(new Point(DragHandleBLogicalX, value));
+					DragHandleBPhysicalY = physPoint.Y;
+					NotifyPropertyChanged("DragHandleBLogicalY");
+				}
+			}
+		}
+
+		public double DragHandleBPhysicalY
+		{
+			get { return (double)DragHandleB.GetValue(Canvas.TopProperty); }
+
+			set
+			{
+				if (Math.Abs(DragHandleBPhysicalY - value) > double.Epsilon)
+				{
+					DragHandleB.SetValue(Canvas.TopProperty, value);
+					NotifyPropertyChanged("DragHandleBPhysicalY");
+				}
+			}
+		}
+
+		#endregion
+
+		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -974,5 +1058,7 @@
 				handlers(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+
+
 	}
 }

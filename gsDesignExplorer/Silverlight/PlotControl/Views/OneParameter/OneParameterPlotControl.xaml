@@ -60,11 +60,14 @@
 			</StackPanel>
 
 			<!-- Plot Control -->
+								   <!--DragHandleAPhysicalX="{Binding Path=TimingParameter, Mode=TwoWay}"
+								   DragHandleAPhysicalY="{Binding Path=InterimSpendingParameter, Mode=TwoWay}"-->
 			<Border Grid.Row="1" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
 				<Charting:LinePlot x:Name="plot" Background="#FFFCF8"
 								   Coordinates="{Binding Path=Coordinates, Mode=OneWay}"
 								   ControlPointPlotX="{Binding Path=TimingParameter, Mode=TwoWay}"
 								   ControlPointPlotY="{Binding Path=InterimSpendingParameter, Mode=TwoWay}"
+								   DragHandleAPhysicalX="{Binding Path=TimingParameter, Mode=TwoWay}"
 								   LogMessage="{Binding Path=LogMessage, Mode=TwoWay}">
 					<Charting:LinePlot.ControlPoint>
 						<Ellipse Fill="Orange" Stroke="Black" Width="16" Height="16">
